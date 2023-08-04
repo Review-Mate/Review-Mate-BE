@@ -11,7 +11,7 @@ import lombok.Getter;
 public class Customer {
 
     @Id @GeneratedValue
-    @Column(name = "user_id")
+    @Column(name = "customer_id")
     private Long id;
 
     private Long clientSideUserId;
