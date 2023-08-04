@@ -20,4 +20,8 @@ public class PackageTravelProduct extends TravelProduct {
     public PackageTravelProduct(String clientSideProductId, String thumbnailUrl, String name, Float rating) {
         super(clientSideProductId, thumbnailUrl, name, rating);
     }
+
+    public void addTourCourse(TourCourse tourCourse) {
+        this.tourCourses.add(tourCourse);
+    }
 }

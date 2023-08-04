@@ -29,4 +29,13 @@ public class TourCourse extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "travel_product_id")
     private PackageTravelProduct packageTravelProduct;
+
+    public TourCourse(String name, LocalDateTime startTime, LocalDateTime endTime, PackageTravelProduct packageTravelProduct) {
+        this.name = name;
+        this.startTime = startTime;
+        this.endTime = endTime;
+
+        packageTravelProduct.addTourCourse(this);
+        this.packageTravelProduct = packageTravelProduct;
+    }
 }
