@@ -14,15 +14,16 @@ public class Customer {
     @Column(name = "customer_id")
     private Long id;
 
+    @Column(nullable = false)
     private Long clientSideUserId;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String username;
 
-    @Column(length = 20)
+    @Column(length = 20, nullable = false)
     private String phoneNumber;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String kakaoId;
 
 }

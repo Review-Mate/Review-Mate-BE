@@ -1,6 +1,7 @@
 package com.somartreview.reviewmate.domain.travelProduct;
 
 import jakarta.persistence.*;
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 @Entity
@@ -12,13 +13,15 @@ public abstract class TravelProduct {
     @Column(name = "travel_product_id")
     private Long id;
 
+    @Column(nullable = false)
     private String clientSideProductId;
 
-    @Nullable
+
     private String thumbnailUrl;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String name;
 
-    private Float rating;
+    @Column(nullable = false)
+    private Float rating = 0.0f;
 }
