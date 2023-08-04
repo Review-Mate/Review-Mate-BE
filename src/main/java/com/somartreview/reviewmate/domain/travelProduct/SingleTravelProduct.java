@@ -1,9 +1,6 @@
 package com.somartreview.reviewmate.domain.travelProduct;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +18,7 @@ public class SingleTravelProduct extends TravelProduct {
     private LocalDateTime endTime;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     public SingleTravelProduct(String clientSideProductId, String thumbnailUrl, String name, Float rating, LocalDateTime startTime, LocalDateTime endTime, Category category) {
