@@ -1,12 +1,13 @@
 package com.somartreview.reviewmate.domain.customer;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.somartreview.reviewmate.domain.reservation.Reservation;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,4 +30,17 @@ public class Customer extends BaseEntity {
     @Column(length = 100, nullable = false)
     private String kakaoId;
 
+    @OneToMany(mappedBy = "customerId")
+    private List<Reservation> reservations = new ArrayList<>();
+
+    public Customer(Long clientSideUserId, String username, String phoneNumber, String kakaoId) {
+        this.clientSideUserId = clientSideUserId;
+        this.username = username;
+        this.phoneNumber = phoneNumber;
+        this.kakaoId = kakaoId;
+    }
+
+    public void addReservation(Reservation reservation) {
+        this.reservations.add(reservation);
+    }
 }
