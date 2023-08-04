@@ -58,7 +58,7 @@ public class TestControllerTest {
 //                                        .requestSchema(Schema.schema("ResponseEntity?.PUT"))
 //                                        .responseSchema(Schema.schema("ResponseEntity?.POST")))
                                 preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint()),
+                                preprocessResponse(prettyPrint())
 //                                pathParameters(
 //                                        parameterWithName("a").description("member")
 //                                ),
@@ -71,9 +71,9 @@ public class TestControllerTest {
 //                                requestParts( // 멀티파트 파일 명세
 //                                        partWithName("file").description("동영상 파일")
 //                                ),
-                                responseFields(
-                                        fieldWithPath("hello").type(STRING).description("상태")
-                                )
+//                                responseFields(
+//                                        fieldWithPath("hello").type(STRING).description("상태")
+//                                )
                         )
                 );
 

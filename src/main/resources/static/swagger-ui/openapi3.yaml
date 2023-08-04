@@ -9,34 +9,20 @@ tags: []
 paths:
   /:
     get:
-      summary: 서버를 상태를 확인한다
-      description: 서버를 상태를 확인한다
+      summary: 서버 상태를 확인
+      description: 서버 상태를 확인
       operationId: greet
-      parameters:
-      - name: a
-        in: query
-        description: member
-        required: true
-        schema:
-          type: string
       responses:
         "200":
           description: "200"
           content:
-            application/json:
+            text/plain;charset=UTF-8:
               schema:
-                $ref: '#/components/schemas/725767103'
+                $ref: '#/components/schemas/486549215'
               examples:
                 greet:
-                  value: |-
-                    {
-                      "hello" : "hello"
-                    }
+                  value: hello
 components:
   schemas:
-    "725767103":
+    "486549215":
       type: object
-      properties:
-        hello:
-          type: string
-          description: 상태
