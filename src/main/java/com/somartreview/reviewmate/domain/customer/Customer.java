@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.domain.customer;
 
+import com.somartreview.reviewmate.domain.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Customer {
+public class Customer extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "customer_id")

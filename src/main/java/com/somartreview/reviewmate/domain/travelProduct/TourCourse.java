@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.domain.travelProduct;
 
+import com.somartreview.reviewmate.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
-public class TourCourse {
+public class TourCourse extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "tour_course_id")
