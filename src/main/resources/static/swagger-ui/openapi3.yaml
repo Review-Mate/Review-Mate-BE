@@ -1,0 +1,42 @@
+openapi: 3.0.1
+info:
+  title: Review Mate API
+  description: Review Mate WAS API
+  version: 0.1.0
+servers:
+- url: https://localhost:8080
+tags: []
+paths:
+  /:
+    get:
+      summary: 서버를 상태를 확인한다
+      description: 서버를 상태를 확인한다
+      operationId: greet
+      parameters:
+      - name: a
+        in: query
+        description: member
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/725767103'
+              examples:
+                greet:
+                  value: |-
+                    {
+                      "hello" : "hello"
+                    }
+components:
+  schemas:
+    "725767103":
+      type: object
+      properties:
+        hello:
+          type: string
+          description: 상태
