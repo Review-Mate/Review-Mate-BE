@@ -1,12 +1,14 @@
 package com.somartreview.reviewmate.domain.travelProduct;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn
+@NoArgsConstructor
 public abstract class TravelProduct {
 
     @Id @GeneratedValue
