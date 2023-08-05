@@ -14,11 +14,10 @@ public class ReviewTag extends BaseEntity {
     @Column(name = "review_tag_id")
     private Long id;
 
-    @Column(length = 20, nullable = false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Property category;
 
-    @Column(length = 20)
     private String keyword;
 
     @Column(nullable = false)

@@ -24,13 +24,13 @@ public class Customer extends BaseEntity {
     @Column(nullable = false)
     private Long clientSideUserId;
 
-    @Column(length = 100, nullable = false)
-    private String username;
+    @Column(nullable = false)
+    private String name;
 
     @Column(length = 20, nullable = false)
     private String phoneNumber;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String kakaoId;
 
     @OneToMany(mappedBy = "customer")
@@ -45,9 +45,9 @@ public class Customer extends BaseEntity {
     @OneToMany(mappedBy = "customer")
     private List<Review> reviews = new ArrayList<>();
 
-    public Customer(Long clientSideUserId, String username, String phoneNumber, String kakaoId) {
+    public Customer(Long clientSideUserId, String name, String phoneNumber, String kakaoId) {
         this.clientSideUserId = clientSideUserId;
-        this.username = username;
+        this.name = name;
         this.phoneNumber = phoneNumber;
         this.kakaoId = kakaoId;
     }

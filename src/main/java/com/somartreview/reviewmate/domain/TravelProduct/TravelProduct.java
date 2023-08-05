@@ -28,7 +28,7 @@ public abstract class TravelProduct extends BaseEntity {
 
     private String thumbnailUrl;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
