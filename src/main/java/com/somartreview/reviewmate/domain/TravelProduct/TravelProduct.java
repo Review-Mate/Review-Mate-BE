@@ -4,6 +4,7 @@ import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.LiveFeedback.LiveFeedback;
 import com.somartreview.reviewmate.domain.LiveSatisfaction.LiveSatisfaction;
 import com.somartreview.reviewmate.domain.Reservation.Reservation;
+import com.somartreview.reviewmate.domain.Review.Review;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
@@ -40,6 +41,9 @@ public abstract class TravelProduct extends BaseEntity {
     @OneToMany(mappedBy = "travelProductId")
     private List<LiveFeedback> liveFeedbacks = new ArrayList<>();
 
+    @OneToMany(mappedBy = "travelProductId")
+    private List<Review> reviews = new ArrayList<>();
+
     public TravelProduct(String clientSideProductId, String thumbnailUrl, String name, Float rating) {
         this.clientSideProductId = clientSideProductId;
         this.thumbnailUrl = thumbnailUrl;
@@ -57,5 +61,12 @@ public abstract class TravelProduct extends BaseEntity {
 
     public void addLiveFeedback(LiveFeedback liveFeedback) {
         this.liveFeedbacks.add(liveFeedback);
+    }
+
+    public void addReview(Review review) {
+        int reviewCount = this.reviews.size();
+        rating = (rating * reviewCount + review.getRating()) / (reviewCount + 1);
+
+        this.reviews.add(review);
     }
 }

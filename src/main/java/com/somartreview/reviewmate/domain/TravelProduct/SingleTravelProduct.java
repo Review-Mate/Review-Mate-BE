@@ -17,7 +17,7 @@ public class SingleTravelProduct extends TravelProduct {
     @Column(nullable = false)
     private LocalDateTime endTime;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private Category category;
 

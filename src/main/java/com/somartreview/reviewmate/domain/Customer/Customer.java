@@ -4,6 +4,7 @@ import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.LiveFeedback.LiveFeedback;
 import com.somartreview.reviewmate.domain.LiveSatisfaction.LiveSatisfaction;
 import com.somartreview.reviewmate.domain.Reservation.Reservation;
+import com.somartreview.reviewmate.domain.Review.Review;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +42,9 @@ public class Customer extends BaseEntity {
     @OneToMany(mappedBy = "customerId")
     private List<LiveFeedback> liveFeedbacks = new ArrayList<>();
 
+    @OneToMany(mappedBy = "customerId")
+    private List<Review> reviews = new ArrayList<>();
+
     public Customer(Long clientSideUserId, String username, String phoneNumber, String kakaoId) {
         this.clientSideUserId = clientSideUserId;
         this.username = username;
@@ -58,5 +62,9 @@ public class Customer extends BaseEntity {
 
     public void addLiveFeedback(LiveFeedback liveFeedback) {
         this.liveFeedbacks.add(liveFeedback);
+    }
+
+    public void addReview(Review review) {
+        this.reviews.add(review);
     }
 }

@@ -20,10 +20,10 @@ public class LiveSatisfaction extends BaseEntity {
     @Column(nullable = false)
     private Integer rating;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private Property satisfiedProperty;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private Property dissatisfiedProperty;
 
     @ManyToOne(fetch = FetchType.LAZY)

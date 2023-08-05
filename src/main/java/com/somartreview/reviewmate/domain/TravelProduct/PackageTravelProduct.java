@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PackageTravelProduct extends TravelProduct {
 
-    @OneToMany(mappedBy = "packageTravelProduct", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "packageTravelProduct", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TourCourse> tourCourses = new ArrayList<>();
 
     public PackageTravelProduct(String clientSideProductId, String thumbnailUrl, String name, Float rating) {
