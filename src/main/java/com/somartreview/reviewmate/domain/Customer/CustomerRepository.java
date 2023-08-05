@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.domain.customer;
+package com.somartreview.reviewmate.domain.Customer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

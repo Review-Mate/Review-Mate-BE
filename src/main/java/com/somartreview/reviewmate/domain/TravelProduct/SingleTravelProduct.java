@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.domain.travelProduct;
+package com.somartreview.reviewmate.domain.TravelProduct;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,8 +1,8 @@
-package com.somartreview.reviewmate.domain.reservation;
+package com.somartreview.reviewmate.domain.Reservation;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
-import com.somartreview.reviewmate.domain.customer.Customer;
-import com.somartreview.reviewmate.domain.travelProduct.TravelProduct;
+import com.somartreview.reviewmate.domain.Customer.Customer;
+import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
