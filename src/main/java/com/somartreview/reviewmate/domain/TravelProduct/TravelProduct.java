@@ -3,6 +3,8 @@ package com.somartreview.reviewmate.domain.TravelProduct;
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.LiveFeedback.LiveFeedback;
 import com.somartreview.reviewmate.domain.LiveSatisfaction.LiveSatisfaction;
+import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
+import com.somartreview.reviewmate.domain.PartnerCompany.PartnerSeller;
 import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import com.somartreview.reviewmate.domain.Review.Review;
 import jakarta.persistence.*;
@@ -44,11 +46,24 @@ public abstract class TravelProduct extends BaseEntity {
     @OneToMany(mappedBy = "travelProduct")
     private List<Review> reviews = new ArrayList<>();
 
-    public TravelProduct(String clientSideProductId, String thumbnailUrl, String name, Float rating) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "partner_company_id", nullable = false)
+    private PartnerCompany partnerCompany;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "partner_seller_id", nullable = false)
+    private PartnerSeller partnerSeller;
+
+
+    public TravelProduct(String clientSideProductId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
         this.clientSideProductId = clientSideProductId;
         this.thumbnailUrl = thumbnailUrl;
         this.name = name;
         this.rating = rating;
+        partnerCompany.addTravelProduct(this);
+        this.partnerCompany = partnerCompany;
+        partnerSeller.addTravelProduct(this);
+        this.partnerSeller = partnerSeller;
     }
 
     public void addReservation(Reservation reservation) {
