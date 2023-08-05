@@ -1,6 +1,7 @@
 package com.somartreview.reviewmate.domain.Customer;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
+import com.somartreview.reviewmate.domain.LiveSatisfaction.LiveSatisfaction;
 import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -33,6 +34,9 @@ public class Customer extends BaseEntity {
     @OneToMany(mappedBy = "customerId")
     private List<Reservation> reservations = new ArrayList<>();
 
+    @OneToMany(mappedBy = "customerId")
+    private List<LiveSatisfaction> liveSatisfactions = new ArrayList<>();
+
     public Customer(Long clientSideUserId, String username, String phoneNumber, String kakaoId) {
         this.clientSideUserId = clientSideUserId;
         this.username = username;
@@ -42,5 +46,9 @@ public class Customer extends BaseEntity {
 
     public void addReservation(Reservation reservation) {
         this.reservations.add(reservation);
+    }
+
+    public void addLiveSatisfaction(LiveSatisfaction liveSatisfaction) {
+        this.liveSatisfactions.add(liveSatisfaction);
     }
 }
