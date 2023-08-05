@@ -17,11 +17,11 @@ public class Reservation extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "travel_product_id")
+    @JoinColumn(name = "travel_product_id", nullable = false)
     private TravelProduct travelProduct;
 
     public Reservation(Customer customer, TravelProduct travelProduct) {

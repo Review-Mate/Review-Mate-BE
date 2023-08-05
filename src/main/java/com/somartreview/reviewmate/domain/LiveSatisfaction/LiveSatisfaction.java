@@ -27,11 +27,11 @@ public class LiveSatisfaction extends BaseEntity {
     private Property dissatisfiedProperty;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "travel_product_id")
+    @JoinColumn(name = "travel_product_id", nullable = false)
     private TravelProduct travelProduct;
 
     public LiveSatisfaction(Integer rating, Property satisfiedProperty, Property dissatisfiedProperty, Customer customer, TravelProduct travelProduct) {
