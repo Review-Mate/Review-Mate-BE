@@ -1,6 +1,8 @@
-package com.somartreview.reviewmate.domain.PartnerCompany;
+package com.somartreview.reviewmate.domain.PartnerManager;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
+import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
+import com.somartreview.reviewmate.domain.PartnerCompany.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

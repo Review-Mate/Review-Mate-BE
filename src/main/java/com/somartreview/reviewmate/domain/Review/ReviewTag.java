@@ -16,7 +16,7 @@ public class ReviewTag extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Property category;
+    private Property property;
 
     private String keyword;
 
@@ -33,8 +33,8 @@ public class ReviewTag extends BaseEntity {
     @JoinColumn(name = "review_id", nullable = false)
     private Review review;
 
-    public ReviewTag(Property category, String keyword, Double polarityValue, Integer startIndex, Integer endIndex, Review review) {
-        this.category = category;
+    public ReviewTag(Property property, String keyword, Double polarityValue, Integer startIndex, Integer endIndex, Review review) {
+        this.property = property;
         this.keyword = keyword;
         this.polarityValue = polarityValue;
         this.startIndex = startIndex;

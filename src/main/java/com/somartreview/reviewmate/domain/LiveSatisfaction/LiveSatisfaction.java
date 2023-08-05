@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.EnumType.*;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -21,9 +23,11 @@ public class LiveSatisfaction extends BaseEntity {
     private Integer rating;
 
     @Column(nullable = false)
+    @Enumerated(STRING)
     private Property satisfiedProperty;
 
     @Column(nullable = false)
+    @Enumerated(STRING)
     private Property dissatisfiedProperty;
 
     @ManyToOne(fetch = FetchType.LAZY)

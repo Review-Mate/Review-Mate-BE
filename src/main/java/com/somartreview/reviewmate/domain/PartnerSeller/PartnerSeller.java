@@ -1,6 +1,7 @@
-package com.somartreview.reviewmate.domain.PartnerCompany;
+package com.somartreview.reviewmate.domain.PartnerSeller;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
+import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
 import jakarta.persistence.*;
 import lombok.Getter;

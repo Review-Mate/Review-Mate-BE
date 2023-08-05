@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.domain.PartnerCompany;
+package com.somartreview.reviewmate.domain.PartnerManager;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -4,7 +4,7 @@ import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.LiveFeedback.LiveFeedback;
 import com.somartreview.reviewmate.domain.LiveSatisfaction.LiveSatisfaction;
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
-import com.somartreview.reviewmate.domain.PartnerCompany.PartnerSeller;
+import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
 import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import com.somartreview.reviewmate.domain.Review.Review;
 import jakarta.persistence.*;
