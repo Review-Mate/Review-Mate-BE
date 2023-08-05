@@ -39,10 +39,10 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "travel_product_id", nullable = false)
     private TravelProduct travelProduct;
 
-    @OneToMany(mappedBy = "review_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewTag> reviewTags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "review_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewImage> reviewImages = new ArrayList<>();
 
     public Review(Integer rating, String title, String content, Customer customer, TravelProduct travelProduct) {

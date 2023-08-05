@@ -32,16 +32,16 @@ public abstract class TravelProduct extends BaseEntity {
     @Column(nullable = false)
     private Float rating = 0.0f;
 
-    @OneToMany(mappedBy = "travelProductId")
+    @OneToMany(mappedBy = "travelProduct")
     private List<Reservation> reservations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "travelProductId")
+    @OneToMany(mappedBy = "travelProduct")
     private List<LiveSatisfaction> liveSatisfactions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "travelProductId")
+    @OneToMany(mappedBy = "travelProduct")
     private List<LiveFeedback> liveFeedbacks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "travelProductId")
+    @OneToMany(mappedBy = "travelProduct")
     private List<Review> reviews = new ArrayList<>();
 
     public TravelProduct(String clientSideProductId, String thumbnailUrl, String name, Float rating) {

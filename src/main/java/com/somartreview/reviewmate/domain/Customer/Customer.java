@@ -33,16 +33,16 @@ public class Customer extends BaseEntity {
     @Column(length = 100, nullable = false)
     private String kakaoId;
 
-    @OneToMany(mappedBy = "customerId")
+    @OneToMany(mappedBy = "customer")
     private List<Reservation> reservations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customerId")
+    @OneToMany(mappedBy = "customer")
     private List<LiveSatisfaction> liveSatisfactions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customerId")
+    @OneToMany(mappedBy = "customer")
     private List<LiveFeedback> liveFeedbacks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customerId")
+    @OneToMany(mappedBy = "customer")
     private List<Review> reviews = new ArrayList<>();
 
     public Customer(Long clientSideUserId, String username, String phoneNumber, String kakaoId) {
