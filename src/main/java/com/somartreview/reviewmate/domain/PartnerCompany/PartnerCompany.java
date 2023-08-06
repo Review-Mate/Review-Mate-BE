@@ -29,7 +29,8 @@ public class PartnerCompany extends BaseEntity {
     @OneToMany(mappedBy = "partnerCompany")
     private List<PartnerSeller> partnerSellers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "partnerCompany")
+    @Column(nullable = false)
+    @OneToMany(mappedBy = "partnerCompany", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PartnerManager> partnerManagers = new ArrayList<>();
 
     public PartnerCompany(String name) {
