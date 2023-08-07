@@ -42,14 +42,13 @@ public class Review extends BaseEntity {
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewTag> reviewTags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "review")
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewImage> reviewImages = new ArrayList<>();
 
     public Review(Integer rating, String title, String content, Customer customer, TravelProduct travelProduct) {
         this.rating = rating;
         this.title = title;
         this.content = content;
-        customer.addReview(this);
         this.customer = customer;
         travelProduct.addReview(this);
         this.travelProduct = travelProduct;

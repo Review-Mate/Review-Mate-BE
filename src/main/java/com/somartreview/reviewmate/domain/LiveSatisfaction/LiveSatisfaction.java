@@ -42,11 +42,7 @@ public class LiveSatisfaction extends BaseEntity {
         this.rating = rating;
         this.satisfiedProperty = satisfiedProperty;
         this.dissatisfiedProperty = dissatisfiedProperty;
-
-        customer.addLiveSatisfaction(this);
         this.customer = customer;
-
-        travelProduct.addLiveSatisfaction(this);
         this.travelProduct = travelProduct;
     }
 }

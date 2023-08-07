@@ -34,9 +34,6 @@ public class PartnerSeller extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "partnerSeller")
-    private List<TravelProduct> travelProducts = new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "partner_company_id", nullable = false)
     private PartnerCompany partnerCompany;
@@ -47,11 +44,6 @@ public class PartnerSeller extends BaseEntity {
         this.phoneNumber = phoneNumber;
         this.kakaoId = kakaoId;
         this.password = password;
-        partnerCompany.addPartnerSeller(this);
         this.partnerCompany = partnerCompany;
-    }
-
-    public void addTravelProduct(TravelProduct travelProduct) {
-        this.travelProducts.add(travelProduct);
     }
 }

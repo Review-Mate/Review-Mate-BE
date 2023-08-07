@@ -25,10 +25,7 @@ public class Reservation extends BaseEntity {
     private TravelProduct travelProduct;
 
     public Reservation(Customer customer, TravelProduct travelProduct) {
-        customer.addReservation(this);
         this.customer = customer;
-
-        travelProduct.addReservation(this);
         this.travelProduct = travelProduct;
     }
 }
