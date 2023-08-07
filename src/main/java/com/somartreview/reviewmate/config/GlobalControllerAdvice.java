@@ -1,7 +1,7 @@
 package com.somartreview.reviewmate.config;
 
 import com.somartreview.reviewmate.dto.ExceptionResponse;
-import com.somartreview.reviewmate.exception.ErrorCode;
+import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ReviewMateException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -25,6 +25,17 @@ import static com.somartreview.reviewmate.exception.ErrorCode.*;
 @RestControllerAdvice
 @Slf4j
 public class GlobalControllerAdvice {
+
+    @ExceptionHandler(DomainLogicException.class)
+    public ResponseEntity<ExceptionResponse> handleDomainLogicException(DomainLogicException e) {
+        log.warn(e.getErrorCode().toString() + " : " + e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ExceptionResponse.builder()
+                        .code(e.getErrorCode().getCode())
+                        .message(e.getErrorCode().toString() + " : " + e.getMessage())
+                        .build());
+    }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ExceptionResponse> handleConstraintViolation(ConstraintViolationException e) {
