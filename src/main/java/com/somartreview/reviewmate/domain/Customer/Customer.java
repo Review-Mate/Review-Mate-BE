@@ -5,17 +5,24 @@ import com.somartreview.reviewmate.domain.LiveFeedback.LiveFeedback;
 import com.somartreview.reviewmate.domain.LiveSatisfaction.LiveSatisfaction;
 import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import com.somartreview.reviewmate.domain.Review.Review;
+import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Entity
 @Getter
 @NoArgsConstructor
 public class Customer extends BaseEntity {
+
+    private static final int MAX_NAME_LENGTH = 255;
+    private static final Pattern ONLY_NUMBER_PATTERN = Pattern.compile("[0-9]+");
+
 
     @Id @GeneratedValue
     @Column(name = "customer_id")
@@ -35,8 +42,22 @@ public class Customer extends BaseEntity {
 
     public Customer(Long clientSideUserId, String name, String phoneNumber, String kakaoId) {
         this.clientSideUserId = clientSideUserId;
+        validateName(name);
         this.name = name;
+        validatePhoneNumber(phoneNumber);
         this.phoneNumber = phoneNumber;
         this.kakaoId = kakaoId;
+    }
+
+    private void validateName(final String name) {
+        if (name.isBlank() || name.length() > MAX_NAME_LENGTH) {
+            throw new DomainLogicException(ErrorCode.CUSTOMER_NAME_ERROR);
+        }
+    }
+
+    private void validatePhoneNumber(final String phoneNumber) {
+        if (phoneNumber.isBlank() || !ONLY_NUMBER_PATTERN.matcher(phoneNumber).matches()) {
+            throw new DomainLogicException(ErrorCode.CUSTOMER_PHONE_NUMBER_ERROR);
+        }
     }
 }
