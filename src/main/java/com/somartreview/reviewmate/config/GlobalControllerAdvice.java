@@ -64,7 +64,7 @@ public class GlobalControllerAdvice {
                 .body(ExceptionResponse.builder()
                         .code(INVALID_PROPERTY_ERROR.getCode())
                         .message(INVALID_PROPERTY_ERROR.toString() + " : " + messages)
-                        .build();
+                        .build());
     }
 
     private String extractErrorMessages(List<FieldError> fieldErrors) {
@@ -82,7 +82,7 @@ public class GlobalControllerAdvice {
                 .body(ExceptionResponse.builder()
                         .code(INVALID_PROPERTY_ERROR.getCode())
                         .message(INVALID_PROPERTY_ERROR.toString() + " : " + "잘못된 요청입니다.")
-                        .build();
+                        .build());
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
@@ -93,7 +93,7 @@ public class GlobalControllerAdvice {
                 .body(ExceptionResponse.builder()
                         .code(API_NOT_FOUND_ERROR.getCode())
                         .message(API_NOT_FOUND_ERROR.toString() + " : " + "처리할 수 없는 요청입니다.")
-                        .build();
+                        .build());
     }
 
 
