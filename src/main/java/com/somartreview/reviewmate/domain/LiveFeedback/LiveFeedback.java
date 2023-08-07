@@ -48,9 +48,7 @@ public class LiveFeedback extends BaseEntity {
         this.isHandled = isHandled;
         this.isReported = isReported;
         this.isSolved = isSolved;
-        customer.addLiveFeedback(this);
         this.customer = customer;
-        travelProduct.addLiveFeedback(this);
         this.travelProduct = travelProduct;
     }
 

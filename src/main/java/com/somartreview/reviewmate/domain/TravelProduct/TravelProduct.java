@@ -35,15 +35,6 @@ public abstract class TravelProduct extends BaseEntity {
     private Float rating = 0.0f;
 
     @OneToMany(mappedBy = "travelProduct")
-    private List<Reservation> reservations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "travelProduct")
-    private List<LiveSatisfaction> liveSatisfactions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "travelProduct")
-    private List<LiveFeedback> liveFeedbacks = new ArrayList<>();
-
-    @OneToMany(mappedBy = "travelProduct")
     private List<Review> reviews = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -60,22 +51,8 @@ public abstract class TravelProduct extends BaseEntity {
         this.thumbnailUrl = thumbnailUrl;
         this.name = name;
         this.rating = rating;
-        partnerCompany.addTravelProduct(this);
         this.partnerCompany = partnerCompany;
-        partnerSeller.addTravelProduct(this);
         this.partnerSeller = partnerSeller;
-    }
-
-    public void addReservation(Reservation reservation) {
-        this.reservations.add(reservation);
-    }
-
-    public void addLiveSatisfaction(LiveSatisfaction liveSatisfaction) {
-        this.liveSatisfactions.add(liveSatisfaction);
-    }
-
-    public void addLiveFeedback(LiveFeedback liveFeedback) {
-        this.liveFeedbacks.add(liveFeedback);
     }
 
     public void addReview(Review review) {

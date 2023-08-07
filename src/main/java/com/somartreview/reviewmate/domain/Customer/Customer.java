@@ -33,38 +33,10 @@ public class Customer extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String kakaoId;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Reservation> reservations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "customer")
-    private List<LiveSatisfaction> liveSatisfactions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "customer")
-    private List<LiveFeedback> liveFeedbacks = new ArrayList<>();
-
-    @OneToMany(mappedBy = "customer")
-    private List<Review> reviews = new ArrayList<>();
-
     public Customer(Long clientSideUserId, String name, String phoneNumber, String kakaoId) {
         this.clientSideUserId = clientSideUserId;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.kakaoId = kakaoId;
-    }
-
-    public void addReservation(Reservation reservation) {
-        this.reservations.add(reservation);
-    }
-
-    public void addLiveSatisfaction(LiveSatisfaction liveSatisfaction) {
-        this.liveSatisfactions.add(liveSatisfaction);
-    }
-
-    public void addLiveFeedback(LiveFeedback liveFeedback) {
-        this.liveFeedbacks.add(liveFeedback);
-    }
-
-    public void addReview(Review review) {
-        this.reviews.add(review);
     }
 }
