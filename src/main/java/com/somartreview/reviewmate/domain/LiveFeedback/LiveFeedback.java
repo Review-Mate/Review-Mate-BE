@@ -19,6 +19,7 @@ public class LiveFeedback extends BaseEntity {
     @Column(nullable = false)
     private String feedbackMessage;
 
+    @Column(length = 1024)
     private String feedbackMediaUrl;
 
     private String responseMessage;
