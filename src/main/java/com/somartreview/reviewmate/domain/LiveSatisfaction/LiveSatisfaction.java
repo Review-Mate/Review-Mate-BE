@@ -44,6 +44,7 @@ public class LiveSatisfaction extends BaseEntity {
     private TravelProduct travelProduct;
 
     public LiveSatisfaction(Integer rating, Property satisfiedProperty, Property dissatisfiedProperty, Customer customer, TravelProduct travelProduct) {
+        validateRating(rating);
         this.rating = rating;
         this.satisfiedProperty = satisfiedProperty;
         this.dissatisfiedProperty = dissatisfiedProperty;
