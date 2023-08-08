@@ -29,7 +29,7 @@ public abstract class TravelProduct extends BaseEntity {
     @Column(name = "travel_product_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, length = 50)
     private String clientSideProductId;
 
     private String thumbnailUrl;

@@ -28,8 +28,8 @@ public class Customer extends BaseEntity {
     @Column(name = "customer_id")
     private Long id;
 
-    @Column(nullable = false)
-    private Long clientSideUserId;
+    @Column(nullable = false, unique = true, length = 50)
+    private String clientSideUserId;
 
     @Column(nullable = false)
     private String name;
