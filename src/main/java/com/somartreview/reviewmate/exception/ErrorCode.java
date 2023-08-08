@@ -17,6 +17,8 @@ public enum ErrorCode {
     LIVE_FEEDBACK_ALREADY_HANDLED_ERROR("1014", "이미 해결된 실시간 피드백입니다."),
     LIVE_FEEDBACK_ALREADY_SOLVED_ERROR("1015", "이미 해결된 실시간 피드백입니다."),
 
+    LIVE_SATISFACTION_RATING_ERROR("1021", "실시간 만족도의 별점이 잘못된 범위입니다."),
+
     INVALID_PROPERTY_ERROR("9001", "잘못된 값이 입력되었습니다."),
     API_NOT_FOUND_ERROR("9002", "요청한 API가 존재하지 않습니다"),
 
