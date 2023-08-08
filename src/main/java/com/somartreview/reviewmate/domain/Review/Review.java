@@ -3,6 +3,8 @@ package com.somartreview.reviewmate.domain.Review;
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.Customer.Customer;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
+import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,10 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class Review extends BaseEntity {
+
+    private static final int MAX_TITLE_LENGTH = 255;
+    private static final int MAX_CONTENT_LENGTH = 255;
+
 
     @Id @GeneratedValue
     @Column(name = "review_id")
@@ -47,11 +53,25 @@ public class Review extends BaseEntity {
 
     public Review(Integer rating, String title, String content, Customer customer, TravelProduct travelProduct) {
         this.rating = rating;
+        validateTitle(title);
         this.title = title;
+        validateContent(content);
         this.content = content;
         this.customer = customer;
         travelProduct.addReview(this);
         this.travelProduct = travelProduct;
+    }
+
+    private void validateTitle(final String title) {
+        if (title.isBlank() || title.length() > MAX_TITLE_LENGTH) {
+            throw new DomainLogicException(ErrorCode.REVIEW_TITLE_ERROR);
+        }
+    }
+
+    private void validateContent(final String content) {
+        if (content.isBlank() || content.length() > MAX_CONTENT_LENGTH) {
+            throw new DomainLogicException(ErrorCode.REVIEW_CONTENT_ERROR);
+        }
     }
 
     public void addReviewTag(ReviewTag reviewTag) {

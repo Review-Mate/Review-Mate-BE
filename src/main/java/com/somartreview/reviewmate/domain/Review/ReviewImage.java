@@ -1,6 +1,8 @@
 package com.somartreview.reviewmate.domain.Review;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
+import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +11,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ReviewImage extends BaseEntity {
+
+    private static final int MAX_URL_LENGTH = 1024;
+
 
     @Id @GeneratedValue
     @Column(name = "review_image_id")
@@ -25,5 +30,11 @@ public class ReviewImage extends BaseEntity {
         this.url = url;
         review.addReviewImage(this);
         this.review = review;
+    }
+
+    private void validateUrl(final String url) {
+        if (url.isBlank() || url.length() > MAX_URL_LENGTH) {
+            throw new DomainLogicException(ErrorCode.LIVE_FEEDBACK_MEDIA_URL_ERROR);
+        }
     }
 }
