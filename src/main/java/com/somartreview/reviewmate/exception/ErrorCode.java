@@ -19,6 +19,16 @@ public enum ErrorCode {
 
     LIVE_SATISFACTION_RATING_ERROR("1021", "실시간 만족도의 별점이 잘못된 범위입니다."),
 
+    PARTNER_COMPANY_NAME_ERROR("1031", "파트너사의 이름이 너무 길거나 공백입니다."),
+
+    PARTNER_MANAGER_NAME_ERROR("1041", "파트너사 관리자의 이름이 너무 길거나 공백입니다."),
+    PARTNER_MANAGER_EMAIL_ERROR("1042", "파트너사 관리자의 이메일이 올바른 형식이 아닙니다."),
+    PARTNER_MANAGER_PASSWORD_ERROR("1043", "파트너사 관리자의 비밀번호가 너무 짧거나 공백입니다."),
+
+    PARTNER_SELLER_NAME_ERROR("1051", "파트너사 판매자의 이름이 너무 길거나 공백입니다."),
+    PARTNER_SELLER_EMAIL_ERROR("1052", "파트너사 판매자의 이메일이 올바른 형식이 아닙니다."),
+    PARTNER_SELLER_PASSWORD_ERROR("1053", "파트너사 판매자의 비밀번호가 너무 짧거나 공백입니다."),
+
     INVALID_PROPERTY_ERROR("9001", "잘못된 값이 입력되었습니다."),
     API_NOT_FOUND_ERROR("9002", "요청한 API가 존재하지 않습니다"),
 

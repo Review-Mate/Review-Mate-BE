@@ -4,6 +4,8 @@ import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.PartnerManager.PartnerManager;
 import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
+import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +33,14 @@ public class PartnerCompany extends BaseEntity {
     private List<PartnerManager> partnerManagers = new ArrayList<>();
 
     public PartnerCompany(String name) {
+        validateName(name);
         this.name = name;
+    }
+
+    private void validateName(final String name) {
+        if (name.isBlank() || name.length() > MAX_NAME_LENGTH) {
+            throw new DomainLogicException(ErrorCode.PARTNER_COMPANY_NAME_ERROR);
+        }
     }
 
     public void addPartnerManager(PartnerManager partnerManager) {
