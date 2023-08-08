@@ -36,6 +36,10 @@ public enum ErrorCode {
 
     REVIEW_IMAGE_URL_ERROR("1320", "리뷰 이미지의 링크가 너무 길거나 공백입니다."),
 
+    TRAVEL_PRODUCT_THUMBNAIL_URL_ERROR("1400", "여행 상품의 썸네일 링크가 너무 길거나 공백입니다."),
+    TRAVEL_PRODUCT_NAME_ERROR("1401", "여행 상품의 이름이 너무 길거나 공백입니다."),
+    TRAVEL_PRODUCT_START_TIME_ERROR("1402", "여행 상품의 시작 시간이 종료 시간 이후일 수 없습니다.."),
+
     INVALID_PROPERTY_ERROR("9001", "잘못된 값이 입력되었습니다."),
     API_NOT_FOUND_ERROR("9002", "요청한 API가 존재하지 않습니다"),
 
