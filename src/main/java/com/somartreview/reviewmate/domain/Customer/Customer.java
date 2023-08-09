@@ -1,18 +1,12 @@
 package com.somartreview.reviewmate.domain.Customer;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
-import com.somartreview.reviewmate.domain.LiveFeedback.LiveFeedback;
-import com.somartreview.reviewmate.domain.LiveSatisfaction.LiveSatisfaction;
-import com.somartreview.reviewmate.domain.Reservation.Reservation;
-import com.somartreview.reviewmate.domain.Review.Review;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 @Entity
@@ -40,7 +34,7 @@ public class Customer extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String kakaoId;
 
-    public Customer(Long clientSideUserId, String name, String phoneNumber, String kakaoId) {
+    public Customer(String clientSideUserId, String name, String phoneNumber, String kakaoId) {
         this.clientSideUserId = clientSideUserId;
         validateName(name);
         this.name = name;
