@@ -4,11 +4,13 @@ info:
   description: Review Mate WAS API
   version: 0.1.0
 servers:
-- url: https://localhost:8080
+- url: https://localhost:8080/
 tags: []
 paths:
   /:
     get:
+      tags:
+      - Greet
       summary: 서버 상태를 확인
       description: 서버 상태를 확인
       operationId: greet
@@ -22,6 +24,52 @@ paths:
               examples:
                 greet:
                   value: hello
+  /api/v1/review/:
+    post:
+      tags:
+      - api
+      operationId: review-createReview
+      parameters:
+      - name: rating
+        in: query
+        description: 별점
+        required: true
+        schema:
+          type: string
+      - name: title
+        in: query
+        description: 리뷰 제목
+        required: true
+        schema:
+          type: string
+      - name: content
+        in: query
+        description: 리뷰 내용
+        required: true
+        schema:
+          type: string
+      - name: travelProductId
+        in: query
+        description: 여행 상품 ID
+        required: true
+        schema:
+          type: string
+      - name: customerId
+        in: query
+        description: 고객(업로더) ID
+        required: true
+        schema:
+          type: string
+      - name: Content-Type
+        in: header
+        description: multipart/form-data
+        required: true
+        schema:
+          type: string
+        example: multipart/form-data
+      responses:
+        "201":
+          description: "201"
 components:
   schemas:
     "486549215":

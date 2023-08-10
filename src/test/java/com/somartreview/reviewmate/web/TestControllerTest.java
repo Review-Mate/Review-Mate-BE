@@ -1,44 +1,18 @@
 package com.somartreview.reviewmate.web;
 
-import com.epages.restdocs.apispec.ResourceDocumentation;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
-import com.epages.restdocs.apispec.Schema;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.restdocs.request.RequestDocumentation;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static com.somartreview.reviewmate.web.ApiDocumentUtils.getDocumentRequest;
+import static com.somartreview.reviewmate.web.ApiDocumentUtils.getDocumentResponse;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.JsonFieldType.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-@SpringBootTest
-public class TestControllerTest {
-
-    private MockMvc mockMvc;
-
-    @BeforeEach
-    void setUp(WebApplicationContext context, RestDocumentationContextProvider restDocumentation) {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
-                .apply(documentationConfiguration(restDocumentation))
-                .build();
-    }
-
+@WebMvcTest(TestController.class)
+public class TestControllerTest extends ControllerTest {
 
     @Test
     void 서버를_확인한다() throws Exception {
@@ -54,11 +28,12 @@ public class TestControllerTest {
                 .andDo(
                         document("greet",
                                 ResourceSnippetParameters.builder()
+                                        .tag("Greet")
                                         .description("서버 상태를 확인"),
 //                                        .requestSchema(Schema.schema("ResponseEntity?.PUT"))
 //                                        .responseSchema(Schema.schema("ResponseEntity?.POST")))
-                                preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint())
+                                getDocumentRequest(),
+                                getDocumentResponse()
 //                                pathParameters(
 //                                        parameterWithName("a").description("member")
 //                                ),

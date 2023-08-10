@@ -3,7 +3,7 @@ package com.somartreview.reviewmate.domain.Reservation;
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.Customer.Customer;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
