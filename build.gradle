@@ -112,3 +112,4 @@ tasks.named('build') {
 
 // chaning https://kotlinworld.com/322
 // 전체흐름 doFirst doLast https://discuss.gradle.org/t/what-is-dolast-for/27731
+// Exec https://stackoverflow.com/questions/58542083/gradle-exec-task-fails-with-execcommand-null
