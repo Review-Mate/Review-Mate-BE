@@ -13,7 +13,9 @@ window.onload = function() {
     plugins: [
       SwaggerUIBundle.plugins.DownloadUrl
     ],
-    layout: "StandaloneLayout"
+    layout: "StandaloneLayout",
+    operationsSorter : "alpha",
+    queryConfigEnabled : true,
   });
 
   //</editor-fold>

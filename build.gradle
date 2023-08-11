@@ -1,64 +1,115 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.1.2'
-	id 'io.spring.dependency-management' version '1.1.2'
-	id 'com.epages.restdocs-api-spec' version '0.18.2'
+    id 'java'
+    id 'org.springframework.boot' version '2.7.15-SNAPSHOT'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'com.epages.restdocs-api-spec' version '0.16.4'
 }
 
 group = 'com.somartreview'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+    sourceCompatibility = '17'
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
 }
+
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.restdocs:spring-restdocs-core:2.0.7.RELEASE'
+//    implementation 'org.springframework:spring-test:5.0.15.RELEASE'
+//    implementation 'org.springframework:spring-webmvc:5.0.15.RELEASE'
 
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    runtimeOnly 'com.h2database:h2'
 
-	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.18.2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc:2.0.7.RELEASE'
+    testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.16.4'
 }
 
 openapi3 {
-	server = "https://localhost:8080" // list 로 넣을 수 있어 각종 환경의 URL 을 넣을 수 있음
-	title = "Review Mate API"
-	description = "Review Mate WAS API"
-	version = "0.1.0"
-	format = "yaml"
+    servers = [{ url = "https://localhost:8080/" }]
+    title = "Review Mate API"
+    description = "Review Mate WAS API"
+    version = "0.1.0"
+    format = "yaml"
 }
 
-tasks.register("copyOasToSwagger") {
-	dependsOn('test')
-	dependsOn("openapi3") // openapi3 Task 가 먼저 실행되도록 설정
-	delete("src/main/resources/static/swagger-ui/openapi3.yaml") // 기존 OAS 파일 삭제
-	copy {
-		from "$buildDir/api-spec/openapi3.yaml" // 복제할 OAS 파일 지정
-		into "src/main/resources/static/swagger-ui/." // 타켓 디렉토리에 파일 복제
 
-	}
+tasks.named('test') {
+    useJUnitPlatform()
 }
+
+tasks.register('clearSwagger') {
+    mustRunAfter('test')
+
+    doLast {
+        delete("build/")
+        println "::: 1. Clear 'build/'"
+
+        delete("src/main/resources/static/swagger-ui/openapi3.yaml") // 기존 OAS 파일 삭제
+        println "::: 2. Delete 'rc/main/resources/static/swagger-ui/openapi3.yaml'"
+    }
+}
+
+tasks.register('runOpenApi3') {
+    mustRunAfter('clearSwagger')
+
+    doLast {
+        exec {
+            commandLine './gradlew', 'openapi3'
+        }
+        println "::: 3. Run openapi3'"
+    }
+}
+
+tasks.register('copyOasToSwagger') {
+    mustRunAfter('runOpenApi3')
+
+    doLast {
+        copy {
+            from "$buildDir/api-spec/openapi3.yaml" // 복제할 OAS 파일 지정
+            into "src/main/resources/static/swagger-ui/." // 타켓 디렉토리에 파일 복제
+
+        }
+        println "::: 4. Copy OAS file to swagger-ui"
+    }
+}
+
+tasks.register('epagesSwagger') {
+    doFirst {
+        println ":: 0. Run ePages Swagger'"
+    }
+
+    dependsOn 'test'
+    dependsOn 'clearSwagger'
+    dependsOn 'runOpenApi3'
+    dependsOn 'copyOasToSwagger'
+}
+
+tasks.named('build') {
+    dependsOn 'copyOasToSwagger'
+}
+
+// chaning https://kotlinworld.com/322
+// 전체흐름 doFirst doLast https://discuss.gradle.org/t/what-is-dolast-for/27731
+// Exec https://stackoverflow.com/questions/58542083/gradle-exec-task-fails-with-execcommand-null

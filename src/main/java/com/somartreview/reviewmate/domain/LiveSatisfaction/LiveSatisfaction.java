@@ -6,11 +6,11 @@ import com.somartreview.reviewmate.domain.Review.Property;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.EnumType.*;
+import static javax.persistence.EnumType.*;
 
 @Entity
 @Getter
