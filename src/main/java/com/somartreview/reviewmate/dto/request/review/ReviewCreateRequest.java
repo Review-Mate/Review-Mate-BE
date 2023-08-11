@@ -33,7 +33,7 @@ public class ReviewCreateRequest {
     @NotNull
     private Long travelProductId;
 
-    @Schema(description = "리뷰가 단 고객의 ID")
+    @Schema(description = "리뷰를 단 고객의 ID")
     @NotNull
     private Long customerId;
 }

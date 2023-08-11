@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewCreateResponse {
+public class ReviewHighlightPair {
 
-    private Long reviewId;
+    private int startIndex;
+    private int endIndex;
 }
-

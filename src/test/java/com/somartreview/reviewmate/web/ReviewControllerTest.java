@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.FileInputStream;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,7 +40,7 @@ class ReviewControllerTest {
 
         // when
         mockMvc.perform(
-                        multipart("/api/v1/review/")
+                        multipart("/api/v1/reviews/")
                                 .file("reviewImages[0]", image1.getBytes())
                                 .file("reviewImages[1]", image1.getBytes())
 //                                .header("Authorization", BEARER_TOKEN_TYPE + SAMPLE_TOKEN)
@@ -53,5 +53,21 @@ class ReviewControllerTest {
                 )
                 .andExpect(status().isCreated())
                 .andExpect(header().string(HttpHeaders.LOCATION, "/api/v1/review/1"));
+    }
+
+    @Test
+    void 상품에_달려있는_리뷰를_조회한댜() throws Exception {
+        // when
+        mockMvc.perform(
+                        get("/api/v1/reviews/products/{travelProductId}", 1)
+                                .param("travelProductId", "1")
+                                .param("property", "KINDNESS")
+                                .param("keyword", "먼지")
+                                .param("orderBy", "POSITIVE")
+                                .param("page", "0")
+                                .param("size", "10")
+//                                .header("Authorization", BEARER_TOKEN_TYPE + SAMPLE_TOKEN)
+                )
+                .andExpect(status().isOk());
     }
 }
