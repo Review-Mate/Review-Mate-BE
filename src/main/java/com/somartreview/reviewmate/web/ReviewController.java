@@ -80,4 +80,12 @@ public class ReviewController {
 
         return ResponseEntity.noContent().build();
     }
+
+
+    @Operation(operationId = "deleteReview", summary = "리뷰 삭제")
+    @ApiResponse(responseCode = "204", description = "리뷰 삭제 성공")
+    @DeleteMapping("/{reviewId}")
+    public ResponseEntity<Void> deleteReview(@PathVariable Long reviewId) {
+        return ResponseEntity.noContent().build();
+    }
 }

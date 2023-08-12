@@ -2201,3 +2201,9 @@ alter table travel_product drop foreign key FKrjl3btw1leqijexob9ryiutra [90057-2
 2023-08-12 10:07:33.790  INFO 86238 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
 2023-08-12 10:07:33.791  INFO 86238 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
 2023-08-12 10:07:33.801  INFO 86238 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.785 seconds (JVM running for 1.196)
+2023-08-12 10:11:21.693  INFO 87236 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Starting ReviewControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 87236 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 10:11:21.694  INFO 87236 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : The following 1 profile is active: "secret"
+2023-08-12 10:11:22.121  INFO 87236 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-12 10:11:22.121  INFO 87236 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-12 10:11:22.121  INFO 87236 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-08-12 10:11:22.131  INFO 87236 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.654 seconds (JVM running for 1.049)

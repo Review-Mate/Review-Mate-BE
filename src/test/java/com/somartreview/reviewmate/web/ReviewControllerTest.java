@@ -106,4 +106,13 @@ class ReviewControllerTest {
                 )
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    void 리뷰를_삭제한다() throws Exception {
+        // when
+        mockMvc.perform(
+                        delete("/api/v1/reviews/{reviewId}", 1)
+        )
+        .andExpect(status().isNoContent());
+    }
 }
