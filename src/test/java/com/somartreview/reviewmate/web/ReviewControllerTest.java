@@ -1,9 +1,13 @@
 package com.somartreview.reviewmate.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.somartreview.reviewmate.dto.request.review.ReviewCreateRequest;
+import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,31 +29,35 @@ class ReviewControllerTest {
     void 리뷰를_생성한다() throws Exception {
         // given
         MockMultipartFile image1 = new MockMultipartFile(
-                "logo_b",
+                "reviewImages[0]",
                 "logo_b.jpg",
                 MediaType.IMAGE_JPEG_VALUE,
                 new FileInputStream("src/test/resources/images/logo_b.jpg")
         );
 
-        MockMultipartFile image2 = new MockMultipartFile(
-                "logo_w",
-                "logo_w.jpg",
-                MediaType.IMAGE_JPEG_VALUE,
-                new FileInputStream("src/test/resources/images/logo_w.jpg")
+        MockMultipartFile reviewCreateRequest = new MockMultipartFile(
+                "reviewCreateRequest",
+                null,
+                MediaType.APPLICATION_JSON_VALUE,
+                new ObjectMapper().writeValueAsString(new ReviewCreateRequest(5, "리뷰 제목", "리뷰 내용", 1L, 1L)).getBytes()
         );
 
         // when
         mockMvc.perform(
                         multipart("/api/v1/reviews/")
-                                .file("reviewImages[0]", image1.getBytes())
-                                .file("reviewImages[1]", image1.getBytes())
+                                .file(image1)
+                                .file(reviewCreateRequest)
+//                                .file("reviewImages[0]", image1.getBytes())
+//                                .file("reviewImages[1]", image1.getBytes())
+//                                .file("reviewCreateRequest", reviewCreateRequest.getBytes())
+                                //  Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'application/octet-stream' not supported]
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+//                                .param("rating", "5")
+//                                .param("title", "리뷰 제목")
+//                                .param("content", "리뷰 내용")
+//                                .param("travelProductId", "1")
+//                                .param("customerId", "1")
 //                                .header("Authorization", BEARER_TOKEN_TYPE + SAMPLE_TOKEN)
-                                .param("rating", "5")
-                                .param("title", "리뷰 제목")
-                                .param("content", "리뷰 내용")
-                                .param("travelProductId", "1")
-                                .param("customerId", "1")
-                                .contentType(MediaType.MULTIPART_FORM_DATA)
                 )
                 .andExpect(status().isCreated())
                 .andExpect(header().string(HttpHeaders.LOCATION, "/api/v1/review/1"));
@@ -69,5 +77,33 @@ class ReviewControllerTest {
 //                                .header("Authorization", BEARER_TOKEN_TYPE + SAMPLE_TOKEN)
                 )
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void 리뷰를_수정한다() throws Exception {
+        // given
+        MockMultipartFile image2 = new MockMultipartFile(
+                "reviewImages[0]",
+                "logo_w.jpg",
+                MediaType.IMAGE_JPEG_VALUE,
+                new FileInputStream("src/test/resources/images/logo_w.jpg")
+        );
+
+        MockMultipartFile reviewUpdateRequest = new MockMultipartFile(
+                "reviewUpdateRequest",
+                null,
+                MediaType.APPLICATION_JSON_VALUE,
+                new ObjectMapper().writeValueAsString(new ReviewUpdateRequest(5, "리뷰 제목", "리뷰 내용")).getBytes()
+        );
+
+        // when
+        mockMvc.perform(
+                        multipart(HttpMethod.PATCH, "/api/v1/reviews/{reviewId}", 1)
+                                .file(image2)
+                                .file(reviewUpdateRequest)
+//                                .header("Authorization", BEARER_TOKEN_TYPE + SAMPLE_TOKEN)
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andExpect(status().isNoContent());
     }
 }

@@ -2091,3 +2091,113 @@ alter table travel_product drop foreign key FKrjl3btw1leqijexob9ryiutra [90057-2
 2023-08-12 08:43:28.740  INFO 74188 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
 2023-08-12 08:43:28.740  INFO 74188 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 2023-08-12 08:43:28.752  INFO 74188 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.587 seconds (JVM running for 1.011)
+2023-08-12 09:16:48.345  INFO 79191 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Starting ReviewControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 79191 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 09:16:48.346  INFO 79191 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : The following 1 profile is active: "secret"
+2023-08-12 09:16:48.781  INFO 79191 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-12 09:16:48.781  INFO 79191 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-12 09:16:48.782  INFO 79191 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-08-12 09:16:48.794  INFO 79191 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.802 seconds (JVM running for 1.212)
+2023-08-12 09:16:52.384  INFO 71477 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-08-12 09:16:52.385  INFO 71477 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2023-08-12 09:16:52.602  INFO 71477 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-08-12 09:16:52.603  INFO 71477 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-08-12 09:16:53.610  INFO 79218 --- [main] c.s.reviewmate.ReviewMateApplication     : Starting ReviewMateApplication using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 79218 (/Users/chan/code/java/review-mate-be/build/classes/java/main started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 09:16:53.611  INFO 79218 --- [main] c.s.reviewmate.ReviewMateApplication     : The following 1 profile is active: "secret"
+2023-08-12 09:16:53.861  INFO 79218 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-08-12 09:16:53.888  INFO 79218 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 11 JPA repository interfaces.
+2023-08-12 09:16:54.143  INFO 79218 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-08-12 09:16:54.147  INFO 79218 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-08-12 09:16:54.147  INFO 79218 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.78]
+2023-08-12 09:16:54.184  INFO 79218 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-08-12 09:16:54.184  INFO 79218 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 556 ms
+2023-08-12 09:16:54.195  INFO 79218 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-08-12 09:16:54.300  INFO 79218 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-08-12 09:16:54.308  INFO 79218 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:~/reviewmate_test'
+2023-08-12 09:16:54.357  INFO 79218 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-08-12 09:16:54.377  INFO 79218 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2023-08-12 09:16:54.436  INFO 79218 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-08-12 09:16:54.471  INFO 79218 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-08-12 09:16:54.775  INFO 79218 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-08-12 09:16:54.779  INFO 79218 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-08-12 09:16:54.833  WARN 79218 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-08-12 09:16:55.152  INFO 79218 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-08-12 09:16:55.157  INFO 79218 --- [main] c.s.reviewmate.ReviewMateApplication     : Started ReviewMateApplication in 1.665 seconds (JVM running for 1.855)
+2023-08-12 09:21:32.106  INFO 79218 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-08-12 09:21:32.107  INFO 79218 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-08-12 09:21:32.109  INFO 79218 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2023-08-12 09:21:32.367  INFO 79218 --- [http-nio-8080-exec-9] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 124 ms
+2023-08-12 09:22:14.740  INFO 80004 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Starting ReviewControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 80004 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 09:22:14.740  INFO 80004 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : The following 1 profile is active: "secret"
+2023-08-12 09:22:15.161  INFO 80004 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-12 09:22:15.161  INFO 80004 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-12 09:22:15.161  INFO 80004 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-08-12 09:22:15.175  INFO 80004 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.722 seconds (JVM running for 1.128)
+2023-08-12 09:22:15.330  WARN 80004 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' not supported]
+2023-08-12 09:27:04.487  INFO 80684 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Starting ReviewControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 80684 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 09:27:04.488  INFO 80684 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : The following 1 profile is active: "secret"
+2023-08-12 09:27:04.903  INFO 80684 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-12 09:27:04.904  INFO 80684 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-12 09:27:04.904  INFO 80684 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-08-12 09:27:04.914  INFO 80684 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.733 seconds (JVM running for 1.138)
+2023-08-12 09:27:05.077  WARN 80684 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'reviewUpdateRequest' is not present]
+2023-08-12 09:28:35.607  INFO 80877 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Starting ReviewControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 80877 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 09:28:35.608  INFO 80877 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : The following 1 profile is active: "secret"
+2023-08-12 09:28:36.036  INFO 80877 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-12 09:28:36.036  INFO 80877 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-12 09:28:36.036  INFO 80877 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-08-12 09:28:36.047  INFO 80877 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.566 seconds (JVM running for 0.966)
+2023-08-12 09:28:36.212  WARN 80877 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'reviewCreateRequest' is not present]
+2023-08-12 09:31:26.034  INFO 81271 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Starting ReviewControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 81271 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 09:31:26.035  INFO 81271 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : The following 1 profile is active: "secret"
+2023-08-12 09:31:26.454  INFO 81271 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-12 09:31:26.454  INFO 81271 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-12 09:31:26.454  INFO 81271 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-08-12 09:31:26.464  INFO 81271 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.788 seconds (JVM running for 1.183)
+2023-08-12 09:31:26.622  WARN 81271 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'reviewCreateRequest' is not present]
+2023-08-12 09:38:58.618  INFO 82295 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Starting ReviewControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 82295 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 09:38:58.619  INFO 82295 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : The following 1 profile is active: "secret"
+2023-08-12 09:38:59.057  INFO 82295 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-12 09:38:59.057  INFO 82295 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-12 09:38:59.058  INFO 82295 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-08-12 09:38:59.068  INFO 82295 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.802 seconds (JVM running for 1.198)
+2023-08-12 09:38:59.229  WARN 82295 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'reviewCreateRequest' is not present]
+2023-08-12 09:38:59.244  WARN 82295 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'reviewUpdateRequest' is not present]
+2023-08-12 09:50:13.716  INFO 83821 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Starting ReviewControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 83821 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 09:50:13.717  INFO 83821 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : The following 1 profile is active: "secret"
+2023-08-12 09:50:14.135  INFO 83821 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-12 09:50:14.135  INFO 83821 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-12 09:50:14.136  INFO 83821 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-08-12 09:50:14.146  INFO 83821 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.747 seconds (JVM running for 1.15)
+2023-08-12 09:50:14.316  WARN 83821 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'application/octet-stream' not supported]
+2023-08-12 09:50:33.658  INFO 83868 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Starting ReviewControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 83868 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 09:50:33.658  INFO 83868 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : The following 1 profile is active: "secret"
+2023-08-12 09:50:34.082  INFO 83868 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-12 09:50:34.083  INFO 83868 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-12 09:50:34.083  INFO 83868 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-08-12 09:50:34.093  INFO 83868 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.56 seconds (JVM running for 0.953)
+2023-08-12 09:50:34.263  WARN 83868 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'application/octet-stream' not supported]
+2023-08-12 09:55:03.268  INFO 84488 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Starting ReviewControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 84488 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 09:55:03.269  INFO 84488 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : The following 1 profile is active: "secret"
+2023-08-12 09:55:03.699  INFO 84488 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-12 09:55:03.699  INFO 84488 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-12 09:55:03.700  INFO 84488 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-08-12 09:55:03.711  INFO 84488 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.711 seconds (JVM running for 1.116)
+2023-08-12 09:55:03.888  WARN 84488 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'application/octet-stream' not supported]
+2023-08-12 10:00:06.733  INFO 85209 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Starting ReviewControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 85209 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 10:00:06.734  INFO 85209 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : The following 1 profile is active: "secret"
+2023-08-12 10:00:07.156  INFO 85209 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-12 10:00:07.156  INFO 85209 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-12 10:00:07.157  INFO 85209 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-08-12 10:00:07.167  INFO 85209 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.559 seconds (JVM running for 0.953)
+2023-08-12 10:04:26.191  INFO 85807 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Starting ReviewControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 85807 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 10:04:26.192  INFO 85807 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : The following 1 profile is active: "secret"
+2023-08-12 10:04:26.615  INFO 85807 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-12 10:04:26.615  INFO 85807 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-12 10:04:26.615  INFO 85807 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-08-12 10:04:26.626  INFO 85807 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.797 seconds (JVM running for 1.19)
+2023-08-12 10:07:33.363  INFO 86238 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Starting ReviewControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 86238 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-12 10:07:33.364  INFO 86238 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : The following 1 profile is active: "secret"
+2023-08-12 10:07:33.790  INFO 86238 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-12 10:07:33.790  INFO 86238 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-12 10:07:33.791  INFO 86238 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-08-12 10:07:33.801  INFO 86238 --- [Test worker] c.s.reviewmate.web.ReviewControllerTest  : Started ReviewControllerTest in 0.785 seconds (JVM running for 1.196)

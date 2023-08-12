@@ -6,6 +6,7 @@ import com.somartreview.reviewmate.dto.request.review.ReviewCreateRequest;
 
 import javax.validation.Valid;
 
+import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.dto.response.review.ReviewInProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,15 +31,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewController {
 
-    @Operation(operationId = "reviewCreateRequest", summary = "리뷰 생성", description = "formData에 데이터를 넣고 파라미터 별로 Content-Type 구별해서 요청해주세요.")
+    @Operation(operationId = "reviewCreateRequest", summary = "리뷰 생성", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
     @Parameters({
-            @Parameter(name = "reviewCreateRequest", description = "리뷰 데이터 객체 \n\nContent-Type: application/json", required = true),
-            @Parameter(name = "reviewImages", description = "리뷰 이미지 리스트 \n\nContent-Type: Multipart/form-data", required = false)
+            @Parameter(name = "reviewCreateRequest", description = "리뷰 데이터 객체 \n\nMediaType: application/json", required = true),
+            @Parameter(name = "reviewImages[]", description = "리뷰 이미지 리스트 \n\nMediaType: image/{image_extension}", required = false)
     })
     @ApiResponse(responseCode = "201", description = "리뷰 생성 성공", headers = {
             @Header(name = "Location", description = "생성된 리뷰의 URI, /api/v1/review/{reviewId}", schema = @Schema(type = "string"))
     })
-    @PostMapping(value = "/", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> createReview(@Valid @RequestPart ReviewCreateRequest reviewCreateRequest,
                                              @RequestPart(required = false) List<MultipartFile> reviewImages) {
         Long reviewId = 1L;
@@ -64,5 +65,19 @@ public class ReviewController {
                                                                                 @RequestParam(required = false, defaultValue = "10") Integer size) {
 
         return ResponseEntity.ok(new ArrayList<ReviewInProductResponse>());
+    }
+
+    @Operation(operationId = "updateReview", summary = "리뷰 수정", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
+    @Parameters({
+            @Parameter(name = "reviewUpdateRequest", description = "리뷰 데이터 객체 \n\nMediaType: application/json", required = true),
+            @Parameter(name = "reviewImages", description = "리뷰 이미지 리스트 \n\nMediaType: Multipart/form-data", required = false)
+    })
+    @ApiResponse(responseCode = "204", description = "리뷰 수정 성공")
+    @PatchMapping(value = "/{reviewId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Void> updateReview(@PathVariable Long reviewId,
+                                             @RequestPart ReviewUpdateRequest reviewUpdateRequest,
+                                             @RequestPart(required = false) List<MultipartFile> reviewImages) {
+
+        return ResponseEntity.noContent().build();
     }
 }
