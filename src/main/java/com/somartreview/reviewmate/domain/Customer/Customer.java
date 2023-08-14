@@ -4,6 +4,8 @@ import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,6 +36,7 @@ public class Customer extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String kakaoId;
 
+    @Builder
     public Customer(String clientSideUserId, String name, String phoneNumber, String kakaoId) {
         this.clientSideUserId = clientSideUserId;
         validateName(name);
