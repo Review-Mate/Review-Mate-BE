@@ -27,10 +27,25 @@ public class CustomerService {
     }
 
     @Transactional
+    public void updateCustomerById(Long id, CustomerUpdateRequest request) {
+        customerRepository.findById(id)
+                .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND))
+                .update(request);
+    }
+
+    @Transactional
     public void updateCustomerByClientSideId(String clientSideId, CustomerUpdateRequest request) {
         customerRepository.findByClientSideId(clientSideId)
                 .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND))
                 .update(request);
+    }
+
+    @Transactional
+    public void deleteCustomerById(Long id) {
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND));
+
+        customerRepository.delete(customer);
     }
 
     @Transactional
