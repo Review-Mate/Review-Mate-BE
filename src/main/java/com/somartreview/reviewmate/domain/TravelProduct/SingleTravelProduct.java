@@ -17,10 +17,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class SingleTravelProduct extends TravelProduct {
 
-    @Column(nullable = false)
     private LocalDateTime startTime;
 
-    @Column(nullable = false)
     private LocalDateTime endTime;
 
     @Column(nullable = false)
