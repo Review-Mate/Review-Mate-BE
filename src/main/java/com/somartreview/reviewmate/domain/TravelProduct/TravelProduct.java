@@ -30,7 +30,7 @@ public abstract class TravelProduct extends BaseEntity {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 50)
-    private String clientSideId;
+    private String partnerTravelProductId;
 
     @Column(length = 1024)
     private String thumbnailUrl;
@@ -53,8 +53,8 @@ public abstract class TravelProduct extends BaseEntity {
     private PartnerSeller partnerSeller;
 
 
-    public TravelProduct(String clientSideId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
-        this.clientSideId = clientSideId;
+    public TravelProduct(String partnerTravelProductId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+        this.partnerTravelProductId = partnerTravelProductId;
         validateThumbnailUrl(thumbnailUrl);
         this.thumbnailUrl = thumbnailUrl;
         validateName(name);

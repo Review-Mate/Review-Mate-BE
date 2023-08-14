@@ -21,7 +21,7 @@ public class SingleTravelProductCreateRequest {
 
     @NotBlank
     @Schema(description = "클라이언트 서비스에서의 상품 식별지", example = "PRODUCT-0001")
-    private String clientSideId;
+    private String partnerSingleTravelProductId;
 
     @NotBlank
     @Schema(description = "상품명", example = "신라더스테이 호텧")
@@ -51,7 +51,7 @@ public class SingleTravelProductCreateRequest {
 
     public SingleTravelProduct toEntity(PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
         return SingleTravelProduct.builder()
-                .clientSideId(clientSideId)
+                .partnerSingleTravelProductId(partnerSingleTravelProductId)
                 .name(name)
                 .partnerCompany(partnerCompany)
                 .partnerSeller(partnerSeller)

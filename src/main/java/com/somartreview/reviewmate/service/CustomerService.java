@@ -19,7 +19,7 @@ public class CustomerService {
 
     @Transactional
     public Long createCustomer(CustomerCreateRequest request) {
-        if (customerRepository.existsByClientSideId(request.getClientSideId())) {
+        if (customerRepository.existsByPartnerCustomerId(request.getPartnerCustomerId())) {
             throw new DomainLogicException(CUSTOMER_DUPLICATED_CLIENT_SIDE_ID);
         }
 
@@ -34,8 +34,8 @@ public class CustomerService {
     }
 
     @Transactional
-    public void updateCustomerByClientSideId(String clientSideId, CustomerUpdateRequest request) {
-        customerRepository.findByClientSideId(clientSideId)
+    public void updateCustomerByPartnerCustomerId(String partnerCustomerId, CustomerUpdateRequest request) {
+        customerRepository.findByPartnerCustomerId(partnerCustomerId)
                 .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND))
                 .update(request);
     }
@@ -49,8 +49,8 @@ public class CustomerService {
     }
 
     @Transactional
-    public void deleteCustomerByClientSideId(String clientSideId) {
-        Customer customer = customerRepository.findByClientSideId(clientSideId)
+    public void deleteCustomerByPartnerCustomerId(String partnerCustomerId) {
+        Customer customer = customerRepository.findByPartnerCustomerId(partnerCustomerId)
                 .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND));
 
         customerRepository.delete(customer);

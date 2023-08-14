@@ -26,8 +26,8 @@ public class SingleTravelProduct extends TravelProduct {
     private Category category;
 
     @Builder
-    public SingleTravelProduct(String clientSideId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalDateTime startTime, LocalDateTime endTime, Category category) {
-        super(clientSideId, thumbnailUrl, name, rating, partnerCompany, partnerSeller);
+    public SingleTravelProduct(String partnerSingleTravelProductId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalDateTime startTime, LocalDateTime endTime, Category category) {
+        super(partnerSingleTravelProductId, thumbnailUrl, name, rating, partnerCompany, partnerSeller);
         validateTime(startTime, endTime);
         this.startTime = startTime;
         this.endTime = endTime;
