@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.service;
 
+import com.somartreview.reviewmate.domain.Customer.Customer;
 import com.somartreview.reviewmate.domain.Customer.CustomerRepository;
 import com.somartreview.reviewmate.dto.request.customer.CustomerCreateRequest;
 import com.somartreview.reviewmate.dto.request.customer.CustomerUpdateRequest;
@@ -30,5 +31,13 @@ public class CustomerService {
         customerRepository.findByClientSideId(clientSideId)
                 .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND))
                 .update(request);
+    }
+
+    @Transactional
+    public void deleteCustomerByClientSideId(String clientSideId) {
+        Customer customer = customerRepository.findByClientSideId(clientSideId)
+                .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND));
+
+        customerRepository.delete(customer);
     }
 }

@@ -9,5 +9,8 @@ import java.util.Optional;
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     boolean existsByClientSideId(String clientSideUserId);
+
     Optional<Customer> findByClientSideId(String clientSideUserId);
+
+    void deleteByClientSideId(String clientSideUserId);
 }
