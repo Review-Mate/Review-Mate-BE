@@ -19,8 +19,8 @@ public class PackageTravelProduct extends TravelProduct {
     @OneToMany(mappedBy = "packageTravelProduct", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TourCourse> tourCourses = new ArrayList<>();
 
-    public PackageTravelProduct(String clientSideProductId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
-        super(clientSideProductId, thumbnailUrl, name, rating, partnerCompany, partnerSeller);
+    public PackageTravelProduct(String clientSideId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+        super(clientSideId, thumbnailUrl, name, rating, partnerCompany, partnerSeller);
     }
 
     public void addTourCourse(TourCourse tourCourse) {

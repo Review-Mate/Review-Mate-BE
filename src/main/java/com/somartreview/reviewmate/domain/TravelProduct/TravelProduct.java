@@ -1,11 +1,8 @@
 package com.somartreview.reviewmate.domain.TravelProduct;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
-import com.somartreview.reviewmate.domain.LiveFeedback.LiveFeedback;
-import com.somartreview.reviewmate.domain.LiveSatisfaction.LiveSatisfaction;
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
-import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import com.somartreview.reviewmate.domain.Review.Review;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
@@ -30,7 +27,7 @@ public abstract class TravelProduct extends BaseEntity {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 50)
-    private String clientSideProductId;
+    private String clientSideId;
 
     @Column(length = 1024)
     private String thumbnailUrl;
@@ -53,8 +50,8 @@ public abstract class TravelProduct extends BaseEntity {
     private PartnerSeller partnerSeller;
 
 
-    public TravelProduct(String clientSideProductId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
-        this.clientSideProductId = clientSideProductId;
+    public TravelProduct(String clientSideId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+        this.clientSideId = clientSideId;
         validateThumbnailUrl(thumbnailUrl);
         this.thumbnailUrl = thumbnailUrl;
         validateName(name);

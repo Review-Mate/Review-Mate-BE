@@ -25,8 +25,8 @@ public class SingleTravelProduct extends TravelProduct {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    public SingleTravelProduct(String clientSideProductId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalDateTime startTime, LocalDateTime endTime, Category category) {
-        super(clientSideProductId, thumbnailUrl, name, rating, partnerCompany, partnerSeller);
+    public SingleTravelProduct(String clientSideId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalDateTime startTime, LocalDateTime endTime, Category category) {
+        super(clientSideId, thumbnailUrl, name, rating, partnerCompany, partnerSeller);
         validateTime(startTime, endTime);
         this.startTime = startTime;
         this.endTime = endTime;

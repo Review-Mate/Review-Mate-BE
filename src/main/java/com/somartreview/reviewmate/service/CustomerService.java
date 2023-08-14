@@ -15,7 +15,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
 
     public Long createCustomer(CustomerCreateRequest request) {
-        if (customerRepository.existsByClientSideUserId(request.getClientSideUserId())) {
+        if (customerRepository.existsByClientSideId(request.getClientSideId())) {
             throw new DomainLogicException(CUSTOMER_DUPLICATED_CLIENT_SIDE_ID);
         }
 

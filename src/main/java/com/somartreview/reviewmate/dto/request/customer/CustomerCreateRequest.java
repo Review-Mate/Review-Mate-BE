@@ -15,7 +15,7 @@ public class CustomerCreateRequest {
 
     @NotEmpty
     @Schema(description = "클라이언트 서비스에서의 유저 식별자\n\n⚠️ 반드시 유니크 해야함", example = "CUST-1234")
-    private String clientSideUserId;
+    private String clientSideId;
 
     @NotEmpty
     @Schema(description = "고객 이름", example = "권순찬")
@@ -31,7 +31,7 @@ public class CustomerCreateRequest {
 
     public Customer toEntity() {
         return Customer.builder()
-                .clientSideUserId(clientSideUserId)
+                .clientSideId(clientSideId)
                 .name(name)
                 .phoneNumber(phoneNumber)
                 .kakaoId(kakaoId)
