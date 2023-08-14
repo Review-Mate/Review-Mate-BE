@@ -5,6 +5,8 @@ import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +27,7 @@ public class SingleTravelProduct extends TravelProduct {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @Builder
     public SingleTravelProduct(String clientSideId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalDateTime startTime, LocalDateTime endTime, Category category) {
         super(clientSideId, thumbnailUrl, name, rating, partnerCompany, partnerSeller);
         validateTime(startTime, endTime);

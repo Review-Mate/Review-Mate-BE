@@ -7,6 +7,8 @@ import com.somartreview.reviewmate.domain.Review.Review;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
+
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn
+@Getter
 @NoArgsConstructor
 public abstract class TravelProduct extends BaseEntity {
 
