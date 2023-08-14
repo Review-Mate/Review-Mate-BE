@@ -25,7 +25,7 @@ public class Customer extends BaseEntity {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 50)
-    private String clientSideUserId;
+    private String clientSideId;
 
     @Column(nullable = false)
     private String name;
@@ -33,12 +33,12 @@ public class Customer extends BaseEntity {
     @Column(length = 20, nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String kakaoId;
 
     @Builder
-    public Customer(String clientSideUserId, String name, String phoneNumber, String kakaoId) {
-        this.clientSideUserId = clientSideUserId;
+    public Customer(String clientSideId, String name, String phoneNumber, String kakaoId) {
+        this.clientSideId = clientSideId;
         validateName(name);
         this.name = name;
         validatePhoneNumber(phoneNumber);
