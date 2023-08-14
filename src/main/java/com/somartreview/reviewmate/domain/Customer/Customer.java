@@ -1,6 +1,7 @@
 package com.somartreview.reviewmate.domain.Customer;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
+import com.somartreview.reviewmate.dto.request.customer.CustomerUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
@@ -56,5 +57,13 @@ public class Customer extends BaseEntity {
         if (phoneNumber.isBlank() || !ONLY_NUMBER_PATTERN.matcher(phoneNumber).matches()) {
             throw new DomainLogicException(ErrorCode.CUSTOMER_PHONE_NUMBER_ERROR);
         }
+    }
+
+    public void update(CustomerUpdateRequest request) {
+        validateName(request.getName());
+        this.name = request.getName();
+        validatePhoneNumber(request.getPhoneNumber());
+        this.phoneNumber = request.getPhoneNumber();
+        this.kakaoId = request.getKakaoId();
     }
 }

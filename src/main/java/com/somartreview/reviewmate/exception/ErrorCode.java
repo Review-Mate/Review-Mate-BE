@@ -11,6 +11,7 @@ public enum ErrorCode {
     CUSTOMER_NAME_ERROR("1000", "고객의 이름이 너무 길거나 공백입니다."),
     CUSTOMER_PHONE_NUMBER_ERROR("1001", "고객의 전화번호가 기호를 포함하거나 공백입니다."),
     CUSTOMER_DUPLICATED_CLIENT_SIDE_ID("1002", "고객의 클라이언트 사 ID가 중복됩니다."),
+    CUSTOMER_NOT_FOUND("1003", "고객을 찾을 수 없습니다."),
 
     LIVE_FEEDBACK_MESSAGE_ERROR("1100", "실시간 피드백의 메시지가 너무 길거나 공백입니다."),
     LIVE_FEEDBACK_MEDIA_URL_ERROR("1101", "실시간 피드백의 미디어 링크가 너무 길거나 공백입니다."),
