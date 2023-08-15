@@ -7,6 +7,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -96,6 +97,16 @@ public class GlobalControllerAdvice {
                         .build());
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ExceptionResponse> handleDataIntegrityViolation(DataIntegrityViolationException e) {
+        log.warn(DB_CONFLICT_ERROR.toString() + " : " + e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ExceptionResponse.builder()
+                        .code(DB_CONFLICT_ERROR.getCode())
+                        .message(DB_CONFLICT_ERROR.toString() + " : " + DB_CONFLICT_ERROR.getMessage() + " : " + e.getCause().getMessage())
+                        .build());
+    }
 
     @ExceptionHandler(ReviewMateException.class)
     public ResponseEntity<ExceptionResponse> handleReviewMateException(ReviewMateException e) {

@@ -1,9 +1,12 @@
 package com.somartreview.reviewmate.domain.Customer;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
+import com.somartreview.reviewmate.dto.request.customer.CustomerUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +26,7 @@ public class Customer extends BaseEntity {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 50)
-    private String clientSideUserId;
+    private String partnerCustomerId;
 
     @Column(nullable = false)
     private String name;
@@ -31,11 +34,12 @@ public class Customer extends BaseEntity {
     @Column(length = 20, nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String kakaoId;
 
-    public Customer(String clientSideUserId, String name, String phoneNumber, String kakaoId) {
-        this.clientSideUserId = clientSideUserId;
+    @Builder
+    public Customer(String partnerCustomerId, String name, String phoneNumber, String kakaoId) {
+        this.partnerCustomerId = partnerCustomerId;
         validateName(name);
         this.name = name;
         validatePhoneNumber(phoneNumber);
@@ -53,5 +57,13 @@ public class Customer extends BaseEntity {
         if (phoneNumber.isBlank() || !ONLY_NUMBER_PATTERN.matcher(phoneNumber).matches()) {
             throw new DomainLogicException(ErrorCode.CUSTOMER_PHONE_NUMBER_ERROR);
         }
+    }
+
+    public void update(CustomerUpdateRequest request) {
+        validateName(request.getName());
+        this.name = request.getName();
+        validatePhoneNumber(request.getPhoneNumber());
+        this.phoneNumber = request.getPhoneNumber();
+        this.kakaoId = request.getKakaoId();
     }
 }

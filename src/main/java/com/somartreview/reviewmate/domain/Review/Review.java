@@ -84,4 +84,13 @@ public class Review extends BaseEntity {
     public void addReviewImage(ReviewImage reviewImage) {
         this.reviewImages.add(reviewImage);
     }
+
+    public void updateReview(Integer rating, String title, String content) {
+        this.rating = rating;
+        validateTitle(title);
+        this.title = title;
+        validateContent(content);
+        this.content = content;
+        this.polarityValue = 0.0;
+    }
 }
