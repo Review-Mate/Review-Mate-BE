@@ -54,14 +54,13 @@ public abstract class TravelProduct extends BaseEntity {
     private PartnerSeller partnerSeller;
 
 
-    public TravelProduct(String partnerTravelProductId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+    public TravelProduct(String partnerTravelProductId, String thumbnailUrl, String name, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
         validatePartnerTravelProductId(partnerTravelProductId);
         this.partnerTravelProductId = partnerTravelProductId;
         validateThumbnailUrl(thumbnailUrl);
         this.thumbnailUrl = thumbnailUrl;
         validateName(name);
         this.name = name;
-        this.rating = rating;
         this.partnerCompany = partnerCompany;
         this.partnerSeller = partnerSeller;
     }

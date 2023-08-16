@@ -49,9 +49,10 @@ public class SingleTravelProductCreateRequest {
     @Schema(description = "여행상품 카테고리", example = "ACCOMMODATION")
     private Category category;
 
-    public SingleTravelProduct toEntity(PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+    public SingleTravelProduct toEntity(String thumbnailUrl ,PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
         return SingleTravelProduct.builder()
                 .partnerSingleTravelProductId(partnerSingleTravelProductId)
+                .thumbnailUrl(thumbnailUrl)
                 .name(name)
                 .partnerCompany(partnerCompany)
                 .partnerSeller(partnerSeller)

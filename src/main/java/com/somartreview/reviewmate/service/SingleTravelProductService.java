@@ -24,11 +24,21 @@ public class SingleTravelProductService {
     private final PartnerSellerService partnerSellerService;
 
     @Transactional
-    public Long createSingleTravelProduct(SingleTravelProductCreateRequest request) {
+    public Long createSingleTravelProduct(SingleTravelProductCreateRequest request, MultipartFile thumbnail) {
+        validateCreatePartnerTravelProductId(request.getPartnerSingleTravelProductId());
+
         final PartnerCompany partnerCompany = partnerCompanyService.findPartnerCompanyById(request.getPartnerCompanyId());
         final PartnerSeller partnerSeller = partnerSellerService.findPartnerSellerById(request.getPartnerSellerId());
 
-        return singleTravelProductRepository.save(request.toEntity(partnerCompany, partnerSeller)).getId();
+        String thumbnailUrl = uploadThumbnailOnS3(thumbnail);
+
+        return singleTravelProductRepository.save(request.toEntity(thumbnailUrl, partnerCompany, partnerSeller)).getId();
+    }
+
+    private void validateCreatePartnerTravelProductId(String partnerTravelProductId) {
+        if (singleTravelProductRepository.existsByPartnerTravelProductId(partnerTravelProductId)) {
+            throw new DomainLogicException(TRAVEL_PRODUCT_DUPLICATED_PARTNER_ID);
+        }
     }
 
     @Transactional
