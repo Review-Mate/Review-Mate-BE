@@ -41,7 +41,7 @@ public class SingleTravelProduct extends TravelProduct {
         }
     }
 
-    public void update(SingleTravelProductUpdateRequest request, String thumbnailUrl, , PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+    public void update(SingleTravelProductUpdateRequest request, String thumbnailUrl, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
         super.update(request.getPartnerSingleTravelProductId(), thumbnailUrl, request.getName(), partnerCompany, partnerSeller);
         validateTime(request.getStartTime(), request.getEndTime());
         this.startTime = request.getStartTime();
