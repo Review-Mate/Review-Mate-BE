@@ -6,7 +6,7 @@ import com.somartreview.reviewmate.exception.DomainLogicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.somartreview.reviewmate.exception.ErrorCode.PARTNET_COMPANY_NOT_FOUND;
+import static com.somartreview.reviewmate.exception.ErrorCode.PARTNER_COMPANY_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +16,6 @@ public class PartnerCompanyService {
 
     public PartnerCompany findPartnerCompanyById(Long partnerCompanyId) {
         return partnerCompanyRepository.findById(partnerCompanyId)
-                .orElseThrow(() -> new DomainLogicException(PARTNET_COMPANY_NOT_FOUND));
+                .orElseThrow(() -> new DomainLogicException(PARTNER_COMPANY_NOT_FOUND));
     }
 }

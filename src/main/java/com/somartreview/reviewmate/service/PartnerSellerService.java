@@ -15,6 +15,6 @@ public class PartnerSellerService {
 
     public PartnerSeller findPartnerSellerById(Long partnerSellerId) {
         return partnerSellerRepository.findById(partnerSellerId)
-                .orElseThrow(() -> new DomainLogicException(ErrorCode.PARTNET_SELLER_NOT_FOUND));
+                .orElseThrow(() -> new DomainLogicException(ErrorCode.PARTNER_SELLER_NOT_FOUND));
     }
 }

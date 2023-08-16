@@ -2,6 +2,7 @@ package com.somartreview.reviewmate.domain.TravelProduct;
 
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
+import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
@@ -38,5 +39,13 @@ public class SingleTravelProduct extends TravelProduct {
         if (startTime.isAfter(endTime)) {
             throw new DomainLogicException(ErrorCode.TRAVEL_PRODUCT_START_TIME_ERROR);
         }
+    }
+
+    public void update(SingleTravelProductUpdateRequest request, String thumbnailUrl, , PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+        super.update(request.getPartnerSingleTravelProductId(), thumbnailUrl, request.getName(), partnerCompany, partnerSeller);
+        validateTime(request.getStartTime(), request.getEndTime());
+        this.startTime = request.getStartTime();
+        this.endTime = request.getEndTime();
+        this.category = request.getCategory();
     }
 }

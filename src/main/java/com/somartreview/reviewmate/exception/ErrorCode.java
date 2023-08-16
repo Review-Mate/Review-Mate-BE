@@ -22,7 +22,7 @@ public enum ErrorCode {
     LIVE_SATISFACTION_RATING_ERROR("1110", "실시간 만족도의 별점이 잘못된 범위입니다."),
 
     PARTNER_COMPANY_NAME_ERROR("1200", "파트너사의 이름이 너무 길거나 공백입니다."),
-    PARTNET_COMPANY_NOT_FOUND("1201", "파트너사를 찾을 수 없습니다."),
+    PARTNER_COMPANY_NOT_FOUND("1201", "파트너사를 찾을 수 없습니다."),
 
     PARTNER_MANAGER_NAME_ERROR("1210", "파트너사 관리자의 이름이 너무 길거나 공백입니다."),
     PARTNER_MANAGER_EMAIL_ERROR("1211", "파트너사 관리자의 이메일이 올바른 형식이 아닙니다."),
@@ -31,7 +31,7 @@ public enum ErrorCode {
     PARTNER_SELLER_NAME_ERROR("1220", "파트너사 판매자의 이름이 너무 길거나 공백입니다."),
     PARTNER_SELLER_EMAIL_ERROR("1221", "파트너사 판매자의 이메일이 올바른 형식이 아닙니다."),
     PARTNER_SELLER_PASSWORD_ERROR("1222", "파트너사 판매자의 비밀번호가 너무 짧거나 공백입니다."),
-    PARTNET_SELLER_NOT_FOUND("1223", "파트너사 판매자를 찾을 수 없습니다."),
+    PARTNER_SELLER_NOT_FOUND("1223", "파트너사 판매자를 찾을 수 없습니다."),
 
     REVIEW_TITLE_ERROR("1300", "리뷰의 제목이 너무 길거나 공백입니다."),
     REVIEW_CONTENT_ERROR("1301", "리뷰의 내용이 너무 길거나 공백입니다."),
@@ -43,7 +43,9 @@ public enum ErrorCode {
     TRAVEL_PRODUCT_THUMBNAIL_URL_ERROR("1400", "여행 상품의 썸네일 링크가 너무 길거나 공백입니다."),
     TRAVEL_PRODUCT_NAME_ERROR("1401", "여행 상품의 이름이 너무 길거나 공백입니다."),
     TRAVEL_PRODUCT_START_TIME_ERROR("1402", "여행 상품의 시작 시간이 종료 시간 이후일 수 없습니다.."),
-    TRAVEL_PRODUCT_NOT_FOUND("1403", "여행 상품을 찾을 수 없습니다."),
+    TRAVEL_PRODUCT_PARTNER_TRAVEL_PRODUCT_ID_ERROR("1403", "여행 상품의 파트너 ID가 너무 길거나 공백입니다."),
+    TRAVEL_PRODUCT_NOT_FOUND("1404", "여행 상품을 찾을 수 없습니다."),
+    TRAVEL_PRODUCT_DUPLICATED_PARTNER_ID("1405", "여행 상품의 파트너 ID가 중복됩니다."),
 
     INVALID_PROPERTY_ERROR("9001", "잘못된 값이 입력되었습니다."),
     API_NOT_FOUND_ERROR("9002", "요청한 API가 존재하지 않습니다"),

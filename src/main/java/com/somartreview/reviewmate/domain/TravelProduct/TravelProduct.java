@@ -21,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 public abstract class TravelProduct extends BaseEntity {
 
+    private static final int MAX_PARTNER_TRAVEL_PRODUCT_ID_LENGTH = 50;
     private static final int MAX_THUMBNAIL_URL_LENGTH = 1024;
     private static final int MAX_NAME_LENGTH = 255;
 
@@ -54,6 +55,7 @@ public abstract class TravelProduct extends BaseEntity {
 
 
     public TravelProduct(String partnerTravelProductId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+        validatePartnerTravelProductId(partnerTravelProductId);
         this.partnerTravelProductId = partnerTravelProductId;
         validateThumbnailUrl(thumbnailUrl);
         this.thumbnailUrl = thumbnailUrl;
@@ -62,6 +64,12 @@ public abstract class TravelProduct extends BaseEntity {
         this.rating = rating;
         this.partnerCompany = partnerCompany;
         this.partnerSeller = partnerSeller;
+    }
+
+    private void validatePartnerTravelProductId(final String partnerTravelProductId) {
+        if (partnerTravelProductId.isBlank() || partnerTravelProductId.length() > MAX_PARTNER_TRAVEL_PRODUCT_ID_LENGTH) {
+            throw new DomainLogicException(ErrorCode.TRAVEL_PRODUCT_PARTNER_TRAVEL_PRODUCT_ID_ERROR);
+        }
     }
 
     private void validateThumbnailUrl(final String thumbnailUrl) {
@@ -81,5 +89,16 @@ public abstract class TravelProduct extends BaseEntity {
         rating = (rating * reviewCount + review.getRating()) / (reviewCount + 1);
 
         this.reviews.add(review);
+    }
+
+    public void update(String partnerTravelProductId, String thumbnailUrl, String name, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+        validatePartnerTravelProductId(partnerTravelProductId);
+        this.partnerTravelProductId = partnerTravelProductId;
+        validateThumbnailUrl(thumbnailUrl);
+        this.thumbnailUrl = thumbnailUrl;
+        validateName(name);
+        this.name = name;
+        this.partnerCompany = partnerCompany;
+        this.partnerSeller = partnerSeller;
     }
 }
