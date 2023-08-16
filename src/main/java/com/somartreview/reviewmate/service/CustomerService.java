@@ -19,15 +19,21 @@ public class CustomerService {
 
     @Transactional
     public Long createCustomer(CustomerCreateRequest request) {
-        if (customerRepository.existsByPartnerCustomerId(request.getPartnerCustomerId())) {
-            throw new DomainLogicException(CUSTOMER_DUPLICATED_CLIENT_SIDE_ID);
-        }
+        validateCreatePartnerCustomerId(request.getPartnerCustomerId());
 
         return customerRepository.save(request.toEntity()).getId();
     }
 
+    private void validateCreatePartnerCustomerId(String partnerCustomerId) {
+        if (customerRepository.existsByPartnerCustomerId(partnerCustomerId)) {
+            throw new DomainLogicException(CUSTOMER_DUPLICATED_PARTNER_ID);
+        }
+    }
+
     @Transactional
     public void updateCustomerById(Long id, CustomerUpdateRequest request) {
+        validateUpdatePartnerCustomerId(request.getPartnerCustomerId());
+
         customerRepository.findById(id)
                 .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND))
                 .update(request);
@@ -35,9 +41,17 @@ public class CustomerService {
 
     @Transactional
     public void updateCustomerByPartnerCustomerId(String partnerCustomerId, CustomerUpdateRequest request) {
+        validateUpdatePartnerCustomerId(request.getPartnerCustomerId());
+
         customerRepository.findByPartnerCustomerId(partnerCustomerId)
                 .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND))
                 .update(request);
+    }
+
+    private void validateUpdatePartnerCustomerId(String partnerCustomerId) {
+        if (customerRepository.countByPartnerCustomerId(partnerCustomerId) >= 2) {
+            throw new DomainLogicException(CUSTOMER_DUPLICATED_PARTNER_ID);
+        }
     }
 
     @Transactional

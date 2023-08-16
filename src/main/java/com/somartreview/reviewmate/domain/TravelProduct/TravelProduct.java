@@ -67,7 +67,7 @@ public abstract class TravelProduct extends BaseEntity {
 
     private void validatePartnerTravelProductId(final String partnerTravelProductId) {
         if (partnerTravelProductId.isBlank() || partnerTravelProductId.length() > MAX_PARTNER_TRAVEL_PRODUCT_ID_LENGTH) {
-            throw new DomainLogicException(ErrorCode.TRAVEL_PRODUCT_PARTNER_TRAVEL_PRODUCT_ID_ERROR);
+            throw new DomainLogicException(ErrorCode.TRAVEL_PRODUCT_PARTNER_ID_ERROR);
         }
     }
 

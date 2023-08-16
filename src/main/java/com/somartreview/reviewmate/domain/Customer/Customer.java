@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 @NoArgsConstructor
 public class Customer extends BaseEntity {
 
+    private static final int MAX_PARTNER_CUSTOMER_ID_LENGTH = 50;
     private static final int MAX_NAME_LENGTH = 255;
     private static final Pattern ONLY_NUMBER_PATTERN = Pattern.compile("[0-9]+");
 
@@ -39,12 +40,19 @@ public class Customer extends BaseEntity {
 
     @Builder
     public Customer(String partnerCustomerId, String name, String phoneNumber, String kakaoId) {
+        validatePartnerCustomerId(partnerCustomerId);
         this.partnerCustomerId = partnerCustomerId;
         validateName(name);
         this.name = name;
         validatePhoneNumber(phoneNumber);
         this.phoneNumber = phoneNumber;
         this.kakaoId = kakaoId;
+    }
+
+    private void validatePartnerCustomerId(final String partnerCustomerId) {
+        if (partnerCustomerId.isBlank() || partnerCustomerId.length() > MAX_PARTNER_CUSTOMER_ID_LENGTH) {
+            throw new DomainLogicException(ErrorCode.CUSTOMER_PARTNER_ID_ERROR);
+        }
     }
 
     private void validateName(final String name) {

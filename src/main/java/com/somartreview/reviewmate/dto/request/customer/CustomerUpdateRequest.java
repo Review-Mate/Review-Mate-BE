@@ -6,11 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerUpdateRequest {
+
+    @NotEmpty
+    @Schema(description = "클라이언트 서비스에서의 유저 식별자\n\n⚠️ 반드시 유니크 해야함", example = "CUST-1234")
+    private String partnerCustomerId;
 
     @NotBlank
     @Schema(description = "고객 이름\n\n⚠️ 업데이트하지 않는 값이라도 제공되어야 합니다.")

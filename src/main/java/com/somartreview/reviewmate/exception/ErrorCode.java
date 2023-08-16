@@ -10,8 +10,9 @@ public enum ErrorCode {
 
     CUSTOMER_NAME_ERROR("1000", "고객의 이름이 너무 길거나 공백입니다."),
     CUSTOMER_PHONE_NUMBER_ERROR("1001", "고객의 전화번호가 기호를 포함하거나 공백입니다."),
-    CUSTOMER_DUPLICATED_CLIENT_SIDE_ID("1002", "고객의 클라이언트 사 ID가 중복됩니다."),
-    CUSTOMER_NOT_FOUND("1003", "고객을 찾을 수 없습니다."),
+    CUSTOMER_PARTNER_ID_ERROR("1002", "고객의 파트너 ID가 너무 길거나 공백입니다."),
+    CUSTOMER_DUPLICATED_PARTNER_ID("1003", "고객의 클라이언트 사 ID가 중복됩니다."),
+    CUSTOMER_NOT_FOUND("1004", "고객을 찾을 수 없습니다."),
 
     LIVE_FEEDBACK_MESSAGE_ERROR("1100", "실시간 피드백의 메시지가 너무 길거나 공백입니다."),
     LIVE_FEEDBACK_MEDIA_URL_ERROR("1101", "실시간 피드백의 미디어 링크가 너무 길거나 공백입니다."),
@@ -43,7 +44,7 @@ public enum ErrorCode {
     TRAVEL_PRODUCT_THUMBNAIL_URL_ERROR("1400", "여행 상품의 썸네일 링크가 너무 길거나 공백입니다."),
     TRAVEL_PRODUCT_NAME_ERROR("1401", "여행 상품의 이름이 너무 길거나 공백입니다."),
     TRAVEL_PRODUCT_START_TIME_ERROR("1402", "여행 상품의 시작 시간이 종료 시간 이후일 수 없습니다.."),
-    TRAVEL_PRODUCT_PARTNER_TRAVEL_PRODUCT_ID_ERROR("1403", "여행 상품의 파트너 ID가 너무 길거나 공백입니다."),
+    TRAVEL_PRODUCT_PARTNER_ID_ERROR("1403", "여행 상품의 파트너 ID가 너무 길거나 공백입니다."),
     TRAVEL_PRODUCT_NOT_FOUND("1404", "여행 상품을 찾을 수 없습니다."),
     TRAVEL_PRODUCT_DUPLICATED_PARTNER_ID("1405", "여행 상품의 파트너 ID가 중복됩니다."),
 
