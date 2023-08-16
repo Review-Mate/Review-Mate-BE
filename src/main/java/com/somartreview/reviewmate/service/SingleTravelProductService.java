@@ -77,7 +77,7 @@ public class SingleTravelProductService {
 
     private String uploadThumbnailOnS3(MultipartFile thumbnail) {
         //  TODO: Upload thumbnail to S3 and get the url
-        return "";
+        return "https://www.testThumbnailUrl.com";
     }
 
     @Transactional
