@@ -2,15 +2,20 @@ package com.somartreview.reviewmate.service;
 
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
+import com.somartreview.reviewmate.domain.TravelProduct.Category;
 import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProduct;
 import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProductRepository;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductUpdateRequest;
+import com.somartreview.reviewmate.dto.response.travelProduct.TravelProductConsoleElementResponse;
+import com.somartreview.reviewmate.dto.response.travelProduct.TravelProductResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 import static com.somartreview.reviewmate.exception.ErrorCode.TRAVEL_PRODUCT_DUPLICATED_PARTNER_ID;
 import static com.somartreview.reviewmate.exception.ErrorCode.TRAVEL_PRODUCT_NOT_FOUND;
@@ -41,18 +46,40 @@ public class SingleTravelProductService {
         }
     }
 
+    public SingleTravelProduct findSingleTravelProductById(Long id) {
+        return singleTravelProductRepository.findById(id)
+                .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
+    }
+
+    public SingleTravelProduct findSingleTravelProductByPartnerProductId(String partnerProductId) {
+        return singleTravelProductRepository.findByPartnerTravelProductId(partnerProductId)
+                .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
+    }
+
+    public List<TravelProductResponse> getSingleTravelProductResponseByCategory(Category category) {
+        return singleTravelProductRepository.findByCategory(category)
+                .stream()
+                .map(TravelProductResponse::new)
+                .toList();
+    }
+
+    public List<TravelProductConsoleElementResponse> getSingleTravelProductConsoleElementResponseByCategory(Category category) {
+        return singleTravelProductRepository.findByCategory(category)
+                .stream()
+                .map(TravelProductConsoleElementResponse::new)
+                .toList();
+    }
+
     @Transactional
     public void updateSingleTravelProductById(Long id, SingleTravelProductUpdateRequest request, MultipartFile thumbnail) {
-        SingleTravelProduct foundTravelProduct = singleTravelProductRepository.findById(id)
-                .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
+        SingleTravelProduct foundTravelProduct = findSingleTravelProductById(id);
 
         updateSingleTravelProduct(foundTravelProduct, request, thumbnail);
     }
 
     @Transactional
     public void updateSingleTravelProductByPartnerTravelProductId(String partnerProductId, SingleTravelProductUpdateRequest request, MultipartFile thumbnail) {
-        SingleTravelProduct foundTravelProduct = singleTravelProductRepository.findByPartnerTravelProductId(partnerProductId)
-                .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
+        SingleTravelProduct foundTravelProduct = findSingleTravelProductByPartnerProductId(partnerProductId);
 
         updateSingleTravelProduct(foundTravelProduct, request, thumbnail);
     }
@@ -82,16 +109,14 @@ public class SingleTravelProductService {
 
     @Transactional
     public void deleteSingleTravelProductById(Long id) {
-        SingleTravelProduct foundTravelProduct = singleTravelProductRepository.findById(id)
-                .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
+        SingleTravelProduct foundTravelProduct = findSingleTravelProductById(id);
 
         singleTravelProductRepository.delete(foundTravelProduct);
     }
 
     @Transactional
     public void deleteSingleTravelProductByPartnerProductId(String partnerProductId) {
-        SingleTravelProduct foundTravelProduct = singleTravelProductRepository.findByPartnerTravelProductId(partnerProductId)
-                .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
+        SingleTravelProduct foundTravelProduct = findSingleTravelProductByPartnerProductId(partnerProductId);
 
         singleTravelProductRepository.delete(foundTravelProduct);
     }

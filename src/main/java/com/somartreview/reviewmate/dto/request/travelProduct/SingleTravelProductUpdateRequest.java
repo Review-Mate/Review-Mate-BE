@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class SingleTravelProductUpdateRequest {
 
     @NotBlank
-    @Schema(description = "클라이언트 서비스에서의 상품 식별지\n\n⚠️ 업데이트하지 않는 값이라도 제공되어야 합니다.", example = "PRODUCT-0001")
+    @Schema(description = "클라이언트 서비스에서의 상품 식별자\n\n⚠️ 업데이트하지 않는 값이라도 제공되어야 합니다.", example = "PRODUCT-0001")
     private String partnerSingleTravelProductId;
 
     @NotBlank

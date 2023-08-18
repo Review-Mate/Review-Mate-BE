@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class SingleTravelProductCreateRequest {
 
     @NotBlank
-    @Schema(description = "클라이언트 서비스에서의 상품 식별지", example = "PRODUCT-0001")
+    @Schema(description = "클라이언트 서비스에서의 상품 식별자", example = "PRODUCT-0001")
     private String partnerSingleTravelProductId;
 
     @NotBlank
