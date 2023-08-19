@@ -7,6 +7,8 @@ import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,6 +34,7 @@ public class PartnerCompany extends BaseEntity {
     @OneToMany(mappedBy = "partnerCompany", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PartnerManager> partnerManagers = new ArrayList<>();
 
+    @Builder
     public PartnerCompany(String name) {
         validateName(name);
         this.name = name;
