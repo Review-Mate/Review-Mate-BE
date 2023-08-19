@@ -2,6 +2,7 @@ package com.somartreview.reviewmate.service;
 
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompanyRepository;
+import com.somartreview.reviewmate.dto.request.PartnerCompanyUpdateRequest;
 import com.somartreview.reviewmate.dto.request.partnerCompany.PartnerCompanyCreateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +25,16 @@ public class PartnerCompanyService {
     public PartnerCompany findPartnerCompanyById(Long partnerCompanyId) {
         return partnerCompanyRepository.findById(partnerCompanyId)
                 .orElseThrow(() -> new DomainLogicException(PARTNER_COMPANY_NOT_FOUND));
+    }
+
+    @Transactional
+    public void updatePartnerCompany(Long partnerCompanyId, PartnerCompanyUpdateRequest request) {
+        PartnerCompany partnerCompany = findPartnerCompanyById(partnerCompanyId);
+        partnerCompany.update(request);
+    }
+
+    @Transactional
+    public void deletePartnerCompany(Long partnerCompanyId) {
+        partnerCompanyRepository.deleteById(partnerCompanyId);
     }
 }

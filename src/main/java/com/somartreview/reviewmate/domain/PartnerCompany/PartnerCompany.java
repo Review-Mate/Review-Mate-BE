@@ -4,6 +4,7 @@ import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.PartnerManager.PartnerManager;
 import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
+import com.somartreview.reviewmate.dto.request.PartnerCompanyUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
@@ -48,5 +49,10 @@ public class PartnerCompany extends BaseEntity {
 
     public void addPartnerManager(PartnerManager partnerManager) {
         this.partnerManagers.add(partnerManager);
+    }
+
+    public void update(PartnerCompanyUpdateRequest request) {
+        validateName(request.getName());
+        this.name = request.getName();
     }
 }
