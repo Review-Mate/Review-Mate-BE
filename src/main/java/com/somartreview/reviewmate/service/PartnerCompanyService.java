@@ -4,6 +4,7 @@ import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompanyRepository;
 import com.somartreview.reviewmate.dto.request.PartnerCompanyUpdateRequest;
 import com.somartreview.reviewmate.dto.request.partnerCompany.PartnerCompanyCreateRequest;
+import com.somartreview.reviewmate.dto.response.partnerCompany.PartnerCompanyResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,11 @@ public class PartnerCompanyService {
     public PartnerCompany findPartnerCompanyById(Long partnerCompanyId) {
         return partnerCompanyRepository.findById(partnerCompanyId)
                 .orElseThrow(() -> new DomainLogicException(PARTNER_COMPANY_NOT_FOUND));
+    }
+
+    public PartnerCompanyResponse getPartnerCompanyResponseById(Long partnerCompanyId) {
+        PartnerCompany partnerCompany = findPartnerCompanyById(partnerCompanyId);
+        return new PartnerCompanyResponse(partnerCompany);
     }
 
     @Transactional
