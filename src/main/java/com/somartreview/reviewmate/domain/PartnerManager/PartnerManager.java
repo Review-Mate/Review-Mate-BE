@@ -2,7 +2,7 @@ package com.somartreview.reviewmate.domain.PartnerManager;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
-import com.somartreview.reviewmate.domain.PartnerCompany.Role;
+import com.somartreview.reviewmate.domain.PartnerCompany.PartnerManagerRole;
 import com.somartreview.reviewmate.dto.request.partnerManager.PartnerManagerUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
@@ -31,7 +31,7 @@ public class PartnerManager extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(STRING)
-    private Role role;
+    private PartnerManagerRole role;
 
     @Column(length = 20, nullable = false)
     private String name;
@@ -48,7 +48,7 @@ public class PartnerManager extends BaseEntity {
 
     @Builder
     public PartnerManager(String name, String email, String password, PartnerCompany partnerCompany) {
-        this.role = Role.ADMIN;
+        this.role = PartnerManagerRole.ADMIN;
         validateName(name);
         this.name = name;
         validateEmail(email);
@@ -59,7 +59,7 @@ public class PartnerManager extends BaseEntity {
         this.partnerCompany = partnerCompany;
     }
 
-    public PartnerManager(Role role, String name, String email, String password, PartnerCompany partnerCompany) {
+    public PartnerManager(PartnerManagerRole role, String name, String email, String password, PartnerCompany partnerCompany) {
         this.role = role;
         validateName(name);
         this.name = name;

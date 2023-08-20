@@ -4,6 +4,7 @@ import com.somartreview.reviewmate.domain.PartnerManager.PartnerManager;
 import com.somartreview.reviewmate.domain.PartnerManager.PartnerManagerRepository;
 import com.somartreview.reviewmate.dto.request.partnerManager.PartnerManagerCreateRequest;
 import com.somartreview.reviewmate.dto.request.partnerManager.PartnerManagerUpdateRequest;
+import com.somartreview.reviewmate.dto.response.partnerManager.PartnerManagerResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,12 @@ public class PartnerManagerService {
     public PartnerManager findPartnerManagerById(Long id) {
         return partnerManagerRepository.findById(id)
                 .orElseThrow(() -> new DomainLogicException(PARTNER_MANAGER_NOT_FOUND));
+    }
+
+    public PartnerManagerResponse getPartnerManagerResponseById(Long id) {
+        final PartnerManager partnerManager = findPartnerManagerById(id);
+
+        return new PartnerManagerResponse(partnerManager);
     }
 
     @Transactional
