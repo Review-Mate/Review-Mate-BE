@@ -28,6 +28,7 @@ public enum ErrorCode {
     PARTNER_MANAGER_NAME_ERROR("1210", "파트너사 관리자의 이름이 너무 길거나 공백입니다."),
     PARTNER_MANAGER_EMAIL_ERROR("1211", "파트너사 관리자의 이메일이 올바른 형식이 아닙니다."),
     PARTNER_MANAGER_PASSWORD_ERROR("1212", "파트너사 관리자의 비밀번호가 너무 짧거나 공백입니다."),
+    PARTNER_MANAGER_NOT_FOUND("1213", "파트너사 관리자를 찾을 수 없습니다."),
 
     PARTNER_SELLER_NAME_ERROR("1220", "파트너사 판매자의 이름이 너무 길거나 공백입니다."),
     PARTNER_SELLER_EMAIL_ERROR("1221", "파트너사 판매자의 이메일이 올바른 형식이 아닙니다."),
