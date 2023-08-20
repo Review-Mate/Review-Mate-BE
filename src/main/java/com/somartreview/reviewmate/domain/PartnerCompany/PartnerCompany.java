@@ -28,15 +28,22 @@ public class PartnerCompany extends BaseEntity {
     @Column(name = "partner_company_id")
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String domain;
+
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
-    @OneToMany(mappedBy = "partnerCompany", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Boolean isWithdrawn = false;
+
+    @Column(nullable = false)
+    @OneToMany(mappedBy = "partnerCompany")
     private List<PartnerManager> partnerManagers = new ArrayList<>();
 
     @Builder
-    public PartnerCompany(String name) {
+    public PartnerCompany(String domain, String name) {
+        this.domain = domain;
         validateName(name);
         this.name = name;
     }
@@ -52,6 +59,7 @@ public class PartnerCompany extends BaseEntity {
     }
 
     public void update(PartnerCompanyUpdateRequest request) {
+        this.domain = domain;
         validateName(request.getName());
         this.name = request.getName();
     }

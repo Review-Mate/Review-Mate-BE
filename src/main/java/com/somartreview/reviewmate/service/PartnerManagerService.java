@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.service;
 
+import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.domain.PartnerManager.PartnerManager;
 import com.somartreview.reviewmate.domain.PartnerManager.PartnerManagerRepository;
 import com.somartreview.reviewmate.dto.request.partnerManager.PartnerManagerCreateRequest;
@@ -17,10 +18,13 @@ import static com.somartreview.reviewmate.exception.ErrorCode.PARTNER_MANAGER_NO
 public class PartnerManagerService {
 
     private final PartnerManagerRepository partnerManagerRepository;
+    private final PartnerCompanyService partnerCompanyService;
 
     @Transactional
     public Long createPartnerManager(PartnerManagerCreateRequest request) {
-        return partnerManagerRepository.save(request.toEntity()).getId();
+        final PartnerCompany partnerCompany = partnerCompanyService.findPartnerCompanyByDomain(request.getPartnerCompanyDomain());
+
+        return partnerManagerRepository.save(request.toEntity(partnerCompany)).getId();
     }
 
     public PartnerManager findPartnerManagerById(Long id) {

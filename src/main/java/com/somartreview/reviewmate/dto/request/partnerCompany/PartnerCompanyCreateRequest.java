@@ -11,11 +11,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PartnerCompanyCreateRequest {
 
+    @Schema(description = "파트너사 도메인", example = "goodchoice.kr")
+    private String domain;
+
     @Schema(description = "파트너사 이름", example = "여기어때컴퍼니")
     private String name;
 
     public PartnerCompany toEntity() {
         return PartnerCompany.builder()
+                .domain(domain)
                 .name(name)
                 .build();
     }

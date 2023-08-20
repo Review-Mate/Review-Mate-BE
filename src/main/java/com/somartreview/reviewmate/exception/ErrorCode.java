@@ -24,6 +24,7 @@ public enum ErrorCode {
 
     PARTNER_COMPANY_NAME_ERROR("1200", "파트너사의 이름이 너무 길거나 공백입니다."),
     PARTNER_COMPANY_NOT_FOUND("1201", "파트너사를 찾을 수 없습니다."),
+    PARTNER_COMPANY_DUPLICATED_DOMAIN("1202", "파트너사의 도메인이 중복됩니다."),
 
     PARTNER_MANAGER_NAME_ERROR("1210", "파트너사 관리자의 이름이 너무 길거나 공백입니다."),
     PARTNER_MANAGER_EMAIL_ERROR("1211", "파트너사 관리자의 이메일이 올바른 형식이 아닙니다."),
