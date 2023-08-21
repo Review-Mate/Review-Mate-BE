@@ -24,7 +24,7 @@ public class PartnerManagerResponse {
     @Schema(description = "소속 파트너사의 이름", example = "소마트리뷰")
     private String companyName;
 
-    public PartnerManagerResponse(PartnerManager partnerManager) {
+    public PartnerManagerResponse(final PartnerManager partnerManager) {
         this.role = partnerManager.getRole();
         this.name = partnerManager.getName();
         this.email = partnerManager.getEmail();

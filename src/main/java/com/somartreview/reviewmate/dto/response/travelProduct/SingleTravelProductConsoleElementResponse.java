@@ -51,7 +51,7 @@ public class SingleTravelProductConsoleElementResponse {
     @Schema(description = "Top 부정 태그 3개")
     private List<ReviewTagResponse> negativeTags;
 
-    public SingleTravelProductConsoleElementResponse(SingleTravelProduct singleTravelProduct) {
+    public SingleTravelProductConsoleElementResponse(final SingleTravelProduct singleTravelProduct) {
         this.id = singleTravelProduct.getId();
         this.partnerSingleTravelProductId = singleTravelProduct.getPartnerTravelProductId();
         this.thumbnailUrl = singleTravelProduct.getThumbnailUrl();

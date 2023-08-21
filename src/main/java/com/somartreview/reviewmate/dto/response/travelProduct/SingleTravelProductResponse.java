@@ -52,7 +52,7 @@ public class SingleTravelProductResponse {
     @Schema(description = "여행상품 이용 종료시간", example = "2023.08.15T12:00")
     private LocalDateTime endTime;
 
-    public SingleTravelProductResponse(SingleTravelProduct singleTravelProduct) {
+    public SingleTravelProductResponse(final SingleTravelProduct singleTravelProduct) {
         this.id = singleTravelProduct.getId();
         this.partnerSingleTravelProductId = singleTravelProduct.getPartnerTravelProductId();
         this.thumbnailUrl = singleTravelProduct.getThumbnailUrl();

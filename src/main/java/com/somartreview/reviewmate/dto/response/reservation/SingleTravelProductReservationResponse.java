@@ -38,7 +38,7 @@ public class SingleTravelProductReservationResponse {
     @Schema(description = "여행 상품 종료 시간")
     private LocalDateTime endTime;
 
-    public SingleTravelProductReservationResponse(Reservation reservation) {
+    public SingleTravelProductReservationResponse(final Reservation reservation) {
         this.id = reservation.getId();
         this.customerId = reservation.getCustomer().getId();
         this.customerName = reservation.getCustomer().getName();
