@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TravelProductResponse {
+public class SingleTravelProductResponse {
 
     @Schema(description = "상품 ID")
     private Long id;
@@ -52,7 +52,7 @@ public class TravelProductResponse {
     @Schema(description = "여행상품 이용 종료시간", example = "2023.08.15T12:00")
     private LocalDateTime endTime;
 
-    public TravelProductResponse(SingleTravelProduct singleTravelProduct) {
+    public SingleTravelProductResponse(SingleTravelProduct singleTravelProduct) {
         this.id = singleTravelProduct.getId();
         this.partnerSingleTravelProductId = singleTravelProduct.getPartnerTravelProductId();
         this.thumbnailUrl = singleTravelProduct.getThumbnailUrl();

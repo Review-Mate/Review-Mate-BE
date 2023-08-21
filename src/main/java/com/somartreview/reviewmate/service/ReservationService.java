@@ -1,0 +1,60 @@
+package com.somartreview.reviewmate.service;
+
+import com.somartreview.reviewmate.domain.Customer.Customer;
+import com.somartreview.reviewmate.domain.Reservation.Reservation;
+import com.somartreview.reviewmate.domain.Reservation.ReservationRepository;
+import com.somartreview.reviewmate.domain.TravelProduct.Category;
+import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
+import com.somartreview.reviewmate.dto.response.reservation.SingleTravelProductReservationResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+import static com.somartreview.reviewmate.domain.TravelProduct.Category.PACKAGE;
+
+@Service
+@RequiredArgsConstructor
+public class ReservationService {
+
+    private final ReservationRepository reservationRepository;
+    private final CustomerService customerService;
+    private final SingleTravelProductService singleTravelProductService;
+
+    @Transactional
+    public Long createReservation(Long customerId, Category category, Long travelProductId) {
+        final Customer customer = customerService.findCustomerById(customerId);
+        final TravelProduct travelProduct = getTravelProductInReservation(category, travelProductId);
+
+        return reservationRepository.save(new Reservation(customer, travelProduct)).getId();
+    }
+
+    private TravelProduct getTravelProductInReservation(Category category, Long travelProductId) {
+        if (category.equals(PACKAGE)){
+            // TODO: PackageTravelProduct 로직
+            return null;
+        } else {
+            return singleTravelProductService.findSingleTravelProductById(travelProductId);
+        }
+    }
+
+    public List<SingleTravelProductReservationResponse> getSingleTravelProductReservationsByTravelProductId(Long travelProductId) {
+        return reservationRepository.findByTravelProduct_Id(travelProductId)
+                .stream()
+                .map(SingleTravelProductReservationResponse::new)
+                .toList();
+    }
+
+    public List<SingleTravelProductReservationResponse> getSingleTravelProductReservationsByCustomerId(Long customerId) {
+        return reservationRepository.findByCustomer_Id(customerId)
+                .stream()
+                .map(SingleTravelProductReservationResponse::new)
+                .toList();
+    }
+
+    @Transactional
+    public void deleteReservationById(Long id) {
+        reservationRepository.deleteById(id);
+    }
+}

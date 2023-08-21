@@ -7,8 +7,8 @@ import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProduct;
 import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProductRepository;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductUpdateRequest;
-import com.somartreview.reviewmate.dto.response.travelProduct.TravelProductConsoleElementResponse;
-import com.somartreview.reviewmate.dto.response.travelProduct.TravelProductResponse;
+import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductConsoleElementResponse;
+import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,17 +56,17 @@ public class SingleTravelProductService {
                 .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
     }
 
-    public List<TravelProductResponse> getSingleTravelProductResponseByCategory(Category category) {
+    public List<SingleTravelProductResponse> getSingleTravelProductResponseByCategory(Category category) {
         return singleTravelProductRepository.findByCategory(category)
                 .stream()
-                .map(TravelProductResponse::new)
+                .map(SingleTravelProductResponse::new)
                 .toList();
     }
 
-    public List<TravelProductConsoleElementResponse> getSingleTravelProductConsoleElementResponseByCategory(Category category) {
+    public List<SingleTravelProductConsoleElementResponse> getSingleTravelProductConsoleElementResponseByCategory(Category category) {
         return singleTravelProductRepository.findByCategory(category)
                 .stream()
-                .map(TravelProductConsoleElementResponse::new)
+                .map(SingleTravelProductConsoleElementResponse::new)
                 .toList();
     }
 

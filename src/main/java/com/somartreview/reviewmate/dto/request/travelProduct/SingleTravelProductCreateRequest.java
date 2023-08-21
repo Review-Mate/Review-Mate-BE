@@ -27,6 +27,10 @@ public class SingleTravelProductCreateRequest {
     @Schema(description = "상품명", example = "신라더스테이 호텧")
     private String name;
 
+    @NotBlank
+    @Schema(description = "여행상품 카테고리", example = "ACCOMMODATION")
+    private Category category;
+
     @NotNull
     @Schema(description = "파트너사 ID")
     private Long partnerCompanyId;
@@ -45,20 +49,16 @@ public class SingleTravelProductCreateRequest {
     @Schema(description = "여행상품 이용 종료시간", example = "2023.08.15T12:00")
     private LocalDateTime endTime;
 
-    @NotBlank
-    @Schema(description = "여행상품 카테고리", example = "ACCOMMODATION")
-    private Category category;
-
     public SingleTravelProduct toEntity(String thumbnailUrl ,PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
         return SingleTravelProduct.builder()
                 .partnerSingleTravelProductId(partnerSingleTravelProductId)
                 .thumbnailUrl(thumbnailUrl)
                 .name(name)
+                .category(category)
                 .partnerCompany(partnerCompany)
                 .partnerSeller(partnerSeller)
                 .startTime(startTime)
                 .endTime(endTime)
-                .category(category)
                 .build();
     }
 }

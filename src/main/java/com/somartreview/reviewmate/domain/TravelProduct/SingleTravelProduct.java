@@ -22,17 +22,12 @@ public class SingleTravelProduct extends TravelProduct {
 
     private LocalDateTime endTime;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Category category;
-
     @Builder
     public SingleTravelProduct(String partnerSingleTravelProductId, String thumbnailUrl, String name, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalDateTime startTime, LocalDateTime endTime, Category category) {
-        super(partnerSingleTravelProductId, thumbnailUrl, name, partnerCompany, partnerSeller);
+        super(partnerSingleTravelProductId, thumbnailUrl, name, category, partnerCompany, partnerSeller);
         validateTime(startTime, endTime);
         this.startTime = startTime;
         this.endTime = endTime;
-        this.category = category;
     }
 
     private void validateTime(final LocalDateTime startTime, final LocalDateTime endTime) {
@@ -42,10 +37,9 @@ public class SingleTravelProduct extends TravelProduct {
     }
 
     public void update(SingleTravelProductUpdateRequest request, String thumbnailUrl, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
-        super.update(request.getPartnerSingleTravelProductId(), thumbnailUrl, request.getName(), partnerCompany, partnerSeller);
+        super.update(request.getPartnerSingleTravelProductId(), thumbnailUrl, request.getName(), request.getCategory(), partnerCompany, partnerSeller);
         validateTime(request.getStartTime(), request.getEndTime());
         this.startTime = request.getStartTime();
         this.endTime = request.getEndTime();
-        this.category = request.getCategory();
     }
 }

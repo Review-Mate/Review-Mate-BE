@@ -24,6 +24,10 @@ public class SingleTravelProductUpdateRequest {
     @Schema(description = "상품명\n\n⚠️ 업데이트하지 않는 값이라도 제공되어야 합니다.", example = "신라더스테이 호텧")
     private String name;
 
+    @NotBlank
+    @Schema(description = "여행상품 카테고리\n\n⚠️ 업데이트하지 않는 값이라도 제공되어야 합니다.", example = "ACCOMMODATION")
+    private Category category;
+
     @NotNull
     @Schema(description = "파트너사 ID\n\n⚠️ 업데이트하지 않는 값이라도 제공되어야 합니다.")
     private Long partnerCompanyId;
@@ -42,7 +46,4 @@ public class SingleTravelProductUpdateRequest {
     @Schema(description = "여행상품 이용 종료시간\n\n⚠️ 업데이트하지 않는 값이라도 제공되어야 합니다.", example = "2023.08.15T12:00")
     private LocalDateTime endTime;
 
-    @NotBlank
-    @Schema(description = "여행상품 카테고리\n\n⚠️ 업데이트하지 않는 값이라도 제공되어야 합니다.", example = "ACCOMMODATION")
-    private Category category;
 }

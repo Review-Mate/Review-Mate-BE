@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TravelProductConsoleElementResponse {
+public class SingleTravelProductConsoleElementResponse {
 
     @Schema(description = "상품 ID")
     private Long id;
@@ -51,7 +51,7 @@ public class TravelProductConsoleElementResponse {
     @Schema(description = "Top 부정 태그 3개")
     private List<ReviewTagResponse> negativeTags;
 
-    public TravelProductConsoleElementResponse(SingleTravelProduct singleTravelProduct) {
+    public SingleTravelProductConsoleElementResponse(SingleTravelProduct singleTravelProduct) {
         this.id = singleTravelProduct.getId();
         this.partnerSingleTravelProductId = singleTravelProduct.getPartnerTravelProductId();
         this.thumbnailUrl = singleTravelProduct.getThumbnailUrl();

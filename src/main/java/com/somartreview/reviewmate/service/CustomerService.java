@@ -30,6 +30,11 @@ public class CustomerService {
         }
     }
 
+    public Customer findCustomerById(Long id) {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND));
+    }
+
     @Transactional
     public void updateCustomerById(Long id, CustomerUpdateRequest request) {
         validateUpdatePartnerCustomerId(request.getPartnerCustomerId());

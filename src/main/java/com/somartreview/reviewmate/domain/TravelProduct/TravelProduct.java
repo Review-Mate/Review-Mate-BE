@@ -42,6 +42,11 @@ public abstract class TravelProduct extends BaseEntity {
     @Column(nullable = false)
     private Float rating = 0.0f;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+
     @OneToMany(mappedBy = "travelProduct")
     private List<Review> reviews = new ArrayList<>();
 
@@ -54,13 +59,14 @@ public abstract class TravelProduct extends BaseEntity {
     private PartnerSeller partnerSeller;
 
 
-    public TravelProduct(String partnerTravelProductId, String thumbnailUrl, String name, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+    public TravelProduct(String partnerTravelProductId, String thumbnailUrl, String name, Category category, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
         validatePartnerTravelProductId(partnerTravelProductId);
         this.partnerTravelProductId = partnerTravelProductId;
         validateThumbnailUrl(thumbnailUrl);
         this.thumbnailUrl = thumbnailUrl;
         validateName(name);
         this.name = name;
+        this.category = category;
         this.partnerCompany = partnerCompany;
         this.partnerSeller = partnerSeller;
     }
@@ -90,13 +96,14 @@ public abstract class TravelProduct extends BaseEntity {
         this.reviews.add(review);
     }
 
-    public void update(String partnerTravelProductId, String thumbnailUrl, String name, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+    public void update(String partnerTravelProductId, String thumbnailUrl, String name, Category category, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
         validatePartnerTravelProductId(partnerTravelProductId);
         this.partnerTravelProductId = partnerTravelProductId;
         validateThumbnailUrl(thumbnailUrl);
         this.thumbnailUrl = thumbnailUrl;
         validateName(name);
         this.name = name;
+        this.category = category;
         this.partnerCompany = partnerCompany;
         this.partnerSeller = partnerSeller;
     }
