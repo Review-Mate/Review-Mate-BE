@@ -4,6 +4,7 @@ import com.somartreview.reviewmate.domain.Customer.Customer;
 import com.somartreview.reviewmate.domain.Customer.CustomerRepository;
 import com.somartreview.reviewmate.dto.request.customer.CustomerCreateRequest;
 import com.somartreview.reviewmate.dto.request.customer.CustomerUpdateRequest;
+import com.somartreview.reviewmate.dto.response.customer.CustomerResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,11 @@ public class CustomerService {
     public Customer findCustomerById(Long id) {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND));
+    }
+
+    public CustomerResponse getCustomerResponseById(Long id) {
+        final Customer customer = findCustomerById(id);
+        return new CustomerResponse(customer);
     }
 
     @Transactional
