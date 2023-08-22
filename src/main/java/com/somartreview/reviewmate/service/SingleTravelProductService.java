@@ -2,9 +2,7 @@ package com.somartreview.reviewmate.service;
 
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
-import com.somartreview.reviewmate.domain.TravelProduct.Category;
-import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProduct;
-import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProductRepository;
+import com.somartreview.reviewmate.domain.TravelProduct.*;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductUpdateRequest;
 import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductConsoleElementResponse;
@@ -16,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.somartreview.reviewmate.exception.ErrorCode.TRAVEL_PRODUCT_DUPLICATED_PARTNER_ID;
 import static com.somartreview.reviewmate.exception.ErrorCode.TRAVEL_PRODUCT_NOT_FOUND;
@@ -24,13 +23,14 @@ import static com.somartreview.reviewmate.exception.ErrorCode.TRAVEL_PRODUCT_NOT
 @RequiredArgsConstructor
 public class SingleTravelProductService {
 
+    private final TravelProductRepository travelProductRepository;
     private final SingleTravelProductRepository singleTravelProductRepository;
     private final PartnerCompanyService partnerCompanyService;
     private final PartnerSellerService partnerSellerService;
 
     @Transactional
     public Long createSingleTravelProduct(SingleTravelProductCreateRequest request, MultipartFile thumbnail) {
-        validateCreatePartnerTravelProductId(request.getPartnerSingleTravelProductId());
+        validateExistsPartnerTravelProductId(request.getPartnerSingleTravelProductId());
 
         final PartnerCompany partnerCompany = partnerCompanyService.findPartnerCompanyById(request.getPartnerCompanyId());
         final PartnerSeller partnerSeller = partnerSellerService.findPartnerSellerById(request.getPartnerSellerId());
@@ -40,8 +40,8 @@ public class SingleTravelProductService {
         return singleTravelProductRepository.save(request.toEntity(thumbnailUrl, partnerCompany, partnerSeller)).getId();
     }
 
-    private void validateCreatePartnerTravelProductId(String partnerTravelProductId) {
-        if (singleTravelProductRepository.existsByPartnerTravelProductId(partnerTravelProductId)) {
+    private void validateExistsPartnerTravelProductId(String partnerTravelProductId) {
+        if (travelProductRepository.existsByPartnerTravelProductId(partnerTravelProductId)) {
             throw new DomainLogicException(TRAVEL_PRODUCT_DUPLICATED_PARTNER_ID);
         }
     }
@@ -85,7 +85,7 @@ public class SingleTravelProductService {
     }
 
     private void updateSingleTravelProduct(SingleTravelProduct foundTravelProduct, SingleTravelProductUpdateRequest request, MultipartFile thumbnail) {
-        validateUpdatePartnerTravelProductId(request.getPartnerSingleTravelProductId());
+        validateDuplicatedPartnerTravelProductId(request.getPartnerSingleTravelProductId(), foundTravelProduct.getId());
 
         final PartnerCompany partnerCompany = partnerCompanyService.findPartnerCompanyById(request.getPartnerCompanyId());
         final PartnerSeller partnerSeller = partnerSellerService.findPartnerSellerById(request.getPartnerSellerId());
@@ -96,8 +96,9 @@ public class SingleTravelProductService {
         foundTravelProduct.update(request, thumbnailUrl, partnerCompany, partnerSeller);
     }
 
-    private void validateUpdatePartnerTravelProductId(String partnerTravelProductId) {
-        if (singleTravelProductRepository.countByPartnerTravelProductId(partnerTravelProductId) >= 2) {
+    private void validateDuplicatedPartnerTravelProductId(String partnerTravelProductId, Long id) {
+        Optional<TravelProduct> findTravelProduct = travelProductRepository.findByPartnerTravelProductId(partnerTravelProductId);
+        if (findTravelProduct.isPresent() && !findTravelProduct.get().getId().equals(id)) {
             throw new DomainLogicException(TRAVEL_PRODUCT_DUPLICATED_PARTNER_ID);
         }
     }

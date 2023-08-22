@@ -5,6 +5,7 @@ import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import com.somartreview.reviewmate.domain.Reservation.ReservationRepository;
 import com.somartreview.reviewmate.domain.TravelProduct.Category;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
+import com.somartreview.reviewmate.domain.TravelProduct.TravelProductRepository;
 import com.somartreview.reviewmate.dto.response.reservation.SingleTravelProductReservationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,23 +21,14 @@ public class ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final CustomerService customerService;
-    private final SingleTravelProductService singleTravelProductService;
+    private final TravelProductService travelProductService;
 
     @Transactional
-    public Long createReservation(Long customerId, Category category, Long travelProductId) {
+    public Long createReservation(Long customerId, Long travelProductId) {
         final Customer customer = customerService.findCustomerById(customerId);
-        final TravelProduct travelProduct = getTravelProductInReservation(category, travelProductId);
+        final TravelProduct travelProduct = travelProductService.findTravelProductById(travelProductId);
 
         return reservationRepository.save(new Reservation(customer, travelProduct)).getId();
-    }
-
-    private TravelProduct getTravelProductInReservation(Category category, Long travelProductId) {
-        if (category.equals(PACKAGE)){
-            // TODO: PackageTravelProduct 로직
-            return null;
-        } else {
-            return singleTravelProductService.findSingleTravelProductById(travelProductId);
-        }
     }
 
     public List<SingleTravelProductReservationResponse> getSingleTravelProductReservationsByTravelProductId(Long travelProductId) {
