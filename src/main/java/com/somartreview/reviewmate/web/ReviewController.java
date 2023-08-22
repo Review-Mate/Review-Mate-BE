@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.dto.response.review.WidgetReviewResponse;
+import com.somartreview.reviewmate.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -31,6 +32,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewController {
 
+    private final ReviewService reviewService;
+
     @Operation(operationId = "reviewCreateRequest", summary = "리뷰 생성", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
     @Parameters({
             @Parameter(name = "reviewCreateRequest", description = "리뷰 데이터 객체 \n\nMediaType: application/json", required = true),
@@ -42,7 +45,7 @@ public class ReviewController {
     @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> createReview(@Valid @RequestPart ReviewCreateRequest reviewCreateRequest,
                                              @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {
-        Long reviewId = 1L;
+        Long reviewId = reviewService.createReview(reviewCreateRequest, reviewImageFiles);
 
         return ResponseEntity.created(URI.create("/api/v1/review/" + reviewId)).build();
     }
@@ -63,8 +66,9 @@ public class ReviewController {
                                                                                    @RequestParam(required = false, defaultValue = "LATEST", value = "orderBy") OrderCriteria orderCriteria,
                                                                                    @RequestParam(required = false, defaultValue = "0") Integer page,
                                                                                    @RequestParam(required = false, defaultValue = "10") Integer size) {
+        List<WidgetReviewResponse> widgetReviewResponses = reviewService.getWidgetReviewsByTravelProductId(travelProductId, property, keyword, orderCriteria, page, size);
 
-        return ResponseEntity.ok(new ArrayList<WidgetReviewResponse>());
+        return ResponseEntity.ok(widgetReviewResponses);
     }
 
     @Operation(operationId = "updateReview", summary = "리뷰 수정", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
@@ -77,6 +81,7 @@ public class ReviewController {
     public ResponseEntity<Void> updateReview(@PathVariable Long reviewId,
                                              @RequestPart ReviewUpdateRequest reviewUpdateRequest,
                                              @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {
+        reviewService.updateReviewById(reviewId, reviewUpdateRequest, reviewImageFiles);
 
         return ResponseEntity.noContent().build();
     }
@@ -86,6 +91,8 @@ public class ReviewController {
     @ApiResponse(responseCode = "204", description = "리뷰 삭제 성공")
     @DeleteMapping("/{reviewId}")
     public ResponseEntity<Void> deleteReview(@PathVariable Long reviewId) {
+        reviewService.deleteReviewById(reviewId);
+
         return ResponseEntity.noContent().build();
     }
 }

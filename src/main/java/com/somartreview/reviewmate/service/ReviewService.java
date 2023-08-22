@@ -28,7 +28,7 @@ public class ReviewService {
     private final TravelProductService travelProductService;
 
     @Transactional
-    public void createReview(ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
+    public Long createReview(ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
         final Customer customer = customerService.findCustomerById(reviewCreateRequest.getCustomerId());
         final TravelProduct travelProduct = travelProductService.findTravelProductById(reviewCreateRequest.getTravelProductId());
 
@@ -39,6 +39,8 @@ public class ReviewService {
         review.appendReviewImage(reviewImages);
 
         // TODO: Request review tag through SQS
+
+        return review.getId();
     }
 
     private List<ReviewImage> createReviewImages(List<MultipartFile> reviewImageFiles) {
