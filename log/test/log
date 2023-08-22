@@ -936,3 +936,11 @@ alter table travel_product drop foreign key FKrjl3btw1leqijexob9ryiutra [42102-2
 2023-08-22 10:22:35.137  WARN 25793 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2023-08-22 10:22:35.323  INFO 25793 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
 2023-08-22 10:22:35.328  INFO 25793 --- [main] c.s.reviewmate.ReviewMateApplication     : Started ReviewMateApplication in 1.689 seconds (JVM running for 1.883)
+2023-08-22 10:31:12.162  WARN 25793 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6m7s637ms).
+2023-08-22 12:29:47.986  WARN 25793 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h58m35s825ms).
+2023-08-22 12:33:56.107  WARN 25793 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m8s121ms).
+2023-08-22 12:36:00.358  WARN 25793 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m4s251ms).
+2023-08-22 13:13:22.658  WARN 25793 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=37m22s300ms).
+2023-08-22 15:47:16.888  WARN 25793 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h33m54s230ms).
+2023-08-22 15:52:57.634  WARN 25793 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m40s746ms).
+2023-08-22 17:10:16.584  WARN 25793 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h17m18s950ms).

@@ -6,9 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface ReviewTagRepository extends JpaRepository<ReviewTag, Long> {
 
-    boolean existsByTravelProduct_Id(Long travelProductId);
-
-    List<Review> findAllByTravelProduct_Id(Long travelProductId);
+    List<ReviewTag> findAllByReview_Id(Long reviewId);
 }

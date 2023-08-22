@@ -4,6 +4,8 @@ import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -38,7 +40,8 @@ public class ReviewTag extends BaseEntity {
     @JoinColumn(name = "review_id", nullable = false)
     private Review review;
 
-    public ReviewTag(Property property, String keyword, Double polarityValue, Integer startIndex, Integer endIndex, Review review) {
+    @Builder
+    public ReviewTag(Property property, String keyword, Double polarityValue, Integer startIndex, Integer endIndex) {
         this.property = property;
         this.keyword = keyword;
         this.polarityValue = polarityValue;
@@ -46,8 +49,6 @@ public class ReviewTag extends BaseEntity {
         this.startIndex = startIndex;
         validateEndIndex(endIndex);
         this.endIndex = endIndex;
-        review.addReviewTag(this);
-        this.review = review;
     }
 
     private void validateStartIndex(Integer startIndex) {

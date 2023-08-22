@@ -46,7 +46,6 @@ public abstract class TravelProduct extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-
     @OneToMany(mappedBy = "travelProduct")
     private List<Review> reviews = new ArrayList<>();
 

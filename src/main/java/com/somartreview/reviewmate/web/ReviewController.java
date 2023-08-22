@@ -7,7 +7,7 @@ import com.somartreview.reviewmate.dto.request.review.ReviewCreateRequest;
 import javax.validation.Valid;
 
 import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
-import com.somartreview.reviewmate.dto.response.review.ReviewInProductResponse;
+import com.somartreview.reviewmate.dto.response.review.WidgetReviewResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -41,13 +41,13 @@ public class ReviewController {
     })
     @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> createReview(@Valid @RequestPart ReviewCreateRequest reviewCreateRequest,
-                                             @RequestPart(required = false) List<MultipartFile> reviewImages) {
+                                             @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {
         Long reviewId = 1L;
 
         return ResponseEntity.created(URI.create("/api/v1/review/" + reviewId)).build();
     }
 
-    @Operation(operationId = "findReviewsByTravelProductId", summary = "상품에 등록된 리뷰 조회", description = "상품에 등록된 리뷰를 조회합니다. \n\n리뷰태그의 속성과 키워드, 정렬기준, 페이징를 조회 옵션에 적용할 수 있습니다.")
+    @Operation(operationId = "findReviewsByTravelProductId", summary = "상품에 등록된 리뷰 조회", description = "🚨아직아무정렬도작동안함\n\n상품에 등록된 리뷰를 조회합니다. \n\n리뷰태그의 속성과 키워드, 정렬기준, 페이징를 조회 옵션에 적용할 수 있습니다.")
     @Parameters({
             @Parameter(name = "travelProductId", description = "상품 ID"),
             @Parameter(name = "property", description = "리뷰태그의 속성"),
@@ -57,14 +57,14 @@ public class ReviewController {
             @Parameter(name = "size", description = "페이지 크기")
     })
     @GetMapping("/products/{travelProductId}")
-    public ResponseEntity<List<ReviewInProductResponse>> findReviewsByTravelProductId(@PathVariable Long travelProductId,
-                                                                                @RequestParam(required = false, value = "property") Property property,
-                                                                                @RequestParam(required = false, value = "keyword") String keyword,
-                                                                                @RequestParam(required = false, defaultValue = "LATEST", value = "orderBy") OrderCriteria orderCriteria,
-                                                                                @RequestParam(required = false, defaultValue = "0") Integer page,
-                                                                                @RequestParam(required = false, defaultValue = "10") Integer size) {
+    public ResponseEntity<List<WidgetReviewResponse>> findReviewsByTravelProductId(@PathVariable Long travelProductId,
+                                                                                   @RequestParam(required = false, value = "property") Property property,
+                                                                                   @RequestParam(required = false, value = "keyword") String keyword,
+                                                                                   @RequestParam(required = false, defaultValue = "LATEST", value = "orderBy") OrderCriteria orderCriteria,
+                                                                                   @RequestParam(required = false, defaultValue = "0") Integer page,
+                                                                                   @RequestParam(required = false, defaultValue = "10") Integer size) {
 
-        return ResponseEntity.ok(new ArrayList<ReviewInProductResponse>());
+        return ResponseEntity.ok(new ArrayList<WidgetReviewResponse>());
     }
 
     @Operation(operationId = "updateReview", summary = "리뷰 수정", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
@@ -76,7 +76,7 @@ public class ReviewController {
     @PatchMapping(value = "/{reviewId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Void> updateReview(@PathVariable Long reviewId,
                                              @RequestPart ReviewUpdateRequest reviewUpdateRequest,
-                                             @RequestPart(required = false) List<MultipartFile> reviewImages) {
+                                             @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {
 
         return ResponseEntity.noContent().build();
     }

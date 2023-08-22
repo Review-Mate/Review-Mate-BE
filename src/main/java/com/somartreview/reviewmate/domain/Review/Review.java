@@ -3,14 +3,19 @@ package com.somartreview.reviewmate.domain.Review;
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.Customer.Customer;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
+import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.somartreview.reviewmate.exception.ErrorCode.*;
 
 @Entity
 @Getter
@@ -19,6 +24,8 @@ public class Review extends BaseEntity {
 
     private static final int MAX_TITLE_LENGTH = 255;
     private static final int MAX_CONTENT_LENGTH = 255;
+    private static final int MIN_RATING = 1;
+    private static final int MAX_RATING = 5;
 
 
     @Id @GeneratedValue
@@ -51,7 +58,9 @@ public class Review extends BaseEntity {
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewImage> reviewImages = new ArrayList<>();
 
+    @Builder
     public Review(Integer rating, String title, String content, Customer customer, TravelProduct travelProduct) {
+        validateRating(rating);
         this.rating = rating;
         validateTitle(title);
         this.title = title;
@@ -62,15 +71,21 @@ public class Review extends BaseEntity {
         this.travelProduct = travelProduct;
     }
 
+    private void validateRating(final Integer rating) {
+        if (rating < MIN_RATING || rating > MAX_RATING) {
+            throw new DomainLogicException(REVIEW_RATING_ERROR);
+        }
+    }
+
     private void validateTitle(final String title) {
         if (title.isBlank() || title.length() > MAX_TITLE_LENGTH) {
-            throw new DomainLogicException(ErrorCode.REVIEW_TITLE_ERROR);
+            throw new DomainLogicException(REVIEW_TITLE_ERROR);
         }
     }
 
     private void validateContent(final String content) {
         if (content.isBlank() || content.length() > MAX_CONTENT_LENGTH) {
-            throw new DomainLogicException(ErrorCode.REVIEW_CONTENT_ERROR);
+            throw new DomainLogicException(REVIEW_CONTENT_ERROR);
         }
     }
 
@@ -81,16 +96,25 @@ public class Review extends BaseEntity {
         this.reviewTags.add(reviewTag);
     }
 
-    public void addReviewImage(ReviewImage reviewImage) {
-        this.reviewImages.add(reviewImage);
+    public void clearReviewTags() {
+        this.reviewTags.clear();
+        this.polarityValue = 0.0;
     }
 
-    public void updateReview(Integer rating, String title, String content) {
-        this.rating = rating;
-        validateTitle(title);
-        this.title = title;
-        validateContent(content);
-        this.content = content;
-        this.polarityValue = 0.0;
+    public void appendReviewImage(List<ReviewImage> reviewImages) {
+        this.reviewImages.addAll(reviewImages);
+    }
+
+    public void clearReviewImages() {
+        this.reviewImages.clear();
+    }
+
+    public void updateReview(ReviewUpdateRequest reviewUpdateRequest) {
+        validateRating(reviewUpdateRequest.getRating());
+        this.rating = reviewUpdateRequest.getRating();
+        validateTitle(reviewUpdateRequest.getTitle());
+        this.title = reviewUpdateRequest.getTitle();
+        validateContent(reviewUpdateRequest.getContent());
+        this.content = reviewUpdateRequest.getContent();
     }
 }
