@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -59,6 +60,10 @@ public class ReviewController {
             @Parameter(name = "page", description = "페이지 번호"),
             @Parameter(name = "size", description = "페이지 크기")
     })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "리뷰 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "존재하지 않는 리뷰 ID")
+    })
     @GetMapping("/products/{travelProductId}")
     public ResponseEntity<List<WidgetReviewResponse>> findReviewsByTravelProductId(@PathVariable Long travelProductId,
                                                                                    @RequestParam(required = false, value = "property") Property property,
@@ -71,14 +76,17 @@ public class ReviewController {
         return ResponseEntity.ok(widgetReviewResponses);
     }
 
-    @Operation(operationId = "updateReview", summary = "리뷰 수정", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
+    @Operation(operationId = "updateReviewByReviewId", summary = "리뷰 수정", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
     @Parameters({
             @Parameter(name = "reviewUpdateRequest", description = "리뷰 데이터 객체 \n\nMediaType: application/json", required = true),
             @Parameter(name = "reviewImages", description = "리뷰 이미지 리스트 \n\nMediaType: Multipart/form-data", required = false)
     })
-    @ApiResponse(responseCode = "204", description = "리뷰 수정 성공")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "리뷰 수정 성공"),
+            @ApiResponse(responseCode = "400", description = "존재하지 않는 리뷰 ID")
+    })
     @PatchMapping(value = "/{reviewId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<Void> updateReview(@PathVariable Long reviewId,
+    public ResponseEntity<Void> updateReviewByReviewId(@PathVariable Long reviewId,
                                              @RequestPart ReviewUpdateRequest reviewUpdateRequest,
                                              @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {
         reviewService.updateReviewById(reviewId, reviewUpdateRequest, reviewImageFiles);
@@ -87,10 +95,13 @@ public class ReviewController {
     }
 
 
-    @Operation(operationId = "deleteReview", summary = "리뷰 삭제")
-    @ApiResponse(responseCode = "204", description = "리뷰 삭제 성공")
+    @Operation(operationId = "deleteReviewByReviewId", summary = "리뷰 삭제")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "리뷰 삭제 성공"),
+            @ApiResponse(responseCode = "400", description = "존재하지 않는 리뷰 ID")
+    })
     @DeleteMapping("/{reviewId}")
-    public ResponseEntity<Void> deleteReview(@PathVariable Long reviewId) {
+    public ResponseEntity<Void> deleteReviewByReviewId(@PathVariable Long reviewId) {
         reviewService.deleteReviewById(reviewId);
 
         return ResponseEntity.noContent().build();
