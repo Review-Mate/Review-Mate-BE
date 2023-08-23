@@ -17,7 +17,7 @@ public class ReviewImage extends BaseEntity {
     private static final int MAX_URL_LENGTH = 1024;
 
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_image_id")
     private Long id;
 

@@ -25,7 +25,7 @@ public class PartnerManager extends BaseEntity {
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
     private static final int MIN_PASSWORD_LENGTH = 8;
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "partner_manager_id")
     private Long id;
 
