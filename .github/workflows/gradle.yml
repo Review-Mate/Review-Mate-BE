@@ -83,6 +83,7 @@ jobs:
           username: ec2-user
           key: ${{ secrets.AWS_PEM_KEY }}
           port: 22
+          envs: GITHUB_SHA
           script: |
               sudo docker rm -f $(docker ps -qa)
               sudo docker pull ${{ secrets.DOCKER_REPO_PROD }}
@@ -99,6 +100,7 @@ jobs:
         username: ec2-user
         key: ${{ secrets.AWS_PEM_KEY }}
         port: 22
+        envs: GITHUB_SHA
         script: |
             sudo docker rm -f $(docker ps -qa)
             sudo docker pull ${{ secrets.DOCKER_REPO_TEST }}
