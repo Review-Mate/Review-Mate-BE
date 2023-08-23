@@ -20,12 +20,16 @@ import java.time.LocalDateTime;
 public class SingleTravelProductCreateRequest {
 
     @NotBlank
-    @Schema(description = "클라이언트 서비스에서의 상품 식별지", example = "PRODUCT-0001")
+    @Schema(description = "클라이언트 서비스에서의 상품 식별자", example = "PRODUCT-0001")
     private String partnerSingleTravelProductId;
 
     @NotBlank
     @Schema(description = "상품명", example = "신라더스테이 호텧")
     private String name;
+
+    @NotBlank
+    @Schema(description = "여행상품 카테고리", example = "ACCOMMODATION")
+    private Category category;
 
     @NotNull
     @Schema(description = "파트너사 ID")
@@ -45,19 +49,16 @@ public class SingleTravelProductCreateRequest {
     @Schema(description = "여행상품 이용 종료시간", example = "2023.08.15T12:00")
     private LocalDateTime endTime;
 
-    @NotBlank
-    @Schema(description = "여행상품 카테고리", example = "ACCOMMODATION")
-    private Category category;
-
-    public SingleTravelProduct toEntity(PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+    public SingleTravelProduct toEntity(String thumbnailUrl ,PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
         return SingleTravelProduct.builder()
                 .partnerSingleTravelProductId(partnerSingleTravelProductId)
+                .thumbnailUrl(thumbnailUrl)
                 .name(name)
+                .category(category)
                 .partnerCompany(partnerCompany)
                 .partnerSeller(partnerSeller)
                 .startTime(startTime)
                 .endTime(endTime)
-                .category(category)
                 .build();
     }
 }

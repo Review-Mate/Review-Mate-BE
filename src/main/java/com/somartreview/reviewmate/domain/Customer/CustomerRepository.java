@@ -10,6 +10,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     boolean existsByPartnerCustomerId(String partnerCustomerId);
 
+    int countByPartnerCustomerId(String partnerCustomerId);
+
     Optional<Customer> findByPartnerCustomerId(String partnerCustomerId);
 
     void deleteByPartnerCustomerId(String partnerCustomerId);

@@ -4,9 +4,12 @@ import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.PartnerManager.PartnerManager;
 import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
+import com.somartreview.reviewmate.dto.request.PartnerCompanyUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,14 +28,22 @@ public class PartnerCompany extends BaseEntity {
     @Column(name = "partner_company_id")
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String domain;
+
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
-    @OneToMany(mappedBy = "partnerCompany", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Boolean isWithdrawn = false;
+
+    @Column(nullable = false)
+    @OneToMany(mappedBy = "partnerCompany")
     private List<PartnerManager> partnerManagers = new ArrayList<>();
 
-    public PartnerCompany(String name) {
+    @Builder
+    public PartnerCompany(String domain, String name) {
+        this.domain = domain;
         validateName(name);
         this.name = name;
     }
@@ -45,5 +56,11 @@ public class PartnerCompany extends BaseEntity {
 
     public void addPartnerManager(PartnerManager partnerManager) {
         this.partnerManagers.add(partnerManager);
+    }
+
+    public void update(PartnerCompanyUpdateRequest request) {
+        this.domain = domain;
+        validateName(request.getName());
+        this.name = request.getName();
     }
 }

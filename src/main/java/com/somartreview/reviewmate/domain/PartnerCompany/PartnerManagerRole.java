@@ -1,5 +1,5 @@
 package com.somartreview.reviewmate.domain.PartnerCompany;
 
-public enum Role {
+public enum PartnerManagerRole {
     ADMIN, REVIEW_MANAGER, CS_MANAGER
 }

@@ -4,6 +4,8 @@ import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,10 +28,9 @@ public class ReviewImage extends BaseEntity {
     @JoinColumn(name = "review_id", nullable = false)
     private Review review;
 
-    public ReviewImage(String url, Review review) {
+    @Builder
+    public ReviewImage(String url) {
         this.url = url;
-        review.addReviewImage(this);
-        this.review = review;
     }
 
     private void validateUrl(final String url) {

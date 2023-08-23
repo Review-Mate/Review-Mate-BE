@@ -2,6 +2,7 @@ package com.somartreview.reviewmate.domain.TravelProduct;
 
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
+import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
@@ -21,22 +22,24 @@ public class SingleTravelProduct extends TravelProduct {
 
     private LocalDateTime endTime;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Category category;
-
     @Builder
-    public SingleTravelProduct(String partnerSingleTravelProductId, String thumbnailUrl, String name, Float rating, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalDateTime startTime, LocalDateTime endTime, Category category) {
-        super(partnerSingleTravelProductId, thumbnailUrl, name, rating, partnerCompany, partnerSeller);
+    public SingleTravelProduct(String partnerSingleTravelProductId, String thumbnailUrl, String name, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalDateTime startTime, LocalDateTime endTime, Category category) {
+        super(partnerSingleTravelProductId, thumbnailUrl, name, category, partnerCompany, partnerSeller);
         validateTime(startTime, endTime);
         this.startTime = startTime;
         this.endTime = endTime;
-        this.category = category;
     }
 
     private void validateTime(final LocalDateTime startTime, final LocalDateTime endTime) {
         if (startTime.isAfter(endTime)) {
             throw new DomainLogicException(ErrorCode.TRAVEL_PRODUCT_START_TIME_ERROR);
         }
+    }
+
+    public void update(SingleTravelProductUpdateRequest request, String thumbnailUrl, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+        super.update(request.getPartnerSingleTravelProductId(), thumbnailUrl, request.getName(), request.getCategory(), partnerCompany, partnerSeller);
+        validateTime(request.getStartTime(), request.getEndTime());
+        this.startTime = request.getStartTime();
+        this.endTime = request.getEndTime();
     }
 }

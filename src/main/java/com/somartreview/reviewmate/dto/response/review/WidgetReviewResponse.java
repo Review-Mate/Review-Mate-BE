@@ -1,17 +1,18 @@
 package com.somartreview.reviewmate.dto.response.review;
 
+import com.somartreview.reviewmate.domain.Review.Review;
+import com.somartreview.reviewmate.domain.Review.ReviewTag;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewInProductResponse {
+public class WidgetReviewResponse {
 
     @Schema(description = "리뷰 ID", example = "1")
     private Long id;
@@ -34,6 +35,17 @@ public class ReviewInProductResponse {
     @Schema(description = "긍부정 수치 (양수 = 긍정, 음수 = 부정)", example = "10.18")
     private Double polarityValue;
 
-    @Schema(description = "적용된 속성 혹은 키워드가 포함된 문자열의 인덱스")
-    private List<ReviewHighlightPair> reviewHighlightPairs;
+    @Schema(description = "적용된 속성 혹은 키워드가 포함된 문자열의 인덱스들")
+    private List<ReviewHighlightPairResponse> reviewHighlightPairResponses;
+
+    public WidgetReviewResponse(final Review review, final List<ReviewTag> reviewTags) {
+        this.id = review.getId();
+        this.rating = review.getRating();
+        this.title = review.getTitle();
+        this.content = review.getContent();
+        this.authorName = review.getCustomer().getName();
+        this.createdAt = review.getCreatedAt().toString();
+        this.polarityValue = review.getPolarityValue();
+        this.reviewHighlightPairResponses = reviewTags.stream().map(ReviewHighlightPairResponse::new).toList();
+    }
 }

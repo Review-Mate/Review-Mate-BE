@@ -2,10 +2,13 @@ package com.somartreview.reviewmate.domain.PartnerManager;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
-import com.somartreview.reviewmate.domain.PartnerCompany.Role;
+import com.somartreview.reviewmate.domain.PartnerCompany.PartnerManagerRole;
+import com.somartreview.reviewmate.dto.request.partnerManager.PartnerManagerUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,7 +31,7 @@ public class PartnerManager extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(STRING)
-    private Role role;
+    private PartnerManagerRole role;
 
     @Column(length = 20, nullable = false)
     private String name;
@@ -43,8 +46,9 @@ public class PartnerManager extends BaseEntity {
     @JoinColumn(name = "partner_company_id", nullable = false)
     private PartnerCompany partnerCompany;
 
+    @Builder
     public PartnerManager(String name, String email, String password, PartnerCompany partnerCompany) {
-        this.role = Role.ADMIN;
+        this.role = PartnerManagerRole.ADMIN;
         validateName(name);
         this.name = name;
         validateEmail(email);
@@ -55,7 +59,7 @@ public class PartnerManager extends BaseEntity {
         this.partnerCompany = partnerCompany;
     }
 
-    public PartnerManager(Role role, String name, String email, String password, PartnerCompany partnerCompany) {
+    public PartnerManager(PartnerManagerRole role, String name, String email, String password, PartnerCompany partnerCompany) {
         this.role = role;
         validateName(name);
         this.name = name;
@@ -83,5 +87,14 @@ public class PartnerManager extends BaseEntity {
         if (password.length() < MIN_PASSWORD_LENGTH) {
             throw new DomainLogicException(ErrorCode.PARTNER_MANAGER_PASSWORD_ERROR);
         }
+    }
+
+    public void update(PartnerManagerUpdateRequest request) {
+        validateName(request.getName());
+        this.name = request.getName();
+        validateEmail(request.getEmail());
+        this.email = request.getEmail();
+        validatePassword(request.getPassword());
+        this.password = request.getPassword();
     }
 }
