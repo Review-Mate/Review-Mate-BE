@@ -26,7 +26,7 @@ public abstract class TravelProduct extends BaseEntity {
     private static final int MAX_NAME_LENGTH = 255;
 
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "travel_product_id")
     private Long id;
 

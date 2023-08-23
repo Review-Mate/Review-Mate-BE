@@ -28,7 +28,7 @@ public class Review extends BaseEntity {
     private static final int MAX_RATING = 5;
 
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private Long id;
 

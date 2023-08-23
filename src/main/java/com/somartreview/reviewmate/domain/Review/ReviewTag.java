@@ -17,7 +17,7 @@ public class ReviewTag extends BaseEntity {
     private static final int MAX_REVIEW_CONTENT_LENGTH = 255;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_tag_id")
     private Long id;
 

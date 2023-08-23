@@ -25,7 +25,7 @@ public class PartnerSeller extends BaseEntity {
     private static final Pattern ONLY_NUMBER_PATTERN = Pattern.compile("[0-9]+");
 
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "partner_seller_id")
     private Long id;
 

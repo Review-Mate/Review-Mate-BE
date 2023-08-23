@@ -24,7 +24,7 @@ public class PartnerCompany extends BaseEntity {
     private static final int MAX_NAME_LENGTH = 255;
 
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "partner_company_id")
     private Long id;
 

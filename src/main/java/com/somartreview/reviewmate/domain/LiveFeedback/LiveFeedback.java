@@ -17,7 +17,7 @@ public class LiveFeedback extends BaseEntity {
     private static final int MAX_MESSAGE_LENGTH = 255;
     private static final int MAX_URL_LENGTH = 1024;
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "live_feedback_id")
     private Long id;
 

@@ -17,7 +17,7 @@ public class TourCourse extends BaseEntity {
     private static final int MAX_NAME_LENGTH = 255;
 
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tour_course_id")
     private Long id;
 

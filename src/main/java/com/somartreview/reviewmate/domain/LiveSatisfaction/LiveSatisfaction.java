@@ -20,7 +20,7 @@ public class LiveSatisfaction extends BaseEntity {
     private static final int LOWEST_RATING = 1;
     private static final int HIGHEST_RATING = 5;
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "live_satisfaction_id")
     private Long id;
 
