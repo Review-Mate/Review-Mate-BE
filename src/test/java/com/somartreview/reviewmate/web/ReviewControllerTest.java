@@ -3,9 +3,11 @@ package com.somartreview.reviewmate.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.somartreview.reviewmate.dto.request.review.ReviewCreateRequest;
 import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
+import com.somartreview.reviewmate.service.ReviewService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -13,7 +15,12 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.FileInputStream;
+import java.util.Collections;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,10 +31,14 @@ class ReviewControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @MockBean
+    private ReviewService reviewService;
 
     @Test
     void 리뷰를_생성한다() throws Exception {
         // given
+        given(reviewService.createReview(any(), any())).willReturn(1L);
+
         MockMultipartFile image1 = new MockMultipartFile(
                 "reviewImages[0]",
                 "logo_b.jpg",
@@ -42,7 +53,7 @@ class ReviewControllerTest {
                 new ObjectMapper().writeValueAsString(new ReviewCreateRequest(5, "리뷰 제목", "리뷰 내용", 1L, 1L)).getBytes()
         );
 
-        // when
+        // when & then
         mockMvc.perform(
                         multipart("/api/v1/reviews/")
                                 .file(image1)
@@ -65,7 +76,10 @@ class ReviewControllerTest {
 
     @Test
     void 상품에_달려있는_리뷰를_조회한댜() throws Exception {
-        // when
+        // given
+        given(reviewService.getWidgetReviewsByTravelProductId(anyLong(), any(), any(), any(), any(), any())).willReturn(Collections.emptyList());
+
+        // when & then
         mockMvc.perform(
                         get("/api/v1/reviews/products/{travelProductId}", 1)
                                 .param("travelProductId", "1")
@@ -82,6 +96,8 @@ class ReviewControllerTest {
     @Test
     void 리뷰를_수정한다() throws Exception {
         // given
+        doNothing().when(reviewService).updateReviewById(anyLong(), any(), any());
+
         MockMultipartFile image2 = new MockMultipartFile(
                 "reviewImages[0]",
                 "logo_w.jpg",
@@ -96,7 +112,7 @@ class ReviewControllerTest {
                 new ObjectMapper().writeValueAsString(new ReviewUpdateRequest(5, "리뷰 제목", "리뷰 내용")).getBytes()
         );
 
-        // when
+        // when & then
         mockMvc.perform(
                         multipart(HttpMethod.PATCH, "/api/v1/reviews/{reviewId}", 1)
                                 .file(image2)
@@ -109,7 +125,10 @@ class ReviewControllerTest {
 
     @Test
     void 리뷰를_삭제한다() throws Exception {
-        // when
+        // given
+        doNothing().when(reviewService).deleteReviewById(anyLong());
+
+        // when & then
         mockMvc.perform(
                         delete("/api/v1/reviews/{reviewId}", 1)
         )
