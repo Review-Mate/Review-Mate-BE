@@ -70,7 +70,7 @@ jobs:
       if: contains(github.ref, 'release')
       run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_REPO_TEST }} .
+          docker build -f Dockerfile-test -t ${{ secrets.DOCKER_REPO_TEST }} .
           docker push ${{ secrets.DOCKER_REPO_TEST }}
 
     ## deploy to production
@@ -83,6 +83,7 @@ jobs:
           username: ec2-user
           key: ${{ secrets.AWS_PEM_KEY }}
           port: 22
+          envs: GITHUB_SHA
           script: |
               sudo docker rm -f $(docker ps -qa)
               sudo docker pull ${{ secrets.DOCKER_REPO_PROD }}
@@ -99,6 +100,7 @@ jobs:
         username: ec2-user
         key: ${{ secrets.AWS_PEM_KEY }}
         port: 22
+        envs: GITHUB_SHA
         script: |
             sudo docker rm -f $(docker ps -qa)
             sudo docker pull ${{ secrets.DOCKER_REPO_TEST }}
