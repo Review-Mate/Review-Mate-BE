@@ -70,7 +70,7 @@ jobs:
       if: contains(github.ref, 'release')
       run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_REPO_TEST }} .
+          docker build -f Dockerfile-test -t ${{ secrets.DOCKER_REPO_TEST }} .
           docker push ${{ secrets.DOCKER_REPO_TEST }}
 
     ## deploy to production
