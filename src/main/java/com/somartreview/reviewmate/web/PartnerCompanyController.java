@@ -5,6 +5,7 @@ import com.somartreview.reviewmate.dto.request.partnerCompany.PartnerCompanyCrea
 import com.somartreview.reviewmate.dto.response.partnerCompany.PartnerCompanyResponse;
 import com.somartreview.reviewmate.service.PartnerCompanyService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -37,6 +38,7 @@ public class PartnerCompanyController {
 
 
     @Operation(operationId = "getPartnerCompanyResponseByDomain", summary = "파트너사 조회")
+    @Parameter(name = "partnerDomain", description = "파트너사 도메인", example = "goodchoice.kr")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "파트너사 조회 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 Domain")
@@ -64,6 +66,7 @@ public class PartnerCompanyController {
 
 
     @Operation(operationId = "updatePartnerCompanyByPartnerDomain", summary = "파트너사 정보 수정")
+    @Parameter(name = "partnerDomain", description = "파트너사 도메인", example = "goodchoice.kr")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "파트너사 정보 수정 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 Domain")
@@ -93,6 +96,7 @@ public class PartnerCompanyController {
 
 
     @Operation(operationId = "deletePartnerCompanyByPartnerCompanyId", summary = "파트너사 삭제")
+    @Parameter(name = "partnerDomain", description = "파트너사 도메인", example = "goodchoice.kr")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "파트너사 삭제 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 ID")
