@@ -15,9 +15,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 
-@Tag(name = "파트너사", description = "⚠️ 개발 환경 및 테스트 용도로만 id로 호출하고, 프로덕션 코드에서는 도메인을 기준으로 호출해주세요.")
+@Tag(name = "파트너사", description = "⚠️ 개발 환경 및 테스트 용도로만 id로 호출하고, 프로덕션 코드에서는 domain을 기준으로 호출해주세요.")
 @RestController
 @RequestMapping("/api/v1/partners")
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class PartnerCompanyController {
             @Header(name = "Location", description = "생성된 파트너사의 URI, /api/v1/partners/{partnerDomain}/companies", schema = @Schema(type = "string"))
     })
     @PostMapping("/companies")
-    public ResponseEntity<Void> createPartnerCompany(@RequestBody PartnerCompanyCreateRequest partnerCompanyCreateRequest) {
+    public ResponseEntity<Void> createPartnerCompany(@Valid @RequestBody PartnerCompanyCreateRequest partnerCompanyCreateRequest) {
         String partnerDomain = partnerCompanyService.createPartnerCompany(partnerCompanyCreateRequest);
 
         return ResponseEntity.created(URI.create("/api/v1/partners/" + partnerDomain + "/companies")).build();
@@ -74,7 +75,7 @@ public class PartnerCompanyController {
     })
     @PutMapping("/{partnerDomain}/companies")
     public ResponseEntity<Void> updatePartnerCompanyByPartnerDomain(@PathVariable String partnerDomain,
-                                                                    @RequestBody PartnerCompanyUpdateRequest request) {
+                                                                    @Valid @RequestBody PartnerCompanyUpdateRequest request) {
         partnerCompanyService.updatePartnerCompanyByDomain(partnerDomain, request);
 
         return ResponseEntity.noContent().build();
@@ -89,7 +90,7 @@ public class PartnerCompanyController {
     })
     @PutMapping("/{partnerCompanyId}/companies")
     public ResponseEntity<Void> updatePartnerCompanyByPartnerCompanyId(@PathVariable Long partnerCompanyId,
-                                                                       @RequestBody PartnerCompanyUpdateRequest request) {
+                                                                       @Valid @RequestBody PartnerCompanyUpdateRequest request) {
         partnerCompanyService.updatePartnerCompanyById(partnerCompanyId, request);
 
         return ResponseEntity.noContent().build();

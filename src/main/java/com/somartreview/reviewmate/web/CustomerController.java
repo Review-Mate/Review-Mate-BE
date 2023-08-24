@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @Tag(name = "고객/여행객", description = "⚠️ 개발 환경 및 테스트 용도로만 사용하고, 프로덕션 코드에서는 예약 API를 통해 고객을 생성하세요.")
@@ -30,7 +31,7 @@ public class CustomerController {
             @Header(name = "Location", description = "생성된 고객의 URI, /api/v1/customers/{customerId}", schema = @Schema(type = "string"))
     })
     @PostMapping("/")
-    public ResponseEntity<Void> createCustomer(@RequestBody CustomerCreateRequest customerCreateRequest) {
+    public ResponseEntity<Void> createCustomer(@Valid @RequestBody CustomerCreateRequest customerCreateRequest) {
         Long customerId = customerService.createCustomer(customerCreateRequest);
 
         return ResponseEntity.created(URI.create("/api/v1/customers/" + customerId)).build();
@@ -56,7 +57,8 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "존재하지 않는 고객 ID")
     })
     @PutMapping("/{customerId}")
-    public ResponseEntity<Void> updateCustomerByCustomerId(@PathVariable Long customerId, @RequestBody CustomerUpdateRequest request) {
+    public ResponseEntity<Void> updateCustomerByCustomerId(@PathVariable Long customerId,
+                                                           @Valid @RequestBody CustomerUpdateRequest request) {
         customerService.updateCustomerById(customerId, request);
 
         return ResponseEntity.noContent().build();

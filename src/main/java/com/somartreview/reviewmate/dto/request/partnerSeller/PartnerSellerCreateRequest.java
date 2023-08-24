@@ -27,10 +27,6 @@ public class PartnerSellerCreateRequest {
     @Schema(description = "파트너사의 판매자 카카오 아이디", example = "sckwon770")
     private String kakaoId;
 
-    @NotNull
-    @Schema(description = "소속 파트너사의 아이디", example = "1")
-    private Long partnerCompanyId;
-
     public PartnerSeller toEntity(PartnerCompany partnerCompany) {
         return PartnerSeller.builder()
                 .name(name)

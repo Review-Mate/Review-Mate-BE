@@ -36,6 +36,7 @@ public enum ErrorCode {
     PARTNER_SELLER_EMAIL_ERROR("1221", "판매자의 이메일이 올바른 형식이 아닙니다."),
     PARTNER_SELLER_PASSWORD_ERROR("1222", "판매자의 비밀번호가 너무 짧거나 공백입니다."),
     PARTNER_SELLER_NOT_FOUND("1223", "판매자를 찾을 수 없습니다."),
+    PARTNER_SELLER_NOT_MATCH_WITH_PARTNER_DOMAIN("1224", "판매자가 소속된 파트너사의 도메인과 일치하지 않습니다."),
 
     REVIEW_RATING_ERROR("1300", "리뷰의 별점이 잘못된 범위입니다."),
     REVIEW_TITLE_ERROR("1301", "리뷰의 제목이 너무 길거나 공백입니다."),

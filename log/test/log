@@ -114,3 +114,32 @@
 2023-08-24 12:14:04.229  INFO 76930 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2023-08-24 12:14:04.231  INFO 76930 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
 2023-08-24 12:14:04.513  INFO 76930 --- [http-nio-8080-exec-4] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 170 ms
+2023-08-24 14:39:28.627  INFO 76930 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-08-24 14:39:28.629  INFO 76930 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2023-08-24 14:39:28.833  INFO 76930 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-08-24 14:39:28.835  INFO 76930 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-08-24 14:39:30.912  INFO 96291 --- [main] c.s.reviewmate.ReviewMateApplication     : Starting ReviewMateApplication using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 96291 (/Users/chan/code/java/review-mate-be/build/classes/java/main started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-24 14:39:30.913  INFO 96291 --- [main] c.s.reviewmate.ReviewMateApplication     : The following 1 profile is active: "secret"
+2023-08-24 14:39:31.190  INFO 96291 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-08-24 14:39:31.218  INFO 96291 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 13 JPA repository interfaces.
+2023-08-24 14:39:31.427  INFO 96291 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-08-24 14:39:31.431  INFO 96291 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-08-24 14:39:31.431  INFO 96291 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.78]
+2023-08-24 14:39:31.470  INFO 96291 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-08-24 14:39:31.470  INFO 96291 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 539 ms
+2023-08-24 14:39:31.481  INFO 96291 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-08-24 14:39:31.592  INFO 96291 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-08-24 14:39:31.596  INFO 96291 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:~/reviewmate_test'
+2023-08-24 14:39:31.641  INFO 96291 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-08-24 14:39:31.662  INFO 96291 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2023-08-24 14:39:31.721  INFO 96291 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-08-24 14:39:31.757  INFO 96291 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-08-24 14:39:32.106  INFO 96291 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-08-24 14:39:32.110  INFO 96291 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-08-24 14:39:32.403  WARN 96291 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-08-24 14:39:32.590  INFO 96291 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-08-24 14:39:32.595  INFO 96291 --- [main] c.s.reviewmate.ReviewMateApplication     : Started ReviewMateApplication in 1.816 seconds (JVM running for 2.248)
+2023-08-24 14:39:49.771  INFO 96291 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-08-24 14:39:49.771  INFO 96291 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-08-24 14:39:49.772  INFO 96291 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-08-24 14:39:50.080  INFO 96291 --- [http-nio-8080-exec-4] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 177 ms
