@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
-@Tag(name = "고객/여행객")
+@Tag(name = "고객/여행객", description = "⚠️ 개발 환경 및 테스트 용도로만 사용하고, 프로덕션 코드에서는 예약 API를 통해 고객을 생성하세요.")
 @RestController
 @RequestMapping("/api/v1/customers")
 @RequiredArgsConstructor
