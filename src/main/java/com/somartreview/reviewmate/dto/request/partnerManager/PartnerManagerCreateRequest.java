@@ -27,10 +27,6 @@ public class PartnerManagerCreateRequest {
     @Schema(description = "파트너사 관리자의 비밀번호\n\n⚠️ 비밀번호는 8자리 이상이어야 함", example = "password1234")
     private String password;
 
-    @NotBlank
-    @Schema(description = "소속 파트너사의 도메인", example = "goodchoice.kr")
-    private String partnerCompanyDomain;
-
     public PartnerManager toEntity(PartnerCompany partnerCompany) {
         return PartnerManager.builder()
                 .name(name)
