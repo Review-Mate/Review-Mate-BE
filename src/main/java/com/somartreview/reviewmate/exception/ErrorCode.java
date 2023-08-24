@@ -40,6 +40,7 @@ public enum ErrorCode {
     REVIEW_TITLE_ERROR("1301", "리뷰의 제목이 너무 길거나 공백입니다."),
     REVIEW_CONTENT_ERROR("1302", "리뷰의 내용이 너무 길거나 공백입니다."),
     REVIEW_NOT_FOUND("1303", "리뷰를 찾을 수 없습니다."),
+    REVIEW_NOT_MATCH_WITH_DOMAIN("1304", "리뷰가 저장된 상품의 파트너사 도메인이 일치하지 않습니다."),
 
     REVIEW_TAG_OUT_OF_BOUND_INDEX_ERROR("1310", "리뷰 태그의 인덱스가 범위가 벗어났습니다."),
 
@@ -51,6 +52,7 @@ public enum ErrorCode {
     TRAVEL_PRODUCT_PARTNER_ID_ERROR("1403", "여행 상품의 파트너 ID가 너무 길거나 공백입니다."),
     TRAVEL_PRODUCT_NOT_FOUND("1404", "여행 상품을 찾을 수 없습니다."),
     TRAVEL_PRODUCT_DUPLICATED_PARTNER_ID("1405", "여행 상품의 파트너 ID가 중복됩니다."),
+    TRAVEL_PRODUCT_NOT_MATCH_WITH_DOMAIN("1406", "여행 상품의 파트너사 도메인이 일치하지 않습니다."),
 
     INVALID_PROPERTY_ERROR("9001", "잘못된 값이 입력되었습니다."),
     API_NOT_FOUND_ERROR("9002", "요청한 API가 존재하지 않습니다"),

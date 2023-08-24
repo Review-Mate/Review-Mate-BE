@@ -77,7 +77,7 @@ class ReviewControllerTest {
     @Test
     void 상품에_달려있는_리뷰를_조회한댜() throws Exception {
         // given
-        given(reviewService.getWidgetReviewsByTravelProductId(anyLong(), any(), any(), any(), any(), any())).willReturn(Collections.emptyList());
+        given(reviewService.getWidgetReviewResponsesByPartnerDomainAndTravelProductId(anyLong(), any(), any(), any(), any(), any())).willReturn(Collections.emptyList());
 
         // when & then
         mockMvc.perform(

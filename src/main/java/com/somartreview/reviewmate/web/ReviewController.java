@@ -24,12 +24,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 @Tag(name = "리뷰")
 @RestController
-@RequestMapping("/api/v1/reviews")
 @RequiredArgsConstructor
 public class ReviewController {
 
@@ -43,15 +41,32 @@ public class ReviewController {
     @ApiResponse(responseCode = "201", description = "리뷰 생성 성공", headers = {
             @Header(name = "Location", description = "생성된 리뷰의 URI, /api/v1/review/{reviewId}", schema = @Schema(type = "string"))
     })
-    @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> createReview(@Valid @RequestPart ReviewCreateRequest reviewCreateRequest,
+    @PostMapping(value = "/api/v1/{partnerDomain}/products/{travelProductId}/reviews/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> createReview(@PathVariable String partnerDomain,
+                                             @PathVariable Long travelProductId,
+                                             @Valid @RequestPart ReviewCreateRequest reviewCreateRequest,
                                              @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {
-        Long reviewId = reviewService.createReview(reviewCreateRequest, reviewImageFiles);
+        Long reviewId = reviewService.createReview(partnerDomain, travelProductId, reviewCreateRequest, reviewImageFiles);
 
-        return ResponseEntity.created(URI.create("/api/v1/review/" + reviewId)).build();
+        return ResponseEntity.created(URI.create("/api/v1/reviews" + reviewId)).build();
     }
 
-    @Operation(operationId = "findReviewsByTravelProductId", summary = "상품에 등록된 리뷰 조회", description = "🚨아직아무정렬도작동안함\n\n상품에 등록된 리뷰를 조회합니다. \n\n리뷰태그의 속성과 키워드, 정렬기준, 페이징를 조회 옵션에 적용할 수 있습니다.")
+
+    @Deprecated
+    @Operation(operationId = "findReviewByReviewId", summary = "리뷰 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "리뷰 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "존재하지 않는 리뷰 ID")
+    })
+    @GetMapping("/api/v1/reviews/{reviewId}")
+    public ResponseEntity<WidgetReviewResponse> findReviewByReviewId(@PathVariable Long reviewId) {
+        WidgetReviewResponse widgetReviewResponse = reviewService.getWidgetReviewResponseById(reviewId);
+
+        return ResponseEntity.ok(widgetReviewResponse);
+    }
+
+
+    @Operation(operationId = "findReviewsByPartnerDomainAndTravelProductId", summary = "상품에 등록된 리뷰 조회", description = "🚨아직아무정렬도작동안함\n\n상품에 등록된 리뷰를 조회합니다. \n\n리뷰태그의 속성과 키워드, 정렬기준, 페이징를 조회 옵션에 적용할 수 있습니다.")
     @Parameters({
             @Parameter(name = "travelProductId", description = "상품 ID"),
             @Parameter(name = "property", description = "리뷰태그의 속성"),
@@ -64,17 +79,19 @@ public class ReviewController {
             @ApiResponse(responseCode = "200", description = "리뷰 조회 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 리뷰 ID")
     })
-    @GetMapping("/products/{travelProductId}")
-    public ResponseEntity<List<WidgetReviewResponse>> findReviewsByTravelProductId(@PathVariable Long travelProductId,
-                                                                                   @RequestParam(required = false, value = "property") Property property,
-                                                                                   @RequestParam(required = false, value = "keyword") String keyword,
+    @GetMapping("/api/v1/{partnerDomain}/products/{travelProductId}/reviews")
+    public ResponseEntity<List<WidgetReviewResponse>> findReviewsByPartnerDomainAndTravelProductId(@PathVariable String partnerDomain,
+                                                                                   @PathVariable Long travelProductId,
+                                                                                   @RequestParam(required = false) Property property,
+                                                                                   @RequestParam(required = false) String keyword,
                                                                                    @RequestParam(required = false, defaultValue = "LATEST", value = "orderBy") OrderCriteria orderCriteria,
                                                                                    @RequestParam(required = false, defaultValue = "0") Integer page,
                                                                                    @RequestParam(required = false, defaultValue = "10") Integer size) {
-        List<WidgetReviewResponse> widgetReviewResponses = reviewService.getWidgetReviewsByTravelProductId(travelProductId, property, keyword, orderCriteria, page, size);
+        List<WidgetReviewResponse> widgetReviewResponses = reviewService.getWidgetReviewResponsesByPartnerDomainAndTravelProductId(partnerDomain, travelProductId, property, keyword, orderCriteria, page, size);
 
         return ResponseEntity.ok(widgetReviewResponses);
     }
+
 
     @Operation(operationId = "updateReviewByReviewId", summary = "리뷰 수정", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
     @Parameters({
@@ -85,11 +102,11 @@ public class ReviewController {
             @ApiResponse(responseCode = "204", description = "리뷰 수정 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 리뷰 ID")
     })
-    @PatchMapping(value = "/{reviewId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<Void> updateReviewByReviewId(@PathVariable Long reviewId,
-                                             @RequestPart ReviewUpdateRequest reviewUpdateRequest,
-                                             @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {
-        reviewService.updateReviewById(reviewId, reviewUpdateRequest, reviewImageFiles);
+    @PatchMapping(value = "/api/v1/{partnerDomain}/reviews/{reviewId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Void> updateReviewByReviewId(@PathVariable String partnerDomain, @PathVariable Long reviewId,
+                                                       @Valid @RequestPart ReviewUpdateRequest reviewUpdateRequest,
+                                                       @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {
+        reviewService.updateReviewById(partnerDomain, reviewId, reviewUpdateRequest, reviewImageFiles);
 
         return ResponseEntity.noContent().build();
     }
@@ -100,9 +117,9 @@ public class ReviewController {
             @ApiResponse(responseCode = "204", description = "리뷰 삭제 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 리뷰 ID")
     })
-    @DeleteMapping("/{reviewId}")
-    public ResponseEntity<Void> deleteReviewByReviewId(@PathVariable Long reviewId) {
-        reviewService.deleteReviewById(reviewId);
+    @DeleteMapping("/api/v1/{partnerDomain}/reviews/{reviewId}")
+    public ResponseEntity<Void> deleteReviewByReviewId(@PathVariable String partnerDomain, @PathVariable Long reviewId) {
+        reviewService.deleteReviewById(partnerDomain, reviewId);
 
         return ResponseEntity.noContent().build();
     }

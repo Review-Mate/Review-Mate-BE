@@ -28,9 +28,9 @@ public class ReviewService {
     private final TravelProductService travelProductService;
 
     @Transactional
-    public Long createReview(ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
+    public Long createReview(String partnerDomain, Long travelProductId, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
         final Customer customer = customerService.findCustomerById(reviewCreateRequest.getCustomerId());
-        final TravelProduct travelProduct = travelProductService.findTravelProductById(reviewCreateRequest.getTravelProductId());
+        final TravelProduct travelProduct = travelProductService.findTravelProductByPartnerDomainAndTravelProductId(partnerDomain, travelProductId);
 
         Review review = reviewCreateRequest.toEntity(customer, travelProduct);
         reviewRepository.save(review);
@@ -61,15 +61,23 @@ public class ReviewService {
                 .orElseThrow(() -> new DomainLogicException(REVIEW_NOT_FOUND));
     }
 
-    // TODO: Apply complicated condition by QueryDSL
-    public List<WidgetReviewResponse> getWidgetReviewsByTravelProductId(Long travelProductId,
-                                                                        Property property, String keyword,
-                                                                        OrderCriteria orderCriteria,
-                                                                        Integer page, Integer size) {
-        List<WidgetReviewResponse> widgetReviewResponses = new ArrayList<>();
+    public WidgetReviewResponse getWidgetReviewResponseById(Long id) {
+        final Review review = findReviewById(id);
+        final List<ReviewTag> foundReviewTags = reviewTagService.findReviewTagsByReviewId(review.getId());
 
+        return new WidgetReviewResponse(review, foundReviewTags);
+    }
+
+    // TODO: Apply complicated condition by QueryDSL
+    public List<WidgetReviewResponse> getWidgetReviewResponsesByPartnerDomainAndTravelProductId(String partnerDomain, Long travelProductId,
+                                                                                                Property property, String keyword,
+                                                                                                OrderCriteria orderCriteria,
+                                                                                                Integer page, Integer size) {
+        List<WidgetReviewResponse> widgetReviewResponses = new ArrayList<>();
         List<Review> foundReviews = reviewRepository.findAllByTravelProduct_Id(travelProductId);
         for (Review review : foundReviews) {
+            validateReviewWithPartnerDomain(partnerDomain, review.getId());
+
             List<ReviewTag> foundReviewTags = reviewTagService.findReviewTagsByReviewId(review.getId());
             widgetReviewResponses.add(new WidgetReviewResponse(review, foundReviewTags));
         }
@@ -78,7 +86,9 @@ public class ReviewService {
     }
 
     @Transactional
-    public void updateReviewById(Long id, ReviewUpdateRequest reviewUpdateRequest, List<MultipartFile> reviewImageFiles) {
+    public void updateReviewById(String partnerDomain, Long id, ReviewUpdateRequest reviewUpdateRequest, List<MultipartFile> reviewImageFiles) {
+        validateReviewWithPartnerDomain(partnerDomain, id);
+
         Review review = findReviewById(id);
         review.clearReviewTags();
         review.clearReviewImages();
@@ -91,10 +101,18 @@ public class ReviewService {
     }
 
     @Transactional
-    public void deleteReviewById(Long id) {
+    public void deleteReviewById(String partnerDomain, Long id) {
+        validateReviewWithPartnerDomain(partnerDomain, id);
+
         Review review = findReviewById(id);
         review.clearReviewTags();
         review.clearReviewImages();
         reviewRepository.delete(review);
+    }
+
+    public void validateReviewWithPartnerDomain(String partnerDomain, Long reviewId) {
+        if (!reviewRepository.existsByIdAndTravelProduct_PartnerCompany_Domain(reviewId, partnerDomain)) {
+            throw new DomainLogicException(REVIEW_NOT_FOUND);
+        }
     }
 }

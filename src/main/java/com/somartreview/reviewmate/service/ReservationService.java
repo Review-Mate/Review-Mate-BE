@@ -3,17 +3,13 @@ package com.somartreview.reviewmate.service;
 import com.somartreview.reviewmate.domain.Customer.Customer;
 import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import com.somartreview.reviewmate.domain.Reservation.ReservationRepository;
-import com.somartreview.reviewmate.domain.TravelProduct.Category;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
-import com.somartreview.reviewmate.domain.TravelProduct.TravelProductRepository;
 import com.somartreview.reviewmate.dto.response.reservation.SingleTravelProductReservationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static com.somartreview.reviewmate.domain.TravelProduct.Category.PACKAGE;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +20,9 @@ public class ReservationService {
     private final TravelProductService travelProductService;
 
     @Transactional
-    public Long createReservation(Long customerId, Long travelProductId) {
+    public Long createReservation(Long customerId, String partnerDomain, Long travelProductId) {
         final Customer customer = customerService.findCustomerById(customerId);
-        final TravelProduct travelProduct = travelProductService.findTravelProductById(travelProductId);
+        final TravelProduct travelProduct = travelProductService.findTravelProductByPartnerDomainAndTravelProductId(partnerDomain, travelProductId);
 
         return reservationRepository.save(new Reservation(customer, travelProduct)).getId();
     }

@@ -27,13 +27,13 @@ public class CustomerController {
 
     @Operation(operationId = "customerCreateRequest", summary = "고객 생성")
     @ApiResponse(responseCode = "201", description = "고객 생성 성공", headers = {
-            @Header(name = "Location", description = "생성된 고객의 URI, /api/v1/customer/{customerId}", schema = @Schema(type = "string"))
+            @Header(name = "Location", description = "생성된 고객의 URI, /api/v1/customers/{customerId}", schema = @Schema(type = "string"))
     })
     @PostMapping("/")
     public ResponseEntity<Void> createCustomer(@RequestBody CustomerCreateRequest customerCreateRequest) {
         Long customerId = customerService.createCustomer(customerCreateRequest);
 
-        return ResponseEntity.created(URI.create("/api/v1/customer/" + customerId)).build();
+        return ResponseEntity.created(URI.create("/api/v1/customers/" + customerId)).build();
     }
 
 

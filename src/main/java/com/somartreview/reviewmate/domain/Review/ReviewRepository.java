@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    boolean existsByTravelProduct_Id(Long travelProductId);
+    boolean existsByIdAndTravelProduct_PartnerCompany_Domain(Long id, String partnerDomain);
 
     List<Review> findAllByTravelProduct_Id(Long travelProductId);
 }

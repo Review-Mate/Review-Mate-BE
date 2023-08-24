@@ -32,10 +32,6 @@ public class ReviewCreateRequest {
     @NotBlank
     private String content;
 
-    @Schema(description = "리뷰가 달린 상품의 ID")
-    @NotNull
-    private Long travelProductId;
-
     @Schema(description = "리뷰를 단 고객의 ID")
     @NotNull
     private Long customerId;

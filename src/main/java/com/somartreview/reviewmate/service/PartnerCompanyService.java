@@ -20,10 +20,10 @@ public class PartnerCompanyService {
     private final PartnerCompanyRepository partnerCompanyRepository;
 
     @Transactional
-    public Long createPartnerCompany(PartnerCompanyCreateRequest request) {
+    public String createPartnerCompany(PartnerCompanyCreateRequest request) {
         validateDuplicatedDomain(request.getDomain());
 
-        return partnerCompanyRepository.save(request.toEntity()).getId();
+        return partnerCompanyRepository.save(request.toEntity()).getDomain();
     }
 
     public void validateDuplicatedDomain(String domain) {
@@ -32,8 +32,8 @@ public class PartnerCompanyService {
         }
     }
 
-    public PartnerCompany findPartnerCompanyById(Long partnerCompanyId) {
-        return partnerCompanyRepository.findById(partnerCompanyId)
+    public PartnerCompany findPartnerCompanyById(Long id) {
+        return partnerCompanyRepository.findById(id)
                 .orElseThrow(() -> new DomainLogicException(PARTNER_COMPANY_NOT_FOUND));
     }
 
@@ -42,8 +42,8 @@ public class PartnerCompanyService {
                 .orElseThrow(() -> new DomainLogicException(PARTNER_COMPANY_NOT_FOUND));
     }
 
-    public PartnerCompanyResponse getPartnerCompanyResponseById(Long partnerCompanyId) {
-        PartnerCompany partnerCompany = findPartnerCompanyById(partnerCompanyId);
+    public PartnerCompanyResponse getPartnerCompanyResponseById(Long id) {
+        PartnerCompany partnerCompany = findPartnerCompanyById(id);
         return new PartnerCompanyResponse(partnerCompany);
     }
 
@@ -53,15 +53,28 @@ public class PartnerCompanyService {
     }
 
     @Transactional
-    public void updatePartnerCompany(Long partnerCompanyId, PartnerCompanyUpdateRequest request) {
+    public void updatePartnerCompanyById(Long id, PartnerCompanyUpdateRequest request) {
         validateDuplicatedDomain(request.getDomain());
 
-        PartnerCompany partnerCompany = findPartnerCompanyById(partnerCompanyId);
+        PartnerCompany partnerCompany = findPartnerCompanyById(id);
         partnerCompany.update(request);
     }
 
     @Transactional
-    public void deletePartnerCompany(Long partnerCompanyId) {
-        partnerCompanyRepository.deleteById(partnerCompanyId);
+    public void updatePartnerCompanyByDomain(String domain, PartnerCompanyUpdateRequest request) {
+        validateDuplicatedDomain(request.getDomain());
+
+        PartnerCompany partnerCompany = findPartnerCompanyByDomain(domain);
+        partnerCompany.update(request);
+    }
+
+    @Transactional
+    public void deletePartnerCompanyById(Long id) {
+        partnerCompanyRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void deletePartnerCompanyByDomain(String domain) {
+        partnerCompanyRepository.deleteByDomain(domain);
     }
 }
