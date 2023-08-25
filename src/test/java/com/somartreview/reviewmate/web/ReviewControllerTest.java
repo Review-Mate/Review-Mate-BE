@@ -3,7 +3,8 @@ package com.somartreview.reviewmate.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.somartreview.reviewmate.dto.request.review.ReviewCreateRequest;
 import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
-import com.somartreview.reviewmate.service.ReviewService;
+import com.somartreview.reviewmate.service.review.ReviewService;
+import com.somartreview.reviewmate.web.review.ReviewController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 class ReviewControllerTest extends ControllerTest {
-
 
 //    @Test
 //    void 리뷰를_생성한다() throws Exception {
@@ -129,4 +129,5 @@ class ReviewControllerTest extends ControllerTest {
 //        )
 //        .andExpect(status().isNoContent());
 //    }
+
 }

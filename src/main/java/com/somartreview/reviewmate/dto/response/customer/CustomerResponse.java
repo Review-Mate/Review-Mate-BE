@@ -26,7 +26,7 @@ public class CustomerResponse {
     private String kakaoId;
 
     public CustomerResponse(final Customer customer) {
-        this.partnerCustomerId = customer.getPartnerCustomerId();
+        this.partnerCustomerId = customer.getCustomerId().getPartnerCustomId();
         this.name = customer.getName();
         this.phoneNumber = customer.getPhoneNumber();
         this.kakaoId = customer.getKakaoId();

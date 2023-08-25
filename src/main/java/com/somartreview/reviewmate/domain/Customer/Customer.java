@@ -17,17 +17,12 @@ import java.util.regex.Pattern;
 @NoArgsConstructor
 public class Customer extends BaseEntity {
 
-    private static final int MAX_PARTNER_CUSTOMER_ID_LENGTH = 50;
     private static final int MAX_NAME_LENGTH = 255;
     private static final Pattern ONLY_NUMBER_PATTERN = Pattern.compile("[0-9]+");
 
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
-    private Long id;
-
-    @Column(nullable = false, unique = true, length = 50)
-    private String partnerCustomerId;
+    @EmbeddedId
+    private CustomerId customerId;
 
     @Column(nullable = false)
     private String name;
@@ -39,20 +34,13 @@ public class Customer extends BaseEntity {
     private String kakaoId;
 
     @Builder
-    public Customer(String partnerCustomerId, String name, String phoneNumber, String kakaoId) {
-        validatePartnerCustomerId(partnerCustomerId);
-        this.partnerCustomerId = partnerCustomerId;
+    public Customer(String partnerCustomId, String partnerDomain, String name, String phoneNumber, String kakaoId) {
+        this.customerId = new CustomerId(partnerCustomId, partnerDomain);
         validateName(name);
         this.name = name;
         validatePhoneNumber(phoneNumber);
         this.phoneNumber = phoneNumber;
         this.kakaoId = kakaoId;
-    }
-
-    private void validatePartnerCustomerId(final String partnerCustomerId) {
-        if (partnerCustomerId.isBlank() || partnerCustomerId.length() > MAX_PARTNER_CUSTOMER_ID_LENGTH) {
-            throw new DomainLogicException(ErrorCode.CUSTOMER_PARTNER_ID_ERROR);
-        }
     }
 
     private void validateName(final String name) {
@@ -68,6 +56,7 @@ public class Customer extends BaseEntity {
     }
 
     public void update(CustomerUpdateRequest request) {
+        customerId.update(request.getPartnerCustomId());
         validateName(request.getName());
         this.name = request.getName();
         validatePhoneNumber(request.getPhoneNumber());

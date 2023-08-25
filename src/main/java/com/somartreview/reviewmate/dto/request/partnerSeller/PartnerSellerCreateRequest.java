@@ -16,20 +16,20 @@ import javax.validation.constraints.NotNull;
 public class PartnerSellerCreateRequest {
 
     @NotBlank
-    @Schema(description = "파트너사의 판매자 이름", example = "권순찬")
+    @Schema(description = "판매자 이름", example = "권순찬")
     private String name;
 
     @NotBlank
-    @Schema(description = "파트너사의 판매자 전화번호\n\n⚠️ 대시바 없이 숫자만으로", example = "01012345678")
+    @Schema(description = "판매자 전화번호\n\n⚠️ 대시바 없이 숫자만으로", example = "01012345678")
     private String phoneNumber;
 
     @NotBlank
-    @Schema(description = "파트너사의 판매자 카카오 아이디", example = "sckwon770")
+    @Schema(description = "판매자 카카오 아이디", example = "sckwon770")
     private String kakaoId;
 
-    @NotNull
-    @Schema(description = "소속 파트너사의 아이디", example = "1")
-    private Long partnerCompanyId;
+    @NotBlank
+    @Schema(description = "소속된 파트너사의 도메인", example = "goodchoice.kr")
+    private String partnerCompanyDomain;
 
     public PartnerSeller toEntity(PartnerCompany partnerCompany) {
         return PartnerSeller.builder()

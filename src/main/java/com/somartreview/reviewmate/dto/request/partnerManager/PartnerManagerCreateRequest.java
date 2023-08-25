@@ -28,8 +28,9 @@ public class PartnerManagerCreateRequest {
     private String password;
 
     @NotBlank
-    @Schema(description = "소속 파트너사의 도메인", example = "goodchoice.kr")
+    @Schema(description = "소속된 파트너사의 도메인", example = "goodchoice.kr")
     private String partnerCompanyDomain;
+
 
     public PartnerManager toEntity(PartnerCompany partnerCompany) {
         return PartnerManager.builder()
