@@ -1645,3 +1645,28 @@ alter table review drop foreign key FK55qe8yjlhuo8mud51eet9v382 [90057-214]
 2023-08-25 15:11:49.734  WARN 502 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
 2023-08-25 15:11:49.930  INFO 502 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
 2023-08-25 15:11:49.936  INFO 502 --- [main] c.s.reviewmate.ReviewMateApplication     : Started ReviewMateApplication in 1.722 seconds (JVM running for 1.917)
+2023-08-25 15:13:18.176  INFO 1374 --- [main] c.s.reviewmate.ReviewMateApplication     : Starting ReviewMateApplication using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 1374 (/Users/chan/code/java/review-mate-be/build/classes/java/main started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-25 15:13:18.177  INFO 1374 --- [main] c.s.reviewmate.ReviewMateApplication     : The following 1 profile is active: "secret"
+2023-08-25 15:13:18.467  INFO 1374 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-08-25 15:13:18.495  INFO 1374 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 13 JPA repository interfaces.
+2023-08-25 15:13:18.685  INFO 1374 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-08-25 15:13:18.689  INFO 1374 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-08-25 15:13:18.689  INFO 1374 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.78]
+2023-08-25 15:13:18.723  INFO 1374 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-08-25 15:13:18.723  INFO 1374 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 524 ms
+2023-08-25 15:13:18.733  INFO 1374 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-08-25 15:13:18.838  INFO 1374 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-08-25 15:13:18.842  INFO 1374 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:~/reviewmate_test'
+2023-08-25 15:13:18.900  INFO 1374 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-08-25 15:13:18.943  INFO 1374 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2023-08-25 15:13:19.013  INFO 1374 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-08-25 15:13:19.052  INFO 1374 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-08-25 15:13:19.403  INFO 1374 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-08-25 15:13:19.408  INFO 1374 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-08-25 15:13:19.725  WARN 1374 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-08-25 15:13:19.940  INFO 1374 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-08-25 15:13:19.945  INFO 1374 --- [main] c.s.reviewmate.ReviewMateApplication     : Started ReviewMateApplication in 1.896 seconds (JVM running for 2.102)
+2023-08-25 15:13:41.868  INFO 1374 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-08-25 15:13:41.868  INFO 1374 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-08-25 15:13:41.869  INFO 1374 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-08-25 15:13:42.276  INFO 1374 --- [http-nio-8080-exec-10] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 223 ms

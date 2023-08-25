@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 
-@Tag(name = "판매자", description = "⚠️ 개발 환경 및 테스트 용도로만 id로 호출하고, 프로덕션 코드에서는 phoneNumber로 기준으로 호출해주세요.")
+@Tag(name = "판매자")
 @RestController
 @RequestMapping("/api/v1/console/partners/sellers")
 @RequiredArgsConstructor
