@@ -9,8 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-@WebMvcTest(TestController.class)
-public class TestControllerTest {
+public class TestControllerTest extends ControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
