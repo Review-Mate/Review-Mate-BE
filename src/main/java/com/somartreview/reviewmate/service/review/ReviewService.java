@@ -74,8 +74,8 @@ public class ReviewService {
 
     // TODO: Apply complicated condition by QueryDSL
     public List<WidgetReviewResponse> getWidgetReviewResponsesByPartnerDomainAndTravelProductIdWithCondition(TravelProductIdDto travelProductId,
-                                                                                                             Property property, String keyword,
-                                                                                                             OrderCriteria orderCriteria,
+                                                                                                             ReviewProperty reviewProperty, String keyword,
+                                                                                                             ReviewOrderCriteria reviewOrderCriteria,
                                                                                                              Integer page, Integer size) {
         List<WidgetReviewResponse> widgetReviewResponses = new ArrayList<>();
         List<Review> foundReviews = reviewRepository.findAllByTravelProduct_TravelProductId(travelProductId.toEntity());

@@ -2,7 +2,7 @@ package com.somartreview.reviewmate.domain.LiveSatisfaction;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.Customer.Customer;
-import com.somartreview.reviewmate.domain.Review.Property;
+import com.somartreview.reviewmate.domain.Review.ReviewProperty;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
@@ -29,25 +29,31 @@ public class LiveSatisfaction extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(STRING)
-    private Property satisfiedProperty;
+    private ReviewProperty satisfiedReviewProperty;
 
     @Column(nullable = false)
     @Enumerated(STRING)
-    private Property dissatisfiedProperty;
+    private ReviewProperty dissatisfiedReviewProperty;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "customer_partner_custom_id", nullable = false),
+            @JoinColumn(name = "customer_partner_domain", nullable = false)
+    })
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "travel_product_id", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "travel_product_partner_custom_id", nullable = false),
+            @JoinColumn(name = "travel_product_partner_domain", nullable = false)
+    })
     private TravelProduct travelProduct;
 
-    public LiveSatisfaction(Integer rating, Property satisfiedProperty, Property dissatisfiedProperty, Customer customer, TravelProduct travelProduct) {
+    public LiveSatisfaction(Integer rating, ReviewProperty satisfiedReviewProperty, ReviewProperty dissatisfiedReviewProperty, Customer customer, TravelProduct travelProduct) {
         validateRating(rating);
         this.rating = rating;
-        this.satisfiedProperty = satisfiedProperty;
-        this.dissatisfiedProperty = dissatisfiedProperty;
+        this.satisfiedReviewProperty = satisfiedReviewProperty;
+        this.dissatisfiedReviewProperty = dissatisfiedReviewProperty;
         this.customer = customer;
         this.travelProduct = travelProduct;
     }

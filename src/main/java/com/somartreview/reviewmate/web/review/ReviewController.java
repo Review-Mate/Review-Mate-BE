@@ -1,7 +1,7 @@
 package com.somartreview.reviewmate.web.review;
 
-import com.somartreview.reviewmate.domain.Review.OrderCriteria;
-import com.somartreview.reviewmate.domain.Review.Property;
+import com.somartreview.reviewmate.domain.Review.ReviewOrderCriteria;
+import com.somartreview.reviewmate.domain.Review.ReviewProperty;
 import com.somartreview.reviewmate.dto.request.customer.CustomerIdDto;
 import com.somartreview.reviewmate.dto.request.review.ReviewCreateRequest;
 
@@ -92,13 +92,13 @@ public class ReviewController {
     @GetMapping("/widget/partners/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
     public ResponseEntity<List<WidgetReviewResponse>> getWidgetReviewResponsesByTravelProductIdWithCondition(@PathVariable String partnerDomain,
                                                                                                 @PathVariable String travelProductPartnerCustomId,
-                                                                                                @RequestParam(required = false) Property property,
+                                                                                                @RequestParam(required = false) ReviewProperty reviewProperty,
                                                                                                 @RequestParam(required = false) String keyword,
-                                                                                                @RequestParam(required = false, defaultValue = "LATEST", value = "orderBy") OrderCriteria orderCriteria,
+                                                                                                @RequestParam(required = false, defaultValue = "LATEST", value = "reviewOrderCriteria") ReviewOrderCriteria reviewOrderCriteria,
                                                                                                 @RequestParam(required = false, defaultValue = "0") Integer page,
                                                                                                 @RequestParam(required = false, defaultValue = "10") Integer size) {
         TravelProductIdDto travelProductIdDto = new TravelProductIdDto(partnerDomain, travelProductPartnerCustomId);
-        List<WidgetReviewResponse> widgetReviewResponses = reviewService.getWidgetReviewResponsesByPartnerDomainAndTravelProductIdWithCondition(travelProductIdDto, property, keyword, orderCriteria, page, size);
+        List<WidgetReviewResponse> widgetReviewResponses = reviewService.getWidgetReviewResponsesByPartnerDomainAndTravelProductIdWithCondition(travelProductIdDto, reviewProperty, keyword, reviewOrderCriteria, page, size);
 
         return ResponseEntity.ok(widgetReviewResponses);
     }

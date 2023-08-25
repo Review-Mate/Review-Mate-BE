@@ -15,11 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 public class SingleTravelProductConsoleElementResponse {
 
-    @Schema(description = "상품 ID")
-    private Long id;
-
-    @Schema(description = "클라이언트 서비스에서의 상품 식별자", example = "PRODUCT-0001")
-    private String partnerSingleTravelProductId;
+    @Schema(description = "파트너사가 정의하는 상품 커스텀 ID (unique)", example = "PRODUCT-0001")
+    private String partnerCustomId;
 
     @Schema(description = "상품 썸네일 이미지 URL")
     private String thumbnailUrl;
@@ -32,12 +29,6 @@ public class SingleTravelProductConsoleElementResponse {
 
     @Schema(description = "상품 평점", example = "4.5")
     private Float rating;
-
-    @Schema(description = "긍정률", example = "74.4")
-    private Double positiveRate;
-
-    @Schema(description = "부정률", example = "25.6")
-    private Double negativeRate;
 
     @Schema(description = "판매자 이름")
     private String partnerSellerName;
@@ -52,15 +43,11 @@ public class SingleTravelProductConsoleElementResponse {
     private List<ReviewTagResponse> negativeTags;
 
     public SingleTravelProductConsoleElementResponse(final SingleTravelProduct singleTravelProduct) {
-        this.id = singleTravelProduct.getId();
-        this.partnerSingleTravelProductId = singleTravelProduct.getPartnerTravelProductId();
+        this.partnerCustomId = singleTravelProduct.getTravelProductId().getPartnerCustomId();
         this.thumbnailUrl = singleTravelProduct.getThumbnailUrl();
         this.name = singleTravelProduct.getName();
         this.reviewsCount = singleTravelProduct.getReviews().size();
         this.rating = singleTravelProduct.getRating();
-        // TODO: Add positiveRate and negativeRate after implementing reviewTag service
-        this.positiveRate = 0.0;;
-        this.negativeRate = 0.0;;
         this.partnerSellerName = singleTravelProduct.getPartnerSeller().getName();
         this.partnerSellerPhoneNumber = singleTravelProduct.getPartnerSeller().getPhoneNumber();
         // TODO: Add positiveTags and negativeTags after implementing reviewTag service

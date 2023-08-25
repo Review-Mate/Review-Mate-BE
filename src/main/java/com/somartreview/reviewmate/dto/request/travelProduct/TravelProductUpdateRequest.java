@@ -12,8 +12,6 @@ public class TravelProductUpdateRequest {
 
     private String partnerCustomId;
 
-    private String partnerDomain;
-
     private String thumbnailUrl;
 
     private String name;
@@ -22,7 +20,6 @@ public class TravelProductUpdateRequest {
 
     public TravelProductUpdateRequest(SingleTravelProductUpdateRequest singleTravelProductUpdateRequest, String thumbnailUrl) {
         this.partnerCustomId = singleTravelProductUpdateRequest.getPartnerCustomId();
-        this.partnerDomain = singleTravelProductUpdateRequest.getPartnerDomain();
         this.thumbnailUrl = thumbnailUrl;
         this.name = singleTravelProductUpdateRequest.getName();
         this.travelProductCategory = singleTravelProductUpdateRequest.getTravelProductCategory();

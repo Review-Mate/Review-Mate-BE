@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.dto.response.reservation;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProduct;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,9 +33,11 @@ public class SingleTravelProductReservationResponse {
     @Schema(description = "여행상품 이름", example = "신라더스테이 호텔")
     private String travelProductName;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd'T'HH:mm")
     @Schema(description = "여행상품 시작 시간")
     private LocalDateTime startTime;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd'T'HH:mm")
     @Schema(description = "여행상품 종료 시간")
     private LocalDateTime endTime;
 
