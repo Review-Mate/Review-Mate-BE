@@ -23,12 +23,12 @@ public class ReviewTag extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Property property;
+    private ReviewProperty reviewProperty;
 
     private String keyword;
 
     @Column(nullable = false)
-    private Double polarityValue;
+    private ReviewPolarity polarity;
 
     @Column(nullable = false)
     private Integer startIndex;
@@ -41,10 +41,10 @@ public class ReviewTag extends BaseEntity {
     private Review review;
 
     @Builder
-    public ReviewTag(Property property, String keyword, Double polarityValue, Integer startIndex, Integer endIndex) {
-        this.property = property;
+    public ReviewTag(ReviewProperty reviewProperty, String keyword, ReviewPolarity polarity, Integer startIndex, Integer endIndex) {
+        this.reviewProperty = reviewProperty;
         this.keyword = keyword;
-        this.polarityValue = polarityValue;
+        this.polarity = polarity;
         validateStartIndex(startIndex);
         this.startIndex = startIndex;
         validateEndIndex(endIndex);

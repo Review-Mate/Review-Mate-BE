@@ -5,7 +5,7 @@ import com.somartreview.reviewmate.domain.Customer.Customer;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
 import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
-import com.somartreview.reviewmate.exception.ErrorCode;
+
 import javax.persistence.*;
 
 import lombok.Builder;
@@ -45,11 +45,17 @@ public class Review extends BaseEntity {
     private Double polarityValue = 0.0;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "customer_partner_custom_id", nullable = false),
+            @JoinColumn(name = "customer_partner_domain", nullable = false)
+    })
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "travel_product_id", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "travel_product_partner_custom_id", nullable = false),
+            @JoinColumn(name = "travel_product_partner_domain", nullable = false)
+    })
     private TravelProduct travelProduct;
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -90,9 +96,6 @@ public class Review extends BaseEntity {
     }
 
     public void addReviewTag(ReviewTag reviewTag) {
-        int reviewTagCount = this.reviewTags.size();
-        polarityValue = (polarityValue * reviewTagCount + reviewTag.getPolarityValue()) / (reviewTagCount + 1);
-
         this.reviewTags.add(reviewTag);
     }
 

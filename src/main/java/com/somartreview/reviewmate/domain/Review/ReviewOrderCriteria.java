@@ -3,7 +3,7 @@ package com.somartreview.reviewmate.domain.Review;
 import lombok.Getter;
 
 @Getter
-public enum OrderCriteria {
+public enum ReviewOrderCriteria {
     LATEST("LATEST"),
     RATING_ASC("RATING_ASC"),
     RATING_DESC("RATING_DESC"),
@@ -12,7 +12,7 @@ public enum OrderCriteria {
 
     private final String value;
 
-    OrderCriteria(String value) {
+    ReviewOrderCriteria(String value) {
         this.value = value;
     }
 }

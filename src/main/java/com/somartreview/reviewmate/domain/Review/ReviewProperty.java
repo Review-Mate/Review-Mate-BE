@@ -1,5 +1,5 @@
 package com.somartreview.reviewmate.domain.Review;
 
-public enum Property {
+public enum ReviewProperty {
     KINDNESS, LOCATION, CLEANNESS
 }

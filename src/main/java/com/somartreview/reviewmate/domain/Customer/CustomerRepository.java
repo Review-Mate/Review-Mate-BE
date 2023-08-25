@@ -8,11 +8,9 @@ import java.util.Optional;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    boolean existsByPartnerCustomerId(String partnerCustomerId);
+    boolean existsByCustomerId(CustomerId customerId);
 
-    int countByPartnerCustomerId(String partnerCustomerId);
+    Optional<Customer> findByCustomerId(CustomerId customerId);
 
-    Optional<Customer> findByPartnerCustomerId(String partnerCustomerId);
-
-    void deleteByPartnerCustomerId(String partnerCustomerId);
+    void deleteByCustomerId(CustomerId customerId);
 }

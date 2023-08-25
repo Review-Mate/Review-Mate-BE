@@ -39,11 +39,17 @@ public class LiveFeedback extends BaseEntity {
     private Boolean isSolved = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "customer_partner_custom_id", nullable = false),
+            @JoinColumn(name = "customer_partner_domain", nullable = false)
+    })
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "travel_product_id", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "travel_product_partner_custom_id", nullable = false),
+            @JoinColumn(name = "travel_product_partner_domain", nullable = false)
+    })
     private TravelProduct travelProduct;
 
     public LiveFeedback(String feedbackMessage, String feedbackMediaUrl, String responseMessage, Customer customer, TravelProduct travelProduct) {

@@ -11,4 +11,6 @@ public interface PartnerCompanyRepository extends JpaRepository<PartnerCompany, 
     boolean existsByDomain(String domain);
 
     Optional<PartnerCompany> findByDomain(String domain);
+
+    void deleteByDomain(String domain);
 }

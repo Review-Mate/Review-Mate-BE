@@ -3,7 +3,8 @@ package com.somartreview.reviewmate.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.somartreview.reviewmate.dto.request.review.ReviewCreateRequest;
 import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
-import com.somartreview.reviewmate.service.ReviewService;
+import com.somartreview.reviewmate.service.review.ReviewService;
+import com.somartreview.reviewmate.web.review.ReviewController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -37,7 +38,7 @@ class ReviewControllerTest {
     @Test
     void 리뷰를_생성한다() throws Exception {
         // given
-        given(reviewService.createReview(any(), any())).willReturn(1L);
+        given(reviewService.create(any(), any())).willReturn(1L);
 
         MockMultipartFile image1 = new MockMultipartFile(
                 "reviewImages[0]",
@@ -77,7 +78,7 @@ class ReviewControllerTest {
     @Test
     void 상품에_달려있는_리뷰를_조회한댜() throws Exception {
         // given
-        given(reviewService.getWidgetReviewsByTravelProductId(anyLong(), any(), any(), any(), any(), any())).willReturn(Collections.emptyList());
+        given(reviewService.getWidgetReviewResponsesByPartnerDomainAndTravelProductIdWithCondition(any(), any(), any(), any(), any(), any())).willReturn(Collections.emptyList());
 
         // when & then
         mockMvc.perform(
@@ -96,7 +97,7 @@ class ReviewControllerTest {
     @Test
     void 리뷰를_수정한다() throws Exception {
         // given
-        doNothing().when(reviewService).updateReviewById(anyLong(), any(), any());
+        doNothing().when(reviewService).updateById(anyLong(), any(), any());
 
         MockMultipartFile image2 = new MockMultipartFile(
                 "reviewImages[0]",
@@ -126,7 +127,7 @@ class ReviewControllerTest {
     @Test
     void 리뷰를_삭제한다() throws Exception {
         // given
-        doNothing().when(reviewService).deleteReviewById(anyLong());
+        doNothing().when(reviewService).deleteById(anyLong());
 
         // when & then
         mockMvc.perform(
