@@ -14,8 +14,8 @@ import javax.validation.constraints.NotEmpty;
 public class CustomerCreateRequest {
 
     @NotEmpty
-    @Schema(description = "클라이언트 서비스에서의 유저 식별자\n\n⚠️ 반드시 유니크 해야함", example = "CUST-1234")
-    private String partnerCustomerId;
+    @Schema(description = "파트너사가 정의하는 고객의 커스텀 ID (unique) \n\n⚠️ 서로 절대 겹쳐서는 안됨", example = "CUST-1234")
+    private String partnerCustomId;
 
     @NotEmpty
     @Schema(description = "고객 이름", example = "권순찬")
@@ -29,9 +29,10 @@ public class CustomerCreateRequest {
     @Schema(description = "챗봇 메시지를 보내기 위한 고객의 카카오톡 ID", example = "sckwon770")
     private String kakaoId;
 
-    public Customer toEntity() {
+    public Customer toEntity(String partnerDomain) {
         return Customer.builder()
-                .partnerCustomerId(partnerCustomerId)
+                .partnerCustomId(partnerCustomId)
+                .partnerDomain(partnerDomain)
                 .name(name)
                 .phoneNumber(phoneNumber)
                 .kakaoId(kakaoId)

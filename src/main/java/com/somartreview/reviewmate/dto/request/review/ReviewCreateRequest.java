@@ -34,7 +34,7 @@ public class ReviewCreateRequest {
 
     @Schema(description = "리뷰를 단 고객의 ID")
     @NotNull
-    private Long customerId;
+    private String customerPartnerCustomId;
 
     public Review toEntity(Customer customer, TravelProduct travelProduct) {
         return Review.builder()

@@ -1,11 +1,14 @@
 package com.somartreview.reviewmate.service;
 
 import com.somartreview.reviewmate.domain.Customer.Customer;
+import com.somartreview.reviewmate.domain.Customer.CustomerId;
 import com.somartreview.reviewmate.domain.Customer.CustomerRepository;
 import com.somartreview.reviewmate.dto.request.customer.CustomerCreateRequest;
+import com.somartreview.reviewmate.dto.request.customer.CustomerIdDto;
 import com.somartreview.reviewmate.dto.request.customer.CustomerUpdateRequest;
 import com.somartreview.reviewmate.dto.response.customer.CustomerResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,67 +20,40 @@ import static com.somartreview.reviewmate.exception.ErrorCode.*;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final PartnerCompanyService partnerCompanyService;
 
     @Transactional
-    public Long createCustomer(CustomerCreateRequest request) {
-        validateCreatePartnerCustomerId(request.getPartnerCustomerId());
+    public Customer create(String partnerDomain, CustomerCreateRequest request) {
+        partnerCompanyService.validateExistPartnerDomain(partnerDomain);
 
-        return customerRepository.save(request.toEntity()).getId();
+        return customerRepository.save(request.toEntity(partnerDomain));
     }
 
-    private void validateCreatePartnerCustomerId(String partnerCustomerId) {
-        if (customerRepository.existsByPartnerCustomerId(partnerCustomerId)) {
-            throw new DomainLogicException(CUSTOMER_DUPLICATED_PARTNER_ID);
-        }
+    public void validateExistCustomer(CustomerIdDto customerIdDto) {
+        if (!customerRepository.existsByCustomerId(customerIdDto.toEntity()))
+            throw new DomainLogicException(CUSTOMER_NOT_FOUND);
     }
 
-    public Customer findCustomerById(Long id) {
-        return customerRepository.findById(id)
+    public Customer findByCustomerId(CustomerIdDto customerIdDto) {
+        return customerRepository.findByCustomerId(customerIdDto.toEntity())
                 .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND));
     }
 
-    public CustomerResponse getCustomerResponseById(Long id) {
-        final Customer customer = findCustomerById(id);
+    public CustomerResponse getCustomerResponseByCustomId(CustomerIdDto customerIdDto) {
+        final Customer customer = findByCustomerId(customerIdDto);
         return new CustomerResponse(customer);
     }
 
     @Transactional
-    public void updateCustomerById(Long id, CustomerUpdateRequest request) {
-        validateUpdatePartnerCustomerId(request.getPartnerCustomerId());
-
-        customerRepository.findById(id)
-                .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND))
-                .update(request);
+    public void updateByCustomerId(CustomerIdDto customerIdDto, CustomerUpdateRequest request) {
+        Customer customer = findByCustomerId(customerIdDto);
+        customer.update(request);
     }
 
     @Transactional
-    public void updateCustomerByPartnerCustomerId(String partnerCustomerId, CustomerUpdateRequest request) {
-        validateUpdatePartnerCustomerId(request.getPartnerCustomerId());
+    public void deleteByCustomerId(CustomerIdDto customerIdDto) {
+        validateExistCustomer(customerIdDto);
 
-        customerRepository.findByPartnerCustomerId(partnerCustomerId)
-                .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND))
-                .update(request);
-    }
-
-    private void validateUpdatePartnerCustomerId(String partnerCustomerId) {
-        if (customerRepository.countByPartnerCustomerId(partnerCustomerId) >= 2) {
-            throw new DomainLogicException(CUSTOMER_DUPLICATED_PARTNER_ID);
-        }
-    }
-
-    @Transactional
-    public void deleteCustomerById(Long id) {
-        Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND));
-
-        customerRepository.delete(customer);
-    }
-
-    @Transactional
-    public void deleteCustomerByPartnerCustomerId(String partnerCustomerId) {
-        Customer customer = customerRepository.findByPartnerCustomerId(partnerCustomerId)
-                .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND));
-
-        customerRepository.delete(customer);
+        customerRepository.deleteByCustomerId(customerIdDto.toEntity());
     }
 }

@@ -9,13 +9,7 @@ import java.util.Optional;
 @Repository
 public interface TravelProductRepository extends JpaRepository<TravelProduct, Long> {
 
-    boolean existsByPartnerTravelProductId(String partnerTravelProductId);
+    boolean existsByTravelProductId(TravelProductId travelProductId);
 
-    Integer countByPartnerTravelProductId(String partnerTravelProductId);
-
-    Optional<TravelProduct> findByPartnerTravelProductId(String partnerTravelProductId);
-
-    List<TravelProduct> findByCategory(Category category);
-
-    boolean existsByPartnerCompany_DomainAndId(String partnerDomain, Long id);
+    Optional<TravelProduct> findByTravelProductId(TravelProductId travelProductId);
 }

@@ -3,6 +3,7 @@ package com.somartreview.reviewmate.domain.TravelProduct;
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductUpdateRequest;
+import com.somartreview.reviewmate.dto.request.travelProduct.TravelProductUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
@@ -23,8 +24,9 @@ public class SingleTravelProduct extends TravelProduct {
     private LocalDateTime endTime;
 
     @Builder
-    public SingleTravelProduct(String partnerSingleTravelProductId, String thumbnailUrl, String name, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalDateTime startTime, LocalDateTime endTime, Category category) {
-        super(partnerSingleTravelProductId, thumbnailUrl, name, category, partnerCompany, partnerSeller);
+    public SingleTravelProduct(String partnerCustomId, String partnerDomain, String thumbnailUrl, String name, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalDateTime startTime, LocalDateTime endTime, TravelProductCategory travelProductCategory) {
+        super(partnerCustomId, partnerDomain, thumbnailUrl, name, travelProductCategory, partnerCompany, partnerSeller);
+
         validateTime(startTime, endTime);
         this.startTime = startTime;
         this.endTime = endTime;
@@ -36,8 +38,9 @@ public class SingleTravelProduct extends TravelProduct {
         }
     }
 
-    public void update(SingleTravelProductUpdateRequest request, String thumbnailUrl, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
-        super.update(request.getPartnerSingleTravelProductId(), thumbnailUrl, request.getName(), request.getCategory(), partnerCompany, partnerSeller);
+    public void update(SingleTravelProductUpdateRequest request, String thumbnailUrl) {
+        super.update(new TravelProductUpdateRequest(request, thumbnailUrl));
+
         validateTime(request.getStartTime(), request.getEndTime());
         this.startTime = request.getStartTime();
         this.endTime = request.getEndTime();

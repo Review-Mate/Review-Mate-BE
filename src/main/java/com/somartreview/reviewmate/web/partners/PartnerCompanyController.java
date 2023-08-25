@@ -1,9 +1,9 @@
-package com.somartreview.reviewmate.web;
+package com.somartreview.reviewmate.web.partners;
 
 import com.somartreview.reviewmate.dto.request.PartnerCompanyUpdateRequest;
 import com.somartreview.reviewmate.dto.request.partnerCompany.PartnerCompanyCreateRequest;
 import com.somartreview.reviewmate.dto.response.partnerCompany.PartnerCompanyResponse;
-import com.somartreview.reviewmate.service.PartnerCompanyService;
+import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.headers.Header;
@@ -20,7 +20,7 @@ import java.net.URI;
 
 @Tag(name = "파트너사", description = "⚠️ 개발 환경 및 테스트 용도로만 id로 호출하고, 프로덕션 코드에서는 domain을 기준으로 호출해주세요.")
 @RestController
-@RequestMapping("/api/v1/partners")
+@RequestMapping("/api/v1/console/partners")
 @RequiredArgsConstructor
 public class PartnerCompanyController {
 
@@ -33,9 +33,9 @@ public class PartnerCompanyController {
     })
     @PostMapping("/companies")
     public ResponseEntity<Void> createPartnerCompany(@Valid @RequestBody PartnerCompanyCreateRequest partnerCompanyCreateRequest) {
-        String partnerDomain = partnerCompanyService.createPartnerCompany(partnerCompanyCreateRequest);
+        String partnerDomain = partnerCompanyService.create(partnerCompanyCreateRequest);
 
-        return ResponseEntity.created(URI.create("/api/v1/partners/" + partnerDomain + "/companies")).build();
+        return ResponseEntity.created(URI.create("/api/v1/console/partners/" + partnerDomain)).build();
     }
 
 
@@ -45,7 +45,7 @@ public class PartnerCompanyController {
             @ApiResponse(responseCode = "200", description = "파트너사 조회 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 Domain")
     })
-    @GetMapping("/{partnerDomain}/companies")
+    @GetMapping("/{partnerDomain}")
     public ResponseEntity<PartnerCompanyResponse> getPartnerCompanyResponseByDomain(@PathVariable String partnerDomain) {
         PartnerCompanyResponse partnerCompanyResponse = partnerCompanyService.getPartnerCompanyResponseByDomain(partnerDomain);
 
@@ -53,13 +53,13 @@ public class PartnerCompanyController {
     }
 
 
-    @Deprecated
+    
     @Operation(operationId = "getPartnerCompanyResponseById", summary = "파트너사 조회")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "파트너사 조회 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 ID")
     })
-    @GetMapping("/{partnerCompanyId}/companies")
+    @GetMapping("/{partnerCompanyId}")
     public ResponseEntity<PartnerCompanyResponse> getPartnerCompanyResponseByPartnerCompanyId(@PathVariable Long partnerCompanyId) {
         PartnerCompanyResponse partnerCompanyResponse = partnerCompanyService.getPartnerCompanyResponseById(partnerCompanyId);
 
@@ -73,25 +73,25 @@ public class PartnerCompanyController {
             @ApiResponse(responseCode = "204", description = "파트너사 정보 수정 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 Domain")
     })
-    @PutMapping("/{partnerDomain}/companies")
+    @PutMapping("/{partnerDomain}")
     public ResponseEntity<Void> updatePartnerCompanyByPartnerDomain(@PathVariable String partnerDomain,
                                                                     @Valid @RequestBody PartnerCompanyUpdateRequest request) {
-        partnerCompanyService.updatePartnerCompanyByDomain(partnerDomain, request);
+        partnerCompanyService.updateByDomain(partnerDomain, request);
 
         return ResponseEntity.noContent().build();
     }
 
 
-    @Deprecated
+    
     @Operation(operationId = "updatePartnerCompanyByPartnerCompanyId", summary = "파트너사 정보 수정")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "파트너사 정보 수정 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 ID")
     })
-    @PutMapping("/{partnerCompanyId}/companies")
+    @PutMapping("/{partnerCompanyId}")
     public ResponseEntity<Void> updatePartnerCompanyByPartnerCompanyId(@PathVariable Long partnerCompanyId,
                                                                        @Valid @RequestBody PartnerCompanyUpdateRequest request) {
-        partnerCompanyService.updatePartnerCompanyById(partnerCompanyId, request);
+        partnerCompanyService.updateById(partnerCompanyId, request);
 
         return ResponseEntity.noContent().build();
     }
@@ -103,23 +103,23 @@ public class PartnerCompanyController {
             @ApiResponse(responseCode = "204", description = "파트너사 삭제 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 Domain")
     })
-    @DeleteMapping("/{partnerDomain}/companies")
+    @DeleteMapping("/{partnerDomain}")
     public ResponseEntity<Void> deletePartnerCompanyByPartnerDomain(@PathVariable String partnerDomain) {
-        partnerCompanyService.deletePartnerCompanyByDomain(partnerDomain);
+        partnerCompanyService.deleteByDomain(partnerDomain);
 
         return ResponseEntity.noContent().build();
     }
 
 
-    @Deprecated
+    
     @Operation(operationId = "deletePartnerCompanyByPartnerDomain", summary = "파트너사 삭제")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "파트너사 삭제 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 Domain")
     })
-    @DeleteMapping("/{partnerCompanyId}/companies")
+    @DeleteMapping("/{partnerCompanyId}")
     public ResponseEntity<Void> deletePartnerCompanyById(@PathVariable Long partnerCompanyId) {
-        partnerCompanyService.deletePartnerCompanyById(partnerCompanyId);
+        partnerCompanyService.deleteById(partnerCompanyId);
 
         return ResponseEntity.noContent().build();
     }

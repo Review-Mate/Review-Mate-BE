@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PartnerManagerRepository extends JpaRepository<PartnerManager, Long> {
 
-    boolean existsByIdAndPartnerCompany_Domain(Long id, String partnerDomain);
+    boolean existsById(Long id);
 }
