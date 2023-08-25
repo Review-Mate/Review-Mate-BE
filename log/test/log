@@ -4,3 +4,9 @@
 2023-08-25 15:49:50.281  INFO 7905 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
 2023-08-25 15:49:50.281  INFO 7905 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 2023-08-25 15:49:50.291  INFO 7905 --- [Test worker] c.s.reviewmate.web.TestControllerTest    : Started TestControllerTest in 0.706 seconds (JVM running for 1.115)
+2023-08-25 19:46:52.530  INFO 43051 --- [Test worker] c.s.reviewmate.web.TestControllerTest    : Starting TestControllerTest using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 43051 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-25 19:46:52.531  INFO 43051 --- [Test worker] c.s.reviewmate.web.TestControllerTest    : The following 1 profile is active: "secret"
+2023-08-25 19:46:52.959  INFO 43051 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-25 19:46:52.959  INFO 43051 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-25 19:46:52.960  INFO 43051 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-08-25 19:46:52.971  INFO 43051 --- [Test worker] c.s.reviewmate.web.TestControllerTest    : Started TestControllerTest in 0.727 seconds (JVM running for 1.104)
