@@ -40,8 +40,6 @@ public class ReviewController {
     @Parameters({
             @Parameter(name = "partnerDomain", description = "파트너사 도메인"),
             @Parameter(name = "travelProductPartnerCustomId", description = "리뷰를 달 상품 ID", example = "PRODUCT_1234"),
-            @Parameter(name = "reviewCreateRequest", description = "리뷰 데이터 객체 \n\nMediaType: application/json", required = true),
-            @Parameter(name = "reviewImageFiles[]", description = "리뷰 이미지 리스트 \n\nMediaType: image/{image_extension}", required = false)
     })
     @ApiResponse(responseCode = "201", description = "리뷰 생성 성공", headers = {
             @Header(name = "Location", description = "생성된 리뷰의 URI, /api/v1/review/{reviewId}", schema = @Schema(type = "string"))
@@ -105,10 +103,6 @@ public class ReviewController {
 
 
     @Operation(operationId = "updateReviewByReviewId", summary = "리뷰 수정", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
-    @Parameters({
-            @Parameter(name = "reviewUpdateRequest", description = "리뷰 데이터 객체 \n\nMediaType: application/json", required = true),
-            @Parameter(name = "reviewImages", description = "리뷰 이미지 리스트 \n\nMediaType: Multipart/form-data", required = false)
-    })
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "리뷰 수정 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 리뷰 ID"),

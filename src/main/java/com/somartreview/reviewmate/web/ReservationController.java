@@ -30,13 +30,6 @@ public class ReservationController {
 
 
     @Operation(operationId = "createSingleTravelProductReservation", summary = "예약 생성", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
-    @Parameters({
-            @Parameter(name = "partnerDomain", description = "파트너사 도메인", example = "goodchoice.kr"),
-            @Parameter(name = "reviewCreateRequest", description = "리뷰 데이터 객체 \n\nMediaType: application/json", required = true),
-            @Parameter(name = "singleTravelProductCreateRequest", description = "단일 여행상품 데이터 객체 \n\n\n\nMediaType: application/json", required = true),
-            @Parameter(name = "thumbnailFile", description = "단일 여행상품 썸네일 이미지 \n\n\n\nMediaType: image/{image_extension}", required = false)
-
-    })
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "생성 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 고객 ID 혹은 여행상품 ID"),
