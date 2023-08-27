@@ -1,8 +1,6 @@
 package com.somartreview.reviewmate.web;
 
-import com.somartreview.reviewmate.domain.Customer.CustomerId;
 import com.somartreview.reviewmate.dto.request.customer.CustomerCreateRequest;
-import com.somartreview.reviewmate.dto.request.customer.CustomerIdDto;
 import com.somartreview.reviewmate.dto.request.customer.CustomerUpdateRequest;
 import com.somartreview.reviewmate.dto.response.customer.CustomerResponse;
 import com.somartreview.reviewmate.service.CustomerService;
@@ -38,9 +36,9 @@ public class CustomerController {
     @PostMapping("/")
     public ResponseEntity<Void> createCustomer(@PathVariable String partnerDomain,
                                                @Valid @RequestBody CustomerCreateRequest customerCreateRequest) {
-        final CustomerId customerId = customerService.create(partnerDomain, customerCreateRequest).getCustomerId();
+        final String partnerCustomId = customerService.create(partnerDomain, customerCreateRequest);
 
-        return ResponseEntity.created(URI.create("/api/v1/dev/partners/" + customerId.getPartnerDomain() + "customers/" + customerId.getPartnerCustomId())).build();
+        return ResponseEntity.created(URI.create("/api/v1/dev/partners/" + partnerDomain + "customers/" + partnerCustomId)).build();
     }
 
 
@@ -56,8 +54,7 @@ public class CustomerController {
     @GetMapping("/{partnerCustomId}")
     public ResponseEntity<CustomerResponse> getCustomerResponseById(@PathVariable String partnerDomain,
                                                                     @PathVariable String partnerCustomId) {
-        CustomerIdDto customerIdDto = new CustomerIdDto(partnerDomain, partnerCustomId);
-        CustomerResponse customerResponse = customerService.getCustomerResponseByCustomId(customerIdDto);
+        CustomerResponse customerResponse = customerService.getCustomerResponseByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
 
         return ResponseEntity.ok(customerResponse);
     }
@@ -66,7 +63,7 @@ public class CustomerController {
     @Operation(operationId = "updateCustomerByCustomerId", summary = "고객 정보 수정")
     @Parameters({
             @Parameter(name = "partnerDomain", description = "고객이 소속된 파트너사 도메인", example = "goodchoice.kr"),
-            @Parameter(name = "partnerCustomId", description = "파트너사가 정의하는 고객 커스텀 ID (unique) \n\n⚠️ 서로 절대 겹치면 안됨", example = "PRODUCT-0001")
+            @Parameter(name = "partnerCustomId", description = "파트너사가 정의하는 고객 커스텀 ID", example = "PRODUCT-0001")
     })
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "고객 정보 수정 성공"),
@@ -76,8 +73,7 @@ public class CustomerController {
     public ResponseEntity<Void> updateCustomerByCustomerId(@PathVariable String partnerDomain,
                                                            @PathVariable String partnerCustomId,
                                                            @Valid @RequestBody CustomerUpdateRequest request) {
-        CustomerIdDto customerIdDto = new CustomerIdDto(partnerDomain, partnerCustomId);
-        customerService.updateByCustomerId(customerIdDto, request);
+        customerService.updateByCustomerId(partnerDomain, partnerCustomId, request);
 
         return ResponseEntity.noContent().build();
     }
@@ -92,11 +88,9 @@ public class CustomerController {
             @ApiResponse(responseCode = "204", description = "고객 삭제 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 고객 ID")
     })
-    @DeleteMapping("/{partnerCustomId}")
-    public ResponseEntity<Void> deleteCustomerByCustomerId(@PathVariable String partnerDomain,
-                                                           @PathVariable String partnerCustomId) {
-        CustomerIdDto customerIdDto = new CustomerIdDto(partnerDomain, partnerCustomId);
-        customerService.deleteByCustomerId(customerIdDto);
+    @DeleteMapping("/{customerId}")
+    public ResponseEntity<Void> deleteCustomerByCustomerId(@PathVariable Long customerId) {
+        customerService.deleteByCustomerId(customerId);
 
         return ResponseEntity.noContent().build();
     }

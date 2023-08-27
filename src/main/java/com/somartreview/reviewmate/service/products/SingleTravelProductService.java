@@ -5,7 +5,6 @@ import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
 import com.somartreview.reviewmate.domain.TravelProduct.*;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductUpdateRequest;
-import com.somartreview.reviewmate.dto.request.travelProduct.TravelProductIdDto;
 import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductConsoleElementResponse;
 import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
@@ -31,56 +30,33 @@ public class SingleTravelProductService {
 
 
     @Transactional
-    public SingleTravelProduct create(String partnerDomain, SingleTravelProductCreateRequest request, MultipartFile thumbnail) {
-        partnerCompanyService.validateExistPartnerDomain(partnerDomain);
-
-        final PartnerCompany partnerCompany = partnerCompanyService.findByDomain(partnerDomain);
+    public String create(String partnerDomain, SingleTravelProductCreateRequest request, MultipartFile thumbnailFile) {
+        final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(partnerDomain);
         final PartnerSeller partnerSeller = partnerSellerService.findById(request.getPartnerSellerId());
 
-        String thumbnailUrl = uploadThumbnailOnS3(thumbnail);
+        String thumbnailUrl = uploadThumbnailOnS3(thumbnailFile);
 
-        return singleTravelProductRepository.save(request.toEntity(partnerDomain, thumbnailUrl, partnerCompany, partnerSeller));
-    }
-
-    public SingleTravelProduct findByTravelProductId(TravelProductIdDto travelProductIdDto) {
-        return singleTravelProductRepository.findByTravelProductId(travelProductIdDto.toEntity())
-                .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
-    }
-
-    public List<SingleTravelProduct> findAllByPartnerDomainAndTravelProductCategory(String partnerDomain, TravelProductCategory travelProductCategory) {
-        return singleTravelProductRepository.findAllByTravelProductId_PartnerDomainAndTravelProductCategory(partnerDomain, travelProductCategory);
-    }
-
-    public SingleTravelProductResponse getSingleTravelProductResponseByTravelProductId(TravelProductIdDto travelProductIdDto) {
-        SingleTravelProduct singleTravelProduct = findByTravelProductId(travelProductIdDto);
-
-        return new SingleTravelProductResponse(singleTravelProduct);
-    }
-
-    public SingleTravelProductConsoleElementResponse getSingleTravelProductConsoleElementResponseByTravelProductId(TravelProductIdDto travelProductIdDto) {
-        SingleTravelProduct singleTravelProduct = findByTravelProductId(travelProductIdDto);
-
-        return new SingleTravelProductConsoleElementResponse(singleTravelProduct);
-    }
-
-    public List<SingleTravelProductResponse> getSingleTravelProductResponsesByPartnerDomainAndCategory(String partnerDomain, TravelProductCategory travelProductCategory) {
-        return findAllByPartnerDomainAndTravelProductCategory(partnerDomain, travelProductCategory)
-                .stream()
-                .map(SingleTravelProductResponse::new)
-                .toList();
-    }
-
-    public List<SingleTravelProductConsoleElementResponse> getSingleTravelProductConsoleElementResponsesByPartnerDomainAndCategory(String partnerDomain, TravelProductCategory travelProductCategory) {
-        return findAllByPartnerDomainAndTravelProductCategory(partnerDomain, travelProductCategory)
-                .stream()
-                .map(SingleTravelProductConsoleElementResponse::new)
-                .toList();
+        return singleTravelProductRepository.save(request.toEntity(thumbnailUrl, partnerCompany, partnerSeller)).getPartnerCustomId();
     }
 
     @Transactional
-    public void updateByTravelProductId(TravelProductIdDto travelProductIdDto, SingleTravelProductUpdateRequest request, MultipartFile thumbnail) {
-        SingleTravelProduct foundTravelProduct = findByTravelProductId(travelProductIdDto);
-        String thumbnailUrl = uploadThumbnailOnS3(thumbnail);
+    public SingleTravelProduct retreiveSingleTravelProduct(String partnerDomain, SingleTravelProductCreateRequest singleTravelProductCreateRequest, MultipartFile thumbnailFile) {
+        if (existsByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductCreateRequest.getPartnerCustomId())) {
+            return findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductCreateRequest.getPartnerCustomId());
+        }
+
+        create(partnerDomain, singleTravelProductCreateRequest, thumbnailFile);
+        return findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductCreateRequest.getPartnerCustomId());
+    }
+
+    public boolean existsByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
+        return singleTravelProductRepository.existsByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
+    }
+
+    @Transactional
+    public void updateByTravelProductId(Long travelProductId, SingleTravelProductUpdateRequest request, MultipartFile thumbnailFile) {
+        SingleTravelProduct foundTravelProduct = findByTravelProductId(travelProductId);
+        String thumbnailUrl = uploadThumbnailOnS3(thumbnailFile);
 
         foundTravelProduct.update(request, thumbnailUrl);
     }
@@ -94,15 +70,42 @@ public class SingleTravelProductService {
         return "https://www.testThumbnailUrl.com";
     }
 
-    @Transactional
-    public void deleteByTravelProductId(TravelProductIdDto travelProductIdDto) {
-        validateExistTravelProductId(travelProductIdDto);
-
-        singleTravelProductRepository.deleteByTravelProductId(travelProductIdDto.toEntity());
+    public SingleTravelProduct findByTravelProductId(Long travelProductId) {
+        return singleTravelProductRepository.findById(travelProductId)
+                .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
     }
 
-    public void validateExistTravelProductId(TravelProductIdDto travelProductIdDto) {
-        if (!singleTravelProductRepository.existsByTravelProductId(travelProductIdDto.toEntity()))
+    public SingleTravelProduct findByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
+        return singleTravelProductRepository.findByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)
+                .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
+    }
+
+    public List<SingleTravelProduct> findAllByPartnerDomainAndTravelProductCategory(String partnerDomain, TravelProductCategory travelProductCategory) {
+        return singleTravelProductRepository.findAllByPartnerCompany_PartnerDomainAndTravelProductCategory(partnerDomain, travelProductCategory);
+    }
+
+    public SingleTravelProductConsoleElementResponse getSingleTravelProductConsoleElementResponseByTravelProductId(Long travelProductId) {
+        SingleTravelProduct singleTravelProduct = findByTravelProductId(travelProductId);
+
+        return new SingleTravelProductConsoleElementResponse(singleTravelProduct);
+    }
+
+    public List<SingleTravelProductConsoleElementResponse> getSingleTravelProductConsoleElementResponsesByPartnerDomainAndTravelProductCategory(String partnerDomain, TravelProductCategory travelProductCategory) {
+        return findAllByPartnerDomainAndTravelProductCategory(partnerDomain, travelProductCategory)
+                .stream()
+                .map(SingleTravelProductConsoleElementResponse::new)
+                .toList();
+    }
+
+    @Transactional
+    public void deleteByTravelProductId(Long travelProductId) {
+        validateExistTravelProductId(travelProductId);
+
+        singleTravelProductRepository.deleteById(travelProductId);
+    }
+
+    public void validateExistTravelProductId(Long travelProductId) {
+        if (!singleTravelProductRepository.existsById(travelProductId))
             throw new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND);
     }
 }

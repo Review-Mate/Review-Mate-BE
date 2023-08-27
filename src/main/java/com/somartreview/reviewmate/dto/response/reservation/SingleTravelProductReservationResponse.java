@@ -43,12 +43,12 @@ public class SingleTravelProductReservationResponse {
 
     public SingleTravelProductReservationResponse(final Reservation reservation) {
         this.id = reservation.getId();
-        this.customerPartnerCustomId = reservation.getCustomer().getCustomerId().getPartnerCustomId();
+        this.customerPartnerCustomId = reservation.getCustomer().getPartnerCustomId();
         this.customerName = reservation.getCustomer().getName();
         this.customerPhoneNumber = reservation.getCustomer().getPhoneNumber();
 
         final SingleTravelProduct singleTravelProduct = (SingleTravelProduct) reservation.getTravelProduct();
-        this.travelProductPartnerCustomId = singleTravelProduct.getTravelProductId().getPartnerCustomId();
+        this.travelProductPartnerCustomId = singleTravelProduct.getPartnerCustomId();
         this.travelProductName = singleTravelProduct.getName();
         this.startTime = singleTravelProduct.getStartTime();
         this.endTime = singleTravelProduct.getEndTime();

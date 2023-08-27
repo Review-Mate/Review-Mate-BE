@@ -2,13 +2,11 @@ package com.somartreview.reviewmate.web.review;
 
 import com.somartreview.reviewmate.domain.Review.ReviewOrderCriteria;
 import com.somartreview.reviewmate.domain.Review.ReviewProperty;
-import com.somartreview.reviewmate.dto.request.customer.CustomerIdDto;
 import com.somartreview.reviewmate.dto.request.review.ReviewCreateRequest;
 
 import javax.validation.Valid;
 
 import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
-import com.somartreview.reviewmate.dto.request.travelProduct.TravelProductIdDto;
 import com.somartreview.reviewmate.dto.response.review.WidgetReviewResponse;
 import com.somartreview.reviewmate.service.review.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,9 +48,7 @@ public class ReviewController {
                                              @Valid @RequestPart ReviewCreateRequest reviewCreateRequest,
                                              @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {
 
-        TravelProductIdDto travelProductIdDto = new TravelProductIdDto(partnerDomain, travelProductPartnerCustomId);
-        CustomerIdDto customerIdDto = new CustomerIdDto(partnerDomain, reviewCreateRequest.getCustomerPartnerCustomId());
-        Long reviewId = reviewService.create(travelProductIdDto, customerIdDto, reviewCreateRequest, reviewImageFiles);
+        Long reviewId = reviewService.create(partnerDomain, travelProductPartnerCustomId, reviewCreateRequest, reviewImageFiles);
 
         return ResponseEntity.created(URI.create("/api/v1/reviews" + reviewId)).build();
     }
@@ -95,8 +91,7 @@ public class ReviewController {
                                                                                                 @RequestParam(required = false, defaultValue = "LATEST", value = "reviewOrderCriteria") ReviewOrderCriteria reviewOrderCriteria,
                                                                                                 @RequestParam(required = false, defaultValue = "0") Integer page,
                                                                                                 @RequestParam(required = false, defaultValue = "10") Integer size) {
-        TravelProductIdDto travelProductIdDto = new TravelProductIdDto(partnerDomain, travelProductPartnerCustomId);
-        List<WidgetReviewResponse> widgetReviewResponses = reviewService.getWidgetReviewResponsesByPartnerDomainAndTravelProductIdWithCondition(travelProductIdDto, reviewProperty, keyword, reviewOrderCriteria, page, size);
+        List<WidgetReviewResponse> widgetReviewResponses = reviewService.getWidgetReviewResponsesByPartnerDomainAndTravelProductIdWithCondition(partnerDomain, travelProductPartnerCustomId, reviewProperty, keyword, reviewOrderCriteria, page, size);
 
         return ResponseEntity.ok(widgetReviewResponses);
     }
@@ -124,7 +119,7 @@ public class ReviewController {
             @ApiResponse(responseCode = "400", description = "존재하지 않는 리뷰 ID"),
             @ApiResponse(responseCode = "400", description = "파트너사 도메인과 여행상품이 등록된 도메인이 다름")
     })
-    @DeleteMapping("/widget/partners//{partnerDomain}/reviews/{reviewId}")
+    @DeleteMapping("/widget/partners/{partnerDomain}/reviews/{reviewId}")
     public ResponseEntity<Void> deleteReviewByReviewId(@PathVariable String partnerDomain,
                                                        @PathVariable Long reviewId) {
         reviewService.deleteById(reviewId);

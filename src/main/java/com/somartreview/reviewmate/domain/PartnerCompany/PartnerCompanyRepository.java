@@ -8,9 +8,9 @@ import java.util.Optional;
 @Repository
 public interface PartnerCompanyRepository extends JpaRepository<PartnerCompany, Long> {
 
-    boolean existsByDomain(String domain);
+    boolean existsByPartnerDomain(String partnerDomain);
 
-    Optional<PartnerCompany> findByDomain(String domain);
+    Optional<PartnerCompany> findByPartnerDomain(String partnerDomain);
 
-    void deleteByDomain(String domain);
+    void deleteByPartnerDomain(String partnerDomain);
 }

@@ -14,6 +14,8 @@ public enum ErrorCode {
     CUSTOMER_PARTNER_DOMAIN_ERROR("1003", "고객의 파트너 도메인이 너무 길거나 공백입니다."),
     CUSTOMER_DUPLICATED_PARTNER_ID("1004", "고객의 클라이언트 사 ID가 중복됩니다."),
     CUSTOMER_NOT_FOUND("1005", "고객을 찾을 수 없습니다."),
+    CUSTOMER_NOT_UNIQUE_PHONE_NUMBER("1006", "고객의 전화번호가 유니크하지 않습니다."),
+    CUSTOMER_NOT_UNIQUE_KAKAO_ID("1007", "고객의 카카오 ID가 유니크하지 않습니다."),
 
     LIVE_FEEDBACK_MESSAGE_ERROR("1100", "실시간 피드백의 메시지가 너무 길거나 공백입니다."),
     LIVE_FEEDBACK_MEDIA_URL_ERROR("1101", "실시간 피드백의 미디어 링크가 너무 길거나 공백입니다."),
@@ -25,7 +27,8 @@ public enum ErrorCode {
 
     PARTNER_COMPANY_NAME_ERROR("1200", "파트너사의 이름이 너무 길거나 공백입니다."),
     PARTNER_COMPANY_NOT_FOUND("1201", "파트너사를 찾을 수 없습니다."),
-    PARTNER_COMPANY_EXIST_DOMAIN("1202", "해당 파트너사의 도메인이 이미 존재합니다."),
+    PARTNER_COMPANY_NOT_UNIQUE_PARTNER_DOMAIN("1202", "파트너사의 도메인이 유니크하지 않습니다."),
+    PARTNER_COMPANY_DUPLICATED_PARTNER_DOMAIN("1202", "파트너사의 도메인이 이미 존재합니다."),
 
     PARTNER_MANAGER_NAME_ERROR("1210", "관리자의 이름이 너무 길거나 공백입니다."),
     PARTNER_MANAGER_EMAIL_ERROR("1211", "관리자의 이메일이 올바른 형식이 아닙니다."),
@@ -38,6 +41,8 @@ public enum ErrorCode {
     PARTNER_SELLER_PASSWORD_ERROR("1222", "판매자의 비밀번호가 너무 짧거나 공백입니다."),
     PARTNER_SELLER_NOT_FOUND("1223", "판매자를 찾을 수 없습니다."),
     PARTNER_SELLER_NOT_MATCH_WITH_PARTNER_DOMAIN("1224", "판매자가 소속된 파트너사의 도메인과 일치하지 않습니다."),
+    PARTNER_SELLER_NOT_UNIQUE_PHONE_NUMBER("1225", "판매자의 전화번호가 유니크하지 않습니다."),
+    PARTNER_SELLER_NOT_UNIQUE_KAKAO_ID("1226", "판매자의 카카오 ID가 유니크하지 않습니다."),
 
     REVIEW_RATING_ERROR("1300", "리뷰의 별점이 잘못된 범위입니다."),
     REVIEW_TITLE_ERROR("1301", "리뷰의 제목이 너무 길거나 공백입니다."),

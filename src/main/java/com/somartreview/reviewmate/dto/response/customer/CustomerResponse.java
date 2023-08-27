@@ -13,7 +13,10 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 public class CustomerResponse {
 
-    @Schema(description = "클라이언트 서비스에서의 유저 식별자\n\n⚠️ 반드시 유니크 해야함", example = "CUST-1234")
+    @Schema(description = "고객 ID")
+    private Long id;
+
+    @Schema(description = "파트너사가 정의한 상품 커스텀 ID (unique)", example = "CUST-1234")
     private String partnerCustomerId;
 
     @Schema(description = "고객 이름", example = "권순찬")
@@ -26,7 +29,8 @@ public class CustomerResponse {
     private String kakaoId;
 
     public CustomerResponse(final Customer customer) {
-        this.partnerCustomerId = customer.getCustomerId().getPartnerCustomId();
+        this.id = customer.getId();
+        this.partnerCustomerId = customer.getPartnerCustomId();
         this.name = customer.getName();
         this.phoneNumber = customer.getPhoneNumber();
         this.kakaoId = customer.getKakaoId();

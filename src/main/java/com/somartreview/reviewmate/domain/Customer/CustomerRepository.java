@@ -7,10 +7,13 @@ import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
+    boolean existsByPartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
 
-    boolean existsByCustomerId(CustomerId customerId);
+    boolean existsByPhoneNumber(String phoneNumber);
 
-    Optional<Customer> findByCustomerId(CustomerId customerId);
+    boolean existsByKakaoId(String kakaoId);
 
-    void deleteByCustomerId(CustomerId customerId);
+    Optional<Customer> findByPartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
+
+    void deleteByPartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
 }

@@ -3,10 +3,8 @@ package com.somartreview.reviewmate.service.review;
 import com.somartreview.reviewmate.domain.Customer.Customer;
 import com.somartreview.reviewmate.domain.Review.*;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
-import com.somartreview.reviewmate.dto.request.customer.CustomerIdDto;
 import com.somartreview.reviewmate.dto.request.review.ReviewCreateRequest;
 import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
-import com.somartreview.reviewmate.dto.request.travelProduct.TravelProductIdDto;
 import com.somartreview.reviewmate.dto.response.review.WidgetReviewResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.CustomerService;
@@ -32,9 +30,9 @@ public class ReviewService {
     private final TravelProductService travelProductService;
 
     @Transactional
-    public Long create(TravelProductIdDto travelProductIdDto, CustomerIdDto customerIdDto, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
-        final Customer customer = customerService.findByCustomerId(customerIdDto);
-        final TravelProduct travelProduct = travelProductService.findByTravelProductId(travelProductIdDto);
+    public Long create(String partnerDomain, String travelProductPartnerCustomId, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
+        final Customer customer = customerService.findByPartnerDomainAndPartnerCustomId(partnerDomain, reviewCreateRequest.getCustomerPartnerCustomId());
+        final TravelProduct travelProduct = travelProductService.findByTravelProductId(partnerDomain, travelProductPartnerCustomId);
 
         Review review = reviewCreateRequest.toEntity(customer, travelProduct);
         reviewRepository.save(review);
@@ -73,12 +71,12 @@ public class ReviewService {
     }
 
     // TODO: Apply complicated condition by QueryDSL
-    public List<WidgetReviewResponse> getWidgetReviewResponsesByPartnerDomainAndTravelProductIdWithCondition(TravelProductIdDto travelProductId,
+    public List<WidgetReviewResponse> getWidgetReviewResponsesByPartnerDomainAndTravelProductIdWithCondition(String partnerDomain, String travelProductPartnerCustomId,
                                                                                                              ReviewProperty reviewProperty, String keyword,
                                                                                                              ReviewOrderCriteria reviewOrderCriteria,
                                                                                                              Integer page, Integer size) {
         List<WidgetReviewResponse> widgetReviewResponses = new ArrayList<>();
-        List<Review> foundReviews = reviewRepository.findAllByTravelProduct_TravelProductId(travelProductId.toEntity());
+        List<Review> foundReviews = reviewRepository.findAllByTravelProduct_PartnerCompany_PartnerDomainAndTravelProduct_PartnerCustomId(partnerDomain, travelProductPartnerCustomId);
         for (Review review : foundReviews) {
             List<ReviewTag> foundReviewTags = reviewTagService.findReviewTagsByReviewId(review.getId());
             widgetReviewResponses.add(new WidgetReviewResponse(review, foundReviewTags));

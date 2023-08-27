@@ -1,6 +1,6 @@
 package com.somartreview.reviewmate.web.partners;
 
-import com.somartreview.reviewmate.dto.request.PartnerCompanyUpdateRequest;
+import com.somartreview.reviewmate.dto.request.partnerCompany.PartnerCompanyUpdateRequest;
 import com.somartreview.reviewmate.dto.request.partnerCompany.PartnerCompanyCreateRequest;
 import com.somartreview.reviewmate.dto.response.partnerCompany.PartnerCompanyResponse;
 import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
@@ -63,7 +63,7 @@ public class PartnerCompanyController {
     @PutMapping("/{partnerDomain}")
     public ResponseEntity<Void> updatePartnerCompanyByPartnerDomain(@PathVariable String partnerDomain,
                                                                     @Valid @RequestBody PartnerCompanyUpdateRequest request) {
-        partnerCompanyService.updateByDomain(partnerDomain, request);
+        partnerCompanyService.updateByPartnerDomain(partnerDomain, request);
 
         return ResponseEntity.noContent().build();
     }
@@ -78,7 +78,7 @@ public class PartnerCompanyController {
     })
     @DeleteMapping("/{partnerDomain}")
     public ResponseEntity<Void> deletePartnerCompanyByPartnerDomain(@PathVariable String partnerDomain) {
-        partnerCompanyService.deleteByDomain(partnerDomain);
+        partnerCompanyService.deleteByPartnerDomain(partnerDomain);
 
         return ResponseEntity.noContent().build();
     }

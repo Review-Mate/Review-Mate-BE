@@ -22,7 +22,7 @@ public class PartnerManagerService {
 
     @Transactional
     public Long create(PartnerManagerCreateRequest request) {
-        final PartnerCompany partnerCompany = partnerCompanyService.findByDomain(request.getPartnerCompanyDomain());
+        final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(request.getPartnerCompanyDomain());
 
         return partnerManagerRepository.save(request.toEntity(partnerCompany)).getId();
     }

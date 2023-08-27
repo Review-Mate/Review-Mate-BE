@@ -22,9 +22,24 @@ public class PartnerSellerService {
 
     @Transactional
     public Long create(PartnerSellerCreateRequest request) {
-        final PartnerCompany partnerCompany = partnerCompanyService.findByDomain(request.getPartnerCompanyDomain());
+        validateUniquePhoneNumber(request.getPhoneNumber());
+        validateUniqueKakaoId(request.getKakaoId());
+
+        final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(request.getPartnerCompanyDomain());
 
         return partnerSellerRepository.save(request.toEntity(partnerCompany)).getId();
+    }
+
+    private void validateUniquePhoneNumber(final String phoneNumber) {
+        if (partnerSellerRepository.existsByPhoneNumber(phoneNumber)) {
+            throw new DomainLogicException(PARTNER_SELLER_NOT_UNIQUE_PHONE_NUMBER);
+        }
+    }
+
+    private void validateUniqueKakaoId(final String kakaoId) {
+        if (partnerSellerRepository.existsByKakaoId(kakaoId)) {
+            throw new DomainLogicException(PARTNER_SELLER_NOT_UNIQUE_KAKAO_ID);
+        }
     }
 
     public PartnerSeller findById(Long partnerSellerId) {
