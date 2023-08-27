@@ -66,7 +66,7 @@ public class CustomerService {
 
     private void validateUniquePartnerCustomerId(String partnerDomain, String partnerCustomId) {
         if (customerRepository.existsByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)) {
-            throw new DomainLogicException(CUSTOMER_DUPLICATED_PARTNER_ID);
+            throw new DomainLogicException(CUSTOMER_NOT_UNIQUE_PARTNER_CUSTOM_ID);
         }
     }
 

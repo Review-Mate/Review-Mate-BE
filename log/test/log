@@ -8783,3 +8783,28 @@ alter table travel_product drop foreign key FKrjl3btw1leqijexob9ryiutra [42102-2
 2023-08-27 19:20:05.812  INFO 44021 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
 2023-08-27 19:20:06.046  INFO 44021 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2023-08-27 19:20:06.047  INFO 44021 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-08-27 19:29:40.192  INFO 45479 --- [main] c.s.reviewmate.ReviewMateApplication     : Starting ReviewMateApplication using Java 20.0.1 on sunchan-ui-MacBook-Pro-14.local with PID 45479 (/Users/chan/code/java/review-mate-be/build/classes/java/main started by chan in /Users/chan/code/java/review-mate-be)
+2023-08-27 19:29:40.193  INFO 45479 --- [main] c.s.reviewmate.ReviewMateApplication     : The following 1 profile is active: "secret"
+2023-08-27 19:29:40.470  INFO 45479 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-08-27 19:29:40.498  INFO 45479 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 13 JPA repository interfaces.
+2023-08-27 19:29:40.703  INFO 45479 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-08-27 19:29:40.707  INFO 45479 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-08-27 19:29:40.707  INFO 45479 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.78]
+2023-08-27 19:29:40.745  INFO 45479 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-08-27 19:29:40.745  INFO 45479 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 534 ms
+2023-08-27 19:29:40.757  INFO 45479 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-08-27 19:29:40.937  INFO 45479 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-08-27 19:29:40.945  INFO 45479 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:~/reviewmate_test'
+2023-08-27 19:29:40.998  INFO 45479 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-08-27 19:29:41.017  INFO 45479 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2023-08-27 19:29:41.075  INFO 45479 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-08-27 19:29:41.111  INFO 45479 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-08-27 19:29:41.425  INFO 45479 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-08-27 19:29:41.428  INFO 45479 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-08-27 19:29:41.752  WARN 45479 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-08-27 19:29:41.946  INFO 45479 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-08-27 19:29:41.952  INFO 45479 --- [main] c.s.reviewmate.ReviewMateApplication     : Started ReviewMateApplication in 1.889 seconds (JVM running for 2.105)
+2023-08-27 19:29:49.337  INFO 45479 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-08-27 19:29:49.338  INFO 45479 --- [SpringApplicationShutdownHook] .SchemaDropperImpl$DelayedDropActionImpl : HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2023-08-27 19:29:49.556  INFO 45479 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-08-27 19:29:49.558  INFO 45479 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

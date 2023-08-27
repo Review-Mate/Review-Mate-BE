@@ -8,6 +8,7 @@ import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProduct
 import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductConsoleElementResponse;
 import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.exception.ErrorCode;
 import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
 import com.somartreview.reviewmate.service.partners.PartnerSellerService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static com.somartreview.reviewmate.exception.ErrorCode.*;
 import static com.somartreview.reviewmate.exception.ErrorCode.TRAVEL_PRODUCT_NOT_FOUND;
 
 @Service
@@ -31,12 +33,19 @@ public class SingleTravelProductService {
 
     @Transactional
     public Long create(String partnerDomain, SingleTravelProductCreateRequest request, MultipartFile thumbnailFile) {
+        validateUniquePartnerCustomId(partnerDomain, request.getPartnerCustomId());
+
         final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(partnerDomain);
         final PartnerSeller partnerSeller = partnerSellerService.findById(request.getPartnerSellerId());
 
         String thumbnailUrl = uploadThumbnailOnS3(thumbnailFile);
 
         return singleTravelProductRepository.save(request.toEntity(thumbnailUrl, partnerCompany, partnerSeller)).getId();
+    }
+
+    private void validateUniquePartnerCustomId(String partnerDomain, String partnerCustomId) {
+        if (existsByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId))
+            throw new DomainLogicException(TRAVEL_PRODUCT_NOT_UNIQUE_PARTNER_CUSTOM_ID);
     }
 
     @Transactional
