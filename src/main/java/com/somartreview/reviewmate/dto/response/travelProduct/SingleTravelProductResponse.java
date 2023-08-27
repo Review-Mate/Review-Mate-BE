@@ -17,7 +17,10 @@ import java.util.List;
 @AllArgsConstructor
 public class SingleTravelProductResponse {
 
-    @Schema(description = "파트너사가 정의한 상품 커스텀 ID", example = "PRODUCT-0001")
+    @Schema(description = "여행상품 ID")
+    private Long id;
+
+    @Schema(description = "파트너사가 정의한 상품 커스텀 ID (unique)", example = "PRODUCT-0001")
     private String partnerCustomerId;
 
     @Schema(description = "상품 썸네일 이미지 URL")
@@ -50,7 +53,8 @@ public class SingleTravelProductResponse {
     private LocalDateTime endTime;
 
     public SingleTravelProductResponse(final SingleTravelProduct singleTravelProduct) {
-        this.partnerCustomerId = singleTravelProduct.getTravelProductId().getPartnerCustomId();
+        this.id = singleTravelProduct.getId();
+        this.partnerCustomerId = singleTravelProduct.getPartnerCustomId();
         this.thumbnailUrl = singleTravelProduct.getThumbnailUrl();
         this.name = singleTravelProduct.getName();
         this.rating = singleTravelProduct.getRating();

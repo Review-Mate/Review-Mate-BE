@@ -2,9 +2,7 @@ package com.somartreview.reviewmate.domain.PartnerCompany;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.PartnerManager.PartnerManager;
-import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
-import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
-import com.somartreview.reviewmate.dto.request.PartnerCompanyUpdateRequest;
+import com.somartreview.reviewmate.dto.request.partnerCompany.PartnerCompanyUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
@@ -28,8 +26,8 @@ public class PartnerCompany extends BaseEntity {
     @Column(name = "partner_company_id")
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String domain;
+    @Column(name = "domain", nullable = false, unique = true)
+    private String partnerDomain;
 
     @Column(nullable = false)
     private String name;
@@ -42,8 +40,8 @@ public class PartnerCompany extends BaseEntity {
     private List<PartnerManager> partnerManagers = new ArrayList<>();
 
     @Builder
-    public PartnerCompany(String domain, String name) {
-        this.domain = domain;
+    public PartnerCompany(String partnerDomain, String name) {
+        this.partnerDomain = partnerDomain;
         validateName(name);
         this.name = name;
     }
@@ -59,7 +57,7 @@ public class PartnerCompany extends BaseEntity {
     }
 
     public void update(PartnerCompanyUpdateRequest request) {
-        this.domain = domain;
+        this.partnerDomain = partnerDomain;
         validateName(request.getName());
         this.name = request.getName();
     }

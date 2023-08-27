@@ -24,8 +24,8 @@ public class SingleTravelProduct extends TravelProduct {
     private LocalDateTime endTime;
 
     @Builder
-    public SingleTravelProduct(String partnerCustomId, String partnerDomain, String thumbnailUrl, String name, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalDateTime startTime, LocalDateTime endTime, TravelProductCategory travelProductCategory) {
-        super(partnerCustomId, partnerDomain, thumbnailUrl, name, travelProductCategory, partnerCompany, partnerSeller);
+    public SingleTravelProduct(String partnerCustomId, String thumbnailUrl, String name, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalDateTime startTime, LocalDateTime endTime, TravelProductCategory travelProductCategory) {
+        super(partnerCustomId, thumbnailUrl, name, travelProductCategory, partnerCompany, partnerSeller);
 
         validateTime(startTime, endTime);
         this.startTime = startTime;

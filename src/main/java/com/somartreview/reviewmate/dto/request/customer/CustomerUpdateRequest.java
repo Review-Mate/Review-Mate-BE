@@ -14,10 +14,6 @@ import javax.validation.constraints.NotEmpty;
 public class CustomerUpdateRequest {
 
     @NotBlank
-    @Schema(description = "고객 커스텀 ID (unique) \n\n서로 절대 겹치면 안됨", example = "CUST-1234")
-    private String partnerCustomId;
-
-    @NotBlank
     @Schema(description = "고객 이름")
     private String name;
 

@@ -45,17 +45,11 @@ public class Review extends BaseEntity {
     private Double polarityValue = 0.0;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "customer_partner_custom_id", nullable = false),
-            @JoinColumn(name = "customer_partner_domain", nullable = false)
-    })
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "travel_product_partner_custom_id", nullable = false),
-            @JoinColumn(name = "travel_product_partner_domain", nullable = false)
-    })
+    @JoinColumn(name = "travel_product_id", nullable = false)
     private TravelProduct travelProduct;
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)

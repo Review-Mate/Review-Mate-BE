@@ -8,9 +8,13 @@ import java.util.Optional;
 @Repository
 public interface PartnerSellerRepository extends JpaRepository<PartnerSeller, Long> {
 
-    boolean existsByIdAndPartnerCompany_Domain(Long id, String partnerDomain);
+    boolean existsByPhoneNumber(String phoneNumber);
 
-    boolean existsByPhoneNumberAndPartnerCompany_Domain(String phoneNumber, String partnerDomain);
+    boolean existsByKakaoId(String kakaoId);
+
+    boolean existsByIdAndPartnerCompany_PartnerDomain(Long id, String partnerDomain);
+
+    boolean existsByPhoneNumberAndPartnerCompany_PartnerDomain(String phoneNumber, String partnerDomain);
 
     Optional<PartnerSeller> findByPhoneNumber(String phoneNumber);
 

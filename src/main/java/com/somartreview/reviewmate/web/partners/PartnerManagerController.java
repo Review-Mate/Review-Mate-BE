@@ -20,7 +20,7 @@ import java.net.URI;
 
 @Tag(name = "파트너사 관리자")
 @RestController
-@RequestMapping("/api/v1/console/partners/managers")
+@RequestMapping("/api/console/v1/managers")
 @RequiredArgsConstructor
 public class PartnerManagerController {
 
@@ -35,7 +35,7 @@ public class PartnerManagerController {
     public ResponseEntity<Void> createPartnerManager(@Valid @RequestBody PartnerManagerCreateRequest partnerManagerCreateRequest) {
         Long partnerManagerId = partnerManagerService.create(partnerManagerCreateRequest);
 
-        return ResponseEntity.created(URI.create("/api/v1/console/partners/managers/" + partnerManagerId)).build();
+        return ResponseEntity.created(URI.create("/api/v1/console//managers/" + partnerManagerId)).build();
     }
 
 

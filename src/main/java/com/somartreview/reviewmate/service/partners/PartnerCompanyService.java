@@ -2,7 +2,7 @@ package com.somartreview.reviewmate.service.partners;
 
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompanyRepository;
-import com.somartreview.reviewmate.dto.request.PartnerCompanyUpdateRequest;
+import com.somartreview.reviewmate.dto.request.partnerCompany.PartnerCompanyUpdateRequest;
 import com.somartreview.reviewmate.dto.request.partnerCompany.PartnerCompanyCreateRequest;
 import com.somartreview.reviewmate.dto.response.partnerCompany.PartnerCompanyResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
@@ -20,14 +20,14 @@ public class PartnerCompanyService {
 
     @Transactional
     public String create(PartnerCompanyCreateRequest request) {
-        validateNotExistDomain(request.getDomain());
+        validateUniquePartnerDomain(request.getPartnerDomain());
 
-        return partnerCompanyRepository.save(request.toEntity()).getDomain();
+        return partnerCompanyRepository.save(request.toEntity()).getPartnerDomain();
     }
 
-    public void validateNotExistDomain(String domain) {
-        if (partnerCompanyRepository.existsByDomain(domain)) {
-            throw new DomainLogicException(PARTNER_COMPANY_EXIST_DOMAIN);
+    public void validateUniquePartnerDomain(String partnerDomain) {
+        if (partnerCompanyRepository.existsByPartnerDomain(partnerDomain)) {
+            throw new DomainLogicException(PARTNER_COMPANY_NOT_UNIQUE_PARTNER_DOMAIN);
         }
     }
 
@@ -36,58 +36,33 @@ public class PartnerCompanyService {
                 .orElseThrow(() -> new DomainLogicException(PARTNER_COMPANY_NOT_FOUND));
     }
 
-    public PartnerCompany findByDomain(String domain) {
-        return partnerCompanyRepository.findByDomain(domain)
+    public PartnerCompany findByPartnerDomain(String partnerDomain) {
+        return partnerCompanyRepository.findByPartnerDomain(partnerDomain)
                 .orElseThrow(() -> new DomainLogicException(PARTNER_COMPANY_NOT_FOUND));
     }
 
-    public PartnerCompanyResponse getPartnerCompanyResponseById(Long id) {
-        PartnerCompany partnerCompany = findById(id);
-        return new PartnerCompanyResponse(partnerCompany);
-    }
-
-    public PartnerCompanyResponse getPartnerCompanyResponseByDomain(String domain) {
-        PartnerCompany partnerCompany = findByDomain(domain);
+    public PartnerCompanyResponse getPartnerCompanyResponseByDomain(String partnerDomain) {
+        PartnerCompany partnerCompany = findByPartnerDomain(partnerDomain);
         return new PartnerCompanyResponse(partnerCompany);
     }
 
     @Transactional
-    public void updateById(Long id, PartnerCompanyUpdateRequest request) {
-        PartnerCompany partnerCompany = findById(id);
+    public void updateByPartnerDomain(String partnerDomain, PartnerCompanyUpdateRequest request) {
+        PartnerCompany partnerCompany = findByPartnerDomain(partnerDomain);
 
-        validateDuplicatedDomain(partnerCompany.getDomain(), request.getDomain());
-
-        partnerCompany.update(request);
-    }
-
-    @Transactional
-    public void updateByDomain(String domain, PartnerCompanyUpdateRequest request) {
-        PartnerCompany partnerCompany = findByDomain(domain);
-
-        validateDuplicatedDomain(partnerCompany.getDomain(), request.getDomain());
+        validateDuplicatedPartnerDomain(partnerCompany.getPartnerDomain(), request.getPartnerDomain());
 
         partnerCompany.update(request);
     }
 
-    public void validateDuplicatedDomain(String oldDomain, String newDomain) {
-        if (!oldDomain.equals(newDomain) && partnerCompanyRepository.existsByDomain(newDomain)) {
-            throw new DomainLogicException(PARTNER_COMPANY_EXIST_DOMAIN);
+    public void validateDuplicatedPartnerDomain(String oldDomain, String newDomain) {
+        if (!oldDomain.equals(newDomain) && partnerCompanyRepository.existsByPartnerDomain(newDomain)) {
+            throw new DomainLogicException(PARTNER_COMPANY_DUPLICATED_PARTNER_DOMAIN);
         }
     }
 
     @Transactional
-    public void deleteById(Long id) {
-        partnerCompanyRepository.deleteById(id);
-    }
-
-    @Transactional
-    public void deleteByDomain(String domain) {
-        partnerCompanyRepository.deleteByDomain(domain);
-    }
-
-    public void validateExistPartnerDomain(String partnerDomain) {
-        if (!partnerCompanyRepository.existsByDomain(partnerDomain)) {
-            throw new DomainLogicException(NOT_EXIST_PARTNER_DOMAIN);
-        }
+    public void deleteByPartnerDomain(String partnerDomain) {
+        partnerCompanyRepository.deleteByPartnerDomain(partnerDomain);
     }
 }

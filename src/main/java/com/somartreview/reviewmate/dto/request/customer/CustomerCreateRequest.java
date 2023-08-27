@@ -1,6 +1,7 @@
 package com.somartreview.reviewmate.dto.request.customer;
 
 import com.somartreview.reviewmate.domain.Customer.Customer;
+import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,13 +30,13 @@ public class CustomerCreateRequest {
     @Schema(description = "챗봇 메시지를 보내기 위한 고객의 카카오톡 ID", example = "sckwon770")
     private String kakaoId;
 
-    public Customer toEntity(String partnerDomain) {
+    public Customer toEntity(PartnerCompany partnerCompany) {
         return Customer.builder()
                 .partnerCustomId(partnerCustomId)
-                .partnerDomain(partnerDomain)
                 .name(name)
                 .phoneNumber(phoneNumber)
                 .kakaoId(kakaoId)
+                .partnerCompany(partnerCompany)
                 .build();
     }
 }

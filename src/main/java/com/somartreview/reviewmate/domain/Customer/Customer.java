@@ -1,6 +1,7 @@
 package com.somartreview.reviewmate.domain.Customer;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
+import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.dto.request.customer.CustomerUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
@@ -18,29 +19,54 @@ import java.util.regex.Pattern;
 public class Customer extends BaseEntity {
 
     private static final int MAX_NAME_LENGTH = 255;
+    private static final int MAX_PARTNER_CUSTOM_ID_LENGTH = 50;
     private static final Pattern ONLY_NUMBER_PATTERN = Pattern.compile("[0-9]+");
 
 
-    @EmbeddedId
-    private CustomerId customerId;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true, length = 50)
+    private String partnerCustomId;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20, nullable = false, unique = true)
     private String phoneNumber;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String kakaoId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "partner_company_id", nullable = false)
+    private PartnerCompany partnerCompany;
+
+
     @Builder
-    public Customer(String partnerCustomId, String partnerDomain, String name, String phoneNumber, String kakaoId) {
-        this.customerId = new CustomerId(partnerCustomId, partnerDomain);
+    public Customer(String partnerCustomId, String name, String phoneNumber, String kakaoId, final PartnerCompany partnerCompany) {
+        validatePartnerCustomId(partnerCustomId);
+        this.partnerCustomId = partnerCustomId;
         validateName(name);
         this.name = name;
         validatePhoneNumber(phoneNumber);
         this.phoneNumber = phoneNumber;
         this.kakaoId = kakaoId;
+        this.partnerCompany = partnerCompany;
+    }
+
+    public void update(CustomerUpdateRequest request) {
+        validateName(request.getName());
+        this.name = request.getName();
+        validatePhoneNumber(request.getPhoneNumber());
+        this.phoneNumber = request.getPhoneNumber();
+        this.kakaoId = request.getKakaoId();
+    }
+
+    private void validatePartnerCustomId(final String partnerCustomerId) {
+        if (partnerCustomerId.isBlank() || partnerCustomerId.length() > MAX_PARTNER_CUSTOM_ID_LENGTH) {
+            throw new DomainLogicException(ErrorCode.CUSTOMER_PARTNER_CUSTOM_ID_ERROR);
+        }
     }
 
     private void validateName(final String name) {
@@ -53,14 +79,5 @@ public class Customer extends BaseEntity {
         if (phoneNumber.isBlank() || !ONLY_NUMBER_PATTERN.matcher(phoneNumber).matches()) {
             throw new DomainLogicException(ErrorCode.CUSTOMER_PHONE_NUMBER_ERROR);
         }
-    }
-
-    public void update(CustomerUpdateRequest request) {
-        customerId.update(request.getPartnerCustomId());
-        validateName(request.getName());
-        this.name = request.getName();
-        validatePhoneNumber(request.getPhoneNumber());
-        this.phoneNumber = request.getPhoneNumber();
-        this.kakaoId = request.getKakaoId();
     }
 }

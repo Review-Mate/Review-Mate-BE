@@ -32,10 +32,10 @@ public class PartnerSeller extends BaseEntity {
     @Column(length = 20, nullable = false)
     private String name;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20, nullable = false, unique = true)
     private String phoneNumber;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String kakaoId;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -36,17 +36,11 @@ public class LiveSatisfaction extends BaseEntity {
     private ReviewProperty dissatisfiedReviewProperty;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "customer_partner_custom_id", nullable = false),
-            @JoinColumn(name = "customer_partner_domain", nullable = false)
-    })
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "travel_product_partner_custom_id", nullable = false),
-            @JoinColumn(name = "travel_product_partner_domain", nullable = false)
-    })
+    @JoinColumn(name = "travel_product_id", nullable = false)
     private TravelProduct travelProduct;
 
     public LiveSatisfaction(Integer rating, ReviewProperty satisfiedReviewProperty, ReviewProperty dissatisfiedReviewProperty, Customer customer, TravelProduct travelProduct) {

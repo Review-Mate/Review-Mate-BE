@@ -9,11 +9,9 @@ import java.util.Optional;
 @Repository
 public interface SingleTravelProductRepository extends JpaRepository<SingleTravelProduct, Long> {
 
-    boolean existsByTravelProductId(TravelProductId travelProductId);
+    boolean existsByPartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
 
-    Optional<SingleTravelProduct> findByTravelProductId(TravelProductId travelProductId);
+    Optional<SingleTravelProduct> findByPartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
 
-    List<SingleTravelProduct> findAllByTravelProductId_PartnerDomainAndTravelProductCategory(String partnerDomain, TravelProductCategory travelProductCategory);
-
-    void deleteByTravelProductId(TravelProductId travelProductId);
+    List<SingleTravelProduct> findAllByPartnerCompany_PartnerDomainAndTravelProductCategory(String partnerDomain, TravelProductCategory travelProductCategory);
 }

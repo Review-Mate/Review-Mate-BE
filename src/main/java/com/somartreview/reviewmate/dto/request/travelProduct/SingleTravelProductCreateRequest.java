@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class SingleTravelProductCreateRequest {
 
     @NotBlank
-    @Schema(description = "파트너사가 정의하는 상품 커스텀 ID (unique)\n\n서로 절대 겹치면 안됨", example = "PRODUCT-0001")
+    @Schema(description = "파트너사가 정의하는 상품 커스텀 ID (unique)\n\n⚠️ 서로 절대 겹치면 안됨", example = "PRODUCT-0001")
     private String partnerCustomId;
 
     @NotBlank
@@ -45,10 +45,9 @@ public class SingleTravelProductCreateRequest {
     @Schema(description = "여행상품 이용 종료시간", example = "2023.08.15T12:00")
     private LocalDateTime endTime;
 
-    public SingleTravelProduct toEntity(String partnerDomain, String thumbnailUrl, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+    public SingleTravelProduct toEntity(String thumbnailUrl, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
         return SingleTravelProduct.builder()
                 .partnerCustomId(partnerCustomId)
-                .partnerDomain(partnerDomain)
                 .thumbnailUrl(thumbnailUrl)
                 .name(name)
                 .travelProductCategory(travelProductCategory)

@@ -17,10 +17,6 @@ import java.time.LocalDateTime;
 public class SingleTravelProductUpdateRequest {
 
     @NotBlank
-    @Schema(description = "파트너사가 정의하는 상품 커스텀 ID (unique)\n\n서로 절대 겹치면 안됨", example = "PRODUCT-0001")
-    private String partnerCustomId;
-
-    @NotBlank
     @Schema(description = "상품명", example = "신라더스테이 호텧")
     private String name;
 

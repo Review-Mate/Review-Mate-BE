@@ -15,6 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 public class SingleTravelProductConsoleElementResponse {
 
+    @Schema(description = "여행상품 ID")
+    private Long id;
+
     @Schema(description = "파트너사가 정의하는 상품 커스텀 ID (unique)", example = "PRODUCT-0001")
     private String partnerCustomId;
 
@@ -43,7 +46,8 @@ public class SingleTravelProductConsoleElementResponse {
     private List<ReviewTagResponse> negativeTags;
 
     public SingleTravelProductConsoleElementResponse(final SingleTravelProduct singleTravelProduct) {
-        this.partnerCustomId = singleTravelProduct.getTravelProductId().getPartnerCustomId();
+        this.id = singleTravelProduct.getId();
+        this.partnerCustomId = singleTravelProduct.getPartnerCustomId();
         this.thumbnailUrl = singleTravelProduct.getThumbnailUrl();
         this.name = singleTravelProduct.getName();
         this.reviewsCount = singleTravelProduct.getReviews().size();

@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TravelProductUpdateRequest {
 
-    private String partnerCustomId;
-
     private String thumbnailUrl;
 
     private String name;
@@ -19,7 +17,6 @@ public class TravelProductUpdateRequest {
     private TravelProductCategory travelProductCategory;
 
     public TravelProductUpdateRequest(SingleTravelProductUpdateRequest singleTravelProductUpdateRequest, String thumbnailUrl) {
-        this.partnerCustomId = singleTravelProductUpdateRequest.getPartnerCustomId();
         this.thumbnailUrl = thumbnailUrl;
         this.name = singleTravelProductUpdateRequest.getName();
         this.travelProductCategory = singleTravelProductUpdateRequest.getTravelProductCategory();
