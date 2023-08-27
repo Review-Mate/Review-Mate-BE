@@ -103,7 +103,7 @@ public class ReviewController {
             @ApiResponse(responseCode = "204", description = "리뷰 수정 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 리뷰 ID"),
     })
-    @PatchMapping(value = "/reviews/{reviewId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PatchMapping(value = "/reviews/{reviewId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateReviewByReviewId(@PathVariable Long reviewId,
                                                        @Valid @RequestPart ReviewUpdateRequest reviewUpdateRequest,
                                                        @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {

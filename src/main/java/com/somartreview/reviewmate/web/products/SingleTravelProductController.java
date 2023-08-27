@@ -37,7 +37,7 @@ public class SingleTravelProductController {
     @ApiResponse(responseCode = "201", description = "단일 여행상품 생성 성공", headers = {
             @Header(name = "Location", description = "생성된 단일 여행상품의 URI, /api/console/v1/products/travel/single/{singleTravelProductId}", schema = @Schema(type = "string"))
     })
-    @PostMapping("/{partnerDomain}/products/travel/single")
+    @PostMapping(value = "/{partnerDomain}/products/travel/single", consumes = {"multipart/form-data"})
     public ResponseEntity<Void> createSingleTravelProduct(@PathVariable String partnerDomain,
                                                           @Valid @RequestPart SingleTravelProductCreateRequest singleTravelProductCreateRequest,
                                                           @RequestPart(required = false) MultipartFile thumbnailFile) {
@@ -98,7 +98,7 @@ public class SingleTravelProductController {
             @ApiResponse(responseCode = "204", description = "단일 여행상품 정보 수정 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
     })
-    @PutMapping("/products/travel/single/{travelProductId}")
+    @PutMapping(value = "/products/travel/single/{travelProductId}", consumes = {"multipart/form-data"})
     public ResponseEntity<Void> updateSingleTravelProductByTravelProductId(@PathVariable Long travelProductId,
                                                                            @Valid @RequestBody SingleTravelProductUpdateRequest singleTravelProductUpdateRequest,
                                                                            @RequestPart(required = false) MultipartFile thumbnailFile) {
