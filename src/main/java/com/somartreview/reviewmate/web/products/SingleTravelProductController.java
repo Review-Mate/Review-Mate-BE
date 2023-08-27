@@ -32,7 +32,7 @@ public class SingleTravelProductController {
     private final SingleTravelProductService singleTravelProductService;
 
 
-    @Operation(operationId = "createSingleTravelProduct", summary = "단일 여행상품 생성", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
+    @Operation(operationId = "createSingleTravelProduct", summary = "단일 여행상품 생성", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요. \n\n⚠️ 개발 환경 및 테스트 용도로만 사용하고, 프로덕션 코드에서는 예약 API를 통해 고객을 생성하세요.")
     @Parameter(name = "partnerDomain", description = "단일 여행상품이 등록될 파트너사 도메인", example = "goodchoice.kr")
     @ApiResponse(responseCode = "201", description = "단일 여행상품 생성 성공", headers = {
             @Header(name = "Location", description = "생성된 단일 여행상품의 URI, /api/console/v1/products/travel/single/{singleTravelProductId}", schema = @Schema(type = "string"))
