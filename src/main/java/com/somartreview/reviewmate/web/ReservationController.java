@@ -30,6 +30,7 @@ public class ReservationController {
 
 
     @Operation(operationId = "createSingleTravelProductReservation", summary = "예약 생성", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
+    @Parameter(name = "partnerDomain", description = "주문이 등록될 파트너사 도메인", example = "goodchoice.kr")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "생성 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 고객 ID 혹은 여행상품 ID"),
@@ -48,7 +49,7 @@ public class ReservationController {
 
     @Operation(operationId = "getReservationResponseByReservationId", summary = "예약 단일 조회")
     @Parameters({
-            @Parameter(name = "partnerDomain", description = "파트너사 도메인", example = "goodchoice.kr"),
+            @Parameter(name = "partnerDomain", description = "주문이 등록된 파트너사 도메인", example = "goodchoice.kr"),
             @Parameter(name = "reservationId", description = "예약 ID", example = "1")
     })
     @ApiResponses({

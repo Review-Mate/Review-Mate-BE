@@ -35,11 +35,7 @@ public class SingleTravelProductController {
 
 
     @Operation(operationId = "createSingleTravelProduct", summary = "단일 여행상품 생성", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
-    @Parameters({
-            @Parameter(name = "partnerDomain", description = "단일 여행상품이 등록될 파트너사 도메인", example = "goodchoice.kr"),
-            @Parameter(name = "singleTravelProductCreateRequest", description = "단일 여행상품 데이터 객체 \n\n\n\nMediaType: application/json", required = true),
-            @Parameter(name = "thumbnailFile", description = "단일 여행상품 썸네일 이미지 \n\n\n\nMediaType: image/{image_extension}", required = false)
-    })
+    @Parameter(name = "partnerDomain", description = "단일 여행상품이 등록될 파트너사 도메인", example = "goodchoice.kr")
     @ApiResponse(responseCode = "201", description = "단일 여행상품 생성 성공", headers = {
             @Header(name = "Location", description = "생성된 단일 여행상품의 URI, /api/v1/partners/{partnerDomain}/products/travel/single/{partnerCustomId}", schema = @Schema(type = "string"))
     })
@@ -83,13 +79,13 @@ public class SingleTravelProductController {
     }
 
 
-    @Operation(operationId = "getSingleTravelProductResponsesByCategory", summary = "단일 여행상품 카테고리별 조회")
+    @Operation(operationId = "getSingleTravelProductResponsesByCategory", summary = "카테고리 별 단일 여행상품들 조회")
     @Parameters({
             @Parameter(name = "partnerDomain", description = "상품이 등록된 파트너사 도메인", example = "goodchoice.kr"),
             @Parameter(name = "category", description = "단일 여행상품 카테고리", example = "ACCOMMODATION")
     })
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "단일 여행상품 카테고리별 조회 성공"),
+            @ApiResponse(responseCode = "200", description = "조회 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
     })
     @GetMapping("/dev/partners/{partnerDomain}/products/travel/single")
@@ -101,13 +97,13 @@ public class SingleTravelProductController {
     }
 
 
-    @Operation(operationId = "getSingleTravelProductConsoleElementResponsesByCategory", summary = "단일 여행상품 카테고리별 조회")
+    @Operation(operationId = "getSingleTravelProductConsoleElementResponsesByCategory", summary = "카테고리 별 단일 여행상품들 조회")
     @Parameters({
             @Parameter(name = "partnerDomain", description = "상품이 등록된 파트너사 도메인", example = "goodchoice.kr"),
             @Parameter(name = "category", description = "단일 여행상품 카테고리", example = "ACCOMMODATION")
     })
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "단일 여행상품 카테고리별 조회 성공"),
+            @ApiResponse(responseCode = "200", description = "조회 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
     })
     @GetMapping("/console/partners/{partnerDomain}/products/travel/single")
@@ -121,13 +117,7 @@ public class SingleTravelProductController {
 
 
     @Operation(operationId = "updateSingleTravelProductByTravelProductId", summary = "단일 여행상품 정보 수정", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
-    @Parameters({
-            @Parameter(name = "partnerDomain", description = "단일 여행상품이 등록된 파트너사 도메인", example = "goodchoice.kr"),
-            @Parameter(name = "partnerCustomId", description = "파트너사가 정의하는 단일 여행상품 커스텀 ID (unique) \n\n⚠️ 서로 절대 겹치면 안됨", example = "PRODUCT-0001"),
-            @Parameter(name = "singleTravelProductUpdateRequest", description = "단일 여행상품 데이터 객체 \n\n\n\nMediaType: application/json", required = true),
-            @Parameter(name = "thumbnailFile", description = "단일 여행상품 썸네일 이미지 \n\n\n\nMediaType: image/{image_extension}", required = false)
-
-    })
+    @Parameter(name = "partnerDomain", description = "단일 여행상품이 등록될 파트너사 도메인", example = "goodchoice.kr")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "단일 여행상품 정보 수정 성공"),
             @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
