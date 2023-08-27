@@ -1,6 +1,7 @@
 package com.somartreview.reviewmate.dto.request.travelProduct;
 
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProductCategory;
+import com.somartreview.reviewmate.exception.EnumNotNull;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +21,7 @@ public class SingleTravelProductUpdateRequest {
     @Schema(description = "상품명", example = "신라더스테이 호텧")
     private String name;
 
-    @NotBlank
+    @EnumNotNull
     @Schema(description = "여행상품 카테고리", example = "ACCOMMODATION")
     private TravelProductCategory travelProductCategory;
 

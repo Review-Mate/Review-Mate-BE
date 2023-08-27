@@ -2,7 +2,6 @@ package com.somartreview.reviewmate.domain.PartnerManager;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
-import com.somartreview.reviewmate.domain.PartnerCompany.PartnerManagerRole;
 import com.somartreview.reviewmate.dto.request.partnerManager.PartnerManagerUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
