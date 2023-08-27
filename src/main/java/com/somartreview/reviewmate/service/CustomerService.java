@@ -22,14 +22,14 @@ public class CustomerService {
     private final PartnerCompanyService partnerCompanyService;
 
     @Transactional
-    public String create(String partnerDomain, CustomerCreateRequest request) {
+    public Long create(String partnerDomain, CustomerCreateRequest request) {
         validateUniquePartnerCustomerId(partnerDomain, request.getPartnerCustomId());
         validateUniquePhoneNumber(request.getPhoneNumber());
         validateUniqueKakaoId(request.getKakaoId());
 
         PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(partnerDomain);
 
-        return customerRepository.save(request.toEntity(partnerCompany)).getPartnerCustomId();
+        return customerRepository.save(request.toEntity(partnerCompany)).getId();
     }
 
     @Transactional
@@ -47,11 +47,20 @@ public class CustomerService {
     }
 
     @Transactional
-    public void updateByCustomerId(String partnerDomain, String partnerCustomId, CustomerUpdateRequest request) {
+    public void updateByPartnerCustomId(String partnerDomain, String partnerCustomId, CustomerUpdateRequest request) {
         validateUniquePhoneNumber(request.getPhoneNumber());
         validateUniqueKakaoId(request.getKakaoId());
 
         Customer customer = findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
+        customer.update(request);
+    }
+
+    @Transactional
+    public void updateByCustomerId(Long customerId, CustomerUpdateRequest request) {
+        validateUniquePhoneNumber(request.getPhoneNumber());
+        validateUniqueKakaoId(request.getKakaoId());
+
+        Customer customer = findByCustomerId(customerId);
         customer.update(request);
     }
 
@@ -73,9 +82,20 @@ public class CustomerService {
         }
     }
 
+    public Customer findByCustomerId(Long customerId) {
+        return customerRepository.findById(customerId)
+                .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND));
+    }
+
     public Customer findByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
         return customerRepository.findByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)
                 .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND));
+    }
+
+    public CustomerResponse getCustomerResponseByCustomerId(Long customerId) {
+        final Customer customer = findByCustomerId(customerId);
+
+        return new CustomerResponse(customer);
     }
 
     public CustomerResponse getCustomerResponseByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
@@ -93,6 +113,19 @@ public class CustomerService {
 
     public void validateExistCustomer(Long customerId) {
         if (!customerRepository.existsById(customerId)) {
+            throw new DomainLogicException(CUSTOMER_NOT_FOUND);
+        }
+    }
+
+    @Transactional
+    public void deleteByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
+        validateExistCustomer(partnerDomain, partnerCustomId);
+
+        customerRepository.deleteByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
+    }
+
+    public void validateExistCustomer(String partnerDomain, String partnerCustomId) {
+        if (!customerRepository.existsByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)) {
             throw new DomainLogicException(CUSTOMER_NOT_FOUND);
         }
     }

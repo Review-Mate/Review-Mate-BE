@@ -61,9 +61,7 @@ public class ReservationService {
         return new SingleTravelProductReservationResponse(reservation);
     }
 
-    public List<SingleTravelProductReservationResponse> getSingleTravelProductReservationResponseByCustomerOrSingleTravelProduct(String partnerDomain,
-                                                                                                                                 String customerPartnerCustomId,
-                                                                                                                                 String travelProductPartnerCustomId) {
+    public List<SingleTravelProductReservationResponse> getSingleTravelProductReservationResponseByCustomerOrSingleTravelProduct(Long customerId, Long singleTravelProductId) {
         return reservationRepository.findAll().stream()
                 .map(SingleTravelProductReservationResponse::new)
                 .toList();

@@ -20,7 +20,7 @@ import java.net.URI;
 
 @Tag(name = "파트너사")
 @RestController
-@RequestMapping("/api/v1/console/partners")
+@RequestMapping("/api/console/v1/companies")
 @RequiredArgsConstructor
 public class PartnerCompanyController {
 
@@ -29,13 +29,13 @@ public class PartnerCompanyController {
 
     @Operation(operationId = "createPartnerCompany", summary = "파트너사 생성")
     @ApiResponse(responseCode = "201", description = "파트너사 생성 성공", headers = {
-            @Header(name = "Location", description = "생성된 파트너사의 URI, /api/v1/partners/{partnerDomain}/companies", schema = @Schema(type = "string"))
+            @Header(name = "Location", description = "생성된 파트너사의 URI, /api/console/v1/companies/{partnerDomain}", schema = @Schema(type = "string"))
     })
-    @PostMapping("/companies")
+    @PostMapping("/")
     public ResponseEntity<Void> createPartnerCompany(@Valid @RequestBody PartnerCompanyCreateRequest partnerCompanyCreateRequest) {
         String partnerDomain = partnerCompanyService.create(partnerCompanyCreateRequest);
 
-        return ResponseEntity.created(URI.create("/api/v1/console/partners/" + partnerDomain)).build();
+        return ResponseEntity.created(URI.create("/api/console/v1/companies/" + partnerDomain)).build();
     }
 
 

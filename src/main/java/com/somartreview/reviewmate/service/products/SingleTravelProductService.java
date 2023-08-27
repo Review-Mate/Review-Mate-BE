@@ -30,13 +30,13 @@ public class SingleTravelProductService {
 
 
     @Transactional
-    public String create(String partnerDomain, SingleTravelProductCreateRequest request, MultipartFile thumbnailFile) {
+    public Long create(String partnerDomain, SingleTravelProductCreateRequest request, MultipartFile thumbnailFile) {
         final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(partnerDomain);
         final PartnerSeller partnerSeller = partnerSellerService.findById(request.getPartnerSellerId());
 
         String thumbnailUrl = uploadThumbnailOnS3(thumbnailFile);
 
-        return singleTravelProductRepository.save(request.toEntity(thumbnailUrl, partnerCompany, partnerSeller)).getPartnerCustomId();
+        return singleTravelProductRepository.save(request.toEntity(thumbnailUrl, partnerCompany, partnerSeller)).getId();
     }
 
     @Transactional
@@ -86,6 +86,12 @@ public class SingleTravelProductService {
 
     public SingleTravelProductConsoleElementResponse getSingleTravelProductConsoleElementResponseByTravelProductId(Long travelProductId) {
         SingleTravelProduct singleTravelProduct = findByTravelProductId(travelProductId);
+
+        return new SingleTravelProductConsoleElementResponse(singleTravelProduct);
+    }
+
+    public SingleTravelProductConsoleElementResponse getSingleTravelProductConsoleElementResponseByPartnerCustomId(String partnerDomain, String partnerCustomId) {
+        SingleTravelProduct singleTravelProduct = findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
 
         return new SingleTravelProductConsoleElementResponse(singleTravelProduct);
     }
