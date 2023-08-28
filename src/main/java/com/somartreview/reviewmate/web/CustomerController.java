@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 
-@Tag(name = "고객/여행객", description = "⚠️ 개발 환경 및 테스트 용도로만 사용하고, 프로덕션 코드에서는 예약 API를 통해 고객을 생성하세요.")
+@Tag(name = "고객/여행객")
 @RestController
 @RequestMapping("/api/console/v1")
 @RequiredArgsConstructor
@@ -28,7 +28,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
 
-    @Operation(operationId = "customerCreateRequest", summary = "고객 생성")
+    @Operation(operationId = "customerCreateRequest", summary = "고객 생성", description = "⚠️ 개발 환경 및 테스트 용도로만 사용하고, 프로덕션 코드에서는 예약 API를 통해 고객을 생성하세요.")
     @Parameter(name = "partnerDomain", description = "고객이 소속될 파트너사 도메인", example = "goodchoice.kr")
     @ApiResponse(responseCode = "201", description = "고객 생성 성공", headers = {
             @Header(name = "Location", description = "생성된 고객의 URI, /api/console/v1/customers/{customerId}", schema = @Schema(type = "string"))
