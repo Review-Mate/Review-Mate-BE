@@ -13,29 +13,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Getter
 @NoArgsConstructor
 public class SingleTravelProduct extends TravelProduct {
 
-    private LocalDateTime startTime;
+    private LocalTime startTime;
 
-    private LocalDateTime endTime;
+    private LocalTime endTime;
 
     @Builder
-    public SingleTravelProduct(String partnerCustomId, String thumbnailUrl, String name, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalDateTime startTime, LocalDateTime endTime, TravelProductCategory travelProductCategory) {
+    public SingleTravelProduct(String partnerCustomId, String thumbnailUrl, String name, PartnerCompany partnerCompany, PartnerSeller partnerSeller, LocalTime startTime, LocalTime endTime, TravelProductCategory travelProductCategory) {
         super(partnerCustomId, thumbnailUrl, name, travelProductCategory, partnerCompany, partnerSeller);
 
         validateTime(startTime, endTime);
         this.startTime = startTime;
         this.endTime = endTime;
-    }
-
-    private void validateTime(final LocalDateTime startTime, final LocalDateTime endTime) {
-        if (startTime.isAfter(endTime)) {
-            throw new DomainLogicException(ErrorCode.TRAVEL_PRODUCT_START_TIME_ERROR);
-        }
     }
 
     public void update(SingleTravelProductUpdateRequest request, String thumbnailUrl) {
@@ -44,5 +39,11 @@ public class SingleTravelProduct extends TravelProduct {
         validateTime(request.getStartTime(), request.getEndTime());
         this.startTime = request.getStartTime();
         this.endTime = request.getEndTime();
+    }
+
+    private void validateTime(final LocalTime startTime, final LocalTime endTime) {
+        if (startTime.isAfter(endTime)) {
+            throw new DomainLogicException(ErrorCode.TRAVEL_PRODUCT_START_TIME_ERROR);
+        }
     }
 }

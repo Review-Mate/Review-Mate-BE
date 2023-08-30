@@ -34,11 +34,11 @@ public class SingleTravelProductReservationResponse {
     private String travelProductName;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 시작 시간")
+    @Schema(description = "여행상품 시작 시간 { pattern: 'yyyy.MM.dd'T'HH:mm' ")
     private LocalDateTime startTime;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 종료 시간")
+    @Schema(description = "여행상품 종료 시간 { pattern: 'yyyy.MM.dd'T'HH:mm' ")
     private LocalDateTime endTime;
 
     public SingleTravelProductReservationResponse(final Reservation reservation) {
@@ -50,7 +50,7 @@ public class SingleTravelProductReservationResponse {
         final SingleTravelProduct singleTravelProduct = (SingleTravelProduct) reservation.getTravelProduct();
         this.travelProductPartnerCustomId = singleTravelProduct.getPartnerCustomId();
         this.travelProductName = singleTravelProduct.getName();
-        this.startTime = singleTravelProduct.getStartTime();
-        this.endTime = singleTravelProduct.getEndTime();
+        this.startTime = reservation.getStartDate().atTime(singleTravelProduct.getStartTime());
+        this.endTime = reservation.getStartDate().atTime(singleTravelProduct.getEndTime());
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @NoArgsConstructor
@@ -26,13 +26,13 @@ public class SingleTravelProductUpdateRequest {
     private TravelProductCategory travelProductCategory;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 이용 시작시간", example = "2023.08.14T15:00")
-    private LocalDateTime startTime;
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    @Schema(description = "여행상품 이용날 기준 이용 시작시간 { pattern: 'HH:mm:ss' } \n\n(예: 당일 13시)", example = "13:00:00")
+    private @NotNull LocalTime startTime;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 이용 종료시간", example = "2023.08.15T12:00")
-    private LocalDateTime endTime;
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    @Schema(description = "여행상품 이용날 기준 이용 종료시간 { pattern: 'HH:mm:ss' } \n\n(예: 다음날 12시)", example = "36:00:00")
+    private @NotNull LocalTime endTime;
 
 }

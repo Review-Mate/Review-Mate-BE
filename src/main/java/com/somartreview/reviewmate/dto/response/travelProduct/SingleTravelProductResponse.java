@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,13 +44,13 @@ public class SingleTravelProductResponse {
     @Schema(description = "파트너사의 판매자 ID")
     private Long partnerSellerId;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 이용 시작시간", example = "2023.08.14T15:00")
-    private LocalDateTime startTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+    @Schema(description = "여행상품 이용날 기준 이용 시작시간 (예: 당일 13시)", example = "13:00:00")
+    private LocalTime startTime;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 이용 종료시간", example = "2023.08.15T12:00")
-    private LocalDateTime endTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+    @Schema(description = "여행상품 이용날 기준 이용 종료시간 (예: 다음날 12시)", example = "36:00:00")
+    private LocalTime endTime;
 
     public SingleTravelProductResponse(final SingleTravelProduct singleTravelProduct) {
         this.id = singleTravelProduct.getId();
