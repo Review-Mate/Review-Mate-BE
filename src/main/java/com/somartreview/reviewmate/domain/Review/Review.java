@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.somartreview.reviewmate.domain.Review.ReviewPolarity.*;
 import static com.somartreview.reviewmate.exception.ErrorCode.*;
 
 @Entity
@@ -41,8 +42,8 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    private Double polarityValue = 0.0;
+    @Column(nullable = false, name = "polarity")
+    private ReviewPolarity polarityValue = NEUTRAL;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
@@ -95,7 +96,7 @@ public class Review extends BaseEntity {
 
     public void clearReviewTags() {
         this.reviewTags.clear();
-        this.polarityValue = 0.0;
+        this.polarityValue = NEUTRAL;
     }
 
     public void appendReviewImage(List<ReviewImage> reviewImages) {
