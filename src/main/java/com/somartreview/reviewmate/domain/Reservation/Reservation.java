@@ -4,6 +4,8 @@ import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.Customer.Customer;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,6 +31,7 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = "travel_product_id", nullable = false)
     private TravelProduct travelProduct;
 
+    @Builder
     public Reservation(LocalDate startDate, Customer customer, TravelProduct travelProduct) {
         this.startDate = startDate;
         this.customer = customer;

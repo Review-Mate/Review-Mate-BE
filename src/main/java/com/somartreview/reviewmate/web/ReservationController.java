@@ -1,6 +1,7 @@
 package com.somartreview.reviewmate.web;
 
 import com.somartreview.reviewmate.dto.request.customer.CustomerCreateRequest;
+import com.somartreview.reviewmate.dto.request.reservation.SingleTravelReservationCreateRequest;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.response.reservation.SingleTravelProductReservationResponse;
 import com.somartreview.reviewmate.service.ReservationService;
@@ -41,10 +42,9 @@ public class ReservationController {
     })
     @PostMapping("/client/v1/{partnerDomain}/products/travel/single/reservations")
     public ResponseEntity<Void> createSingleTravelProductReservation(@PathVariable String partnerDomain,
-                                                  @Valid @RequestPart CustomerCreateRequest customerCreateRequest,
-                                                  @Valid @RequestPart SingleTravelProductCreateRequest singleTravelProductCreateRequest,
-                                                  @RequestPart(required = false) MultipartFile singleTravelProductThumbnail) {
-        Long reservationId = reservationService.createSingleTravelProductReservation(partnerDomain, customerCreateRequest, singleTravelProductCreateRequest, singleTravelProductThumbnail);
+                                                                     @Valid @RequestPart SingleTravelReservationCreateRequest singleTravelReservationCreateRequest,
+                                                                     @RequestPart(required = false) MultipartFile singleTravelProductThumbnail) {
+        Long reservationId = reservationService.createSingleTravelProductReservation(partnerDomain, singleTravelReservationCreateRequest, singleTravelProductThumbnail);
 
         return ResponseEntity.created(URI.create("/api/console/v1/products/travel/single/reservations/" + reservationId)).build();
     }

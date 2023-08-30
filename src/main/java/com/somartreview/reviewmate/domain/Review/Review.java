@@ -43,7 +43,7 @@ public class Review extends BaseEntity {
     private String content;
 
     @Column(nullable = false, name = "polarity")
-    private ReviewPolarity polarityValue = NEUTRAL;
+    private ReviewPolarity polarity = NEUTRAL;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
@@ -96,7 +96,7 @@ public class Review extends BaseEntity {
 
     public void clearReviewTags() {
         this.reviewTags.clear();
-        this.polarityValue = NEUTRAL;
+        this.polarity = NEUTRAL;
     }
 
     public void appendReviewImage(List<ReviewImage> reviewImages) {

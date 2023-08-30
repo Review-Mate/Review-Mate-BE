@@ -5,6 +5,7 @@ import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import com.somartreview.reviewmate.domain.Reservation.ReservationRepository;
 import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProduct;
 import com.somartreview.reviewmate.dto.request.customer.CustomerCreateRequest;
+import com.somartreview.reviewmate.dto.request.reservation.SingleTravelReservationCreateRequest;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.response.reservation.SingleTravelProductReservationResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
@@ -30,12 +31,12 @@ public class ReservationService {
 
     @Transactional
     public Long createSingleTravelProductReservation(String partnerDomain,
-                                                     CustomerCreateRequest customerCreateRequest,
-                                                     SingleTravelProductCreateRequest singleTravelProductCreateRequest, MultipartFile thumbnail) {
-        final Customer customer = customerService.retreiveCustomer(partnerDomain, customerCreateRequest);
-        final SingleTravelProduct travelProduct = singleTravelProductService.retreiveSingleTravelProduct(partnerDomain, singleTravelProductCreateRequest, thumbnail);
+                                                     SingleTravelReservationCreateRequest singleTravelReservationCreateRequest,
+                                                     MultipartFile thumbnail) {
+        final Customer customer = customerService.retreiveCustomer(partnerDomain, singleTravelReservationCreateRequest.getCustomerCreateRequest());
+        final SingleTravelProduct travelProduct = singleTravelProductService.retreiveSingleTravelProduct(partnerDomain, singleTravelReservationCreateRequest.getSingleTravelProductCreateRequest(), thumbnail);
 
-        return reservationRepository.save(new Reservation(customer, travelProduct)).getId();
+        return reservationRepository.save(singleTravelReservationCreateRequest.toEntity(customer, travelProduct)).getId();
     }
 
     public Reservation findById(Long id) {

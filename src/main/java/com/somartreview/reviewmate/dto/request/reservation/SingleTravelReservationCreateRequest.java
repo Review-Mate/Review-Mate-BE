@@ -1,5 +1,8 @@
 package com.somartreview.reviewmate.dto.request.reservation;
 
+import com.somartreview.reviewmate.domain.Customer.Customer;
+import com.somartreview.reviewmate.domain.Reservation.Reservation;
+import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProduct;
 import com.somartreview.reviewmate.dto.request.customer.CustomerCreateRequest;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,4 +27,13 @@ public class SingleTravelReservationCreateRequest {
     private CustomerCreateRequest customerCreateRequest;
 
     private SingleTravelProductCreateRequest singleTravelProductCreateRequest;
+
+
+    public Reservation toEntity(final Customer customer, final SingleTravelProduct singleTravelProduct) {
+        return Reservation.builder()
+                .startDate(startDate)
+                .customer(customer)
+                .travelProduct(singleTravelProduct)
+                .build();
+    }
 }
