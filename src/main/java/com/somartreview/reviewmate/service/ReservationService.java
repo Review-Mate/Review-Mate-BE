@@ -44,6 +44,11 @@ public class ReservationService {
                 .orElseThrow(() -> new DomainLogicException(RESERVATION_NOT_FOUND));
     }
 
+    public Reservation findByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
+        return reservationRepository.findByTravelProduct_PartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)
+                .orElseThrow(() -> new DomainLogicException(RESERVATION_NOT_FOUND));
+    }
+
     public List<Reservation> findAllByTravelProductId(Long travelProductId) {
         travelProductService.validateExistTravelProduct(travelProductId);
 

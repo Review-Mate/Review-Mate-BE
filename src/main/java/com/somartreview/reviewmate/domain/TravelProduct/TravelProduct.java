@@ -42,14 +42,14 @@ public abstract class TravelProduct extends BaseEntity {
     private String name;
 
     @Column(nullable = false)
+    private Integer reviewCount = 0;
+
+    @Column(nullable = false)
     private Float rating = 0.0f;
 
     @Column(nullable = false, name = "category")
     @Enumerated(EnumType.STRING)
     private TravelProductCategory travelProductCategory;
-
-    @OneToMany(mappedBy = "travelProduct")
-    private List<Review> reviews = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "partner_company_id", nullable = false)
@@ -98,10 +98,14 @@ public abstract class TravelProduct extends BaseEntity {
         }
     }
 
-    public void addReview(Review review) {
-        int reviewCount = this.reviews.size();
-        rating = (rating * reviewCount + review.getRating()) / (reviewCount + 1);
 
-        this.reviews.add(review);
+    public void addReview(int newReviewRating) {
+        this.reviewCount++;
+        this.rating = (this.rating * (this.reviewCount - 1) + newReviewRating) / this.reviewCount;
+    }
+
+    public void removeReview(int removedReviewRating) {
+        this.reviewCount--;
+        this.rating = (this.rating * (this.reviewCount + 1) - removedReviewRating) / this.reviewCount;
     }
 }

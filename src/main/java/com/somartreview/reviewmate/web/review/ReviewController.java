@@ -42,13 +42,13 @@ public class ReviewController {
     @ApiResponse(responseCode = "201", description = "리뷰 생성 성공", headers = {
             @Header(name = "Location", description = "생성된 리뷰의 URI, /api/widget/v1/reviews/{reviewId}", schema = @Schema(type = "string"))
     })
-    @PostMapping(value = "{partnerDomain}/products/{travelProductPartnerCustomId}/reviews", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "{partnerDomain}/reservations/{reservationPartnerCustomId}/reviews", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> createReview(@PathVariable String partnerDomain,
-                                             @PathVariable String travelProductPartnerCustomId,
+                                             @PathVariable String reservationPartnerCustomId,
                                              @Valid @RequestPart ReviewCreateRequest reviewCreateRequest,
                                              @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {
 
-        Long reviewId = reviewService.create(partnerDomain, travelProductPartnerCustomId, reviewCreateRequest, reviewImageFiles);
+        Long reviewId = reviewService.create(partnerDomain, reservationPartnerCustomId, reviewCreateRequest, reviewImageFiles);
 
         return ResponseEntity.created(URI.create("/api/widget/v1/reviews/" + reviewId)).build();
     }

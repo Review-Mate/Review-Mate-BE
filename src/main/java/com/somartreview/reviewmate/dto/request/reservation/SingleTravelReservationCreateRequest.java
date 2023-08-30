@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -18,6 +19,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SingleTravelReservationCreateRequest {
+
+    @NotBlank
+    @Schema(description = "파트너사가 부여한 예약 ID", example = "RESERVATION_0001")
+    private String partnerCustomId;
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -31,6 +36,7 @@ public class SingleTravelReservationCreateRequest {
 
     public Reservation toEntity(final Customer customer, final SingleTravelProduct singleTravelProduct) {
         return Reservation.builder()
+                .partnerCustomId(partnerCustomId)
                 .startDate(startDate)
                 .customer(customer)
                 .travelProduct(singleTravelProduct)

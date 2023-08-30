@@ -2,6 +2,7 @@ package com.somartreview.reviewmate.domain.LiveSatisfaction;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.Customer.Customer;
+import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import com.somartreview.reviewmate.domain.Review.ReviewProperty;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
 import com.somartreview.reviewmate.exception.DomainLogicException;
@@ -35,21 +36,16 @@ public class LiveSatisfaction extends BaseEntity {
     @Enumerated(STRING)
     private ReviewProperty dissatisfiedReviewProperty;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_id")
+    private Reservation reservation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "travel_product_id", nullable = false)
-    private TravelProduct travelProduct;
-
-    public LiveSatisfaction(Integer rating, ReviewProperty satisfiedReviewProperty, ReviewProperty dissatisfiedReviewProperty, Customer customer, TravelProduct travelProduct) {
+    public LiveSatisfaction(Integer rating, ReviewProperty satisfiedReviewProperty, ReviewProperty dissatisfiedReviewProperty, Reservation reservation) {
         validateRating(rating);
         this.rating = rating;
         this.satisfiedReviewProperty = satisfiedReviewProperty;
         this.dissatisfiedReviewProperty = dissatisfiedReviewProperty;
-        this.customer = customer;
-        this.travelProduct = travelProduct;
+        this.reservation = reservation;
     }
 
     private void validateRating(final Integer rating) {

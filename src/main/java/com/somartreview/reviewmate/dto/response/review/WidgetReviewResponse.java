@@ -44,7 +44,7 @@ public class WidgetReviewResponse {
         this.rating = review.getRating();
         this.title = review.getTitle();
         this.content = review.getContent();
-        this.authorName = review.getCustomer().getName();
+        this.authorName = review.getReservation().getCustomer().getName();
         this.createdAt = review.getCreatedAt().toString();
         this.polarity = review.getPolarity();
         this.reviewHighlightPairResponses = reviewTags.stream().map(ReviewHighlightPairResponse::new).toList();

@@ -18,6 +18,9 @@ public class SingleTravelProductReservationResponse {
     @Schema(description = "예약 ID")
     private Long id;
 
+    @Schema(description = "파트너사가 부여한 예약 ID")
+    private String reservationPartnerCustomId;
+
     @Schema(description = "고객의 파트너사 커스텀 ID")
     private String customerPartnerCustomId;
 
@@ -43,6 +46,7 @@ public class SingleTravelProductReservationResponse {
 
     public SingleTravelProductReservationResponse(final Reservation reservation) {
         this.id = reservation.getId();
+        this.reservationPartnerCustomId = reservation.getPartnerCustomId();
         this.customerPartnerCustomId = reservation.getCustomer().getPartnerCustomId();
         this.customerName = reservation.getCustomer().getName();
         this.customerPhoneNumber = reservation.getCustomer().getPhoneNumber();

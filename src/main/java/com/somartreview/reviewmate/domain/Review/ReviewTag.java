@@ -28,6 +28,7 @@ public class ReviewTag extends BaseEntity {
     private String keyword;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ReviewPolarity polarity;
 
     @Column(nullable = false)

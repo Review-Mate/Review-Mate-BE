@@ -2,10 +2,13 @@ package com.somartreview.reviewmate.domain.LiveFeedback;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.Customer.Customer;
+import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -38,23 +41,19 @@ public class LiveFeedback extends BaseEntity {
     @Column(nullable = false)
     private Boolean isSolved = false;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_id")
+    private Reservation reservation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "travel_product_id", nullable = false)
-    private TravelProduct travelProduct;
-
-    public LiveFeedback(String feedbackMessage, String feedbackMediaUrl, String responseMessage, Customer customer, TravelProduct travelProduct) {
+    @Builder
+    public LiveFeedback(String feedbackMessage, String feedbackMediaUrl, String responseMessage, final Reservation reservation) {
         validateFeedbackMessage(feedbackMessage);
         this.feedbackMessage = feedbackMessage;
         validateFeedbackMediaUrl(feedbackMediaUrl);
         this.feedbackMediaUrl = feedbackMediaUrl;
         validateResponseMessage(responseMessage);
         this.responseMessage = responseMessage;
-        this.customer = customer;
-        this.travelProduct = travelProduct;
+        this.reservation = reservation;
     }
 
     private void validateFeedbackMessage(final String feedbackMessage) {

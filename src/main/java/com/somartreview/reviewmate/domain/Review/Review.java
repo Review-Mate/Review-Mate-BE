@@ -2,6 +2,7 @@ package com.somartreview.reviewmate.domain.Review;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.Customer.Customer;
+import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
 import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
@@ -43,15 +44,12 @@ public class Review extends BaseEntity {
     private String content;
 
     @Column(nullable = false, name = "polarity")
+    @Enumerated(EnumType.STRING)
     private ReviewPolarity polarity = NEUTRAL;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "travel_product_id", nullable = false)
-    private TravelProduct travelProduct;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_id")
+    private Reservation reservation;
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewTag> reviewTags = new ArrayList<>();
@@ -60,16 +58,14 @@ public class Review extends BaseEntity {
     private List<ReviewImage> reviewImages = new ArrayList<>();
 
     @Builder
-    public Review(Integer rating, String title, String content, Customer customer, TravelProduct travelProduct) {
+    public Review(Integer rating, String title, String content, final Reservation reservation) {
         validateRating(rating);
         this.rating = rating;
         validateTitle(title);
         this.title = title;
         validateContent(content);
         this.content = content;
-        this.customer = customer;
-        travelProduct.addReview(this);
-        this.travelProduct = travelProduct;
+        this.reservation = reservation;
     }
 
     private void validateRating(final Integer rating) {

@@ -1,14 +1,12 @@
 package com.somartreview.reviewmate.service.review;
 
-import com.somartreview.reviewmate.domain.Customer.Customer;
+import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import com.somartreview.reviewmate.domain.Review.*;
-import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
 import com.somartreview.reviewmate.dto.request.review.ReviewCreateRequest;
 import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.dto.response.review.WidgetReviewResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
-import com.somartreview.reviewmate.service.CustomerService;
-import com.somartreview.reviewmate.service.products.TravelProductService;
+import com.somartreview.reviewmate.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,15 +24,14 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final ReviewTagService reviewTagService;
-    private final CustomerService customerService;
-    private final TravelProductService travelProductService;
+    private final ReservationService reservationService;
 
     @Transactional
     public Long create(String partnerDomain, String travelProductPartnerCustomId, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
-        final Customer customer = customerService.findByPartnerDomainAndPartnerCustomId(partnerDomain, reviewCreateRequest.getCustomerPartnerCustomId());
-        final TravelProduct travelProduct = travelProductService.findByTravelProductId(partnerDomain, travelProductPartnerCustomId);
+        final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, travelProductPartnerCustomId);
+        reservation.getTravelProduct().addReview(reviewCreateRequest.getRating());
 
-        Review review = reviewCreateRequest.toEntity(customer, travelProduct);
+        Review review = reviewCreateRequest.toEntity(reservation);
         reviewRepository.save(review);
 
         List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
@@ -76,7 +73,7 @@ public class ReviewService {
                                                                                                              ReviewOrderCriteria reviewOrderCriteria,
                                                                                                              Integer page, Integer size) {
         List<WidgetReviewResponse> widgetReviewResponses = new ArrayList<>();
-        List<Review> foundReviews = reviewRepository.findAllByTravelProduct_PartnerCompany_PartnerDomainAndTravelProduct_PartnerCustomId(partnerDomain, travelProductPartnerCustomId);
+        List<Review> foundReviews = reviewRepository.findAllByReservation_TravelProduct_PartnerCompany_PartnerDomainAndReservation_TravelProduct_PartnerCustomId(partnerDomain, travelProductPartnerCustomId);
         for (Review review : foundReviews) {
             List<ReviewTag> foundReviewTags = reviewTagService.findReviewTagsByReviewId(review.getId());
             widgetReviewResponses.add(new WidgetReviewResponse(review, foundReviewTags));
@@ -89,10 +86,12 @@ public class ReviewService {
     public void updateById(Long id, ReviewUpdateRequest reviewUpdateRequest, List<MultipartFile> reviewImageFiles) {
         Review review = findById(id);
 
+        review.getReservation().getTravelProduct().removeReview(review.getRating());
         review.clearReviewTags();
         review.clearReviewImages();
 
         review.updateReview(reviewUpdateRequest);
+        review.getReservation().getTravelProduct().addReview(reviewUpdateRequest.getRating());
         List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
         review.appendReviewImage(reviewImages);
 
@@ -103,6 +102,7 @@ public class ReviewService {
     public void deleteById(Long id) {
         Review review = findById(id);
 
+        review.getReservation().getTravelProduct().removeReview(review.getRating());
         review.clearReviewTags();
         review.clearReviewImages();
 
