@@ -20,11 +20,11 @@ VALUES ('2023-08-30 12:00:00', '2023-08-30 12:00:00', 'sckwon770kakao', '권순�
 INSERT INTO customer (created_at, updated_at, kakao_id, name, partner_custom_id, phone_number, partner_company_id)
 VALUES ('2023-08-30 12:00:00', '2023-08-30 12:00:00', 'sckwon770kakao', '권순찬', 'CUSTOMER-0001', '010-1234-1234', 1);
 
-INSERT INTO travel_product (dtype, created_at, updated_at, name, partner_custom_id, review_count, rating, thumbnail_url, category, end_time, start_time, partner_company_id, partner_seller_id)
-VALUES ('single_travel_product', '2023-08-30 12:00:00', '2023-08-30 12:00:00', '신라더스테이 호텔 - 스위트룸', 'HOTEL-0001', 1, 5, 'testurl.com', 'ACCOMMODATION', '36:00:00', '13:00:00', 1, 1);
+INSERT INTO travel_product (dtype, created_at, updated_at, name, partner_custom_id, review_count, rating, thumbnail_url, category, partner_company_id, partner_seller_id)
+VALUES ('SingleTravelProduct', '2023-08-30 12:00:00', '2023-08-30 12:00:00', '신라더스테이 호텔 - 스위트룸', 'HOTEL-0001', 1, 5, 'testurl.com', 'ACCOMMODATION', 1, 1);
 
-INSERT INTO reservation (created_at, updated_at, partner_custom_id, start_date, customer_id, travel_product_id)
-VALUES ('2023-08-30 12:00:00', '2023-08-30 12:00:00', 'RESERVATION_0001', '2023-10-18', 1, 1);
+INSERT INTO reservation (created_at, updated_at, partner_custom_id, start_date_time, end_date_time, customer_id, travel_product_id)
+VALUES ('2023-08-30 12:00:00', '2023-08-30 12:00:00', 'RESERVATION_0001', '2023-10-18T13:00:00', '2023-10-19T12:00:00', 1, 1);
 
 
 

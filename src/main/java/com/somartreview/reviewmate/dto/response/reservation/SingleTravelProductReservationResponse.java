@@ -36,25 +36,13 @@ public class SingleTravelProductReservationResponse {
     @Schema(description = "여행상품 이름", example = "신라더스테이 호텔")
     private String travelProductName;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 시작 시간 { pattern: 'yyyy.MM.dd'T'HH:mm' ")
-    private LocalDateTime startTime;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 종료 시간 { pattern: 'yyyy.MM.dd'T'HH:mm' ")
-    private LocalDateTime endTime;
-
     public SingleTravelProductReservationResponse(final Reservation reservation) {
         this.id = reservation.getId();
         this.reservationPartnerCustomId = reservation.getPartnerCustomId();
         this.customerPartnerCustomId = reservation.getCustomer().getPartnerCustomId();
         this.customerName = reservation.getCustomer().getName();
         this.customerPhoneNumber = reservation.getCustomer().getPhoneNumber();
-
-        final SingleTravelProduct singleTravelProduct = (SingleTravelProduct) reservation.getTravelProduct();
-        this.travelProductPartnerCustomId = singleTravelProduct.getPartnerCustomId();
-        this.travelProductName = singleTravelProduct.getName();
-        this.startTime = reservation.getStartDate().atTime(singleTravelProduct.getStartTime());
-        this.endTime = reservation.getStartDate().atTime(singleTravelProduct.getEndTime());
+        this.travelProductPartnerCustomId = reservation.getTravelProduct().getPartnerCustomId();
+        this.travelProductName = reservation.getTravelProduct().getName();
     }
 }

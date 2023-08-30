@@ -47,10 +47,6 @@ public abstract class TravelProduct extends BaseEntity {
     @Column(nullable = false)
     private Float rating = 0.0f;
 
-    @Column(nullable = false, name = "category")
-    @Enumerated(EnumType.STRING)
-    private TravelProductCategory travelProductCategory;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "partner_company_id", nullable = false)
     private PartnerCompany partnerCompany;
@@ -60,14 +56,13 @@ public abstract class TravelProduct extends BaseEntity {
     private PartnerSeller partnerSeller;
 
 
-    public TravelProduct(String partnerCustomId, String thumbnailUrl, String name, TravelProductCategory travelProductCategory, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+    public TravelProduct(String partnerCustomId, String thumbnailUrl, String name, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
         validatePartnerCustomId(partnerCustomId);
         this.partnerCustomId = partnerCustomId;
         validateThumbnailUrl(thumbnailUrl);
         this.thumbnailUrl = thumbnailUrl;
         validateName(name);
         this.name = name;
-        this.travelProductCategory = travelProductCategory;
         this.partnerCompany = partnerCompany;
         this.partnerSeller = partnerSeller;
     }
@@ -77,7 +72,6 @@ public abstract class TravelProduct extends BaseEntity {
         this.thumbnailUrl = travelProductUpdateRequest.getThumbnailUrl();
         validateName(travelProductUpdateRequest.getName());
         this.name = travelProductUpdateRequest.getName();
-        this.travelProductCategory = travelProductUpdateRequest.getTravelProductCategory();
     }
 
     private void validatePartnerCustomId(final String partnerCustomerId) {

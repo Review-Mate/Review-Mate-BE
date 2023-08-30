@@ -14,6 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -25,9 +26,14 @@ public class SingleTravelReservationCreateRequest {
     private String partnerCustomId;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Schema(description = "여행상품 이용날 { pattern: 'yyyy-MM-dd' }", example = "2021-08-01")
-    private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @Schema(description = "여행상품 이용시작 날짜시간 { pattern: 'yyyy-MM-dd'T'HH:mm:ss' }", example = "2023-10-18T13:00:00")
+    private LocalDateTime startDateTime;
+
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @Schema(description = "여행상품 이용종료 날짜시간 { pattern: 'yyyy-MM-dd'T'HH:mm:ss' }", example = "2023-10-19T12:00:00")
+    private LocalDateTime endDateTime;
 
     private CustomerCreateRequest customerCreateRequest;
 
@@ -37,7 +43,8 @@ public class SingleTravelReservationCreateRequest {
     public Reservation toEntity(final Customer customer, final SingleTravelProduct singleTravelProduct) {
         return Reservation.builder()
                 .partnerCustomId(partnerCustomId)
-                .startDate(startDate)
+                .startDateTime(startDateTime)
+                .endDateTime(endDateTime)
                 .customer(customer)
                 .travelProduct(singleTravelProduct)
                 .build();

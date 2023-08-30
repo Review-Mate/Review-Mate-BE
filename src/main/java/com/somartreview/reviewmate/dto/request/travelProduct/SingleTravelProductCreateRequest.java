@@ -2,7 +2,7 @@ package com.somartreview.reviewmate.dto.request.travelProduct;
 
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
-import com.somartreview.reviewmate.domain.TravelProduct.TravelProductCategory;
+import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProductCategory;
 import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProduct;
 import com.somartreview.reviewmate.exception.EnumNotNull;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,32 +30,20 @@ public class SingleTravelProductCreateRequest {
 
     @EnumNotNull
     @Schema(description = "여행상품 카테고리", example = "ACCOMMODATION")
-    private TravelProductCategory travelProductCategory;
+    private SingleTravelProductCategory singleTravelProductCategory;
 
     @NotNull
     @Schema(description = "파트너사의 판매자 ID")
     private Long partnerSellerId;
-
-    @NotNull
-    @DateTimeFormat(pattern = "HH:mm:ss")
-    @Schema(description = "여행상품 이용날 기준 이용 시작시간 { pattern: 'HH:mm:ss' } \n\n(예: 당일 13시)", example = "13:00:00")
-    private @NotNull LocalTime startTime;
-
-    @NotNull
-    @DateTimeFormat(pattern = "HH:mm:ss")
-    @Schema(description = "여행상품 이용날 기준 이용 종료시간 { pattern: 'HH:mm:ss' } \n\n(예: 다음날 12시)", example = "36:00:00")
-    private @NotNull LocalTime endTime;
 
     public SingleTravelProduct toEntity(String thumbnailUrl, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
         return SingleTravelProduct.builder()
                 .partnerCustomId(partnerCustomId)
                 .thumbnailUrl(thumbnailUrl)
                 .name(name)
-                .travelProductCategory(travelProductCategory)
+                .singleTravelProductCategory(singleTravelProductCategory)
                 .partnerCompany(partnerCompany)
                 .partnerSeller(partnerSeller)
-                .startTime(startTime)
-                .endTime(endTime)
                 .build();
     }
 }

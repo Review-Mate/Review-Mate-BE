@@ -14,7 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -33,7 +33,10 @@ public class Reservation extends BaseEntity {
 
 
     @Column(nullable = false)
-    private LocalDate startDate;
+    private LocalDateTime startDateTime;
+
+    @Column(nullable = false)
+    private LocalDateTime endDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
@@ -54,10 +57,12 @@ public class Reservation extends BaseEntity {
 
 
     @Builder
-    public Reservation(String partnerCustomId, LocalDate startDate, Customer customer, TravelProduct travelProduct) {
+    public Reservation(String partnerCustomId, LocalDateTime startDateTime, LocalDateTime endDateTime, Customer customer, TravelProduct travelProduct) {
         validatePartnerCustomId(partnerCustomId);
         this.partnerCustomId = partnerCustomId;
-        this.startDate = startDate;
+        validateTime(startDateTime, endDateTime);
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
         this.customer = customer;
         this.travelProduct = travelProduct;
     }
@@ -65,6 +70,12 @@ public class Reservation extends BaseEntity {
     private void validatePartnerCustomId(final String partnerCustomerId) {
         if (partnerCustomerId.isBlank() || partnerCustomerId.length() > MAX_PARTNER_CUSTOM_ID_LENGTH) {
             throw new DomainLogicException(ErrorCode.RESERVATION_PARTNER_CUSTOM_ID_ERROR);
+        }
+    }
+
+    private void validateTime(final LocalDateTime startTime, final LocalDateTime endTime) {
+        if (startTime.isAfter(endTime)) {
+            throw new DomainLogicException(ErrorCode.TRAVEL_PRODUCT_START_TIME_ERROR);
         }
     }
 }
