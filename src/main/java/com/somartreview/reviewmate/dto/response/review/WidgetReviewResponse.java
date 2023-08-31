@@ -1,6 +1,7 @@
 package com.somartreview.reviewmate.dto.response.review;
 
 import com.somartreview.reviewmate.domain.Review.Review;
+import com.somartreview.reviewmate.domain.Review.ReviewPolarity;
 import com.somartreview.reviewmate.domain.Review.ReviewTag;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -32,8 +33,8 @@ public class WidgetReviewResponse {
     @Schema(description = "업로드 날짜", example = "2021.01.01")
     private String createdAt;
 
-    @Schema(description = "긍부정 수치 (양수 = 긍정, 음수 = 부정)", example = "10.18")
-    private Double polarityValue;
+    @Schema(description = "긍부정", example = "POSITIVE")
+    private ReviewPolarity polarity;
 
     @Schema(description = "적용된 속성 혹은 키워드가 포함된 문자열의 인덱스들")
     private List<ReviewHighlightPairResponse> reviewHighlightPairResponses;
@@ -43,9 +44,9 @@ public class WidgetReviewResponse {
         this.rating = review.getRating();
         this.title = review.getTitle();
         this.content = review.getContent();
-        this.authorName = review.getCustomer().getName();
+        this.authorName = review.getReservation().getCustomer().getName();
         this.createdAt = review.getCreatedAt().toString();
-        this.polarityValue = review.getPolarityValue();
+        this.polarity = review.getPolarity();
         this.reviewHighlightPairResponses = reviewTags.stream().map(ReviewHighlightPairResponse::new).toList();
     }
 }

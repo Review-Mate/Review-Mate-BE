@@ -6,9 +6,7 @@ import com.somartreview.reviewmate.domain.TravelProduct.*;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductUpdateRequest;
 import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductConsoleElementResponse;
-import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
-import com.somartreview.reviewmate.exception.ErrorCode;
 import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
 import com.somartreview.reviewmate.service.partners.PartnerSellerService;
 import lombok.RequiredArgsConstructor;
@@ -89,8 +87,8 @@ public class SingleTravelProductService {
                 .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
     }
 
-    public List<SingleTravelProduct> findAllByPartnerDomainAndTravelProductCategory(String partnerDomain, TravelProductCategory travelProductCategory) {
-        return singleTravelProductRepository.findAllByPartnerCompany_PartnerDomainAndTravelProductCategory(partnerDomain, travelProductCategory);
+    public List<SingleTravelProduct> findAllByPartnerDomainAndTravelProductCategory(String partnerDomain, SingleTravelProductCategory singleTravelProductCategory) {
+        return singleTravelProductRepository.findAllByPartnerCompany_PartnerDomainAndSingleTravelProductCategory(partnerDomain, singleTravelProductCategory);
     }
 
     public SingleTravelProductConsoleElementResponse getSingleTravelProductConsoleElementResponseByTravelProductId(Long travelProductId) {
@@ -105,8 +103,8 @@ public class SingleTravelProductService {
         return new SingleTravelProductConsoleElementResponse(singleTravelProduct);
     }
 
-    public List<SingleTravelProductConsoleElementResponse> getSingleTravelProductConsoleElementResponsesByPartnerDomainAndTravelProductCategory(String partnerDomain, TravelProductCategory travelProductCategory) {
-        return findAllByPartnerDomainAndTravelProductCategory(partnerDomain, travelProductCategory)
+    public List<SingleTravelProductConsoleElementResponse> getSingleTravelProductConsoleElementResponsesByPartnerDomainAndTravelProductCategory(String partnerDomain, SingleTravelProductCategory singleTravelProductCategory) {
+        return findAllByPartnerDomainAndTravelProductCategory(partnerDomain, singleTravelProductCategory)
                 .stream()
                 .map(SingleTravelProductConsoleElementResponse::new)
                 .toList();

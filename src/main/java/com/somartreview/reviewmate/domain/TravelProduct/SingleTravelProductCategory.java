@@ -1,8 +1,7 @@
 package com.somartreview.reviewmate.domain.TravelProduct;
 
-public enum TravelProductCategory {
+public enum SingleTravelProductCategory {
     ACCOMMODATION,
     RESTAURANT,
-    RENTAL_CAR,
-    PACKAGE
+    RENTAL_CAR
 }

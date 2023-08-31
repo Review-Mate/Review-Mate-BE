@@ -18,6 +18,9 @@ public class SingleTravelProductReservationResponse {
     @Schema(description = "예약 ID")
     private Long id;
 
+    @Schema(description = "파트너사가 부여한 예약 ID")
+    private String reservationPartnerCustomId;
+
     @Schema(description = "고객의 파트너사 커스텀 ID")
     private String customerPartnerCustomId;
 
@@ -33,24 +36,13 @@ public class SingleTravelProductReservationResponse {
     @Schema(description = "여행상품 이름", example = "신라더스테이 호텔")
     private String travelProductName;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 시작 시간")
-    private LocalDateTime startTime;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 종료 시간")
-    private LocalDateTime endTime;
-
     public SingleTravelProductReservationResponse(final Reservation reservation) {
         this.id = reservation.getId();
+        this.reservationPartnerCustomId = reservation.getPartnerCustomId();
         this.customerPartnerCustomId = reservation.getCustomer().getPartnerCustomId();
         this.customerName = reservation.getCustomer().getName();
         this.customerPhoneNumber = reservation.getCustomer().getPhoneNumber();
-
-        final SingleTravelProduct singleTravelProduct = (SingleTravelProduct) reservation.getTravelProduct();
-        this.travelProductPartnerCustomId = singleTravelProduct.getPartnerCustomId();
-        this.travelProductName = singleTravelProduct.getName();
-        this.startTime = singleTravelProduct.getStartTime();
-        this.endTime = singleTravelProduct.getEndTime();
+        this.travelProductPartnerCustomId = reservation.getTravelProduct().getPartnerCustomId();
+        this.travelProductName = reservation.getTravelProduct().getName();
     }
 }

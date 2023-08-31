@@ -1,6 +1,6 @@
 package com.somartreview.reviewmate.dto.request.travelProduct;
 
-import com.somartreview.reviewmate.domain.TravelProduct.TravelProductCategory;
+import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProductCategory;
 import com.somartreview.reviewmate.exception.EnumNotNull;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @NoArgsConstructor
@@ -23,16 +23,6 @@ public class SingleTravelProductUpdateRequest {
 
     @EnumNotNull
     @Schema(description = "여행상품 카테고리", example = "ACCOMMODATION")
-    private TravelProductCategory travelProductCategory;
-
-    @NotNull
-    @DateTimeFormat(pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 이용 시작시간", example = "2023.08.14T15:00")
-    private LocalDateTime startTime;
-
-    @NotNull
-    @DateTimeFormat(pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 이용 종료시간", example = "2023.08.15T12:00")
-    private LocalDateTime endTime;
+    private SingleTravelProductCategory singleTravelProductCategory;
 
 }

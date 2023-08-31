@@ -1,10 +1,9 @@
 package com.somartreview.reviewmate.web.products;
 
-import com.somartreview.reviewmate.domain.TravelProduct.TravelProductCategory;
+import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProductCategory;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductUpdateRequest;
 import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductConsoleElementResponse;
-import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductResponse;
 import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -85,8 +84,8 @@ public class SingleTravelProductController {
     })
     @GetMapping("/console/{partnerDomain}/products/travel/single")
     public ResponseEntity<List<SingleTravelProductConsoleElementResponse>> getSingleTravelProductConsoleElementResponsesByCategory(@PathVariable String partnerDomain,
-                                                                                                                                   @RequestParam(name = "category") TravelProductCategory travelProductCategory) {
-        List<SingleTravelProductConsoleElementResponse> singleTravelProductConsoleElementResponses = singleTravelProductService.getSingleTravelProductConsoleElementResponsesByPartnerDomainAndTravelProductCategory(partnerDomain, travelProductCategory);
+                                                                                                                                   @RequestParam(name = "singleTravelProductCategory") SingleTravelProductCategory singleTravelProductCategory) {
+        List<SingleTravelProductConsoleElementResponse> singleTravelProductConsoleElementResponses = singleTravelProductService.getSingleTravelProductConsoleElementResponsesByPartnerDomainAndTravelProductCategory(partnerDomain, singleTravelProductCategory);
 
         return ResponseEntity.ok(singleTravelProductConsoleElementResponses);
     }

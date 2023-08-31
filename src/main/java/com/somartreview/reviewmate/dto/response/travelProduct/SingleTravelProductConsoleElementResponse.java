@@ -50,7 +50,7 @@ public class SingleTravelProductConsoleElementResponse {
         this.partnerCustomId = singleTravelProduct.getPartnerCustomId();
         this.thumbnailUrl = singleTravelProduct.getThumbnailUrl();
         this.name = singleTravelProduct.getName();
-        this.reviewsCount = singleTravelProduct.getReviews().size();
+        this.reviewsCount = singleTravelProduct.getReviewCount();
         this.rating = singleTravelProduct.getRating();
         this.partnerSellerName = singleTravelProduct.getPartnerSeller().getName();
         this.partnerSellerPhoneNumber = singleTravelProduct.getPartnerSeller().getPhoneNumber();

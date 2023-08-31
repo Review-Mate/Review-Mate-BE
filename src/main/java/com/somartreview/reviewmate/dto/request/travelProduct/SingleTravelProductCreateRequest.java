@@ -2,7 +2,7 @@ package com.somartreview.reviewmate.dto.request.travelProduct;
 
 import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
 import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
-import com.somartreview.reviewmate.domain.TravelProduct.TravelProductCategory;
+import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProductCategory;
 import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProduct;
 import com.somartreview.reviewmate.exception.EnumNotNull;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,7 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @NoArgsConstructor
@@ -30,32 +30,20 @@ public class SingleTravelProductCreateRequest {
 
     @EnumNotNull
     @Schema(description = "여행상품 카테고리", example = "ACCOMMODATION")
-    private TravelProductCategory travelProductCategory;
+    private SingleTravelProductCategory singleTravelProductCategory;
 
     @NotNull
     @Schema(description = "파트너사의 판매자 ID")
     private Long partnerSellerId;
-
-    @NotNull
-    @DateTimeFormat(pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 이용 시작시간", example = "2023.08.14T15:00")
-    private LocalDateTime startTime;
-
-    @NotNull
-    @DateTimeFormat(pattern = "yyyy.MM.dd'T'HH:mm")
-    @Schema(description = "여행상품 이용 종료시간", example = "2023.08.15T12:00")
-    private LocalDateTime endTime;
 
     public SingleTravelProduct toEntity(String thumbnailUrl, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
         return SingleTravelProduct.builder()
                 .partnerCustomId(partnerCustomId)
                 .thumbnailUrl(thumbnailUrl)
                 .name(name)
-                .travelProductCategory(travelProductCategory)
+                .singleTravelProductCategory(singleTravelProductCategory)
                 .partnerCompany(partnerCompany)
                 .partnerSeller(partnerSeller)
-                .startTime(startTime)
-                .endTime(endTime)
                 .build();
     }
 }

@@ -4,6 +4,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.somartreview.reviewmate.domain.Customer.Customer;
+import com.somartreview.reviewmate.domain.Reservation.Reservation;
 import com.somartreview.reviewmate.domain.Review.Review;
 import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,17 +33,12 @@ public class ReviewCreateRequest {
     @NotBlank
     private String content;
 
-    @Schema(description = "리뷰를 단 고객의 ID")
-    @NotNull
-    private String customerPartnerCustomId;
-
-    public Review toEntity(Customer customer, TravelProduct travelProduct) {
+    public Review toEntity(final Reservation reservation) {
         return Review.builder()
                 .rating(rating)
                 .title(title)
                 .content(content)
-                .customer(customer)
-                .travelProduct(travelProduct)
+                .reservation(reservation)
                 .build();
     }
 }

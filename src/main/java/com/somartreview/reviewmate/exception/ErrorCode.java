@@ -60,6 +60,8 @@ public enum ErrorCode {
     TRAVEL_PRODUCT_NOT_UNIQUE_PARTNER_CUSTOM_ID("1406", "여행상품의 파트너 커스텀 ID가 유니크하지 않습니다."),
 
     RESERVATION_NOT_FOUND("1500", "예약을 찾을 수 없습니다."),
+    RESERVATION_PARTNER_CUSTOM_ID_ERROR("1501", "예약의 파트너 커스텀 ID가 너무 길거나 공백입니다."),
+    RESERVATION_NOT_UNIQUE_PARTNER_CUSTOM_ID("1502", "예약의 파트너 커스텀 ID가 유니크하지 않습니다."),
 
 
     NOT_EXIST_PARTNER_DOMAIN("2001", "존재하지 않는 파트너사 도메인입니다."),
