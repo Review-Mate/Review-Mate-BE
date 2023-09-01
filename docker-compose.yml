@@ -1,0 +1,8 @@
+version: "3"
+services:
+  reviewmate:
+    image: sckwon770/reviewmate-local
+    restart: always
+    container_name: reviewmate-local
+    ports:
+      - 8080:8080

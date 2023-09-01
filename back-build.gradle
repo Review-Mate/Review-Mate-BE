@@ -1,0 +1,93 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.2'
+	id 'io.spring.dependency-management' version '1.1.2'
+	id 'com.epages.restdocs-api-spec' version '0.18.2'
+	id "org.asciidoctor.jvm.convert" version "3.3.2"
+}
+
+group = 'com.somartreview'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	asciidoctorExtensions
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.18.2'
+
+}
+
+ext {
+	snippetsDir = file('build/generated-snippets')
+}
+
+test {
+	// 테스트의 아웃풋이 위에서 설정한 스니펫 디렉토리로 출력(저장)된다.
+	outputs.dir snippetsDir
+	useJUnitPlatform()
+}
+
+asciidoctor {
+	dependsOn test // 테스트 이후 작동 설정
+	configurations 'asciidoctorExtensions' // 위 설정한 configuration 적용
+	inputs.dir snippetsDir // snippetsDir를 입력으로
+
+	baseDirFollowsSourceFile() // 특정 파일 인클루드 시, 경로를 베이스 디렉토리로 맞춰줌.
+}
+
+asciidoctor.doFirst {
+	delete file('src/main/resources/static/docs')
+}
+
+task copyDocument(type: Copy) {
+	dependsOn asciidoctor
+	from file("build/docs/asciidoc")
+	into file("src/main/resources/static/docs")
+}
+
+openapi3 {
+	server = "https://localhost:8080" // list 로 넣을 수 있어 각종 환경의 URL 을 넣을 수 있음
+	title = "Review Mate API"
+	description = "Review Mate WAS API"
+	version = "0.1.0"
+	format = "yaml"
+}
+
+tasks.register("copyOasToSwagger") {
+	dependsOn("openapi3") // openapi3 Task 이후, 작동 설정
+	delete("src/main/resources/static/swagger-ui/openapi3.yaml") // 기존 OAS 파일 삭제
+	copy {
+		from "$buildDir/api-spec/openapi3.yaml" // 복제할 OAS 파일 지정
+		into "src/main/resources/static/swagger-ui/." // 타켓 디렉토리에 파일 복제
+
+	}
+}
+
+build {
+	dependsOn copyDocument
+}
