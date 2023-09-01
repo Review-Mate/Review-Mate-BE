@@ -188,7 +188,8 @@ jobs:
 
   ## time
   current-time:
-    needs: development-automation-prod-server-2
+    if: ${{ always() }}
+    needs: [development-automation-test-server, development-automation-prod-server-2]
     runs-on: ubuntu-latest
     steps:
       - name: Get Current Time
