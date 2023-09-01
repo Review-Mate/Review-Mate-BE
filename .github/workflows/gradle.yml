@@ -12,7 +12,9 @@ permissions:
   contents: read
 
 jobs:
-  development-automation:
+
+####################################################################################################################################
+  development-automation-test-server:
     runs-on: ubuntu-latest
     steps:
 
@@ -44,26 +46,10 @@ jobs:
         echo "${{ secrets.PROPERTIES_TEST }}" > ./application-test.properties
       shell: bash
 
-    ## create application-prod.properties
-    - name: make application-prod.properties
-      if: contains(github.ref, 'main')
-      run: |
-          cd ./src/main/resources
-          touch ./application-prod.properties
-          echo "${{ secrets.PROPERTIES_PROD }}" > ./application-prod.properties
-      shell: bash
-
     ## gradle build
     - name: Build with Gradle
+      if: contains(github.ref, 'release')
       run: ./gradlew build
-
-    ## docker build & push to production
-    - name: Docker build & push to prod
-      if: contains(github.ref, 'main')
-      run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile-prod -t ${{ secrets.DOCKER_REPO_PROD }} .
-          docker push ${{ secrets.DOCKER_REPO_PROD }}
 
     ## docker build & push to test
     - name: Docker build & push to test
@@ -72,24 +58,6 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile-test -t ${{ secrets.DOCKER_REPO_TEST }} .
           docker push ${{ secrets.DOCKER_REPO_TEST }}
-
-    ## deploy to production
-    - name: Deploy to prod
-      uses: appleboy/ssh-action@master
-      id: deploy-prod
-      if: contains(github.ref, 'main')
-      with:
-          host: ${{ secrets.EC2_DOMAIN_PROD }}
-          username: ec2-user
-          key: ${{ secrets.AWS_PEM_KEY }}
-          port: 22
-          envs: GITHUB_SHA
-          script: |
-              docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-              sudo docker rm -f $(docker ps -qa)
-              sudo docker pull ${{ secrets.DOCKER_REPO_PROD }}
-              docker-compose up -d
-              docker image prune -f
 
     ## deploy to test
     - name: Deploy to test
@@ -109,9 +77,124 @@ jobs:
             docker-compose up -d
             docker image prune -f
 
+
+####################################################################################################################################
+  development-automation-prod-server-1:
+    needs: development-automation-test-server
+    runs-on: ubuntu-latest
+    steps:
+
+    ## jdk setting
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin' # https://github.com/actions/setup-java
+
+    ## gradle caching
+    - name: Gradle Caching
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+
+    ## create application-prod.properties
+    - name: make application-prod.properties
+      if: contains(github.ref, 'main')
+      run: |
+          cd ./src/main/resources
+          touch ./application-prod.properties
+          echo "${{ secrets.PROPERTIES_PROD }}" > ./application-prod.properties
+      shell: bash
+
+    ## gradle build
+    - name: Build with Gradle
+      if: contains(github.ref, 'main')
+      run: ./gradlew build
+
+    ## docker build & push to production
+    - name: Docker build & push to prod
+      if: contains(github.ref, 'main')
+      run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -f Dockerfile-prod -t ${{ secrets.DOCKER_REPO_PROD }} .
+          docker push ${{ secrets.DOCKER_REPO_PROD }}
+
+    ## deploy to production AZ 1
+    - name: Deploy to prod
+      uses: appleboy/ssh-action@master
+      id: deploy-prod-az-1
+      if: contains(github.ref, 'main')
+      with:
+          host: ${{ secrets.EC2_DOMAIN_PROD_1 }}
+          username: ec2-user
+          key: ${{ secrets.AWS_PEM_KEY }}
+          port: 22
+          envs: GITHUB_SHA
+          script: |
+              docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+              sudo docker rm -f $(docker ps -qa)
+              sudo docker pull ${{ secrets.DOCKER_REPO_PROD }}
+              docker-compose up -d
+              docker image prune -f
+
+
+####################################################################################################################################
+
+  development-automation-prod-server-2:
+    needs: development-automation-prod-server-1
+    runs-on: ubuntu-latest
+    steps:
+
+    ## jdk setting
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin' # https://github.com/actions/setup-java
+
+    ## gradle caching
+    - name: Gradle Caching
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+
+    ## deploy to production AZ 2
+    - name: Deploy to prod
+      uses: appleboy/ssh-action@master
+      id: deploy-prod-az-2
+      if: contains(github.ref, 'main')
+      with:
+          host: ${{ secrets.EC2_DOMAIN_PROD_2 }}
+          username: ec2-user
+          key: ${{ secrets.AWS_PEM_KEY }}
+          port: 22
+          envs: GITHUB_SHA
+          script: |
+              docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+              sudo docker rm -f $(docker ps -qa)
+              sudo docker pull ${{ secrets.DOCKER_REPO_PROD }}
+              docker-compose up -d
+              docker image prune -f
+
+####################################################################################################################################
+
   ## time
   current-time:
-    needs: development-automation
+    needs: development-automation-prod-server-2
     runs-on: ubuntu-latest
     steps:
       - name: Get Current Time
@@ -127,7 +210,7 @@ jobs:
 
   ## slack
   action-slack:
-    needs: development-automation
+    needs: current-time
     runs-on: ubuntu-latest
     steps:
         - name: Slack Alarm
