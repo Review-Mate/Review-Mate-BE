@@ -15,6 +15,7 @@ jobs:
 
 ####################################################################################################################################
   development-automation-test-server:
+    if: contains(github.ref, 'release')
     runs-on: ubuntu-latest
     steps:
 
@@ -39,7 +40,6 @@ jobs:
 
     ## create application-test.properties
     - name: make application-test.properties
-      if: contains(github.ref, 'release')
       run: |
         cd ./src/main/resources
         touch ./application-test.properties
@@ -48,12 +48,10 @@ jobs:
 
     ## gradle build
     - name: Build with Gradle
-      if: contains(github.ref, 'release')
       run: ./gradlew build
 
     ## docker build & push to test
     - name: Docker build & push to test
-      if: contains(github.ref, 'release')
       run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile-test -t ${{ secrets.DOCKER_REPO_TEST }} .
@@ -63,7 +61,6 @@ jobs:
     - name: Deploy to test
       uses: appleboy/ssh-action@master
       id: deploy-test
-      if: contains(github.ref, 'release')
       with:
         host: ${{ secrets.EC2_DOMAIN_TEST }}
         username: ec2-user
@@ -81,6 +78,7 @@ jobs:
 ####################################################################################################################################
   development-automation-prod-server-1:
     needs: development-automation-test-server
+    if: contains(github.ref, 'main')
     runs-on: ubuntu-latest
     steps:
 
@@ -106,7 +104,6 @@ jobs:
 
     ## create application-prod.properties
     - name: make application-prod.properties
-      if: contains(github.ref, 'main')
       run: |
           cd ./src/main/resources
           touch ./application-prod.properties
@@ -115,12 +112,10 @@ jobs:
 
     ## gradle build
     - name: Build with Gradle
-      if: contains(github.ref, 'main')
       run: ./gradlew build
 
     ## docker build & push to production
     - name: Docker build & push to prod
-      if: contains(github.ref, 'main')
       run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile-prod -t ${{ secrets.DOCKER_REPO_PROD }} .
@@ -130,7 +125,6 @@ jobs:
     - name: Deploy to prod
       uses: appleboy/ssh-action@master
       id: deploy-prod-az-1
-      if: contains(github.ref, 'main')
       with:
           host: ${{ secrets.EC2_DOMAIN_PROD_1 }}
           username: ec2-user
@@ -149,6 +143,7 @@ jobs:
 
   development-automation-prod-server-2:
     needs: development-automation-prod-server-1
+    if: contains(github.ref, 'main')
     runs-on: ubuntu-latest
     steps:
 
@@ -176,7 +171,6 @@ jobs:
     - name: Deploy to prod
       uses: appleboy/ssh-action@master
       id: deploy-prod-az-2
-      if: contains(github.ref, 'main')
       with:
           host: ${{ secrets.EC2_DOMAIN_PROD_2 }}
           username: ec2-user
