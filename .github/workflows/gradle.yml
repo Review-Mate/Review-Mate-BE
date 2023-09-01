@@ -77,7 +77,6 @@ jobs:
 
 ####################################################################################################################################
   development-automation-prod-server-1:
-    needs: development-automation-test-server
     if: contains(github.ref, 'main')
     runs-on: ubuntu-latest
     steps:
