@@ -57,7 +57,7 @@ public class PartnerCompany extends BaseEntity {
     }
 
     public void update(PartnerCompanyUpdateRequest request) {
-        this.partnerDomain = partnerDomain;
+        this.partnerDomain = request.getPartnerDomain();
         validateName(request.getName());
         this.name = request.getName();
     }
