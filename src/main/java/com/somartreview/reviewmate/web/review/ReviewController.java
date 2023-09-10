@@ -1,7 +1,7 @@
 package com.somartreview.reviewmate.web.review;
 
-import com.somartreview.reviewmate.domain.Review.ReviewOrderCriteria;
-import com.somartreview.reviewmate.domain.Review.ReviewProperty;
+import com.somartreview.reviewmate.domain.review.ReviewOrderCriteria;
+import com.somartreview.reviewmate.domain.review.ReviewProperty;
 import com.somartreview.reviewmate.dto.request.review.ReviewCreateRequest;
 
 import javax.validation.Valid;

@@ -1,6 +1,6 @@
 package com.somartreview.reviewmate.dto.request.partnerCompany;
 
-import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
+import com.somartreview.reviewmate.domain.partnerCompany.PartnerCompany;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

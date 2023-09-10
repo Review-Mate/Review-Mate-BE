@@ -1,19 +1,17 @@
 package com.somartreview.reviewmate.dto.request.travelProduct;
 
-import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
-import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
-import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProductCategory;
-import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProduct;
+import com.somartreview.reviewmate.domain.partnerCompany.PartnerCompany;
+import com.somartreview.reviewmate.domain.partnerSeller.PartnerSeller;
+import com.somartreview.reviewmate.domain.travelProduct.SingleTravelProductCategory;
+import com.somartreview.reviewmate.domain.travelProduct.SingleTravelProduct;
 import com.somartreview.reviewmate.exception.EnumNotNull;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalTime;
 
 @Getter
 @NoArgsConstructor

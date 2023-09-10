@@ -3,18 +3,12 @@ package com.somartreview.reviewmate.dto.request.review;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.somartreview.reviewmate.domain.Customer.Customer;
-import com.somartreview.reviewmate.domain.Reservation.Reservation;
-import com.somartreview.reviewmate.domain.Review.Review;
-import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
+import com.somartreview.reviewmate.domain.reservation.Reservation;
+import com.somartreview.reviewmate.domain.review.Review;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @Getter
 @NoArgsConstructor

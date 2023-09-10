@@ -1,7 +1,7 @@
 package com.somartreview.reviewmate.dto.response.partnerManager;
 
-import com.somartreview.reviewmate.domain.PartnerManager.PartnerManagerRole;
-import com.somartreview.reviewmate.domain.PartnerManager.PartnerManager;
+import com.somartreview.reviewmate.domain.partnerManager.PartnerManagerRole;
+import com.somartreview.reviewmate.domain.partnerManager.PartnerManager;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

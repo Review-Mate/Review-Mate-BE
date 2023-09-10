@@ -1,8 +1,8 @@
 package com.somartreview.reviewmate.dto.response.review;
 
-import com.somartreview.reviewmate.domain.Review.Review;
-import com.somartreview.reviewmate.domain.Review.ReviewPolarity;
-import com.somartreview.reviewmate.domain.Review.ReviewTag;
+import com.somartreview.reviewmate.domain.review.Review;
+import com.somartreview.reviewmate.domain.review.ReviewPolarity;
+import com.somartreview.reviewmate.domain.review.ReviewTag;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,14 +1,13 @@
 package com.somartreview.reviewmate.dto.request.partnerSeller;
 
-import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
-import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
+import com.somartreview.reviewmate.domain.partnerCompany.PartnerCompany;
+import com.somartreview.reviewmate.domain.partnerSeller.PartnerSeller;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor

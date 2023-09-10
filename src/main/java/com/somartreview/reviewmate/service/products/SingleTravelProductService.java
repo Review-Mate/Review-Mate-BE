@@ -1,8 +1,8 @@
 package com.somartreview.reviewmate.service.products;
 
-import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
-import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
-import com.somartreview.reviewmate.domain.TravelProduct.*;
+import com.somartreview.reviewmate.domain.partnerCompany.PartnerCompany;
+import com.somartreview.reviewmate.domain.partnerSeller.PartnerSeller;
+import com.somartreview.reviewmate.domain.travelProduct.*;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductUpdateRequest;
 import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductConsoleElementResponse;

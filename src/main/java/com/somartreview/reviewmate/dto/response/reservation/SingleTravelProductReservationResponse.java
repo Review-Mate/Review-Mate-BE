@@ -1,14 +1,10 @@
 package com.somartreview.reviewmate.dto.response.reservation;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.somartreview.reviewmate.domain.Reservation.Reservation;
-import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProduct;
+import com.somartreview.reviewmate.domain.reservation.Reservation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor

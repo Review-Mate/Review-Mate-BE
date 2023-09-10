@@ -1,7 +1,7 @@
 package com.somartreview.reviewmate.service.review;
 
-import com.somartreview.reviewmate.domain.Reservation.Reservation;
-import com.somartreview.reviewmate.domain.Review.*;
+import com.somartreview.reviewmate.domain.reservation.Reservation;
+import com.somartreview.reviewmate.domain.review.*;
 import com.somartreview.reviewmate.dto.request.review.ReviewCreateRequest;
 import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.dto.response.review.WidgetReviewResponse;

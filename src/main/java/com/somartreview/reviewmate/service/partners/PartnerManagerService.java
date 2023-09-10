@@ -1,8 +1,8 @@
 package com.somartreview.reviewmate.service.partners;
 
-import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
-import com.somartreview.reviewmate.domain.PartnerManager.PartnerManager;
-import com.somartreview.reviewmate.domain.PartnerManager.PartnerManagerRepository;
+import com.somartreview.reviewmate.domain.partnerCompany.PartnerCompany;
+import com.somartreview.reviewmate.domain.partnerManager.PartnerManager;
+import com.somartreview.reviewmate.domain.partnerManager.PartnerManagerRepository;
 import com.somartreview.reviewmate.dto.request.partnerManager.PartnerManagerCreateRequest;
 import com.somartreview.reviewmate.dto.request.partnerManager.PartnerManagerUpdateRequest;
 import com.somartreview.reviewmate.dto.response.partnerManager.PartnerManagerResponse;

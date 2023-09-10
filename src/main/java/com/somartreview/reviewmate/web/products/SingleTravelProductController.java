@@ -1,6 +1,6 @@
 package com.somartreview.reviewmate.web.products;
 
-import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProductCategory;
+import com.somartreview.reviewmate.domain.travelProduct.SingleTravelProductCategory;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductUpdateRequest;
 import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductConsoleElementResponse;

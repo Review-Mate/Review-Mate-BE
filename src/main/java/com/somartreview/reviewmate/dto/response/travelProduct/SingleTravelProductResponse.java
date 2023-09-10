@@ -1,16 +1,12 @@
 package com.somartreview.reviewmate.dto.response.travelProduct;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProduct;
+import com.somartreview.reviewmate.domain.travelProduct.SingleTravelProduct;
 import com.somartreview.reviewmate.dto.response.review.ReviewTagResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.somartreview.reviewmate.service.review;
 
-import com.somartreview.reviewmate.domain.Review.ReviewTag;
-import com.somartreview.reviewmate.domain.Review.ReviewTagRepository;
+import com.somartreview.reviewmate.domain.review.ReviewTag;
+import com.somartreview.reviewmate.domain.review.ReviewTagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
