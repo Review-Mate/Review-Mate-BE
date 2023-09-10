@@ -115,10 +115,6 @@ jacocoTestCoverageVerification {
         rule {
             element = 'METHOD'
 
-            excludes = [
-                    "*"
-            ]
-
             limit {
                 counter = 'LINE'
                 value = 'TOTALCOUNT'

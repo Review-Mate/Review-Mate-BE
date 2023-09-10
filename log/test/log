@@ -131,3 +131,6 @@ Identify and stop the process that's listening on port 8080 or configure this ap
 2023-09-08 11:46:22.414  INFO 19280 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
 2023-09-08 11:46:22.415  INFO 19280 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
 2023-09-08 11:46:22.431  INFO 19280 --- [Test worker] c.s.reviewmate.web.TestControllerTest    : Started TestControllerTest in 1.284 seconds (JVM running for 2.138)
+2023-09-08 11:54:37.527  INFO 19246 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-09-08 11:54:37.532  INFO 19246 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-09-08 11:54:37.534  INFO 19246 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
