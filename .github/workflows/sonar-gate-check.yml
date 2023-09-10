@@ -38,3 +38,18 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: ./gradlew build sonar --info
+
+  action-slack:
+    if: ${{ always() }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+        - name: Slack Alarm
+          uses: 8398a7/action-slack@v2
+          with:
+              status: ${{ job.status }}
+              author_name: GitHub-Actions development automation
+              fields: repo,message,commit,author,ref,job,took
+          env:
+              SLACK_WEBHOOK_URL: ${{ secrets.SLACK_BE_PR_ANALYSIS_ALARM_WEBHOOK }}
+          if: always() # Pick up events even if the job fails or is canceled.
