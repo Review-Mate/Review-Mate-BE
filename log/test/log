@@ -592,3 +592,105 @@ Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No q
 2023-09-11 02:13:58.569  INFO 55442 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
 2023-09-11 02:13:58.570  INFO 55442 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 2023-09-11 02:13:58.584  INFO 55442 --- [Test worker] c.s.r.w.p.PartnerSellerControllerTest    : Started PartnerSellerControllerTest in 1.253 seconds (JVM running for 2.158)
+2023-09-11 02:50:12.521  INFO 60650 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Starting SingleTravelProductControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 60650 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 02:50:12.521  INFO 60650 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : The following 1 profile is active: "secret"
+2023-09-11 02:50:13.611  INFO 60650 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 02:50:13.611  INFO 60650 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 02:50:13.612  INFO 60650 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 02:50:13.628  INFO 60650 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.387 seconds (JVM running for 2.429)
+2023-09-11 02:50:13.757  WARN 60650 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'multipart/form-data;charset=UTF-8' not supported]
+2023-09-11 02:51:47.295  INFO 60930 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Starting SingleTravelProductControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 60930 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 02:51:47.296  INFO 60930 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : The following 1 profile is active: "secret"
+2023-09-11 02:51:48.362  INFO 60930 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 02:51:48.362  INFO 60930 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 02:51:48.363  INFO 60930 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 02:51:48.379  INFO 60930 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.322 seconds (JVM running for 2.066)
+2023-09-11 02:51:48.498  WARN 60930 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'PATCH' not supported]
+2023-09-11 02:53:03.376  INFO 61127 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Starting SingleTravelProductControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 61127 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 02:53:03.377  INFO 61127 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : The following 1 profile is active: "secret"
+2023-09-11 02:53:04.336  INFO 61127 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 02:53:04.336  INFO 61127 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 02:53:04.337  INFO 61127 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 02:53:04.352  INFO 61127 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.202 seconds (JVM running for 1.983)
+2023-09-11 02:53:04.463  WARN 61127 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'multipart/form-data;charset=UTF-8' not supported]
+2023-09-11 02:53:14.659  INFO 61166 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Starting SingleTravelProductControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 61166 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 02:53:14.660  INFO 61166 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : The following 1 profile is active: "secret"
+2023-09-11 02:53:15.645  INFO 61166 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 02:53:15.645  INFO 61166 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 02:53:15.646  INFO 61166 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 02:53:15.661  INFO 61166 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.222 seconds (JVM running for 1.954)
+2023-09-11 02:53:15.777  WARN 61166 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'PATCH' not supported]
+2023-09-11 02:53:23.759  INFO 61196 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Starting SingleTravelProductControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 61196 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 02:53:23.759  INFO 61196 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : The following 1 profile is active: "secret"
+2023-09-11 02:53:24.751  INFO 61196 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 02:53:24.751  INFO 61196 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 02:53:24.752  INFO 61196 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 02:53:24.766  INFO 61196 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.252 seconds (JVM running for 2.018)
+2023-09-11 02:53:24.880  WARN 61196 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'multipart/form-data;charset=UTF-8' not supported]
+2023-09-11 02:55:36.902  INFO 61494 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Starting SingleTravelProductControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 61494 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 02:55:36.903  INFO 61494 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : The following 1 profile is active: "secret"
+2023-09-11 02:55:37.886  INFO 61494 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 02:55:37.886  INFO 61494 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 02:55:37.887  INFO 61494 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 02:55:37.902  INFO 61494 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.228 seconds (JVM running for 2.152)
+2023-09-11 02:55:38.010  WARN 61494 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'multipart/form-data;charset=UTF-8' not supported]
+2023-09-11 02:57:13.311  INFO 61721 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Starting SingleTravelProductControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 61721 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 02:57:13.312  INFO 61721 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : The following 1 profile is active: "secret"
+2023-09-11 02:57:14.291  INFO 61721 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 02:57:14.291  INFO 61721 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 02:57:14.292  INFO 61721 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 02:57:14.309  INFO 61721 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.242 seconds (JVM running for 1.989)
+2023-09-11 02:57:14.421  WARN 61721 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'PUT' not supported]
+2023-09-11 02:58:32.032  INFO 61906 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Starting SingleTravelProductControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 61906 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 02:58:32.033  INFO 61906 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : The following 1 profile is active: "secret"
+2023-09-11 02:58:33.063  INFO 61906 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 02:58:33.063  INFO 61906 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 02:58:33.064  INFO 61906 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-09-11 02:58:33.079  INFO 61906 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.287 seconds (JVM running for 2.041)
+2023-09-11 02:58:33.192  WARN 61906 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'PUT' not supported]
+2023-09-11 02:58:53.767  INFO 61959 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Starting SingleTravelProductControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 61959 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 02:58:53.768  INFO 61959 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : The following 1 profile is active: "secret"
+2023-09-11 02:58:54.773  INFO 61959 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 02:58:54.773  INFO 61959 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 02:58:54.774  INFO 61959 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 02:58:54.789  INFO 61959 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.269 seconds (JVM running for 1.995)
+2023-09-11 02:58:54.905  WARN 61959 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'multipart/form-data;charset=UTF-8' not supported]
+2023-09-11 02:59:43.861  INFO 62084 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Starting SingleTravelProductControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 62084 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 02:59:43.862  INFO 62084 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : The following 1 profile is active: "secret"
+2023-09-11 02:59:44.950  INFO 62084 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 02:59:44.950  INFO 62084 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 02:59:44.951  INFO 62084 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 02:59:44.969  INFO 62084 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.351 seconds (JVM running for 2.346)
+2023-09-11 02:59:45.098  WARN 62084 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'multipart/form-data;charset=UTF-8' not supported]
+2023-09-11 03:01:07.548  INFO 62278 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Starting SingleTravelProductControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 62278 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 03:01:07.549  INFO 62278 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : The following 1 profile is active: "secret"
+2023-09-11 03:01:08.564  INFO 62278 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 03:01:08.565  INFO 62278 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 03:01:08.565  INFO 62278 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-09-11 03:01:08.585  INFO 62278 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.274 seconds (JVM running for 2.038)
+2023-09-11 03:01:08.694  WARN 62278 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'multipart/form-data;charset=UTF-8' not supported]
+2023-09-11 03:02:27.547  INFO 62462 --- [Test worker] c.s.r.web.review.ReviewControllerTest    : Starting ReviewControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 62462 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 03:02:27.548  INFO 62462 --- [Test worker] c.s.r.web.review.ReviewControllerTest    : The following 1 profile is active: "secret"
+2023-09-11 03:02:28.593  INFO 62462 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 03:02:28.593  INFO 62462 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 03:02:28.594  INFO 62462 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 03:02:28.608  INFO 62462 --- [Test worker] c.s.r.web.review.ReviewControllerTest    : Started ReviewControllerTest in 1.296 seconds (JVM running for 2.225)
+2023-09-11 03:04:04.475  INFO 62685 --- [Test worker] c.s.r.web.review.ReviewControllerTest    : Starting ReviewControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 62685 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 03:04:04.476  INFO 62685 --- [Test worker] c.s.r.web.review.ReviewControllerTest    : The following 1 profile is active: "secret"
+2023-09-11 03:04:05.492  INFO 62685 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 03:04:05.492  INFO 62685 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 03:04:05.493  INFO 62685 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 03:04:05.508  INFO 62685 --- [Test worker] c.s.r.web.review.ReviewControllerTest    : Started ReviewControllerTest in 1.269 seconds (JVM running for 2.029)
+2023-09-11 03:04:11.988  INFO 62712 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Starting SingleTravelProductControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 62712 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 03:04:11.989  INFO 62712 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : The following 1 profile is active: "secret"
+2023-09-11 03:04:12.946  INFO 62712 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 03:04:12.946  INFO 62712 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 03:04:12.946  INFO 62712 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-09-11 03:04:12.961  INFO 62712 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.197 seconds (JVM running for 1.902)
+2023-09-11 03:04:13.027  WARN 62712 --- [Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'multipart/form-data;charset=UTF-8' not supported]
+2023-09-11 03:08:48.684  INFO 63436 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Starting SingleTravelProductControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 63436 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 03:08:48.685  INFO 63436 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : The following 1 profile is active: "secret"
+2023-09-11 03:08:49.641  INFO 63436 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 03:08:49.641  INFO 63436 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 03:08:49.641  INFO 63436 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-09-11 03:08:49.656  INFO 63436 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.187 seconds (JVM running for 2.176)
