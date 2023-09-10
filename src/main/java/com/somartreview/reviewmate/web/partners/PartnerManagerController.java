@@ -34,7 +34,7 @@ public class PartnerManagerController {
     public ResponseEntity<Void> createPartnerManager(@Valid @RequestBody PartnerManagerCreateRequest partnerManagerCreateRequest) {
         Long partnerManagerId = partnerManagerService.create(partnerManagerCreateRequest);
 
-        return ResponseEntity.created(URI.create("/api/v1/console//managers/" + partnerManagerId)).build();
+        return ResponseEntity.created(URI.create("/api/v1/console/managers/" + partnerManagerId)).build();
     }
 
 

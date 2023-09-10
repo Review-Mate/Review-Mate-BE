@@ -574,3 +574,15 @@ Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No q
 2023-09-11 01:53:18.639  INFO 52227 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
 2023-09-11 01:53:18.639  INFO 52227 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 2023-09-11 01:53:18.655  INFO 52227 --- [Test worker] c.s.r.w.p.PartnerCompanyControllerTest   : Started PartnerCompanyControllerTest in 1.277 seconds (JVM running for 2.011)
+2023-09-11 02:03:22.788  INFO 53701 --- [Test worker] c.s.r.w.p.PartnerManagerControllerTest   : Starting PartnerManagerControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 53701 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 02:03:22.789  INFO 53701 --- [Test worker] c.s.r.w.p.PartnerManagerControllerTest   : The following 1 profile is active: "secret"
+2023-09-11 02:03:23.776  INFO 53701 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 02:03:23.776  INFO 53701 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 02:03:23.777  INFO 53701 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-09-11 02:03:23.792  INFO 53701 --- [Test worker] c.s.r.w.p.PartnerManagerControllerTest   : Started PartnerManagerControllerTest in 1.228 seconds (JVM running for 2.119)
+2023-09-11 02:03:58.756  INFO 53794 --- [Test worker] c.s.r.w.p.PartnerManagerControllerTest   : Starting PartnerManagerControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 53794 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 02:03:58.757  INFO 53794 --- [Test worker] c.s.r.w.p.PartnerManagerControllerTest   : The following 1 profile is active: "secret"
+2023-09-11 02:03:59.718  INFO 53794 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 02:03:59.718  INFO 53794 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 02:03:59.719  INFO 53794 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 02:03:59.734  INFO 53794 --- [Test worker] c.s.r.w.p.PartnerManagerControllerTest   : Started PartnerManagerControllerTest in 1.22 seconds (JVM running for 1.972)
