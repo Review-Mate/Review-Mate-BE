@@ -1,13 +1,11 @@
 package com.somartreview.reviewmate.service;
 
-import com.somartreview.reviewmate.domain.Customer.Customer;
-import com.somartreview.reviewmate.domain.Reservation.Reservation;
-import com.somartreview.reviewmate.domain.Reservation.ReservationRepository;
-import com.somartreview.reviewmate.domain.TravelProduct.SingleTravelProduct;
-import com.somartreview.reviewmate.dto.request.customer.CustomerCreateRequest;
-import com.somartreview.reviewmate.dto.request.reservation.SingleTravelReservationCreateRequest;
-import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
-import com.somartreview.reviewmate.dto.response.reservation.SingleTravelProductReservationResponse;
+import com.somartreview.reviewmate.domain.customer.Customer;
+import com.somartreview.reviewmate.domain.reservation.Reservation;
+import com.somartreview.reviewmate.domain.reservation.ReservationRepository;
+import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
+import com.somartreview.reviewmate.dto.reservation.SingleTravelReservationCreateRequest;
+import com.somartreview.reviewmate.dto.reservation.SingleTravelProductReservationResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import com.somartreview.reviewmate.service.products.TravelProductService;
@@ -61,6 +59,13 @@ public class ReservationService {
         return reservationRepository.findAllByCustomer_Id(customerId);
     }
 
+    public List<Reservation> findAllByTravelProductIdAndCustomerId(Long travelProductId, Long customerId) {
+        travelProductService.validateExistTravelProduct(travelProductId);
+        customerService.validateExistCustomer(customerId);
+
+        return reservationRepository.findAllByTravelProduct_IdAndCustomer_Id(travelProductId, customerId);
+    }
+
     public SingleTravelProductReservationResponse getSingleTravelProductReservationResponseById(Long id) {
         Reservation reservation = findById(id);
 
@@ -68,9 +73,19 @@ public class ReservationService {
     }
 
     public List<SingleTravelProductReservationResponse> getSingleTravelProductReservationResponseByCustomerOrSingleTravelProduct(Long customerId, Long singleTravelProductId) {
-        return reservationRepository.findAll().stream()
-                .map(SingleTravelProductReservationResponse::new)
-                .toList();
+        if (singleTravelProductId == null) {
+            return findAllByCustomerId(customerId).stream()
+                    .map(SingleTravelProductReservationResponse::new)
+                    .toList();
+        } else if (customerId == null) {
+            return findAllByTravelProductId(singleTravelProductId).stream()
+                    .map(SingleTravelProductReservationResponse::new)
+                    .toList();
+        } else {
+            return findAllByTravelProductIdAndCustomerId(singleTravelProductId, customerId).stream()
+                    .map(SingleTravelProductReservationResponse::new)
+                    .toList();
+        }
     }
 
     @Transactional

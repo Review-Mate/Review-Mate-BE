@@ -1,11 +1,13 @@
 package com.somartreview.reviewmate.service.products;
 
-import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
-import com.somartreview.reviewmate.domain.PartnerSeller.PartnerSeller;
-import com.somartreview.reviewmate.domain.TravelProduct.*;
-import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
-import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductUpdateRequest;
-import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductConsoleElementResponse;
+import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
+import com.somartreview.reviewmate.domain.partner.seller.PartnerSeller;
+import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
+import com.somartreview.reviewmate.domain.product.SingleTravelProductCategory;
+import com.somartreview.reviewmate.domain.product.SingleTravelProductRepository;
+import com.somartreview.reviewmate.dto.product.SingleTravelProductCreateRequest;
+import com.somartreview.reviewmate.dto.product.SingleTravelProductUpdateRequest;
+import com.somartreview.reviewmate.dto.product.SingleTravelProductConsoleElementResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
 import com.somartreview.reviewmate.service.partners.PartnerSellerService;
@@ -22,6 +24,8 @@ import static com.somartreview.reviewmate.exception.ErrorCode.TRAVEL_PRODUCT_NOT
 @Service
 @RequiredArgsConstructor
 public class SingleTravelProductService {
+
+
 
     private final SingleTravelProductRepository singleTravelProductRepository;
     private final TravelProductService travelProductService;
@@ -69,7 +73,7 @@ public class SingleTravelProductService {
     }
 
     private String uploadThumbnailOnS3(MultipartFile thumbnail) {
-        //  TODO: Upload thumbnail to S3 and get the url
+        //  Impl Uploading thumbnail to S3 and get the url
         if (thumbnail != null) {
             return null;
         }

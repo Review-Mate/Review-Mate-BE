@@ -1,11 +1,11 @@
 package com.somartreview.reviewmate.service.partners;
 
-import com.somartreview.reviewmate.domain.PartnerCompany.PartnerCompany;
-import com.somartreview.reviewmate.domain.PartnerManager.PartnerManager;
-import com.somartreview.reviewmate.domain.PartnerManager.PartnerManagerRepository;
-import com.somartreview.reviewmate.dto.request.partnerManager.PartnerManagerCreateRequest;
-import com.somartreview.reviewmate.dto.request.partnerManager.PartnerManagerUpdateRequest;
-import com.somartreview.reviewmate.dto.response.partnerManager.PartnerManagerResponse;
+import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
+import com.somartreview.reviewmate.domain.partner.manager.PartnerManager;
+import com.somartreview.reviewmate.domain.partner.manager.PartnerManagerRepository;
+import com.somartreview.reviewmate.dto.partner.manager.PartnerManagerCreateRequest;
+import com.somartreview.reviewmate.dto.partner.manager.PartnerManagerUpdateRequest;
+import com.somartreview.reviewmate.dto.partner.manager.PartnerManagerResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

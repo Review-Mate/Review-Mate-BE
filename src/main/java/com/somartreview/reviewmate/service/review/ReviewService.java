@@ -1,10 +1,10 @@
 package com.somartreview.reviewmate.service.review;
 
-import com.somartreview.reviewmate.domain.Reservation.Reservation;
-import com.somartreview.reviewmate.domain.Review.*;
-import com.somartreview.reviewmate.dto.request.review.ReviewCreateRequest;
-import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
-import com.somartreview.reviewmate.dto.response.review.WidgetReviewResponse;
+import com.somartreview.reviewmate.domain.reservation.Reservation;
+import com.somartreview.reviewmate.domain.review.*;
+import com.somartreview.reviewmate.dto.review.ReviewCreateRequest;
+import com.somartreview.reviewmate.dto.review.ReviewUpdateRequest;
+import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.ReservationService;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,8 @@ public class ReviewService {
         List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
         review.appendReviewImage(reviewImages);
 
-        // TODO: Request review tag through SQS
+        // Impl Requesting review inference through API gateway
+        // Impl Requesting review inference through kafka
 
         return review.getId();
     }
@@ -51,7 +52,7 @@ public class ReviewService {
     }
 
     private String uploadReviewImageOnS3(MultipartFile reviewImage) {
-        //  TODO: Upload review image to S3 and get the url
+        //  Impl uploading review image to S3 and get the url
         return "https://www.testThumbnailUrl.com";
     }
 
@@ -67,7 +68,7 @@ public class ReviewService {
         return new WidgetReviewResponse(review, foundReviewTags);
     }
 
-    // TODO: Apply complicated condition by QueryDSL
+    // Impl complicated condition query with QueryDSL
     public List<WidgetReviewResponse> getWidgetReviewResponsesByPartnerDomainAndTravelProductIdWithCondition(String partnerDomain, String travelProductPartnerCustomId,
                                                                                                              ReviewProperty reviewProperty, String keyword,
                                                                                                              ReviewOrderCriteria reviewOrderCriteria,
@@ -95,7 +96,8 @@ public class ReviewService {
         List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
         review.appendReviewImage(reviewImages);
 
-        // TODO: Request review tag through SQS
+        // Impl Requesting review inference through API gateway
+        // Impl Requesting review inference through kafka
     }
 
     @Transactional

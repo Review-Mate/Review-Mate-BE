@@ -1,7 +1,7 @@
 package com.somartreview.reviewmate.service.products;
 
-import com.somartreview.reviewmate.domain.TravelProduct.TravelProduct;
-import com.somartreview.reviewmate.domain.TravelProduct.TravelProductRepository;
+import com.somartreview.reviewmate.domain.product.TravelProduct;
+import com.somartreview.reviewmate.domain.product.TravelProductRepository;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
