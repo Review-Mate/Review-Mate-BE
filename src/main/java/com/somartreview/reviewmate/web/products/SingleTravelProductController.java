@@ -1,17 +1,16 @@
 package com.somartreview.reviewmate.web.products;
 
-import com.somartreview.reviewmate.domain.travelProduct.SingleTravelProductCategory;
-import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductCreateRequest;
-import com.somartreview.reviewmate.dto.request.travelProduct.SingleTravelProductUpdateRequest;
-import com.somartreview.reviewmate.dto.response.travelProduct.SingleTravelProductConsoleElementResponse;
+import com.somartreview.reviewmate.domain.product.SingleTravelProductCategory;
+import com.somartreview.reviewmate.dto.product.SingleTravelProductCreateRequest;
+import com.somartreview.reviewmate.dto.product.SingleTravelProductUpdateRequest;
+import com.somartreview.reviewmate.dto.product.SingleTravelProductConsoleElementResponse;
 import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
+
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +45,6 @@ public class SingleTravelProductController {
     }
 
 
-
     @Operation(operationId = "getSingleTravelProductConsoleElementResponseByTravelProductId", summary = "단일 여행상품 단독 조회")
     @Parameter(name = "travelProductId", description = "단일 여행상품 ID")
     @GetMapping("/products/travel/single/{travelProductId}")
@@ -57,12 +55,9 @@ public class SingleTravelProductController {
     }
 
 
-
     @Operation(operationId = "getSingleTravelProductConsoleElementResponseByPartnerCustomId", summary = "단일 여행상품 단독 조회")
-    @Parameters({
-            @Parameter(name = "partnerDomain", description = "단일 여행상품이 등록된 파트너사 도메인", example = "goodchoice.kr"),
-            @Parameter(name = "partnerCustomId", description = "파트너사가 정의하는 단일 여행상품 커스텀 ID (unique)", example = "PRODUCT-0001")
-    })
+    @Parameter(name = "partnerDomain", description = "단일 여행상품이 등록된 파트너사 도메인", example = "goodchoice.kr")
+    @Parameter(name = "partnerCustomId", description = "파트너사가 정의하는 단일 여행상품 커스텀 ID (unique)", example = "PRODUCT-0001")
     @GetMapping("/{partnerDomain}/products/travel/single/{partnerCustomId}")
     public ResponseEntity<SingleTravelProductConsoleElementResponse> getSingleTravelProductConsoleElementResponseByPartnerCustomId(@PathVariable String partnerDomain,
                                                                                                                                    @PathVariable String partnerCustomId) {
@@ -72,16 +67,11 @@ public class SingleTravelProductController {
     }
 
 
-
     @Operation(operationId = "getSingleTravelProductConsoleElementResponsesByCategory", summary = "카테고리 별 단일 여행상품 목록 조회")
-    @Parameters({
-            @Parameter(name = "partnerDomain", description = "상품이 등록된 파트너사 도메인", example = "goodchoice.kr"),
-            @Parameter(name = "category", description = "단일 여행상품 카테고리", example = "ACCOMMODATION")
-    })
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "조회 성공"),
-            @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
-    })
+    @Parameter(name = "partnerDomain", description = "상품이 등록된 파트너사 도메인", example = "goodchoice.kr")
+    @Parameter(name = "category", description = "단일 여행상품 카테고리", example = "ACCOMMODATION")
+    @ApiResponse(responseCode = "200", description = "조회 성공")
+    @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
     @GetMapping("/console/{partnerDomain}/products/travel/single")
     public ResponseEntity<List<SingleTravelProductConsoleElementResponse>> getSingleTravelProductConsoleElementResponsesByCategory(@PathVariable String partnerDomain,
                                                                                                                                    @RequestParam(name = "singleTravelProductCategory") SingleTravelProductCategory singleTravelProductCategory) {
@@ -93,10 +83,8 @@ public class SingleTravelProductController {
 
     @Operation(operationId = "updateSingleTravelProductByTravelProductId", summary = "단일 여행상품 정보 수정", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
     @Parameter(name = "travelProductId", description = "단일 여행상품 ID")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "단일 여행상품 정보 수정 성공"),
-            @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
-    })
+    @ApiResponse(responseCode = "204", description = "단일 여행상품 정보 수정 성공")
+    @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
     @PutMapping(value = "/products/travel/single/{travelProductId}", consumes = {"multipart/form-data"})
     public ResponseEntity<Void> updateSingleTravelProductByTravelProductId(@PathVariable Long travelProductId,
                                                                            @Valid @RequestBody SingleTravelProductUpdateRequest singleTravelProductUpdateRequest,
@@ -109,10 +97,8 @@ public class SingleTravelProductController {
 
     @Operation(operationId = "deleteSingleTravelProductByTravelProductId", summary = "단일 여행상품 삭제")
     @Parameter(name = "travelProductId", description = "단일 여행상품 ID")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "단일 여행상품 삭제 성공"),
-            @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
-    })
+    @ApiResponse(responseCode = "204", description = "단일 여행상품 삭제 성공")
+    @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
     @DeleteMapping("/products/travel/single/{travelProductId}")
     public ResponseEntity<Void> deleteSingleTravelProductByTravelProductId(@PathVariable Long travelProductId) {
         singleTravelProductService.deleteByTravelProductId(travelProductId);

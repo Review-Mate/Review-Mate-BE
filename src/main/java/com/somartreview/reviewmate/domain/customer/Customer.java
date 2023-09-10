@@ -1,8 +1,8 @@
 package com.somartreview.reviewmate.domain.customer;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
-import com.somartreview.reviewmate.domain.partnerCompany.PartnerCompany;
-import com.somartreview.reviewmate.dto.request.customer.CustomerUpdateRequest;
+import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
+import com.somartreview.reviewmate.dto.customer.CustomerUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
@@ -20,7 +20,7 @@ public class Customer extends BaseEntity {
 
     private static final int MAX_NAME_LENGTH = 255;
     private static final int MAX_PARTNER_CUSTOM_ID_LENGTH = 50;
-    private static final Pattern ONLY_NUMBER_PATTERN = Pattern.compile("[0-9]+");
+    private static final Pattern ONLY_NUMBER_PATTERN = Pattern.compile("\\d");
 
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

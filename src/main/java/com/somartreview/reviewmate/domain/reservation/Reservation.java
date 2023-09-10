@@ -2,10 +2,10 @@ package com.somartreview.reviewmate.domain.reservation;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.customer.Customer;
-import com.somartreview.reviewmate.domain.liveFeedback.LiveFeedback;
-import com.somartreview.reviewmate.domain.liveSatisfaction.LiveSatisfaction;
+import com.somartreview.reviewmate.domain.chatbot.feedback.LiveFeedback;
+import com.somartreview.reviewmate.domain.chatbot.satisfaction.LiveSatisfaction;
 import com.somartreview.reviewmate.domain.review.Review;
-import com.somartreview.reviewmate.domain.travelProduct.TravelProduct;
+import com.somartreview.reviewmate.domain.product.TravelProduct;
 import javax.persistence.*;
 
 import com.somartreview.reviewmate.exception.DomainLogicException;

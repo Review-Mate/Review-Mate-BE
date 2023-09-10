@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.web;
 
+import com.somartreview.reviewmate.web.review.ReviewController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -9,7 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-public class TestControllerTest extends ControllerTest {
+@WebMvcTest(ReviewController.class)
+class TestControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

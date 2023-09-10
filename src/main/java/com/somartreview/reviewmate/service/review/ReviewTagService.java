@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// TODO: Review Tag Service 개발
+// Add positiveTags and negativeTags assignment in TravelProduct DTO after implementing reviewTag service
 @Service
 @RequiredArgsConstructor
 public class ReviewTagService {
@@ -17,4 +17,5 @@ public class ReviewTagService {
     public List<ReviewTag> findReviewTagsByReviewId(Long reviewId) {
         return reviewTagRepository.findAllByReview_Id(reviewId);
     }
+
 }

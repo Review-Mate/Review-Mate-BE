@@ -2,7 +2,7 @@ package com.somartreview.reviewmate.domain.review;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.reservation.Reservation;
-import com.somartreview.reviewmate.dto.request.review.ReviewUpdateRequest;
+import com.somartreview.reviewmate.dto.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 
 import javax.persistence.*;

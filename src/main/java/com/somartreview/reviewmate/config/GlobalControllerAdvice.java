@@ -41,7 +41,6 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ExceptionResponse> handleConstraintViolation(ConstraintViolationException e) {
         log.warn(INVALID_PROPERTY_ERROR.toString() + " : " + e.getMessage());
-        e.printStackTrace();
 
         String messages = extractErrorMessages(e.getConstraintViolations());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -112,7 +111,6 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(ReviewMateException.class)
     public ResponseEntity<ExceptionResponse> handleReviewMateException(ReviewMateException e) {
         log.warn(e.getErrorCode().toString() + " : " + e.getMessage());
-        e.printStackTrace();
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ExceptionResponse.builder()
@@ -124,7 +122,6 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ExceptionResponse> handleRuntimeException(RuntimeException e) {
         log.warn(RUNTIME_ERROR.toString() + " : " + RUNTIME_ERROR.getMessage());
-        e.printStackTrace();
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionResponse.builder()

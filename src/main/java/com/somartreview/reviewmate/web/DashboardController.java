@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-// TODO: 대시보드 전용 Request 추가
+// Impl the requests
 @Tag(name = "대시보드")
 @RestController
 @RequestMapping("/api/v1/")

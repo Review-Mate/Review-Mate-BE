@@ -30,6 +30,7 @@ public class ReviewImage extends BaseEntity {
 
     @Builder
     public ReviewImage(String url) {
+        validateUrl(url);
         this.url = url;
     }
 
