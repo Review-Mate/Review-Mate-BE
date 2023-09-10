@@ -586,3 +586,9 @@ Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No q
 2023-09-11 02:03:59.718  INFO 53794 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
 2023-09-11 02:03:59.719  INFO 53794 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
 2023-09-11 02:03:59.734  INFO 53794 --- [Test worker] c.s.r.w.p.PartnerManagerControllerTest   : Started PartnerManagerControllerTest in 1.22 seconds (JVM running for 1.972)
+2023-09-11 02:13:57.562  INFO 55442 --- [Test worker] c.s.r.w.p.PartnerSellerControllerTest    : Starting PartnerSellerControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 55442 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 02:13:57.563  INFO 55442 --- [Test worker] c.s.r.w.p.PartnerSellerControllerTest    : The following 1 profile is active: "secret"
+2023-09-11 02:13:58.569  INFO 55442 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 02:13:58.569  INFO 55442 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 02:13:58.570  INFO 55442 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-09-11 02:13:58.584  INFO 55442 --- [Test worker] c.s.r.w.p.PartnerSellerControllerTest    : Started PartnerSellerControllerTest in 1.253 seconds (JVM running for 2.158)
