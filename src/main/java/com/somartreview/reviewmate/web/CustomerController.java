@@ -75,7 +75,7 @@ public class CustomerController {
     public ResponseEntity<Void> updateCustomerByPartnerCustomId(@PathVariable String partnerDomain,
                                                                 @PathVariable String partnerCustomId,
                                                                 @Valid @RequestBody CustomerUpdateRequest request) {
-        customerService.updateByPartnerCustomId(partnerDomain, partnerCustomId, request);
+        customerService.updateByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId, request);
 
         return ResponseEntity.noContent().build();
     }

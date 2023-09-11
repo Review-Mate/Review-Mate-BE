@@ -47,7 +47,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public void updateByPartnerCustomId(String partnerDomain, String partnerCustomId, CustomerUpdateRequest request) {
+    public void updateByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId, CustomerUpdateRequest request) {
         validateUniquePhoneNumber(request.getPhoneNumber());
         validateUniqueKakaoId(request.getKakaoId());
 

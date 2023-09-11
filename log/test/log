@@ -694,3 +694,35 @@ Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No q
 2023-09-11 03:08:49.641  INFO 63436 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
 2023-09-11 03:08:49.641  INFO 63436 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 2023-09-11 03:08:49.656  INFO 63436 --- [Test worker] .r.w.p.SingleTravelProductControllerTest : Started SingleTravelProductControllerTest in 1.187 seconds (JVM running for 2.176)
+2023-09-11 03:19:25.104  INFO 65181 --- [Test worker] c.s.r.web.CustomerControllerTest         : Starting CustomerControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 65181 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 03:19:25.105  INFO 65181 --- [Test worker] c.s.r.web.CustomerControllerTest         : The following 1 profile is active: "secret"
+2023-09-11 03:19:26.126  INFO 65181 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 03:19:26.127  INFO 65181 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 03:19:26.127  INFO 65181 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-09-11 03:19:26.144  INFO 65181 --- [Test worker] c.s.r.web.CustomerControllerTest         : Started CustomerControllerTest in 1.283 seconds (JVM running for 2.176)
+2023-09-11 03:19:49.250  INFO 65273 --- [Test worker] c.s.r.web.CustomerControllerTest         : Starting CustomerControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 65273 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 03:19:49.252  INFO 65273 --- [Test worker] c.s.r.web.CustomerControllerTest         : The following 1 profile is active: "secret"
+2023-09-11 03:19:50.288  INFO 65273 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 03:19:50.288  INFO 65273 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 03:19:50.289  INFO 65273 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 03:19:50.305  INFO 65273 --- [Test worker] c.s.r.web.CustomerControllerTest         : Started CustomerControllerTest in 1.295 seconds (JVM running for 2.056)
+2023-09-11 03:20:24.675  INFO 65365 --- [Test worker] c.s.r.web.CustomerControllerTest         : Starting CustomerControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 65365 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 03:20:24.676  INFO 65365 --- [Test worker] c.s.r.web.CustomerControllerTest         : The following 1 profile is active: "secret"
+2023-09-11 03:20:25.646  INFO 65365 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 03:20:25.646  INFO 65365 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 03:20:25.647  INFO 65365 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 03:20:25.661  INFO 65365 --- [Test worker] c.s.r.web.CustomerControllerTest         : Started CustomerControllerTest in 1.216 seconds (JVM running for 1.979)
+2023-09-11 03:20:25.750  WARN 65365 --- [Test worker] c.s.r.config.GlobalControllerAdvice      : INVALID_PROPERTY_ERROR : JSON parse error: Cannot construct instance of `com.somartreview.reviewmate.dto.customer.CustomerCreateRequest` (although at least one Creator exists): no String-argument constructor/factory method to deserialize from String value ('{"partnerCustomId":"CUSTOMER-0001","name":"권순찬","phoneNumber":"01012345678","kakaoId":"sckwon770"}'); nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot construct instance of `com.somartreview.reviewmate.dto.customer.CustomerCreateRequest` (although at least one Creator exists): no String-argument constructor/factory method to deserialize from String value ('{"partnerCustomId":"CUSTOMER-0001","name":"권순찬","phoneNumber":"01012345678","kakaoId":"sckwon770"}')
+ at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 1, column: 1]
+2023-09-11 03:21:22.405  INFO 65543 --- [Test worker] c.s.r.web.CustomerControllerTest         : Starting CustomerControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 65543 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 03:21:22.406  INFO 65543 --- [Test worker] c.s.r.web.CustomerControllerTest         : The following 1 profile is active: "secret"
+2023-09-11 03:21:23.376  INFO 65543 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 03:21:23.378  INFO 65543 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 03:21:23.379  INFO 65543 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-09-11 03:21:23.395  INFO 65543 --- [Test worker] c.s.r.web.CustomerControllerTest         : Started CustomerControllerTest in 1.229 seconds (JVM running for 1.956)
+2023-09-11 21:51:35.880  INFO 70353 --- [Test worker] c.s.r.web.CustomerControllerTest         : Starting CustomerControllerTest using Java 17.0.8 on sunchan-ui-MacBook-Pro-14.local with PID 70353 (started by chan in /Users/chan/code/java/review-mate-be)
+2023-09-11 21:51:35.881  INFO 70353 --- [Test worker] c.s.r.web.CustomerControllerTest         : The following 1 profile is active: "secret"
+2023-09-11 21:51:36.940  INFO 70353 --- [Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-11 21:51:36.940  INFO 70353 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-11 21:51:36.941  INFO 70353 --- [Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-11 21:51:36.958  INFO 70353 --- [Test worker] c.s.r.web.CustomerControllerTest         : Started CustomerControllerTest in 1.319 seconds (JVM running for 2.07)
