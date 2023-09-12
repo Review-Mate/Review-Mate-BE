@@ -95,6 +95,11 @@ public abstract class TravelProduct extends BaseEntity {
 
     public void removeReview(int removedReviewRating) {
         this.reviewCount--;
+        if (reviewCount == 0) {
+            this.rating = 0.0f;
+            return;
+        }
+
         this.rating = (this.rating * (this.reviewCount + 1) - removedReviewRating) / this.reviewCount;
     }
 }
