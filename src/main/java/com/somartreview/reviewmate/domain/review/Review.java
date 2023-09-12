@@ -92,7 +92,9 @@ public class Review extends BaseEntity {
         for (ReviewTag tag : this.reviewTags) {
             if (tag.getPolarity().equals(POSITIVE)) {
                 positiveTagsCount++;
-            } else if (tag.getPolarity().equals(NEGATIVE)) {
+            }
+
+            if (tag.getPolarity().equals(NEGATIVE)) {
                 negativeTagsCount++;
             }
         }
