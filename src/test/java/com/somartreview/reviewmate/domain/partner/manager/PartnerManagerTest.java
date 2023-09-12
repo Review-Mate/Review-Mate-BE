@@ -7,6 +7,10 @@ import com.somartreview.reviewmate.exception.DomainLogicException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import static com.somartreview.reviewmate.exception.ErrorCode.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -18,12 +22,27 @@ class PartnerManagerTest {
     @BeforeEach
     void setup() {
         partnerManager = PartnerManager.builder()
+                .role(PartnerManagerRole.ADMIN)
                 .name("권순찬")
                 .email("sckwon770@gmail.com")
                 .password("123456789")
                 .partnerCompany(new PartnerCompany())
                 .build();
     }
+
+    @Test
+    void 기본_생성자로_피트너사_관리자를_생성한다() {
+        new PartnerManager("권순찬", "sckwon770@gmail.com", "123456789", new PartnerCompany());
+
+        assertThat(partnerManager)
+                .extracting("name", "email", "password")
+                .containsExactly("권순찬", "sckwon770@gmail.com", "123456789");
+        assertThat(partnerManager.getPartnerCompany().getPartnerManagers())
+                .last()
+                .extracting("name")
+                .isEqualTo("권순찬");
+    }
+
 
     @Test
     void 파트너사_관리자의_정보를_수정한다() {
@@ -51,7 +70,7 @@ class PartnerManagerTest {
     }
 
     @Test
-    void 파트너사_관리자의_이름이_255자_보다_갈면_안된다() {
+    void 파트너사_관리자의_이름이_255자_보다_길면_안된다() {
         // given
         String overflowName = "WTy85YZG2HsEOMahKZERNJmZrY4XHnOwugREhMcgSxYrqWnqJa9yGgBLojDzLF8l6Wa1c011w8Io1W9Mt0Smsb5tWs8wCCV7rgBLDIb51GyvPKb928YXuRaRNXeh5tGRXqwEz2zWNvvsjo7i2iG4Bg10Yt8WlPEZaLMBT0fOcKeHXK3PUk24Nd2QTc0eT1jATWxPgALle7ytGToQNIKg5wTEn0kUOmNr9ODmtL0N6MX5ayqozMiD50AKDgs2Dp1R";
 
@@ -73,7 +92,7 @@ class PartnerManagerTest {
     }
 
     @Test
-    void 파트너사_관리자의_비밀번호는_8자_이상이어야_한다() {
+    void 파트너사_관리자의_비밀번호는_7자리_이하면_안된다() {
         // given
         String invalidPassword = "1234567";
 
@@ -82,4 +101,14 @@ class PartnerManagerTest {
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(PARTNER_MANAGER_PASSWORD_ERROR.getMessage());
     }
+
+//    @Test
+//    void ㅁㄴㅇㅁㄴㅇ() {
+//        // given
+//        String invalidPassword = "1234567";
+//
+//        // when & then
+//        assertThatThrownBy(() -> new PartnerManager("장현우", "changhw7@gmail.com", "123123123123", null))
+//                .isInstanceOf(NullPointerException.class);
+//    }
 }

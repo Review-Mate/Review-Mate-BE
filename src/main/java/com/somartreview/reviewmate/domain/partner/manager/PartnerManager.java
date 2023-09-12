@@ -45,7 +45,7 @@ public class PartnerManager extends BaseEntity {
     @JoinColumn(name = "partner_company_id", nullable = false)
     private PartnerCompany partnerCompany;
 
-    @Builder
+//    @Builder
     public PartnerManager(String name, String email, String password, PartnerCompany partnerCompany) {
         this.role = PartnerManagerRole.ADMIN;
         validateName(name);
@@ -58,6 +58,7 @@ public class PartnerManager extends BaseEntity {
         this.partnerCompany = partnerCompany;
     }
 
+    @Builder
     public PartnerManager(PartnerManagerRole role, String name, String email, String password, PartnerCompany partnerCompany) {
         this.role = role;
         validateName(name);
