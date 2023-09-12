@@ -20,7 +20,7 @@ public class Customer extends BaseEntity {
 
     private static final int MAX_NAME_LENGTH = 255;
     private static final int MAX_PARTNER_CUSTOM_ID_LENGTH = 50;
-    private static final Pattern ONLY_NUMBER_PATTERN = Pattern.compile("\\d");
+    private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile("^\\d{11}$");
 
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,7 +76,7 @@ public class Customer extends BaseEntity {
     }
 
     private void validatePhoneNumber(final String phoneNumber) {
-        if (phoneNumber.isBlank() || !ONLY_NUMBER_PATTERN.matcher(phoneNumber).matches()) {
+        if (phoneNumber.isBlank() || !PHONE_NUMBER_PATTERN.matcher(phoneNumber).matches()) {
             throw new DomainLogicException(ErrorCode.CUSTOMER_PHONE_NUMBER_ERROR);
         }
     }
