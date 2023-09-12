@@ -66,10 +66,10 @@ jacocoTestReport {
     reports {
         xml.required = true
         csv.required = true
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        html.required = true
 
         xml.destination file("${buildDir}/jacoco/index.xml")
-        csv.destination file("${buildDir}/jacoco/jacoco.csv")
+        csv.destination file("${buildDir}/jacoco/index.csv")
         html.destination file("${buildDir}/jacoco/index.html")
     }
 
@@ -80,11 +80,10 @@ jacocoTestReport {
                             '**/ReviewMateApplication*',
                             '**/*Formatter*',
                             '**/*Interceptor*',
-                            '**/GlobalControllerAdvice*',
-                            '**/SwaggerConfig*',
-                            '**/MultipartJackson2HttpMessageConverter*',
-                            '**/StaticRoutingConfiguration*',
-                            '**/*BaseEntity*'
+                            '**/config/**',
+                            '**/BaseEntity*',
+                            '**/*Response*',
+                            '**/*Request*',
                     ])
                 })
         )
