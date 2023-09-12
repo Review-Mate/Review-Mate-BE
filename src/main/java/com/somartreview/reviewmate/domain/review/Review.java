@@ -86,6 +86,26 @@ public class Review extends BaseEntity {
 
     public void addReviewTag(ReviewTag reviewTag) {
         this.reviewTags.add(reviewTag);
+
+        int positiveTagsCount = 0;
+        int negativeTagsCount = 0;
+        for (ReviewTag tag : this.reviewTags) {
+            if (tag.getPolarity().equals(POSITIVE)) {
+                positiveTagsCount++;
+            } else if (tag.getPolarity().equals(NEGATIVE)) {
+                negativeTagsCount++;
+            }
+        }
+
+        if (positiveTagsCount > negativeTagsCount) {
+            this.polarity = POSITIVE;
+
+        } else if (positiveTagsCount < negativeTagsCount) {
+            this.polarity = NEGATIVE;
+
+        } else {
+            this.polarity = NEUTRAL;
+        }
     }
 
     public void clearReviewTags() {
