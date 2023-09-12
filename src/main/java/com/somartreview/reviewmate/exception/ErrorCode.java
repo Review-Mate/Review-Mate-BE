@@ -54,15 +54,15 @@ public enum ErrorCode {
 
     TRAVEL_PRODUCT_THUMBNAIL_URL_ERROR("1400", "여행상품의 썸네일 링크가 너무 길거나 공백입니다."),
     TRAVEL_PRODUCT_NAME_ERROR("1401", "여행상품의 이름이 너무 길거나 공백입니다."),
-    TRAVEL_PRODUCT_START_TIME_ERROR("1402", "여행상품의 시작 시간이 종료 시간 이후일 수 없습니다.."),
-    TRAVEL_PRODUCT_PARTNER_CUSTOM_ID_ERROR("1403", "여행상품의 파트너 커스텀 ID가 너무 길거나 공백입니다."),
-    TRAVEL_PRODUCT_PARTNER_DOMAIN_ERROR("1404", "여행상품의 파트너 도메인이 너무 길거나 공백입니다."),
-    TRAVEL_PRODUCT_NOT_FOUND("1405", "여행상품을 찾을 수 없습니다."),
-    TRAVEL_PRODUCT_NOT_UNIQUE_PARTNER_CUSTOM_ID("1406", "여행상품의 파트너 커스텀 ID가 유니크하지 않습니다."),
+    TRAVEL_PRODUCT_PARTNER_CUSTOM_ID_ERROR("1402", "여행상품의 파트너 커스텀 ID가 너무 길거나 공백입니다."),
+    TRAVEL_PRODUCT_PARTNER_DOMAIN_ERROR("1403", "여행상품의 파트너 도메인이 너무 길거나 공백입니다."),
+    TRAVEL_PRODUCT_NOT_FOUND("1404", "여행상품을 찾을 수 없습니다."),
+    TRAVEL_PRODUCT_NOT_UNIQUE_PARTNER_CUSTOM_ID("1405", "여행상품의 파트너 커스텀 ID가 유니크하지 않습니다."),
 
     RESERVATION_NOT_FOUND("1500", "예약을 찾을 수 없습니다."),
     RESERVATION_PARTNER_CUSTOM_ID_ERROR("1501", "예약의 파트너 커스텀 ID가 너무 길거나 공백입니다."),
     RESERVATION_NOT_UNIQUE_PARTNER_CUSTOM_ID("1502", "예약의 파트너 커스텀 ID가 유니크하지 않습니다."),
+    RESERVATION_FRONT_END_TIME_ERROR("1402", "여행상품의 종료 시간이 시작 시간보다 빠를 수 없습니다."),
 
 
     NOT_EXIST_PARTNER_DOMAIN("2001", "존재하지 않는 파트너사 도메인입니다."),

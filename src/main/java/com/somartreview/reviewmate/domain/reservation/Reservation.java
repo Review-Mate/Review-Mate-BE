@@ -75,7 +75,7 @@ public class Reservation extends BaseEntity {
 
     private void validateTime(final LocalDateTime startTime, final LocalDateTime endTime) {
         if (startTime.isAfter(endTime)) {
-            throw new DomainLogicException(ErrorCode.TRAVEL_PRODUCT_START_TIME_ERROR);
+            throw new DomainLogicException(ErrorCode.RESERVATION_FRONT_END_TIME_ERROR);
         }
     }
 }

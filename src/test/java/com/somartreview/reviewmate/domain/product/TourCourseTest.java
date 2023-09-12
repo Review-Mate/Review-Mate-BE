@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
 import static com.somartreview.reviewmate.exception.ErrorCode.TRAVEL_PRODUCT_NAME_ERROR;
-import static com.somartreview.reviewmate.exception.ErrorCode.TRAVEL_PRODUCT_START_TIME_ERROR;
+import static com.somartreview.reviewmate.exception.ErrorCode.RESERVATION_FRONT_END_TIME_ERROR;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class TourCourseTest {
@@ -55,6 +55,6 @@ class TourCourseTest {
         // when & then
         assertThatThrownBy(() -> new TourCourse("출국 비행기", startTime, endTime, new PackageTravelProduct()))
                 .isInstanceOf(DomainLogicException.class)
-                .hasMessage(TRAVEL_PRODUCT_START_TIME_ERROR.getMessage());
+                .hasMessage(RESERVATION_FRONT_END_TIME_ERROR.getMessage());
     }
 }
