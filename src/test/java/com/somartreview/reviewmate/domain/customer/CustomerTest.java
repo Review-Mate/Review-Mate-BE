@@ -43,10 +43,10 @@ class CustomerTest {
     @Test
     void 고객의_커스텀_Id는_공백이어선_안된다() {
         // given
-        partnerCustomId = " ";
+        String partnerCustomId = " ";
 
         // when & then
-        assertThatThrownBy(() -> new Customer(emptyPartnerCustomId, "권순찬", "01012345678", "sckwon770", new PartnerCompany()))
+        assertThatThrownBy(() -> new Customer(partnerCustomId, "권순찬", "01012345678", "sckwon770", new PartnerCompany()))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(CUSTOMER_PARTNER_CUSTOM_ID_ERROR.getMessage());
     }
@@ -54,10 +54,10 @@ class CustomerTest {
     @Test
     void 고객의_커스텀_Id는_최대길이를_넘어선_안된다() {
         // given
-        partnerCustomId = "a".repeat(256);
+        String partnerCustomId = "a".repeat(256);
 
         // when & then
-        assertThatThrownBy(() -> new Customer(longPartnerCustomId, "권순찬", "01012345678", "sckwon770", new PartnerCompany()))
+        assertThatThrownBy(() -> new Customer(partnerCustomId, "권순찬", "01012345678", "sckwon770", new PartnerCompany()))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(CUSTOMER_PARTNER_CUSTOM_ID_ERROR.getMessage());
     }
@@ -65,10 +65,10 @@ class CustomerTest {
     @Test
     void 고객의_이름은_공백이어선_안된다() {
         // given
-        name = " ";
+        String name = " ";
 
         // when & then
-        assertThatThrownBy(() -> new Customer("emptyPartnerCustomId", emptyName, "01012345678", "sckwon770", new PartnerCompany()))
+        assertThatThrownBy(() -> new Customer("emptyPartnerCustomId", name, "01012345678", "sckwon770", new PartnerCompany()))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(CUSTOMER_NAME_ERROR.getMessage());
     }
@@ -76,10 +76,10 @@ class CustomerTest {
     @Test
     void 고객의_이름은_최대길이를_넘어선_안된다() {
         // given
-        name = "a".repeat(256);
+        String name = "a".repeat(256);
 
         // when & then
-        assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", longName, "01012345678", "sckwon770", new PartnerCompany()))
+        assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", name, "01012345678", "sckwon770", new PartnerCompany()))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(CUSTOMER_NAME_ERROR.getMessage());
     }
@@ -87,10 +87,10 @@ class CustomerTest {
     @Test
     void 고객의_휴대폰_번호는_공백이어선_안된다() {
         // given
-        phoneNumber = " ";
+        String phoneNumber = " ";
 
         // when & then
-        assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", "권순찬", emptyPhoneNumber, "sckwon770", new PartnerCompany()))
+        assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", "권순찬", phoneNumber, "sckwon770", new PartnerCompany()))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(CUSTOMER_PHONE_NUMBER_ERROR.getMessage());
     }
@@ -98,10 +98,10 @@ class CustomerTest {
     @Test
     void 고객의_휴대폰_번호는_숫자로만_이루어_졌다() {
         // given
-        String wrongPhoneNumber = "010-1234-5678";
+        String phoneNumber = "010-1234-5678";
 
         // when & then
-        assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", "권순찬", wrongPhoneNumber, "sckwon770", new PartnerCompany()))
+        assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", "권순찬", phoneNumber, "sckwon770", new PartnerCompany()))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(CUSTOMER_PHONE_NUMBER_ERROR.getMessage());
     }
@@ -109,10 +109,10 @@ class CustomerTest {
     @Test
     void 고객의_휴대폰_번호는_11자리_숫자여야_한다() {
         // given
-        String wrongPhoneNumber = "0101234";
+        String phoneNumber = "0101234";
 
         // when & then
-        assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", "권순찬", wrongPhoneNumber, "sckwon770", new PartnerCompany()))
+        assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", "권순찬", phoneNumber, "sckwon770", new PartnerCompany()))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(CUSTOMER_PHONE_NUMBER_ERROR.getMessage());
     }

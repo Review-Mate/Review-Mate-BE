@@ -42,10 +42,10 @@ class PartnerSellerTest {
     @Test
     void 파트너사_판매자의_이름이_공백이어선_안된다() {
         // given
-        name = "";
+        String name = "";
 
         // when & then
-        assertThatThrownBy(() -> new PartnerSeller(emptyName, "01012345678", "hyunjin7", new PartnerCompany()))
+        assertThatThrownBy(() -> new PartnerSeller(name, "01012345678", "hyunjin7", new PartnerCompany()))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(PARTNER_SELLER_NAME_ERROR.getMessage());
     }
@@ -53,10 +53,10 @@ class PartnerSellerTest {
     @Test
     void 파트너사_판매자의_이름이_255자_보다_길면_안된다() {
         // given
-        name = "a".repeat(256);
+        String name = "a".repeat(256);
 
         // when & then
-        assertThatThrownBy(() -> new PartnerSeller(longName, "01012345678", "hyunjin7", new PartnerCompany()))
+        assertThatThrownBy(() -> new PartnerSeller(name, "01012345678", "hyunjin7", new PartnerCompany()))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(PARTNER_SELLER_NAME_ERROR.getMessage());
     }

@@ -3,7 +3,6 @@ package com.somartreview.reviewmate.domain.product;
 
 import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
 import com.somartreview.reviewmate.domain.partner.seller.PartnerSeller;
-import com.somartreview.reviewmate.domain.review.Review;
 import com.somartreview.reviewmate.dto.product.SingleTravelProductUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,10 +48,10 @@ class SingleTravelProductTest {
     @Test
     void 단일_여행상품의_커스텀_Id가_공백이면_안된다() {
         // given
-        partnerCustomId = " ";
+        String partnerCustomId = " ";
 
         // when & then
-        assertThatThrownBy(() -> new SingleTravelProduct(emptyPartnerCustomId, "www.thumbnail.com", "신라더스테이", new PartnerCompany(), new PartnerSeller(), ACCOMMODATION))
+        assertThatThrownBy(() -> new SingleTravelProduct(partnerCustomId, "www.thumbnail.com", "신라더스테이", new PartnerCompany(), new PartnerSeller(), ACCOMMODATION))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(TRAVEL_PRODUCT_PARTNER_CUSTOM_ID_ERROR.getMessage());
     }
@@ -60,10 +59,10 @@ class SingleTravelProductTest {
     @Test
     void 단일_여행상품의_커스텀_Id가_50자_보다_길면_안된다() {
         // given
-        partnerCustomId = "a".repeat(51);
+        String partnerCustomId = "a".repeat(51);
 
         // when & then
-        assertThatThrownBy(() -> new SingleTravelProduct(longPartnerCustomId, "www.thumbnail.com", "신라더스테이", new PartnerCompany(), new PartnerSeller(), ACCOMMODATION))
+        assertThatThrownBy(() -> new SingleTravelProduct(partnerCustomId, "www.thumbnail.com", "신라더스테이", new PartnerCompany(), new PartnerSeller(), ACCOMMODATION))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(TRAVEL_PRODUCT_PARTNER_CUSTOM_ID_ERROR.getMessage());
     }
