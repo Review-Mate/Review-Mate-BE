@@ -48,6 +48,7 @@ public enum ErrorCode {
     REVIEW_NOT_FOUND("1303", "리뷰를 찾을 수 없습니다."),
 
     REVIEW_TAG_OUT_OF_BOUND_INDEX_ERROR("1310", "리뷰 태그의 인덱스가 범위가 벗어났습니다."),
+    REVIEW_TAG_FRONT_END_INDEX_ERROR("1311", "리뷰 태그의 끝 인덱스가 시작 인덱스보다 앞에 있습니다."),
 
     REVIEW_IMAGE_URL_ERROR("1320", "리뷰 이미지의 링크가 너무 길거나 공백입니다."),
 
