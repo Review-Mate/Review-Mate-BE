@@ -42,7 +42,7 @@ class PartnerSellerTest {
     @Test
     void 파트너사_판매자의_이름이_공백이어선_안된다() {
         // given
-        String emptyName = "";
+        name = "";
 
         // when & then
         assertThatThrownBy(() -> new PartnerSeller(emptyName, "01012345678", "hyunjin7", new PartnerCompany()))
@@ -53,7 +53,7 @@ class PartnerSellerTest {
     @Test
     void 파트너사_판매자의_이름이_255자_보다_길면_안된다() {
         // given
-        String longName = "a".repeat(256);
+        name = "a".repeat(256);
 
         // when & then
         assertThatThrownBy(() -> new PartnerSeller(longName, "01012345678", "hyunjin7", new PartnerCompany()))

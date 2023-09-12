@@ -49,7 +49,7 @@ class SingleTravelProductTest {
     @Test
     void 단일_여행상품의_커스텀_Id가_공백이면_안된다() {
         // given
-        String emptyPartnerCustomId = " ";
+        partnerCustomId = " ";
 
         // when & then
         assertThatThrownBy(() -> new SingleTravelProduct(emptyPartnerCustomId, "www.thumbnail.com", "신라더스테이", new PartnerCompany(), new PartnerSeller(), ACCOMMODATION))
@@ -60,7 +60,7 @@ class SingleTravelProductTest {
     @Test
     void 단일_여행상품의_커스텀_Id가_50자_보다_길면_안된다() {
         // given
-        String longPartnerCustomId = "a".repeat(51);
+        partnerCustomId = "a".repeat(51);
 
         // when & then
         assertThatThrownBy(() -> new SingleTravelProduct(longPartnerCustomId, "www.thumbnail.com", "신라더스테이", new PartnerCompany(), new PartnerSeller(), ACCOMMODATION))

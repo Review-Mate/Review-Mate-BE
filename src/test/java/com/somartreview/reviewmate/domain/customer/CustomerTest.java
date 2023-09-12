@@ -43,7 +43,7 @@ class CustomerTest {
     @Test
     void 고객의_커스텀_Id는_공백이어선_안된다() {
         // given
-        String emptyPartnerCustomId = " ";
+        partnerCustomId = " ";
 
         // when & then
         assertThatThrownBy(() -> new Customer(emptyPartnerCustomId, "권순찬", "01012345678", "sckwon770", new PartnerCompany()))
@@ -54,7 +54,7 @@ class CustomerTest {
     @Test
     void 고객의_커스텀_Id는_최대길이를_넘어선_안된다() {
         // given
-        String longPartnerCustomId = "a".repeat(256);
+        partnerCustomId = "a".repeat(256);
 
         // when & then
         assertThatThrownBy(() -> new Customer(longPartnerCustomId, "권순찬", "01012345678", "sckwon770", new PartnerCompany()))
@@ -65,7 +65,7 @@ class CustomerTest {
     @Test
     void 고객의_이름은_공백이어선_안된다() {
         // given
-        String emptyName = " ";
+        name = " ";
 
         // when & then
         assertThatThrownBy(() -> new Customer("emptyPartnerCustomId", emptyName, "01012345678", "sckwon770", new PartnerCompany()))
@@ -76,7 +76,7 @@ class CustomerTest {
     @Test
     void 고객의_이름은_최대길이를_넘어선_안된다() {
         // given
-        String longName = "a".repeat(256);
+        name = "a".repeat(256);
 
         // when & then
         assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", longName, "01012345678", "sckwon770", new PartnerCompany()))
@@ -87,7 +87,7 @@ class CustomerTest {
     @Test
     void 고객의_휴대폰_번호는_공백이어선_안된다() {
         // given
-        String emptyPhoneNumber = " ";
+        phoneNumber = " ";
 
         // when & then
         assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", "권순찬", emptyPhoneNumber, "sckwon770", new PartnerCompany()))

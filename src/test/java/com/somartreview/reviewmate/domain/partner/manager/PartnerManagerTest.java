@@ -61,7 +61,7 @@ class PartnerManagerTest {
     @Test
     void 파트너사_관리자의_이름이_공백이어선_안된다() {
         // given
-        String emptyName = " ";
+        name = " ";
 
         // when & then
         assertThatThrownBy(() -> new PartnerManager(emptyName, "changhw7@gmail.com", "987654321", new PartnerCompany()))
@@ -72,7 +72,7 @@ class PartnerManagerTest {
     @Test
     void 파트너사_관리자의_이름이_255자_보다_길면_안된다() {
         // given
-        String longName = "a".repeat(256);
+        name = "a".repeat(256);
 
         // when & then
         assertThatThrownBy(() -> new PartnerManager(longName, "changhw7@gmail.com", "987654321", new PartnerCompany()))
