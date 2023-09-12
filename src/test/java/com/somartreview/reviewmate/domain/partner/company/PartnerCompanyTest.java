@@ -49,10 +49,10 @@ class PartnerCompanyTest {
     @Test
     void 파트너사의_이름이_255자_보다_길면_안된다() {
         // given
-        String overflowName = "WTy85YZG2HsEOMahKZERNJmZrY4XHnOwugREhMcgSxYrqWnqJa9yGgBLojDzLF8l6Wa1c011w8Io1W9Mt0Smsb5tWs8wCCV7rgBLDIb51GyvPKb928YXuRaRNXeh5tGRXqwEz2zWNvvsjo7i2iG4Bg10Yt8WlPEZaLMBT0fOcKeHXK3PUk24Nd2QTc0eT1jATWxPgALle7ytGToQNIKg5wTEn0kUOmNr9ODmtL0N6MX5ayqozMiD50AKDgs2Dp1R";
+        String longName = "a".repeat(256);
 
         // when & then
-        assertThatThrownBy(() -> new PartnerCompany("goodchoice.kr", overflowName))
+        assertThatThrownBy(() -> new PartnerCompany("goodchoice.kr", longName))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(PARTNER_COMPANY_NAME_ERROR.getMessage());
     }

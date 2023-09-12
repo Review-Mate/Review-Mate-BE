@@ -54,10 +54,10 @@ class CustomerTest {
     @Test
     void 고객의_커스텀_Id는_최대길이를_넘어선_안된다() {
         // given
-        String overflowPartnerCustomId = "WTy85YZG2HsEOMahKZERNJmZrY4XHnOwugREhMcgSxYrqWnqJa9yGgBLojDzLF8l6Wa1c011w8Io1W9Mt0Smsb5tWs8wCCV7rgBLDIb51GyvPKb928YXuRaRNXeh5tGRXqwEz2zWNvvsjo7i2iG4Bg10Yt8WlPEZaLMBT0fOcKeHXK3PUk24Nd2QTc0eT1jATWxPgALle7ytGToQNIKg5wTEn0kUOmNr9ODmtL0N6MX5ayqozMiD50AKDgs2Dp1R";
+        String longPartnerCustomId = "a".repeat(256);
 
         // when & then
-        assertThatThrownBy(() -> new Customer(overflowPartnerCustomId, "권순찬", "01012345678", "sckwon770", new PartnerCompany()))
+        assertThatThrownBy(() -> new Customer(longPartnerCustomId, "권순찬", "01012345678", "sckwon770", new PartnerCompany()))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(CUSTOMER_PARTNER_CUSTOM_ID_ERROR.getMessage());
     }
@@ -76,10 +76,10 @@ class CustomerTest {
     @Test
     void 고객의_이름은_최대길이를_넘어선_안된다() {
         // given
-        String overflowName = "WTy85YZG2HsEOMahKZERNJmZrY4XHnOwugREhMcgSxYrqWnqJa9yGgBLojDzLF8l6Wa1c011w8Io1W9Mt0Smsb5tWs8wCCV7rgBLDIb51GyvPKb928YXuRaRNXeh5tGRXqwEz2zWNvvsjo7i2iG4Bg10Yt8WlPEZaLMBT0fOcKeHXK3PUk24Nd2QTc0eT1jATWxPgALle7ytGToQNIKg5wTEn0kUOmNr9ODmtL0N6MX5ayqozMiD50AKDgs2Dp1R";
+        String longName = "a".repeat(256);
 
         // when & then
-        assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", overflowName, "01012345678", "sckwon770", new PartnerCompany()))
+        assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", longName, "01012345678", "sckwon770", new PartnerCompany()))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(CUSTOMER_NAME_ERROR.getMessage());
     }
@@ -96,9 +96,20 @@ class CustomerTest {
     }
 
     @Test
-    void 고객의_휴대폰_번호는_숫자_11자리다() {
+    void 고객의_휴대폰_번호는_숫자로만_이루어_졌다() {
         // given
-        String wrongPhoneNumber = "010-8799-9941";
+        String wrongPhoneNumber = "010-1234-5678";
+
+        // when & then
+        assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", "권순찬", wrongPhoneNumber, "sckwon770", new PartnerCompany()))
+                .isInstanceOf(DomainLogicException.class)
+                .hasMessage(CUSTOMER_PHONE_NUMBER_ERROR.getMessage());
+    }
+
+    @Test
+    void 고객의_휴대폰_번호는_11자리_숫자여야_한다() {
+        // given
+        String wrongPhoneNumber = "0101234";
 
         // when & then
         assertThatThrownBy(() -> new Customer("CUSTOMER_TEST_CUSTOMER_0001", "권순찬", wrongPhoneNumber, "sckwon770", new PartnerCompany()))
