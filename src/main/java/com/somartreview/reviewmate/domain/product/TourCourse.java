@@ -4,6 +4,8 @@ import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,6 +36,7 @@ public class TourCourse extends BaseEntity {
     @JoinColumn(name = "travel_product_id", nullable = false)
     private PackageTravelProduct packageTravelProduct;
 
+    @Builder
     public TourCourse(String name, LocalDateTime startTime, LocalDateTime endTime, PackageTravelProduct packageTravelProduct) {
         validateName(name);
         this.name = name;
