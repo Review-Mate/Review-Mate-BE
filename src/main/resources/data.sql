@@ -45,7 +45,7 @@ VALUES ('2023-09-01 12:00:00', '2023-09-01 12:00:00', '먼지', 'NEGATIVE', 'CLE
 --  Live Chatbot  #####################################################################################################################################################################################################
 --  Live Chatbot  #####################################################################################################################################################################################################
 
-INSERT INTO live_feedback (created_at, updated_at, feedback_media_url, feedback_message, is_handled, is_reported, is_solved, response_message, reservation_id)
+INSERT INTO live_feedback (created_at, updated_at, customer_media_url, customer_message, is_handled, is_reported, is_solved, seller_message, reservation_id)
 VALUES ('2023-08-30 12:00:00', '2023-08-30 12:00:00', null, '피드백 메시지 1', 0, 0, 0, '응답 메시지 1', 1);
 
 INSERT INTO live_satisfaction (created_at, updated_at, dissatisfied_review_property, rating, satisfied_review_property, reservation_id)

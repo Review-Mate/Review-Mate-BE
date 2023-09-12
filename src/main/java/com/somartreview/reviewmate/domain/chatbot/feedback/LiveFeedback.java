@@ -3,12 +3,14 @@ package com.somartreview.reviewmate.domain.chatbot.feedback;
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.exception.DomainLogicException;
-import com.somartreview.reviewmate.exception.ErrorCode;
+
 import javax.persistence.*;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import static com.somartreview.reviewmate.exception.ErrorCode.*;
 
 @Entity
 @Getter
@@ -23,12 +25,12 @@ public class LiveFeedback extends BaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String feedbackMessage;
+    private String customerMessage;
 
     @Column(length = 1024)
-    private String feedbackMediaUrl;
+    private String customerMediaUrl;
 
-    private String responseMessage;
+    private String sellerMessage;
 
     @Column(nullable = false)
     private Boolean isHandled = false;
@@ -44,57 +46,61 @@ public class LiveFeedback extends BaseEntity {
     private Reservation reservation;
 
     @Builder
-    public LiveFeedback(String feedbackMessage, String feedbackMediaUrl, String responseMessage, final Reservation reservation) {
-        validateFeedbackMessage(feedbackMessage);
-        this.feedbackMessage = feedbackMessage;
-        validateFeedbackMediaUrl(feedbackMediaUrl);
-        this.feedbackMediaUrl = feedbackMediaUrl;
-        validateResponseMessage(responseMessage);
-        this.responseMessage = responseMessage;
+    public LiveFeedback(String customerMessage, String customerMediaUrl, String sellerMessage, final Reservation reservation) {
+        validateCustomerMessage(customerMessage);
+        this.customerMessage = customerMessage;
+        validateCustomerMediaUrl(customerMediaUrl);
+        this.customerMediaUrl = customerMediaUrl;
+        validateSellerMessage(sellerMessage);
+        this.sellerMessage = sellerMessage;
         this.reservation = reservation;
     }
 
-    private void validateFeedbackMessage(final String feedbackMessage) {
-        if (feedbackMessage.isBlank() || feedbackMessage.length() > MAX_MESSAGE_LENGTH) {
-            throw new DomainLogicException(ErrorCode.LIVE_FEEDBACK_MESSAGE_ERROR);
+    private void validateCustomerMessage(final String customerMessage) {
+        if (customerMessage.isBlank() || customerMessage.length() > MAX_MESSAGE_LENGTH) {
+            throw new DomainLogicException(LIVE_FEEDBACK_MESSAGE_ERROR);
         }
     }
 
-    private void validateFeedbackMediaUrl(final String feedbackMediaUrl) {
-        if (feedbackMediaUrl.isBlank() || feedbackMediaUrl.length() > MAX_URL_LENGTH) {
-            throw new DomainLogicException(ErrorCode.LIVE_FEEDBACK_MEDIA_URL_ERROR);
+    private void validateCustomerMediaUrl(final String customerMediaUrl) {
+        if (customerMediaUrl.isBlank() || customerMediaUrl.length() > MAX_URL_LENGTH) {
+            throw new DomainLogicException(LIVE_FEEDBACK_MEDIA_URL_ERROR);
         }
     }
 
-    private void validateResponseMessage(final String responseMessage) {
-        if (responseMessage == null) {
+    private void validateSellerMessage(final String sellerMessage) {
+        if (sellerMessage == null) {
             return;
         }
 
-        if (responseMessage.isBlank() || responseMessage.length() > MAX_MESSAGE_LENGTH) {
-            throw new DomainLogicException(ErrorCode.LIVE_FEEDBACK_MESSAGE_ERROR);
+        if (sellerMessage.isBlank() || sellerMessage.length() > MAX_MESSAGE_LENGTH) {
+            throw new DomainLogicException(LIVE_FEEDBACK_MESSAGE_ERROR);
         }
     }
 
-    public void handleFeedback() {
-        if (isReported.equals(true)) {
-            throw new DomainLogicException(ErrorCode.LIVE_FEEDBACK_ALREADY_REPORTED_ERROR);
-        }
-
+    public void handle() {
         isHandled = true;
     }
 
-    public void reportFeedback() {
-        if (isHandled.equals(true)) {
-            throw new DomainLogicException(ErrorCode.LIVE_FEEDBACK_ALREADY_HANDLED_ERROR);
+    public void report() {
+        if (isHandled.equals(false)) {
+            throw new DomainLogicException(LIVE_FEEDBACK_NOT_HANDLED_YET);
+        }
+
+        if (isSolved.equals(true)) {
+            throw new DomainLogicException(LIVE_FEEDBACK_ALREADY_SOLVED_ERROR);
         }
 
         isReported = true;
     }
 
-    public void solveFeedback() {
-        if (isSolved.equals(true)) {
-            throw new DomainLogicException(ErrorCode.LIVE_FEEDBACK_ALREADY_SOLVED_ERROR);
+    public void solve() {
+        if (isHandled.equals(false)) {
+            throw new DomainLogicException(LIVE_FEEDBACK_NOT_HANDLED_YET);
+        }
+
+        if (isReported.equals(true)) {
+            throw new DomainLogicException(LIVE_FEEDBACK_ALREADY_REPORTED_ERROR);
         }
 
         isSolved = true;
