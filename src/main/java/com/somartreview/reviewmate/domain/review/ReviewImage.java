@@ -36,7 +36,7 @@ public class ReviewImage extends BaseEntity {
 
     private void validateUrl(final String url) {
         if (url.isBlank() || url.length() > MAX_URL_LENGTH) {
-            throw new DomainLogicException(ErrorCode.LIVE_FEEDBACK_MEDIA_URL_ERROR);
+            throw new DomainLogicException(ErrorCode.REVIEW_IMAGE_URL_ERROR);
         }
     }
 }
