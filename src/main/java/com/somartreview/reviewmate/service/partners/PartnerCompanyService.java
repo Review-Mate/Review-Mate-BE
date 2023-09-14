@@ -6,6 +6,8 @@ import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyUpdateReque
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyCreateRequest;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.service.CustomerService;
+import com.somartreview.reviewmate.service.products.TravelProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,11 @@ import static com.somartreview.reviewmate.exception.ErrorCode.*;
 public class PartnerCompanyService {
 
     private final PartnerCompanyRepository partnerCompanyRepository;
+    private final PartnerManagerService partnerManagerService;
+    private final PartnerSellerService partnerSellerService;
+    private final CustomerService customerService;
+    private final TravelProductService travelProductService;
+
 
     @Transactional
     public String create(PartnerCompanyCreateRequest request) {
@@ -63,6 +70,10 @@ public class PartnerCompanyService {
 
     @Transactional
     public void deleteByPartnerDomain(String partnerDomain) {
+        partnerManagerService.deleteAllByPartnerDomain(partnerDomain);
+        partnerSellerService.deleteAllByPartnerDomain(partnerDomain);
+        customerService.deleteAllByPartnerDomain(partnerDomain);
+        travelProductService.deleteAllByPartnerDomain(partnerDomain);
         partnerCompanyRepository.deleteByPartnerDomain(partnerDomain);
     }
 }

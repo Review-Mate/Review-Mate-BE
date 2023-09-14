@@ -1,8 +1,10 @@
 package com.somartreview.reviewmate.web.partners;
 
+import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerCreateRequest;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerUpdateRequest;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerResponse;
+import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
 import com.somartreview.reviewmate.service.partners.PartnerSellerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,6 +26,7 @@ import java.net.URI;
 public class PartnerSellerController {
 
     private final PartnerSellerService partnerSellerService;
+    private final PartnerCompanyService partnerCompanyService;
 
 
     @Operation(operationId = "createPartnerSeller", summary = "판매자 생성")
@@ -32,7 +35,8 @@ public class PartnerSellerController {
     })
     @PostMapping("/")
     public ResponseEntity<Void> createPartnerSeller(@Valid @RequestBody PartnerSellerCreateRequest partnerSellerCreateRequest) {
-        Long partnerSellerId = partnerSellerService.create(partnerSellerCreateRequest);
+        final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(partnerSellerCreateRequest.getPartnerCompanyDomain());
+        Long partnerSellerId = partnerSellerService.create(partnerSellerCreateRequest, partnerCompany);
 
         return ResponseEntity.created(URI.create("/api/console/v1/sellers/" + partnerSellerId)).build();
     }

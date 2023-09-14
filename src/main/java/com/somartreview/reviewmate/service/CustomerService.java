@@ -19,27 +19,24 @@ import static com.somartreview.reviewmate.exception.ErrorCode.*;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final PartnerCompanyService partnerCompanyService;
     private final ReservationService reservationService;
 
     @Transactional
-    public Long create(String partnerDomain, CustomerCreateRequest request) {
+    public Long create(String partnerDomain, CustomerCreateRequest request, final PartnerCompany partnerCompany) {
         validateUniquePartnerCustomerId(partnerDomain, request.getPartnerCustomId());
         validateUniquePhoneNumber(request.getPhoneNumber());
         validateUniqueKakaoId(request.getKakaoId());
-
-        PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(partnerDomain);
 
         return customerRepository.save(request.toEntity(partnerCompany)).getId();
     }
 
     @Transactional
-    public Customer retreiveCustomer(String partnerDomain, CustomerCreateRequest customerCreateRequest) {
+    public Customer retreiveCustomer(String partnerDomain, CustomerCreateRequest customerCreateRequest, final PartnerCompany partnerCompany) {
         if (existsByPartnerDomainAndPartnerCustomId(partnerDomain, customerCreateRequest.getPartnerCustomId())) {
             return findByPartnerDomainAndPartnerCustomId(partnerDomain, customerCreateRequest.getPartnerCustomId());
         }
 
-        create(partnerDomain, customerCreateRequest);
+        create(partnerDomain, customerCreateRequest, partnerCompany);
         return findByPartnerDomainAndPartnerCustomId(partnerDomain, customerCreateRequest.getPartnerCustomId());
     }
 
@@ -131,5 +128,9 @@ public class CustomerService {
         if (!customerRepository.existsByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)) {
             throw new DomainLogicException(CUSTOMER_NOT_FOUND);
         }
+    }
+
+    public void deleteAllByPartnerDomain(String partnerDomain) {
+        customerRepository.deleteAllByPartnerCompany_PartnerDomain(partnerDomain);
     }
 }

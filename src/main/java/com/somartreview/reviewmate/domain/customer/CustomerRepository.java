@@ -16,4 +16,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     Optional<Customer> findByPartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
 
     void deleteByPartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
+
+    void deleteAllByPartnerCompany_PartnerDomain(String partnerDomain);
 }

@@ -18,12 +18,9 @@ import static com.somartreview.reviewmate.exception.ErrorCode.PARTNER_MANAGER_NO
 public class PartnerManagerService {
 
     private final PartnerManagerRepository partnerManagerRepository;
-    private final PartnerCompanyService partnerCompanyService;
 
     @Transactional
-    public Long create(PartnerManagerCreateRequest request) {
-        final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(request.getPartnerCompanyDomain());
-
+    public Long create(PartnerManagerCreateRequest request, final PartnerCompany partnerCompany) {
         return partnerManagerRepository.save(request.toEntity(partnerCompany)).getId();
     }
 
@@ -55,5 +52,9 @@ public class PartnerManagerService {
         if (!partnerManagerRepository.existsById(id)) {
             throw new DomainLogicException(PARTNER_MANAGER_NOT_FOUND);
         }
+    }
+
+    public void deleteAllByPartnerDomain(String partnerDomain) {
+        partnerManagerRepository.deleteAllByPartnerCompany_PartnerDomain(partnerDomain);
     }
 }

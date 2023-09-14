@@ -11,4 +11,6 @@ public interface TravelProductRepository extends JpaRepository<TravelProduct, Lo
     boolean existsByPartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
 
     Optional<TravelProduct> findByPartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
+
+    void deleteAllByPartnerCompany_PartnerDomain(String partnerDomain);
 }

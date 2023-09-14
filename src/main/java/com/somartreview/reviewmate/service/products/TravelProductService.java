@@ -31,4 +31,8 @@ public class TravelProductService {
         return travelProductRepository.findByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)
                 .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
     }
+
+    public void deleteAllByPartnerDomain(String partnerDomain) {
+        travelProductRepository.deleteAllByPartnerCompany_PartnerDomain(partnerDomain);
+    }
 }

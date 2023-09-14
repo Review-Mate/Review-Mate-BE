@@ -50,10 +50,10 @@ public class ReservationController {
     public ResponseEntity<Void> createSingleTravelProductReservation(@PathVariable String partnerDomain,
                                                                      @Valid @RequestPart SingleTravelReservationCreateRequest singleTravelReservationCreateRequest,
                                                                      @RequestPart(required = false) MultipartFile singleTravelProductThumbnail) {
-        final Customer customer = customerService.retreiveCustomer(partnerDomain, singleTravelReservationCreateRequest.getCustomerCreateRequest());
+        final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(partnerDomain);
+        final Customer customer = customerService.retreiveCustomer(partnerDomain, singleTravelReservationCreateRequest.getCustomerCreateRequest(), partnerCompany);
 
         SingleTravelProductCreateRequest singleTravelProductCreateRequest = singleTravelReservationCreateRequest.getSingleTravelProductCreateRequest();
-        final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(partnerDomain);
         final PartnerSeller partnerSeller = partnerSellerService.findByPartnerSellerId(singleTravelReservationCreateRequest.getSingleTravelProductCreateRequest().getPartnerSellerId());
         singleTravelProductCreateRequest.setPartnerCompany(partnerCompany);
         singleTravelProductCreateRequest.setPartnerSeller(partnerSeller);

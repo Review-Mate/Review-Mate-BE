@@ -19,16 +19,13 @@ import static com.somartreview.reviewmate.exception.ErrorCode.*;
 public class PartnerSellerService {
 
     private final PartnerSellerRepository partnerSellerRepository;
-    private final PartnerCompanyService partnerCompanyService;
     private final SingleTravelProductService singleTravelProductService;
 
 
     @Transactional
-    public Long create(PartnerSellerCreateRequest request) {
+    public Long create(PartnerSellerCreateRequest request, final PartnerCompany partnerCompany) {
         validateUniquePhoneNumber(request.getPhoneNumber());
         validateUniqueKakaoId(request.getKakaoId());
-
-        final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(request.getPartnerCompanyDomain());
 
         return partnerSellerRepository.save(request.toEntity(partnerCompany)).getId();
     }
@@ -67,5 +64,11 @@ public class PartnerSellerService {
     public void deleteByPartnerSellerId(Long partnerSellerId) {
         singleTravelProductService.deleteAllByPartnerSellerId(partnerSellerId);
         partnerSellerRepository.deleteById(partnerSellerId);
+    }
+
+    @Transactional
+    public void deleteAllByPartnerDomain(String partnerDomain) {
+        partnerSellerRepository.findAllByPartnerCompany_PartnerDomain(partnerDomain)
+                .forEach(partnerSeller -> deleteByPartnerSellerId(partnerSeller.getId()));
     }
 }
