@@ -1,7 +1,5 @@
 package com.somartreview.reviewmate.service.products;
 
-import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
-import com.somartreview.reviewmate.domain.partner.seller.PartnerSeller;
 import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
 import com.somartreview.reviewmate.domain.product.SingleTravelProductCategory;
 import com.somartreview.reviewmate.domain.product.SingleTravelProductRepository;
@@ -10,8 +8,6 @@ import com.somartreview.reviewmate.dto.product.SingleTravelProductUpdateRequest;
 import com.somartreview.reviewmate.dto.product.SingleTravelProductConsoleElementResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.ReservationService;
-import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
-import com.somartreview.reviewmate.service.partners.PartnerSellerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,40 +22,30 @@ import static com.somartreview.reviewmate.exception.ErrorCode.TRAVEL_PRODUCT_NOT
 @RequiredArgsConstructor
 public class SingleTravelProductService {
 
-
-
     private final SingleTravelProductRepository singleTravelProductRepository;
     private final TravelProductService travelProductService;
-    private final PartnerCompanyService partnerCompanyService;
-    private final PartnerSellerService partnerSellerService;
     private final ReservationService reservationService;
 
 
     @Transactional
-    public Long create(String partnerDomain, SingleTravelProductCreateRequest request, MultipartFile thumbnailFile) {
-        validateUniquePartnerCustomId(partnerDomain, request.getPartnerCustomId());
+    public SingleTravelProduct retreiveSingleTravelProduct(SingleTravelProductCreateRequest singleTravelProductCreateRequest, MultipartFile thumbnailFile, String partnerDomain) {
 
-        final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(partnerDomain);
-        final PartnerSeller partnerSeller = partnerSellerService.findById(request.getPartnerSellerId());
+        create(singleTravelProductCreateRequest, thumbnailFile, partnerDomain);
+        return findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductCreateRequest.getPartnerCustomId());
+    }
+
+    @Transactional
+    public Long create(SingleTravelProductCreateRequest request, MultipartFile thumbnailFile, String partnerDomain) {
+        validateUniquePartnerCustomId(partnerDomain, request.getPartnerCustomId());
 
         String thumbnailUrl = uploadThumbnailOnS3(thumbnailFile);
 
-        return singleTravelProductRepository.save(request.toEntity(thumbnailUrl, partnerCompany, partnerSeller)).getId();
+        return singleTravelProductRepository.save(request.toEntity(thumbnailUrl)).getId();
     }
 
     private void validateUniquePartnerCustomId(String partnerDomain, String partnerCustomId) {
         if (existsByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId))
             throw new DomainLogicException(TRAVEL_PRODUCT_NOT_UNIQUE_PARTNER_CUSTOM_ID);
-    }
-
-    @Transactional
-    public SingleTravelProduct retreiveSingleTravelProduct(String partnerDomain, SingleTravelProductCreateRequest singleTravelProductCreateRequest, MultipartFile thumbnailFile) {
-        if (existsByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductCreateRequest.getPartnerCustomId())) {
-            return findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductCreateRequest.getPartnerCustomId());
-        }
-
-        create(partnerDomain, singleTravelProductCreateRequest, thumbnailFile);
-        return findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductCreateRequest.getPartnerCustomId());
     }
 
     public boolean existsByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
@@ -127,5 +113,13 @@ public class SingleTravelProductService {
     public void validateExistTravelProductId(Long travelProductId) {
         if (!singleTravelProductRepository.existsById(travelProductId))
             throw new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND);
+    }
+
+    public void deleteAllByPartnerSellerId(Long partnerSellerId) {
+        List<SingleTravelProduct> singleTravelProducts = singleTravelProductRepository.findAllByPartnerSeller_Id(partnerSellerId);
+        singleTravelProducts.forEach(singleTravelProduct -> {
+            reservationService.deleteAllByTravelProductId(singleTravelProduct.getId());
+            singleTravelProductRepository.deleteById(singleTravelProduct.getId());
+        });
     }
 }

@@ -5,6 +5,7 @@ import com.somartreview.reviewmate.domain.partner.seller.PartnerSeller;
 import com.somartreview.reviewmate.domain.product.SingleTravelProductCategory;
 import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
 import com.somartreview.reviewmate.exception.EnumNotNull;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,7 +35,21 @@ public class SingleTravelProductCreateRequest {
     @Schema(description = "파트너사의 판매자 ID")
     private Long partnerSellerId;
 
-    public SingleTravelProduct toEntity(String thumbnailUrl, PartnerCompany partnerCompany, PartnerSeller partnerSeller) {
+    @Hidden
+    private PartnerCompany partnerCompany;
+
+    @Hidden
+    private PartnerSeller partnerSeller;
+
+    public void setPartnerCompany(PartnerCompany partnerCompany) {
+        this.partnerCompany = partnerCompany;
+    }
+
+    public void setPartnerSeller(PartnerSeller partnerSeller) {
+        this.partnerSeller = partnerSeller;
+    }
+
+    public SingleTravelProduct toEntity(String thumbnailUrl) {
         return SingleTravelProduct.builder()
                 .partnerCustomId(partnerCustomId)
                 .thumbnailUrl(thumbnailUrl)

@@ -7,6 +7,7 @@ import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerCreateRequest
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerUpdateRequest;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,8 @@ public class PartnerSellerService {
 
     private final PartnerSellerRepository partnerSellerRepository;
     private final PartnerCompanyService partnerCompanyService;
+    private final SingleTravelProductService singleTravelProductService;
+
 
     @Transactional
     public Long create(PartnerSellerCreateRequest request) {
@@ -42,27 +45,27 @@ public class PartnerSellerService {
         }
     }
 
-    public PartnerSeller findById(Long partnerSellerId) {
+    public PartnerSeller findByPartnerSellerId(Long partnerSellerId) {
         return partnerSellerRepository.findById(partnerSellerId)
                 .orElseThrow(() -> new DomainLogicException(PARTNER_SELLER_NOT_FOUND));
     }
 
-    public PartnerSellerResponse getPartnerSellerResponseById(Long id) {
+    public PartnerSellerResponse getPartnerSellerResponseByPartnerSellerId(Long partnerSellerId) {
 
-        PartnerSeller partnerSeller = findById(id);
+        PartnerSeller partnerSeller = findByPartnerSellerId(partnerSellerId);
         return new PartnerSellerResponse(partnerSeller);
     }
 
     @Transactional
-    public void updateById(Long id, PartnerSellerUpdateRequest request) {
+    public void updateById(Long partnerSellerId, PartnerSellerUpdateRequest request) {
 
-        PartnerSeller partnerSeller = findById(id);
+        PartnerSeller partnerSeller = findByPartnerSellerId(partnerSellerId);
         partnerSeller.update(request);
     }
 
     @Transactional
-    public void deleteById(Long id) {
-
-        partnerSellerRepository.deleteById(id);
+    public void deleteByPartnerSellerId(Long partnerSellerId) {
+        singleTravelProductService.deleteAllByPartnerSellerId(partnerSellerId);
+        partnerSellerRepository.deleteById(partnerSellerId);
     }
 }

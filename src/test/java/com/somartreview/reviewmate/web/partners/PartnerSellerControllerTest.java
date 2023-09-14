@@ -59,7 +59,7 @@ class PartnerSellerControllerTest {
     @Test
     void 파트너사의_판매자를_조회한다() throws Exception {
         // given
-        given(partnerSellerService.getPartnerSellerResponseById(any())).willReturn(new PartnerSellerResponse());
+        given(partnerSellerService.getPartnerSellerResponseByPartnerSellerId(any())).willReturn(new PartnerSellerResponse());
 
         // when & then
         mockMvc.perform(
@@ -86,7 +86,7 @@ class PartnerSellerControllerTest {
     @Test
     void 파트너사의_판매자를_삭제한다() throws Exception {
         // given
-        doNothing().when(partnerSellerService).deleteById(any());
+        doNothing().when(partnerSellerService).deleteByPartnerSellerId(any());
 
         // when & then
         mockMvc.perform(
