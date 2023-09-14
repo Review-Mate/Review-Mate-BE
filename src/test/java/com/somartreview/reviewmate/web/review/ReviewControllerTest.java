@@ -7,6 +7,7 @@ import com.somartreview.reviewmate.domain.review.ReviewProperty;
 import com.somartreview.reviewmate.dto.review.ReviewCreateRequest;
 import com.somartreview.reviewmate.dto.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
+import com.somartreview.reviewmate.service.ReservationService;
 import com.somartreview.reviewmate.service.review.ReviewService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +48,13 @@ class ReviewControllerTest {
     @MockBean
     private ReviewService reviewService;
 
+    @MockBean
+    private ReservationService reservationService;
+
     @Test
     void 리뷰를_생성한다() throws Exception {
         // given
-        given(reviewService.create(anyString(), anyString(), any(), any())).willReturn(1L);
+        given(reviewService.create(any(), any(), any())).willReturn(1L);
 
         MockMultipartFile image1 = new MockMultipartFile(
                 "reviewImages[0]",

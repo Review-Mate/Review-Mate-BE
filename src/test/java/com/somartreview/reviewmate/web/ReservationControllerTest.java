@@ -6,7 +6,9 @@ import com.somartreview.reviewmate.domain.product.SingleTravelProductCategory;
 import com.somartreview.reviewmate.dto.customer.CustomerCreateRequest;
 import com.somartreview.reviewmate.dto.product.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.reservation.SingleTravelReservationCreateRequest;
+import com.somartreview.reviewmate.service.CustomerService;
 import com.somartreview.reviewmate.service.ReservationService;
+import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -41,6 +43,12 @@ class ReservationControllerTest {
 
     @MockBean
     private ReservationService reservationService;
+
+    @MockBean
+    private CustomerService customerService;
+
+    @MockBean
+    private SingleTravelProductService singleTravelProductService;
 
 
     @Test
