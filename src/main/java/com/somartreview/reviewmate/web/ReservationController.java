@@ -54,10 +54,10 @@ public class ReservationController {
 
         SingleTravelProductCreateRequest singleTravelProductCreateRequest = singleTravelReservationCreateRequest.getSingleTravelProductCreateRequest();
         final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(partnerDomain);
-        singleTravelProductCreateRequest.setPartnerCompany(partnerCompany);
         final PartnerSeller partnerSeller = partnerSellerService.findByPartnerSellerId(singleTravelReservationCreateRequest.getSingleTravelProductCreateRequest().getPartnerSellerId());
+        singleTravelProductCreateRequest.setPartnerCompany(partnerCompany);
         singleTravelProductCreateRequest.setPartnerSeller(partnerSeller);
-        final SingleTravelProduct singleTravelProduct = singleTravelProductService.retreiveSingleTravelProduct(singleTravelProductCreateRequest, singleTravelProductThumbnail, partnerDomain);
+        final SingleTravelProduct singleTravelProduct = singleTravelProductService.retreiveSingleTravelProduct(partnerDomain, singleTravelProductCreateRequest, singleTravelProductThumbnail);
 
         Long reservationId = reservationService.createSingleTravelProductReservation(customer, singleTravelProduct, singleTravelReservationCreateRequest);
 

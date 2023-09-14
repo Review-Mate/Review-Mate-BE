@@ -28,14 +28,14 @@ public class SingleTravelProductService {
 
 
     @Transactional
-    public SingleTravelProduct retreiveSingleTravelProduct(SingleTravelProductCreateRequest singleTravelProductCreateRequest, MultipartFile thumbnailFile, String partnerDomain) {
+    public SingleTravelProduct retreiveSingleTravelProduct(String partnerDomain, SingleTravelProductCreateRequest singleTravelProductCreateRequest, MultipartFile thumbnailFile) {
 
-        create(singleTravelProductCreateRequest, thumbnailFile, partnerDomain);
+        create(partnerDomain, singleTravelProductCreateRequest, thumbnailFile);
         return findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductCreateRequest.getPartnerCustomId());
     }
 
     @Transactional
-    public Long create(SingleTravelProductCreateRequest request, MultipartFile thumbnailFile, String partnerDomain) {
+    public Long create(String partnerDomain, SingleTravelProductCreateRequest request, MultipartFile thumbnailFile) {
         validateUniquePartnerCustomId(partnerDomain, request.getPartnerCustomId());
 
         String thumbnailUrl = uploadThumbnailOnS3(thumbnailFile);
