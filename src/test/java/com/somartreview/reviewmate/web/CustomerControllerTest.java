@@ -6,6 +6,7 @@ import com.somartreview.reviewmate.dto.customer.CustomerCreateRequest;
 import com.somartreview.reviewmate.dto.customer.CustomerResponse;
 import com.somartreview.reviewmate.dto.customer.CustomerUpdateRequest;
 import com.somartreview.reviewmate.service.CustomerService;
+import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -39,11 +40,14 @@ class CustomerControllerTest {
     @MockBean
     private CustomerService customerService;
 
+    @MockBean
+    private PartnerCompanyService partnerCompanyService;
+
 
     @Test
     void 고객을_생성한다() throws Exception {
         // given
-        given(customerService.create(anyString(), any())).willReturn(1L);
+        given(customerService.create(anyString(), any(), any())).willReturn(1L);
         CustomerCreateRequest customerCreateRequest = new CustomerCreateRequest("CUSTOMER-0001", "권순찬", "01012345678", "sckwon770");
 
         // when & then

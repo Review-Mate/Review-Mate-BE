@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.somartreview.reviewmate.dto.partner.manager.PartnerManagerCreateRequest;
 import com.somartreview.reviewmate.dto.partner.manager.PartnerManagerResponse;
 import com.somartreview.reviewmate.dto.partner.manager.PartnerManagerUpdateRequest;
+import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
 import com.somartreview.reviewmate.service.partners.PartnerManagerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,14 @@ class PartnerManagerControllerTest {
     @MockBean
     private PartnerManagerService partnerManagerService;
 
+    @MockBean
+    private PartnerCompanyService partnerCompanyService;
+
 
     @Test
     void 파트너사의_관리자를_생성한다() throws Exception {
         // given
-        given(partnerManagerService.create(any())).willReturn(1L);
+        given(partnerManagerService.create(any(), any())).willReturn(1L);
         PartnerManagerCreateRequest partnerManagerCreateRequest = new PartnerManagerCreateRequest("권순찬", "sckwon770@gmail.com", "password1234", PARTNER_DOMAIN);
 
         // when & then

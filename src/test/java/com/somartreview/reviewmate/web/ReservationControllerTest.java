@@ -8,6 +8,8 @@ import com.somartreview.reviewmate.dto.product.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.reservation.SingleTravelReservationCreateRequest;
 import com.somartreview.reviewmate.service.CustomerService;
 import com.somartreview.reviewmate.service.ReservationService;
+import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
+import com.somartreview.reviewmate.service.partners.PartnerSellerService;
 import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,12 @@ class ReservationControllerTest {
 
     @MockBean
     private SingleTravelProductService singleTravelProductService;
+
+    @MockBean
+    private PartnerCompanyService partnerCompanyService;
+
+    @MockBean
+    private PartnerSellerService partnerSellerService;
 
 
     @Test

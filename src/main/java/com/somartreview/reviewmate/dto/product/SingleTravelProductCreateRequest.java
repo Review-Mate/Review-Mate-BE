@@ -41,6 +41,14 @@ public class SingleTravelProductCreateRequest {
     @Hidden
     private PartnerSeller partnerSeller;
 
+    public SingleTravelProductCreateRequest(String partnerCustomId, String name, SingleTravelProductCategory singleTravelProductCategory, Long partnerSellerId) {
+        this.partnerCustomId = partnerCustomId;
+        this.name = name;
+        this.singleTravelProductCategory = singleTravelProductCategory;
+        this.partnerSellerId = partnerSellerId;
+    }
+
+
     public void setPartnerCompany(PartnerCompany partnerCompany) {
         this.partnerCompany = partnerCompany;
     }
