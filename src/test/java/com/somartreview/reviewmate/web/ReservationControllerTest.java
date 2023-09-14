@@ -46,7 +46,7 @@ class ReservationControllerTest {
     @Test
     void 예약을_생성한다() throws Exception {
         // given
-        given(reservationService.createSingleTravelProductReservation(anyString(), any(), any())).willReturn(1L);
+        given(reservationService.createSingleTravelProductReservation(any(), any(), any())).willReturn(1L);
 
         CustomerCreateRequest customerCreateRequest = new CustomerCreateRequest("CUSTOMER_0001", "권순찬", "01012345678", "sckwon770");
         SingleTravelProductCreateRequest ProductCreateRequest = new SingleTravelProductCreateRequest("PRODUCT_0001", "신라더스테이 호텔", SingleTravelProductCategory.ACCOMMODATION, 1L);
@@ -81,7 +81,7 @@ class ReservationControllerTest {
     @Test
     void 예약_ID로_예약을_조회한다() throws Exception {
         // given
-        given(reservationService.createSingleTravelProductReservation(anyString(), any(), any())).willReturn(1L);
+        given(reservationService.createSingleTravelProductReservation(any(), any(), any())).willReturn(1L);
 
         // when & then
         mockMvc.perform(

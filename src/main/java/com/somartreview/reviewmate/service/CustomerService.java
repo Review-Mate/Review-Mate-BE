@@ -20,6 +20,7 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final PartnerCompanyService partnerCompanyService;
+    private final ReservationService reservationService;
 
     @Transactional
     public Long create(String partnerDomain, CustomerCreateRequest request) {
@@ -108,6 +109,7 @@ public class CustomerService {
     public void deleteByCustomerId(Long customerId) {
         validateExistCustomer(customerId);
 
+        reservationService.deleteAllByCustomerId(customerId);
         customerRepository.deleteById(customerId);
     }
 
@@ -119,8 +121,9 @@ public class CustomerService {
 
     @Transactional
     public void deleteByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
-        validateExistCustomer(partnerDomain, partnerCustomId);
+        Long customerId = findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId).getId();
 
+        reservationService.deleteAllByCustomerId(customerId);
         customerRepository.deleteByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
     }
 

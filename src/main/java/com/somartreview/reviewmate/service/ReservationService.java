@@ -26,21 +26,16 @@ import static com.somartreview.reviewmate.exception.ErrorCode.*;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-    private final CustomerService customerService;
-    private final TravelProductService travelProductService;
-    private final SingleTravelProductService singleTravelProductService;
     private final LiveSatisfactionService liveSatisfactionService;
     private final LiveFeedbackService liveFeedbackService;
     private final ReviewService reviewService;
 
     @Transactional
-    public Long createSingleTravelProductReservation(String partnerDomain,
-                                                     SingleTravelReservationCreateRequest singleTravelReservationCreateRequest,
-                                                     MultipartFile thumbnail) {
-        final Customer customer = customerService.retreiveCustomer(partnerDomain, singleTravelReservationCreateRequest.getCustomerCreateRequest());
-        final SingleTravelProduct travelProduct = singleTravelProductService.retreiveSingleTravelProduct(partnerDomain, singleTravelReservationCreateRequest.getSingleTravelProductCreateRequest(), thumbnail);
+    public Long createSingleTravelProductReservation(final Customer customer,
+                                                     final SingleTravelProduct singleTravelProduct,
+                                                     SingleTravelReservationCreateRequest singleTravelReservationCreateRequest) {
 
-        return reservationRepository.save(singleTravelReservationCreateRequest.toEntity(customer, travelProduct)).getId();
+        return reservationRepository.save(singleTravelReservationCreateRequest.toEntity(customer, singleTravelProduct)).getId();
     }
 
     public Reservation findById(Long id) {
@@ -54,21 +49,14 @@ public class ReservationService {
     }
 
     public List<Reservation> findAllByTravelProductId(Long travelProductId) {
-        travelProductService.validateExistTravelProduct(travelProductId);
-
         return reservationRepository.findAllByTravelProduct_Id(travelProductId);
     }
 
     public List<Reservation> findAllByCustomerId(Long customerId) {
-        customerService.validateExistCustomer(customerId);
-
         return reservationRepository.findAllByCustomer_Id(customerId);
     }
 
     public List<Reservation> findAllByTravelProductIdAndCustomerId(Long travelProductId, Long customerId) {
-        travelProductService.validateExistTravelProduct(travelProductId);
-        customerService.validateExistCustomer(customerId);
-
         return reservationRepository.findAllByTravelProduct_IdAndCustomer_Id(travelProductId, customerId);
     }
 
@@ -108,5 +96,12 @@ public class ReservationService {
         if (!reservationRepository.existsById(reservationId)) {
             throw new DomainLogicException(RESERVATION_NOT_FOUND);
         }
+    }
+
+    @Transactional
+    public void deleteAllByCustomerId(Long customerId) {
+        reservationRepository.findAllByCustomer_Id(customerId).forEach(reservation -> {
+            deleteByReservationId(reservation.getId());
+        });
     }
 }

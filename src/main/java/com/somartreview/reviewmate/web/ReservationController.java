@@ -1,8 +1,12 @@
 package com.somartreview.reviewmate.web;
 
+import com.somartreview.reviewmate.domain.customer.Customer;
+import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
 import com.somartreview.reviewmate.dto.reservation.SingleTravelReservationCreateRequest;
 import com.somartreview.reviewmate.dto.reservation.SingleTravelProductReservationResponse;
+import com.somartreview.reviewmate.service.CustomerService;
 import com.somartreview.reviewmate.service.ReservationService;
+import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.headers.Header;
@@ -25,6 +29,8 @@ import java.util.List;
 public class ReservationController {
 
     private final ReservationService reservationService;
+    private final CustomerService customerService;
+    private final SingleTravelProductService singleTravelProductService;
 
 
     @Operation(operationId = "createSingleTravelProductReservation", summary = "예약 생성", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
@@ -37,7 +43,9 @@ public class ReservationController {
     public ResponseEntity<Void> createSingleTravelProductReservation(@PathVariable String partnerDomain,
                                                                      @Valid @RequestPart SingleTravelReservationCreateRequest singleTravelReservationCreateRequest,
                                                                      @RequestPart(required = false) MultipartFile singleTravelProductThumbnail) {
-        Long reservationId = reservationService.createSingleTravelProductReservation(partnerDomain, singleTravelReservationCreateRequest, singleTravelProductThumbnail);
+        final Customer customer = customerService.retreiveCustomer(partnerDomain, singleTravelReservationCreateRequest.getCustomerCreateRequest());
+        final SingleTravelProduct singleTravelProduct = singleTravelProductService.retreiveSingleTravelProduct(partnerDomain, singleTravelReservationCreateRequest.getSingleTravelProductCreateRequest(), singleTravelProductThumbnail);
+        Long reservationId = reservationService.createSingleTravelProductReservation(customer, singleTravelProduct, singleTravelReservationCreateRequest);
 
         return ResponseEntity.created(URI.create("/api/console/v1/products/travel/single/reservations/" + reservationId)).build();
     }
