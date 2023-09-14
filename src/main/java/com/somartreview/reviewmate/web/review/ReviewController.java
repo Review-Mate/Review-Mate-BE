@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.web.review;
 
+import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.domain.review.ReviewOrderCriteria;
 import com.somartreview.reviewmate.domain.review.ReviewProperty;
 import com.somartreview.reviewmate.dto.review.ReviewCreateRequest;
@@ -8,6 +9,7 @@ import javax.validation.Valid;
 
 import com.somartreview.reviewmate.dto.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
+import com.somartreview.reviewmate.service.ReservationService;
 import com.somartreview.reviewmate.service.review.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,6 +33,7 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final ReservationService reservationService;
 
     @Operation(operationId = "reviewCreateRequest", summary = "리뷰 생성", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
     @Parameter(name = "partnerDomain", description = "파트너사 도메인", example = "goodchoice.kr")
@@ -44,7 +47,8 @@ public class ReviewController {
                                              @Valid @RequestPart ReviewCreateRequest reviewCreateRequest,
                                              @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {
 
-        Long reviewId = reviewService.create(partnerDomain, reservationPartnerCustomId, reviewCreateRequest, reviewImageFiles);
+        final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, reservationPartnerCustomId);
+        Long reviewId = reviewService.create(reservation, reviewCreateRequest, reviewImageFiles);
 
         return ResponseEntity.created(URI.create("/api/widget/v1/reviews/" + reviewId)).build();
     }

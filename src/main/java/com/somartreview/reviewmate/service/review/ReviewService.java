@@ -24,11 +24,9 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final ReviewTagService reviewTagService;
-    private final ReservationService reservationService;
 
     @Transactional
-    public Long create(String partnerDomain, String travelProductPartnerCustomId, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
-        final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, travelProductPartnerCustomId);
+    public Long create(final Reservation reservation, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
         reservation.getTravelProduct().addReview(reviewCreateRequest.getRating());
 
         Review review = reviewCreateRequest.toEntity(reservation);
@@ -58,6 +56,11 @@ public class ReviewService {
 
     public Review findById(Long id) {
         return reviewRepository.findById(id)
+                .orElseThrow(() -> new DomainLogicException(REVIEW_NOT_FOUND));
+    }
+
+    public Review findByReservationId(Long reservationId) {
+        return reviewRepository.findByReservation_Id(reservationId)
                 .orElseThrow(() -> new DomainLogicException(REVIEW_NOT_FOUND));
     }
 
@@ -109,5 +112,11 @@ public class ReviewService {
         review.clearReviewImages();
 
         reviewRepository.delete(review);
+    }
+
+    @Transactional
+    public void deleteByReservationId(Long reservationId) {
+        final Long reviewId = findByReservationId(reservationId).getId();
+        deleteById(reviewId);
     }
 }

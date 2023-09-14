@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.domain.chatbot.feedback;
+package com.somartreview.reviewmate.domain.live.feedback;
 
 
 import com.somartreview.reviewmate.domain.reservation.Reservation;

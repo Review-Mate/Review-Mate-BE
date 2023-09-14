@@ -7,8 +7,11 @@ import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
 import com.somartreview.reviewmate.dto.reservation.SingleTravelReservationCreateRequest;
 import com.somartreview.reviewmate.dto.reservation.SingleTravelProductReservationResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.service.live.LiveFeedbackService;
+import com.somartreview.reviewmate.service.live.LiveSatisfactionService;
 import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import com.somartreview.reviewmate.service.products.TravelProductService;
+import com.somartreview.reviewmate.service.review.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,9 @@ public class ReservationService {
     private final CustomerService customerService;
     private final TravelProductService travelProductService;
     private final SingleTravelProductService singleTravelProductService;
+    private final LiveSatisfactionService liveSatisfactionService;
+    private final LiveFeedbackService liveFeedbackService;
+    private final ReviewService reviewService;
 
     @Transactional
     public Long createSingleTravelProductReservation(String partnerDomain,
@@ -92,6 +98,9 @@ public class ReservationService {
     public void deleteByReservationId(Long reservationId) {
         validateExistReservation(reservationId);
 
+        liveSatisfactionService.deleteByReservationId(reservationId);
+        liveFeedbackService.deleteByReservationId(reservationId);
+        reviewService.deleteByReservationId(reservationId);
         reservationRepository.deleteById(reservationId);
     }
 

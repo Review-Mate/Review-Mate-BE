@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.domain.chatbot.satisfaction;
+package com.somartreview.reviewmate.domain.live.satisfaction;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.reservation.Reservation;
