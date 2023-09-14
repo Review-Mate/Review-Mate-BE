@@ -104,4 +104,11 @@ public class ReservationService {
             deleteByReservationId(reservation.getId());
         });
     }
+
+    @Transactional
+    public void deleteAllByTravelProductId(Long travelProductId) {
+        reservationRepository.findAllByTravelProduct_Id(travelProductId).forEach(reservation -> {
+            deleteByReservationId(reservation.getId());
+        });
+    }
 }

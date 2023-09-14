@@ -9,6 +9,7 @@ import com.somartreview.reviewmate.dto.product.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.product.SingleTravelProductUpdateRequest;
 import com.somartreview.reviewmate.dto.product.SingleTravelProductConsoleElementResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.service.ReservationService;
 import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
 import com.somartreview.reviewmate.service.partners.PartnerSellerService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class SingleTravelProductService {
     private final TravelProductService travelProductService;
     private final PartnerCompanyService partnerCompanyService;
     private final PartnerSellerService partnerSellerService;
+    private final ReservationService reservationService;
 
 
     @Transactional
@@ -118,6 +120,7 @@ public class SingleTravelProductService {
     public void deleteByTravelProductId(Long travelProductId) {
         validateExistTravelProductId(travelProductId);
 
+        reservationService.deleteAllByTravelProductId(travelProductId);
         singleTravelProductRepository.deleteById(travelProductId);
     }
 
