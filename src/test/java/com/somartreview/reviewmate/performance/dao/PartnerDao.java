@@ -60,9 +60,9 @@ public class PartnerDao {
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        ps.setString(1, "kakaoId" + i);
+                        ps.setString(1, "kakaoId" + String.valueOf(System.nanoTime()));
                         ps.setString(2, "seller" + i);
-                        ps.setString(3, "01012345678");
+                        ps.setString(3, String.valueOf(System.nanoTime()));
                         ps.setLong(4, companyId);
                     }
 

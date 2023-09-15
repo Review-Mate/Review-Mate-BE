@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,7 +47,7 @@ public class ReservationController {
             @Header(name = "Location", description = "생성된 예약의 URI, /api/console/v1/products/travel/single/reservations/{reservationId}", schema = @Schema(type = "string"))
     })
     @ApiResponse(responseCode = "400", description = "존재하지 않는 고객 ID 혹은 여행상품 ID")
-    @PostMapping("/client/v1/{partnerDomain}/products/travel/single/reservations")
+    @PostMapping(value = "/client/v1/{partnerDomain}/products/travel/single/reservations", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> createSingleTravelProductReservation(@PathVariable String partnerDomain,
                                                                      @Valid @RequestPart SingleTravelReservationCreateRequest singleTravelReservationCreateRequest,
                                                                      @RequestPart(required = false) MultipartFile singleTravelProductThumbnail) {

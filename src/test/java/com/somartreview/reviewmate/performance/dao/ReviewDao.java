@@ -31,7 +31,7 @@ public class ReviewDao {
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        ps.setString(1, "RESERVATION_" + i);
+                        ps.setString(1, "RESERVATION_" + String.valueOf(System.nanoTime()));
                         ps.setLong(2, customerId);
                         ps.setLong(3, travelProductId);
                     }
@@ -78,8 +78,8 @@ public class ReviewDao {
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
                         ps.setString(1, "tag" + i);
                         ps.setString(2, polarities[i % polarities.length].name());
-                        ps.setString(2, properties[i % properties.length].name());
-                        ps.setLong(3, reviewId);
+                        ps.setString(3, properties[i % properties.length].name());
+                        ps.setLong(4, reviewId);
                     }
 
                     @Override
@@ -89,7 +89,7 @@ public class ReviewDao {
                 });
     }
 
-    public void batchInsertReviewImage(long reviewId, int reviewImagesSize) {
+    public void batchInsertReviewImages(long reviewId, int reviewImagesSize) {
         jdbcTemplate.batchUpdate(
                 "INSERT INTO review_image (created_at, updated_at, url, review_id) " +
                         "VALUES (now(), now(), ?, ?)",

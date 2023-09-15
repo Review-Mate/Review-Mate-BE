@@ -38,10 +38,10 @@ public class LiveDao {
                         ps.setString(1, "www.customer-media-url" + i + ".com");
                         ps.setString(2, "customer-message" + i);
                         ps.setBoolean(3, statusSets[i % statusSets.length][0]);
-                        ps.setBoolean(3, statusSets[i % statusSets.length][1]);
-                        ps.setBoolean(3, statusSets[i % statusSets.length][2]);
-                        ps.setString(4, "seller-message" + i);
-                        ps.setLong(5, reservationId);
+                        ps.setBoolean(4, statusSets[i % statusSets.length][1]);
+                        ps.setBoolean(5, statusSets[i % statusSets.length][2]);
+                        ps.setString(6, "seller-message" + i);
+                        ps.setLong(7, reservationId);
                     }
 
                     @Override

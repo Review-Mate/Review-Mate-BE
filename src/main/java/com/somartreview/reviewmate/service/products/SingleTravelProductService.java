@@ -62,7 +62,7 @@ public class SingleTravelProductService {
 
     private String uploadThumbnailOnS3(MultipartFile thumbnail) {
         //  Impl Uploading thumbnail to S3 and get the url
-        if (thumbnail != null) {
+        if (thumbnail == null) {
             return null;
         }
 

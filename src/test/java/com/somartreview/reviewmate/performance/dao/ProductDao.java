@@ -29,7 +29,7 @@ public class ProductDao {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
                         ps.setString(1, "product" + i);
-                        ps.setString(2, "PRODUCT_" + i);
+                        ps.setString(2, "PRODUCT_" + String.valueOf(System.nanoTime()));
                         ps.setInt(3, reviewCount);
                         ps.setFloat(4, random.nextFloat(4) + 1);
                         ps.setString(5, "www.product-thumbnail" + i + ".com");
@@ -52,10 +52,10 @@ public class ProductDao {
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        ps.setString(1, "kakaoId" + i);
+                        ps.setString(1, "kakaoId" + String.valueOf(System.nanoTime()));
                         ps.setString(2, "customer" + i);
-                        ps.setString(3, "CUSTOMER_" + i);
-                        ps.setString(4, "01012345678");
+                        ps.setString(3, "CUSTOMER_" + String.valueOf(System.nanoTime()));
+                        ps.setString(4, String.valueOf(System.nanoTime()));
                         ps.setLong(5, companyId);
                     }
 
