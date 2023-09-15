@@ -76,6 +76,10 @@ public abstract class TravelProduct extends BaseEntity {
     }
 
     private void validateThumbnailUrl(final String thumbnailUrl) {
+        if (thumbnailUrl == null) {
+            return;
+        }
+
         if (thumbnailUrl.isBlank() || thumbnailUrl.length() > MAX_THUMBNAIL_URL_LENGTH) {
             throw new DomainLogicException(ErrorCode.TRAVEL_PRODUCT_THUMBNAIL_URL_ERROR);
         }
