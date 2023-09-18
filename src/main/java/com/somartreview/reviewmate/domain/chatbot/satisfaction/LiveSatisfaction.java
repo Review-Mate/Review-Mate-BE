@@ -6,6 +6,8 @@ import com.somartreview.reviewmate.domain.review.ReviewProperty;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -38,6 +40,7 @@ public class LiveSatisfaction extends BaseEntity {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
+    @Builder
     public LiveSatisfaction(Integer rating, ReviewProperty satisfiedReviewProperty, ReviewProperty dissatisfiedReviewProperty, Reservation reservation) {
         validateRating(rating);
         this.rating = rating;

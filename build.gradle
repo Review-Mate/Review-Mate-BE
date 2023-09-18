@@ -46,6 +46,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport, jacocoTestCoverageVerification
 }
 
 sonar {
@@ -63,9 +64,13 @@ jacocoTestReport {
     mustRunAfter test
 
     reports {
-        xml.required = false
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        xml.required = true
+        csv.required = true
+        html.required = true
+
+        xml.destination file("${buildDir}/jacoco/index.xml")
+        csv.destination file("${buildDir}/jacoco/index.csv")
+        html.destination file("${buildDir}/jacoco/index.html")
     }
 
     afterEvaluate {
@@ -75,11 +80,10 @@ jacocoTestReport {
                             '**/ReviewMateApplication*',
                             '**/*Formatter*',
                             '**/*Interceptor*',
-                            '**/GlobalControllerAdvice*',
-                            '**/SwaggerConfig*',
-                            '**/MultipartJackson2HttpMessageConverter*',
-                            '**/StaticRoutingConfiguration*',
-                            '**/*BaseEntity*'
+                            '**/config/**',
+                            '**/BaseEntity*',
+                            '**/*Response*',
+                            '**/*Request*',
                     ])
                 })
         )

@@ -1,24 +1,21 @@
 package com.somartreview.reviewmate.web.products;
 
 import com.somartreview.reviewmate.domain.product.SingleTravelProductCategory;
-import com.somartreview.reviewmate.dto.product.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.product.SingleTravelProductUpdateRequest;
 import com.somartreview.reviewmate.dto.product.SingleTravelProductConsoleElementResponse;
 import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 
-import io.swagger.v3.oas.annotations.headers.Header;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 
 @Tag(name = "단일 여행상품")
@@ -28,21 +25,6 @@ import java.util.List;
 public class SingleTravelProductController {
 
     private final SingleTravelProductService singleTravelProductService;
-
-
-    @Operation(operationId = "createSingleTravelProduct", summary = "단일 여행상품 생성", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요. \n\n⚠️ 개발 환경 및 테스트 용도로만 사용하고, 프로덕션 코드에서는 예약 API를 통해 고객을 생성하세요.")
-    @Parameter(name = "partnerDomain", description = "단일 여행상품이 등록될 파트너사 도메인", example = "goodchoice.kr")
-    @ApiResponse(responseCode = "201", description = "단일 여행상품 생성 성공", headers = {
-            @Header(name = "Location", description = "생성된 단일 여행상품의 URI, /api/console/v1/products/travel/single/{singleTravelProductId}", schema = @Schema(type = "string"))
-    })
-    @PostMapping(value = "/{partnerDomain}/products/travel/single", consumes = {"multipart/form-data"})
-    public ResponseEntity<Void> createSingleTravelProduct(@PathVariable String partnerDomain,
-                                                          @Valid @RequestPart SingleTravelProductCreateRequest singleTravelProductCreateRequest,
-                                                          @RequestPart(required = false) MultipartFile thumbnailFile) {
-        final Long singleTravelProductId = singleTravelProductService.create(partnerDomain, singleTravelProductCreateRequest, thumbnailFile);
-
-        return ResponseEntity.created(URI.create("/api/console/v1/products/travel/single/" + singleTravelProductId)).build();
-    }
 
 
     @Operation(operationId = "getSingleTravelProductConsoleElementResponseByTravelProductId", summary = "단일 여행상품 단독 조회")
@@ -72,7 +54,7 @@ public class SingleTravelProductController {
     @Parameter(name = "category", description = "단일 여행상품 카테고리", example = "ACCOMMODATION")
     @ApiResponse(responseCode = "200", description = "조회 성공")
     @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
-    @GetMapping("/console/{partnerDomain}/products/travel/single")
+    @GetMapping("/{partnerDomain}/products/travel/single")
     public ResponseEntity<List<SingleTravelProductConsoleElementResponse>> getSingleTravelProductConsoleElementResponsesByCategory(@PathVariable String partnerDomain,
                                                                                                                                    @RequestParam(name = "singleTravelProductCategory") SingleTravelProductCategory singleTravelProductCategory) {
         List<SingleTravelProductConsoleElementResponse> singleTravelProductConsoleElementResponses = singleTravelProductService.getSingleTravelProductConsoleElementResponsesByPartnerDomainAndTravelProductCategory(partnerDomain, singleTravelProductCategory);
@@ -85,9 +67,9 @@ public class SingleTravelProductController {
     @Parameter(name = "travelProductId", description = "단일 여행상품 ID")
     @ApiResponse(responseCode = "204", description = "단일 여행상품 정보 수정 성공")
     @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
-    @PutMapping(value = "/products/travel/single/{travelProductId}", consumes = {"multipart/form-data"})
+    @PatchMapping(value = "/products/travel/single/{travelProductId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateSingleTravelProductByTravelProductId(@PathVariable Long travelProductId,
-                                                                           @Valid @RequestBody SingleTravelProductUpdateRequest singleTravelProductUpdateRequest,
+                                                                           @Valid @RequestPart SingleTravelProductUpdateRequest singleTravelProductUpdateRequest,
                                                                            @RequestPart(required = false) MultipartFile thumbnailFile) {
         singleTravelProductService.updateByTravelProductId(travelProductId, singleTravelProductUpdateRequest, thumbnailFile);
 

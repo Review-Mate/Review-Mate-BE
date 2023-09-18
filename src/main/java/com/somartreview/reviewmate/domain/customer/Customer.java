@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.regex.Pattern;
 
+import static com.somartreview.reviewmate.exception.ErrorCode.*;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -20,7 +22,7 @@ public class Customer extends BaseEntity {
 
     private static final int MAX_NAME_LENGTH = 255;
     private static final int MAX_PARTNER_CUSTOM_ID_LENGTH = 50;
-    private static final Pattern ONLY_NUMBER_PATTERN = Pattern.compile("\\d");
+    private static final Pattern PHONE_NUMBER_PATTERN = Pattern.compile("^\\d{11}$");
 
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,19 +67,19 @@ public class Customer extends BaseEntity {
 
     private void validatePartnerCustomId(final String partnerCustomerId) {
         if (partnerCustomerId.isBlank() || partnerCustomerId.length() > MAX_PARTNER_CUSTOM_ID_LENGTH) {
-            throw new DomainLogicException(ErrorCode.CUSTOMER_PARTNER_CUSTOM_ID_ERROR);
+            throw new DomainLogicException(CUSTOMER_PARTNER_CUSTOM_ID_ERROR);
         }
     }
 
     private void validateName(final String name) {
         if (name.isBlank() || name.length() > MAX_NAME_LENGTH) {
-            throw new DomainLogicException(ErrorCode.CUSTOMER_NAME_ERROR);
+            throw new DomainLogicException(CUSTOMER_NAME_ERROR);
         }
     }
 
     private void validatePhoneNumber(final String phoneNumber) {
-        if (phoneNumber.isBlank() || !ONLY_NUMBER_PATTERN.matcher(phoneNumber).matches()) {
-            throw new DomainLogicException(ErrorCode.CUSTOMER_PHONE_NUMBER_ERROR);
+        if (phoneNumber.isBlank() || !PHONE_NUMBER_PATTERN.matcher(phoneNumber).matches()) {
+            throw new DomainLogicException(CUSTOMER_PHONE_NUMBER_ERROR);
         }
     }
 }

@@ -49,6 +49,7 @@ public class ReviewTag extends BaseEntity {
         validateStartIndex(startIndex);
         this.startIndex = startIndex;
         validateEndIndex(endIndex);
+        validateFrontEndIndex(startIndex, endIndex);
         this.endIndex = endIndex;
     }
 
@@ -61,6 +62,12 @@ public class ReviewTag extends BaseEntity {
     private void validateEndIndex(Integer endIndex) {
         if (endIndex < 0 || endIndex > MAX_REVIEW_CONTENT_LENGTH) {
             throw new DomainLogicException(ErrorCode.REVIEW_TAG_OUT_OF_BOUND_INDEX_ERROR, "endIndex");
+        }
+    }
+
+    private void validateFrontEndIndex(Integer startIndex, Integer endIndex) {
+        if (startIndex > endIndex) {
+            throw new DomainLogicException(ErrorCode.REVIEW_TAG_FRONT_END_INDEX_ERROR);
         }
     }
 }
