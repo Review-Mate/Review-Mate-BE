@@ -1,0 +1,33 @@
+package com.somartreview.reviewmate.domain.review;
+
+import com.somartreview.reviewmate.exception.DomainLogicException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static com.somartreview.reviewmate.exception.ErrorCode.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class ReviewImageTest {
+
+    @Test
+    void 리뷰이미지의_url은_공백이어선_안된다() {
+        // given
+        String url = " ";
+
+        // when & then
+        assertThatThrownBy(() -> new ReviewImage(url))
+                .isInstanceOf(DomainLogicException.class)
+                .hasMessageContaining(REVIEW_IMAGE_URL_ERROR.getMessage());
+    }
+
+    @Test
+    void 리뷰이미지의_url은_1024자_보다_길면_안된다() {
+        // given
+        String url = "a".repeat(1025);
+
+        // when & then
+        assertThatThrownBy(() -> new ReviewImage(url))
+                .isInstanceOf(DomainLogicException.class)
+                .hasMessageContaining(REVIEW_IMAGE_URL_ERROR.getMessage());
+    }
+}

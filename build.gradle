@@ -80,11 +80,10 @@ jacocoTestReport {
                             '**/ReviewMateApplication*',
                             '**/*Formatter*',
                             '**/*Interceptor*',
-                            '**/GlobalControllerAdvice*',
-                            '**/SwaggerConfig*',
-                            '**/MultipartJackson2HttpMessageConverter*',
-                            '**/StaticRoutingConfiguration*',
-                            '**/*BaseEntity*'
+                            '**/config/**',
+                            '**/BaseEntity*',
+                            '**/*Response*',
+                            '**/*Request*',
                     ])
                 })
         )

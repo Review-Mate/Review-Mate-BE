@@ -19,8 +19,8 @@ public enum ErrorCode {
 
     LIVE_FEEDBACK_MESSAGE_ERROR("1100", "실시간 피드백의 메시지가 너무 길거나 공백입니다."),
     LIVE_FEEDBACK_MEDIA_URL_ERROR("1101", "실시간 피드백의 미디어 링크가 너무 길거나 공백입니다."),
-    LIVE_FEEDBACK_ALREADY_REPORTED_ERROR("1102", "이미 신고된 실시간 피드백입니다."),
-    LIVE_FEEDBACK_ALREADY_HANDLED_ERROR("1103", "이미 해결된 실시간 피드백입니다."),
+    LIVE_FEEDBACK_NOT_HANDLED_YET("1102", "아직 처리되지 않은 실시간 피드백입니다."),
+    LIVE_FEEDBACK_ALREADY_REPORTED_ERROR("1103", "이미 신고된 실시간 피드백입니다."),
     LIVE_FEEDBACK_ALREADY_SOLVED_ERROR("1104", "이미 해결된 실시간 피드백입니다."),
 
     LIVE_SATISFACTION_RATING_ERROR("1110", "실시간 만족도의 별점이 잘못된 범위입니다."),
@@ -48,20 +48,21 @@ public enum ErrorCode {
     REVIEW_NOT_FOUND("1303", "리뷰를 찾을 수 없습니다."),
 
     REVIEW_TAG_OUT_OF_BOUND_INDEX_ERROR("1310", "리뷰 태그의 인덱스가 범위가 벗어났습니다."),
+    REVIEW_TAG_FRONT_END_INDEX_ERROR("1311", "리뷰 태그의 끝 인덱스가 시작 인덱스보다 앞에 있습니다."),
 
     REVIEW_IMAGE_URL_ERROR("1320", "리뷰 이미지의 링크가 너무 길거나 공백입니다."),
 
     TRAVEL_PRODUCT_THUMBNAIL_URL_ERROR("1400", "여행상품의 썸네일 링크가 너무 길거나 공백입니다."),
     TRAVEL_PRODUCT_NAME_ERROR("1401", "여행상품의 이름이 너무 길거나 공백입니다."),
-    TRAVEL_PRODUCT_START_TIME_ERROR("1402", "여행상품의 시작 시간이 종료 시간 이후일 수 없습니다.."),
-    TRAVEL_PRODUCT_PARTNER_CUSTOM_ID_ERROR("1403", "여행상품의 파트너 커스텀 ID가 너무 길거나 공백입니다."),
-    TRAVEL_PRODUCT_PARTNER_DOMAIN_ERROR("1404", "여행상품의 파트너 도메인이 너무 길거나 공백입니다."),
-    TRAVEL_PRODUCT_NOT_FOUND("1405", "여행상품을 찾을 수 없습니다."),
-    TRAVEL_PRODUCT_NOT_UNIQUE_PARTNER_CUSTOM_ID("1406", "여행상품의 파트너 커스텀 ID가 유니크하지 않습니다."),
+    TRAVEL_PRODUCT_PARTNER_CUSTOM_ID_ERROR("1402", "여행상품의 파트너 커스텀 ID가 너무 길거나 공백입니다."),
+    TRAVEL_PRODUCT_PARTNER_DOMAIN_ERROR("1403", "여행상품의 파트너 도메인이 너무 길거나 공백입니다."),
+    TRAVEL_PRODUCT_NOT_FOUND("1404", "여행상품을 찾을 수 없습니다."),
+    TRAVEL_PRODUCT_NOT_UNIQUE_PARTNER_CUSTOM_ID("1405", "여행상품의 파트너 커스텀 ID가 유니크하지 않습니다."),
 
     RESERVATION_NOT_FOUND("1500", "예약을 찾을 수 없습니다."),
     RESERVATION_PARTNER_CUSTOM_ID_ERROR("1501", "예약의 파트너 커스텀 ID가 너무 길거나 공백입니다."),
     RESERVATION_NOT_UNIQUE_PARTNER_CUSTOM_ID("1502", "예약의 파트너 커스텀 ID가 유니크하지 않습니다."),
+    RESERVATION_FRONT_END_TIME_ERROR("1402", "여행상품의 종료 시간이 시작 시간보다 빠를 수 없습니다."),
 
 
     NOT_EXIST_PARTNER_DOMAIN("2001", "존재하지 않는 파트너사 도메인입니다."),
