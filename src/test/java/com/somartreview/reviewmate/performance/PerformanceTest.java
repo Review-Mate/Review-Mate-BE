@@ -16,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import static com.somartreview.reviewmate.performance.api.ReservationApiRequest.예약Id로_예약을_조회한다;
 import static com.somartreview.reviewmate.performance.api.ReservationApiRequest.예약을_생성한다;
 import static org.springframework.boot.test.context.SpringBootTest.*;
 
@@ -23,30 +24,30 @@ import static org.springframework.boot.test.context.SpringBootTest.*;
 @ActiveProfiles("performance")
 class PerformanceTest {
 
-//    private static final int COMPANIES_SIZE = 2;
-//    private static final int MANAGERS_PER_COMPANY_SIZE = 10;
-//    private static final int SELLERS_PER_COMPANY_SIZE = 50;
-//    private static final int PRODUCTS_PER_SELLER_SIZE = 1;
-//    //    private static final int CUSTOMERS_PER_COMPANY_SIZE = 5000;
-//    private static final int CUSTOMERS_PER_COMPANY_SIZE = 1000;
-//    private static final int RESERVATIONS_PER_CUSTOMER_SIZE = 5;
-//    private static final int REVIEWS_PER_RESERVATION_SIZE = 1;
-//    private static final int REVIEW_TAGS_PER_REVIEW_SIZE = 5;
-//    private static final int REVIEW_IMAGES_PER_REVIEW_SIZE = 2;
-//    private static final int LIVE_SATISFACTIONS_PER_RESERVATION = 1;
-//    private static final int LIVE_FEEDBACKS_PER_RESERVATION = 1;
-
-    private static final int COMPANIES_SIZE = 1;
-    private static final int MANAGERS_PER_COMPANY_SIZE = 1;
-    private static final int SELLERS_PER_COMPANY_SIZE = 1;
+    private static final int COMPANIES_SIZE = 2;
+    private static final int MANAGERS_PER_COMPANY_SIZE = 10;
+    private static final int SELLERS_PER_COMPANY_SIZE = 50;
     private static final int PRODUCTS_PER_SELLER_SIZE = 1;
-    private static final int CUSTOMERS_PER_COMPANY_SIZE = 1;
-    private static final int RESERVATIONS_PER_CUSTOMER_SIZE = 1;
+    //    private static final int CUSTOMERS_PER_COMPANY_SIZE = 5000;
+    private static final int CUSTOMERS_PER_COMPANY_SIZE = 1000;
+    private static final int RESERVATIONS_PER_CUSTOMER_SIZE = 5;
     private static final int REVIEWS_PER_RESERVATION_SIZE = 1;
-    private static final int REVIEW_TAGS_PER_REVIEW_SIZE = 1;
-    private static final int REVIEW_IMAGES_PER_REVIEW_SIZE = 1;
+    private static final int REVIEW_TAGS_PER_REVIEW_SIZE = 5;
+    private static final int REVIEW_IMAGES_PER_REVIEW_SIZE = 2;
     private static final int LIVE_SATISFACTIONS_PER_RESERVATION = 1;
     private static final int LIVE_FEEDBACKS_PER_RESERVATION = 1;
+
+//    private static final int COMPANIES_SIZE = 1;
+//    private static final int MANAGERS_PER_COMPANY_SIZE = 1;
+//    private static final int SELLERS_PER_COMPANY_SIZE = 1;
+//    private static final int PRODUCTS_PER_SELLER_SIZE = 1;
+//    private static final int CUSTOMERS_PER_COMPANY_SIZE = 1;
+//    private static final int RESERVATIONS_PER_CUSTOMER_SIZE = 1;
+//    private static final int REVIEWS_PER_RESERVATION_SIZE = 1;
+//    private static final int REVIEW_TAGS_PER_REVIEW_SIZE = 1;
+//    private static final int REVIEW_IMAGES_PER_REVIEW_SIZE = 1;
+//    private static final int LIVE_SATISFACTIONS_PER_RESERVATION = 1;
+//    private static final int LIVE_FEEDBACKS_PER_RESERVATION = 1;
 
     private static final Logger log = LoggerFactory.getLogger("PERFORMANCE");
 
@@ -127,5 +128,6 @@ class PerformanceTest {
 
     void 예약_API의_성능을_테스트한다() {
         예약을_생성한다();
+        예약Id로_예약을_조회한다();
     }
 }
