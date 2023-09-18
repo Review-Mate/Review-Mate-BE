@@ -43,9 +43,10 @@ class PartnerSellerTest {
     void 파트너사_판매자의_이름이_공백이어선_안된다() {
         // given
         String name = "";
+        PartnerCompany mockPartnerCompany = new PartnerCompany();
 
         // when & then
-        assertThatThrownBy(() -> new PartnerSeller(name, "01012345678", "hyunjin7", new PartnerCompany()))
+        assertThatThrownBy(() -> new PartnerSeller(name, "01012345678", "hyunjin7", mockPartnerCompany))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(PARTNER_SELLER_NAME_ERROR.getMessage());
     }
@@ -54,9 +55,10 @@ class PartnerSellerTest {
     void 파트너사_판매자의_이름이_255자_보다_길면_안된다() {
         // given
         String name = "a".repeat(256);
+        PartnerCompany mockPartnerCompany = new PartnerCompany();
 
         // when & then
-        assertThatThrownBy(() -> new PartnerSeller(name, "01012345678", "hyunjin7", new PartnerCompany()))
+        assertThatThrownBy(() -> new PartnerSeller(name, "01012345678", "hyunjin7", mockPartnerCompany))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(PARTNER_SELLER_NAME_ERROR.getMessage());
     }
@@ -65,9 +67,10 @@ class PartnerSellerTest {
     void 파트너사_판매자의_휴대폰번호는_숫자로만_이루어져야_한다() {
         // given
         String phoneNumber = "010-1234-5678";
+        PartnerCompany mockPartnerCompany = new PartnerCompany();
 
         // when & then
-        assertThatThrownBy(() -> new PartnerSeller("소현진", phoneNumber, "hyunjin7", new PartnerCompany()))
+        assertThatThrownBy(() -> new PartnerSeller("소현진", phoneNumber, "hyunjin7", mockPartnerCompany))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(CUSTOMER_PHONE_NUMBER_ERROR.getMessage());
     }
@@ -76,9 +79,10 @@ class PartnerSellerTest {
     void 파트너사_판매자의_휴대폰번호는_11자리_숫자여야_한다() {
         // given
         String phoneNumber = "01012345";
+        PartnerCompany mockPartnerCompany = new PartnerCompany();
 
         // when & then
-        assertThatThrownBy(() -> new PartnerSeller("소현진", phoneNumber, "hyunjin7", new PartnerCompany()))
+        assertThatThrownBy(() -> new PartnerSeller("소현진", phoneNumber, "hyunjin7", mockPartnerCompany))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(CUSTOMER_PHONE_NUMBER_ERROR.getMessage());
     }

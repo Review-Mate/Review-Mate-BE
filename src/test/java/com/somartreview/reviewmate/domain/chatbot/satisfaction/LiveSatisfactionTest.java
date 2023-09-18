@@ -40,9 +40,10 @@ class LiveSatisfactionTest {
     void 만족도_점수는_1점보다_낮으면_안된다() {
         // given
         int rating = 0;
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new LiveSatisfaction(rating, ReviewProperty.CLEANNESS, ReviewProperty.CLEANNESS, new Reservation()))
+        assertThatThrownBy(() -> new LiveSatisfaction(rating, ReviewProperty.CLEANNESS, ReviewProperty.CLEANNESS, mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(LIVE_SATISFACTION_RATING_ERROR.getMessage());
     }
@@ -51,9 +52,10 @@ class LiveSatisfactionTest {
     void 만족도_점수는_5점보다_높으면_안된다() {
         // given
         int rating = 6;
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new LiveSatisfaction(rating, ReviewProperty.CLEANNESS, ReviewProperty.CLEANNESS, new Reservation()))
+        assertThatThrownBy(() -> new LiveSatisfaction(rating, ReviewProperty.CLEANNESS, ReviewProperty.CLEANNESS, mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(LIVE_SATISFACTION_RATING_ERROR.getMessage());
     }

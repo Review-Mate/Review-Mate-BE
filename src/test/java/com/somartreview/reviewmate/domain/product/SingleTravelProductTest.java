@@ -49,9 +49,11 @@ class SingleTravelProductTest {
     void 단일_여행상품의_커스텀_Id가_공백이면_안된다() {
         // given
         String partnerCustomId = " ";
+        PartnerCompany mockPartnerCompany = new PartnerCompany();
+        PartnerSeller mockPartnerSeller = new PartnerSeller();
 
         // when & then
-        assertThatThrownBy(() -> new SingleTravelProduct(partnerCustomId, "www.thumbnail.com", "신라더스테이", new PartnerCompany(), new PartnerSeller(), ACCOMMODATION))
+        assertThatThrownBy(() -> new SingleTravelProduct(partnerCustomId, "www.thumbnail.com", "신라더스테이", mockPartnerCompany, mockPartnerSeller, ACCOMMODATION))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(TRAVEL_PRODUCT_PARTNER_CUSTOM_ID_ERROR.getMessage());
     }
@@ -60,9 +62,11 @@ class SingleTravelProductTest {
     void 단일_여행상품의_커스텀_Id가_50자_보다_길면_안된다() {
         // given
         String partnerCustomId = "a".repeat(51);
+        PartnerCompany mockPartnerCompany = new PartnerCompany();
+        PartnerSeller mockPartnerSeller = new PartnerSeller();
 
         // when & then
-        assertThatThrownBy(() -> new SingleTravelProduct(partnerCustomId, "www.thumbnail.com", "신라더스테이", new PartnerCompany(), new PartnerSeller(), ACCOMMODATION))
+        assertThatThrownBy(() -> new SingleTravelProduct(partnerCustomId, "www.thumbnail.com", "신라더스테이", mockPartnerCompany, mockPartnerSeller, ACCOMMODATION))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(TRAVEL_PRODUCT_PARTNER_CUSTOM_ID_ERROR.getMessage());
     }
@@ -71,9 +75,11 @@ class SingleTravelProductTest {
     void 단일_여행상품의_썸네일url이_공백이면_안된다() {
         // given
         String thumbnailUrl = " ";
+        PartnerCompany mockPartnerCompany = new PartnerCompany();
+        PartnerSeller mockPartnerSeller = new PartnerSeller();
 
         // when & then
-        assertThatThrownBy(() -> new SingleTravelProduct("PRODUCT_0001", thumbnailUrl, "신라더스테이", new PartnerCompany(), new PartnerSeller(), ACCOMMODATION))
+        assertThatThrownBy(() -> new SingleTravelProduct("PRODUCT_0001", thumbnailUrl, "신라더스테이", mockPartnerCompany, mockPartnerSeller, ACCOMMODATION))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(TRAVEL_PRODUCT_THUMBNAIL_URL_ERROR.getMessage());
     }
@@ -82,9 +88,11 @@ class SingleTravelProductTest {
     void 단일_여행상품의_썸네일url이_1024자_보다_길면_안된다() {
         // given
         String thumbnailUrl = "a".repeat(1025);
+        PartnerCompany mockPartnerCompany = new PartnerCompany();
+        PartnerSeller mockPartnerSeller = new PartnerSeller();
 
         // when & then
-        assertThatThrownBy(() -> new SingleTravelProduct("PRODUCT_0001", thumbnailUrl, "신라더스테이", new PartnerCompany(), new PartnerSeller(), ACCOMMODATION))
+        assertThatThrownBy(() -> new SingleTravelProduct("PRODUCT_0001", thumbnailUrl, "신라더스테이", mockPartnerCompany, mockPartnerSeller, ACCOMMODATION))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(TRAVEL_PRODUCT_THUMBNAIL_URL_ERROR.getMessage());
     }
@@ -93,9 +101,11 @@ class SingleTravelProductTest {
     void 단일_여행상품의_이름이_공백이면_안된다() {
         // given
         String name = " ";
+        PartnerCompany mockPartnerCompany = new PartnerCompany();
+        PartnerSeller mockPartnerSeller = new PartnerSeller();
 
         // when & then
-        assertThatThrownBy(() -> new SingleTravelProduct("PRODUCT_0001", "www.thumbnail.com", name, new PartnerCompany(), new PartnerSeller(), ACCOMMODATION))
+        assertThatThrownBy(() -> new SingleTravelProduct("PRODUCT_0001", "www.thumbnail.com", name, mockPartnerCompany, mockPartnerSeller, ACCOMMODATION))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(TRAVEL_PRODUCT_NAME_ERROR.getMessage());
     }
@@ -104,9 +114,11 @@ class SingleTravelProductTest {
     void 단일_여행상품의_이름이_255자_보다_길면_안된다() {
         // given
         String name = "a".repeat(256);
+        PartnerCompany mockPartnerCompany = new PartnerCompany();
+        PartnerSeller mockPartnerSeller = new PartnerSeller();
 
         // when & then
-        assertThatThrownBy(() -> new SingleTravelProduct("PRODUCT_0001", "www.thumbnail.com", name, new PartnerCompany(), new PartnerSeller(), ACCOMMODATION))
+        assertThatThrownBy(() -> new SingleTravelProduct("PRODUCT_0001", "www.thumbnail.com", name, mockPartnerCompany, mockPartnerSeller, ACCOMMODATION))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(TRAVEL_PRODUCT_NAME_ERROR.getMessage());
     }

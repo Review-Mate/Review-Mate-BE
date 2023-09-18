@@ -28,9 +28,10 @@ class LiveFeedbackTest {
     void 라이브피드백의_고객메시지가_공백이면_안된다() {
         // given
         String customerMessage = " ";
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new LiveFeedback(customerMessage, "www.media.com", "응답 메시지", new Reservation()))
+        assertThatThrownBy(() -> new LiveFeedback(customerMessage, "www.media.com", "응답 메시지", mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessageContaining(ErrorCode.LIVE_FEEDBACK_MESSAGE_ERROR.getMessage());
     }
@@ -39,31 +40,34 @@ class LiveFeedbackTest {
     void 라이브피드백의_고객메시지가_255자_보다_길면_안된다() {
         // given
         String customerMessage = "a".repeat(256);
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new LiveFeedback(customerMessage, "www.media.com", "응답 메시지", new Reservation()))
+        assertThatThrownBy(() -> new LiveFeedback(customerMessage, "www.media.com", "응답 메시지", mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessageContaining(ErrorCode.LIVE_FEEDBACK_MESSAGE_ERROR.getMessage());
     }
 
     @Test
-    void 라이브피드백의_고객미디어url이_공백이면_안된다() {
+    void 라이브피드백의_고객미디어_url이_공백이면_안된다() {
         // given
         String customerMediaUrl = " ";
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new LiveFeedback("리포트 메시지", customerMediaUrl, "응답 메시지", new Reservation()))
+        assertThatThrownBy(() -> new LiveFeedback("리포트 메시지", customerMediaUrl, "응답 메시지", mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessageContaining(ErrorCode.LIVE_FEEDBACK_MEDIA_URL_ERROR.getMessage());
     }
 
     @Test
-    void 라이브피드백의_고객미디어url이_1025자_보다_길면_안된다() {
+    void 라이브피드백의_고객미디어_url이_1025자_보다_길면_안된다() {
         // given
         String customerMediaUrl = "a".repeat(1025);
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new LiveFeedback("리포트 메시지", customerMediaUrl, "응답 메시지", new Reservation()))
+        assertThatThrownBy(() -> new LiveFeedback("리포트 메시지", customerMediaUrl, "응답 메시지", mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessageContaining(ErrorCode.LIVE_FEEDBACK_MEDIA_URL_ERROR.getMessage());
     }
@@ -72,9 +76,10 @@ class LiveFeedbackTest {
     void 라이브피드백의_판매자메시지가_공백이면_안된다() {
         // given
         String sellerMessage = " ";
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new LiveFeedback("리포트 메시지", "www.media.com", sellerMessage, new Reservation()))
+        assertThatThrownBy(() -> new LiveFeedback("리포트 메시지", "www.media.com", sellerMessage, mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessageContaining(ErrorCode.LIVE_FEEDBACK_MESSAGE_ERROR.getMessage());
     }
@@ -83,9 +88,10 @@ class LiveFeedbackTest {
     void 라이브피드백의_판매자메시지가_255자_보다_길면_안된다() {
         // given
         String sellerMessage = "a".repeat(256);
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new LiveFeedback("리포트 메시지", "www.media.com", sellerMessage, new Reservation()))
+        assertThatThrownBy(() -> new LiveFeedback("리포트 메시지", "www.media.com", sellerMessage, mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessageContaining(ErrorCode.LIVE_FEEDBACK_MESSAGE_ERROR.getMessage());
     }

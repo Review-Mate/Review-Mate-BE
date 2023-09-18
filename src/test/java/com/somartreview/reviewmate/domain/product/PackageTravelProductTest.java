@@ -31,6 +31,6 @@ class PackageTravelProductTest {
         packageTravelProduct.addTourCourse(tourCourse);
 
         // then
-        assertThat(packageTravelProduct.getTourCourses().size()).isEqualTo(1);
+        assertThat(packageTravelProduct.getTourCourses()).hasSize(1);
     }
 }

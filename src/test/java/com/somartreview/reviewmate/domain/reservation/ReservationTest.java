@@ -46,8 +46,13 @@ class ReservationTest {
         // given
         String partnerCustomId = " ";
 
+        LocalDateTime startDateTime = LocalDateTime.of(2023, 10, 18, 13, 0);
+        LocalDateTime endDateTime = LocalDateTime.of(2023, 10, 19, 12, 0);
+        Customer mockCustomer = new Customer();
+        SingleTravelProduct mockSingleTravelProduct = new SingleTravelProduct();
+
         // when & then
-        assertThatThrownBy(() -> new Reservation(partnerCustomId, LocalDateTime.of(2023, 10, 18, 13, 0), LocalDateTime.of(2023, 10, 19, 12, 0), new Customer(), new SingleTravelProduct()))
+        assertThatThrownBy(() -> new Reservation(partnerCustomId, startDateTime, endDateTime, mockCustomer, mockSingleTravelProduct))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(RESERVATION_PARTNER_CUSTOM_ID_ERROR.getMessage());
     }
@@ -57,8 +62,13 @@ class ReservationTest {
         // given
         String partnerCustomId = "a".repeat(51);
 
+        LocalDateTime startDateTime = LocalDateTime.of(2023, 10, 18, 13, 0);
+        LocalDateTime endDateTime = LocalDateTime.of(2023, 10, 19, 12, 0);
+        Customer mockCustomer = new Customer();
+        SingleTravelProduct mockSingleTravelProduct = new SingleTravelProduct();
+
         // when & then
-        assertThatThrownBy(() -> new Reservation(partnerCustomId, LocalDateTime.of(2023, 10, 18, 13, 0), LocalDateTime.of(2023, 10, 19, 12, 0), new Customer(), new SingleTravelProduct()))
+        assertThatThrownBy(() -> new Reservation(partnerCustomId, startDateTime, endDateTime, mockCustomer, mockSingleTravelProduct))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(RESERVATION_PARTNER_CUSTOM_ID_ERROR.getMessage());
     }
@@ -69,8 +79,11 @@ class ReservationTest {
         LocalDateTime startDateTime = LocalDateTime.of(2023, 10, 18, 13, 0);
         LocalDateTime endDateTime = LocalDateTime.of(2023, 10, 17, 12, 0);
 
+        Customer mockCustomer = new Customer();
+        SingleTravelProduct mockSingleTravelProduct = new SingleTravelProduct();
+
         // when & then
-        assertThatThrownBy(() -> new Reservation("RESERVATION_0001", startDateTime, endDateTime, new Customer(), new SingleTravelProduct()))
+        assertThatThrownBy(() -> new Reservation("RESERVATION_0001", startDateTime, endDateTime, mockCustomer, mockSingleTravelProduct))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(RESERVATION_FRONT_END_TIME_ERROR.getMessage());
     }
