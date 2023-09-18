@@ -1,0 +1,40 @@
+![image_reviewmate_top_logo.jpg](docs%2Fimage_reviewmate_top_logo.jpg)
+
+<div align="center">
+
+# 여행 리뷰 통합 관리 플랫폼
+
+### Repositories
+
+기획: [Design](https://github.com/review-mate/review-mate)
+
+프론트: [랜딩페이지](https://github.com/review-mate/review-mate-landing-page), [리뷰위젯](https://github.com/review-mate/review-mate-insert-module), [관리자콘솔](https://github.com/review-mate/review-mate-admin-console)
+
+인공지능: [리뷰 분석 ABSA 모델](https://github.com/review-mate/review-mate-ai-ABSA), [리뷰 제안 GPT](https://github.com/review-mate/review-mate-ai-gpt)
+
+[<img src="https://img.shields.io/badge/-reviewmate.co.kr-009AAB?logo=google-chrome&logoColor=white&label=%20&labelColor=grey" />](https://www.reviewmate.co.kr/)
+[<img src="https://img.shields.io/badge/-reviewmate.co.kr-009AAB?logo=google-chrome&logoColor=white&label=%20&labelColor=grey" />](http://api.reviewmate.co.kr:8080/swagger-ui.html)
+[<img src="https://img.shields.io/badge/-reviewmate.co.kr-009AAB?logo=google-chrome&logoColor=white&label=%20&labelColor=grey" />](http://test.api.reviewmate.co.kr:8080/swagger-ui.html)
+
+[![Quality Gate Status](http://test.analysis.reviewmate.co.kr:8080/api/project_badges/measure?project=review-mate_review-mate-be_AYpxCkmbkDvpsC93SDU_&metric=alert_status&token=sqb_2933aeb1690b69b3b5553c2cabf1c1566066ec53)](http://test.analysis.reviewmate.co.kr:8080/dashboard?id=review-mate_review-mate-be_AYpxCkmbkDvpsC93SDU_)
+[![Coverage](http://test.analysis.reviewmate.co.kr:8080/api/project_badges/measure?project=review-mate_review-mate-be_AYpxCkmbkDvpsC93SDU_&metric=coverage&token=sqb_2933aeb1690b69b3b5553c2cabf1c1566066ec53)](http://test.analysis.reviewmate.co.kr:8080/dashboard?id=review-mate_review-mate-be_AYpxCkmbkDvpsC93SDU_)
+[![Code Smells](http://test.analysis.reviewmate.co.kr:8080/api/project_badges/measure?project=review-mate_review-mate-be_AYpxCkmbkDvpsC93SDU_&metric=code_smells&token=sqb_2933aeb1690b69b3b5553c2cabf1c1566066ec53)](http://test.analysis.reviewmate.co.kr:8080/dashboard?id=review-mate_review-mate-be_AYpxCkmbkDvpsC93SDU_)
+</div>
+
+---
+
+# 💻 서버 아키텍처
+
+### ERD Diagram
+![리뷰메이트.png](..%2F..%2F..%2FLibrary%2FMobile%20Documents%2Fcom%7Eapple%7ECloudDocs%2F%EC%B7%A8%EC%A4%80%2F%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C%2F%EB%A6%AC%EB%B7%B0%EB%A9%94%EC%9D%B4%ED%8A%B8.png)
+
+### AWS Architecutre
+![aws.png](..%2F..%2F..%2FDownloads%2Faws.png)
+
+
+### Deployment pipeline - GitOps
+![gitops.png](..%2F..%2F..%2FDownloads%2Fgitops.png)
+
+
+# 🛠 기술 스택
+![image_reviewmate-be-stack.png](docs%2Fimage_reviewmate-be-stack.png)
