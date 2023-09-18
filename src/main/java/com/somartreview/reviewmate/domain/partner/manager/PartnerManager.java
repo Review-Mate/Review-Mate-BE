@@ -7,6 +7,7 @@ import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,8 @@ import static javax.persistence.EnumType.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PartnerManager extends BaseEntity {
 
     private static final int MAX_NAME_LENGTH = 255;

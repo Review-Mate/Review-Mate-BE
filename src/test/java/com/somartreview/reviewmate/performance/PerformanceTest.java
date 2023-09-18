@@ -1,5 +1,9 @@
 package com.somartreview.reviewmate.performance;
 
+import com.somartreview.reviewmate.domain.partner.manager.PartnerManager;
+import com.somartreview.reviewmate.domain.review.ReviewPolarity;
+import com.somartreview.reviewmate.domain.review.ReviewProperty;
+import com.somartreview.reviewmate.dto.partner.manager.PartnerManagerCreateRequest;
 import com.somartreview.reviewmate.performance.dao.LiveDao;
 import com.somartreview.reviewmate.performance.dao.PartnerDao;
 import com.somartreview.reviewmate.performance.dao.ProductDao;
@@ -14,7 +18,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import static com.somartreview.reviewmate.performance.api.ReservationApiRequest.예약Id로_예약을_조회한다;
 import static com.somartreview.reviewmate.performance.api.ReservationApiRequest.예약을_생성한다;
@@ -24,30 +32,41 @@ import static org.springframework.boot.test.context.SpringBootTest.*;
 @ActiveProfiles("performance")
 class PerformanceTest {
 
-    private static final int COMPANIES_SIZE = 2;
-    private static final int MANAGERS_PER_COMPANY_SIZE = 10;
-    private static final int SELLERS_PER_COMPANY_SIZE = 50;
-    private static final int PRODUCTS_PER_SELLER_SIZE = 1;
-    //    private static final int CUSTOMERS_PER_COMPANY_SIZE = 5000;
-    private static final int CUSTOMERS_PER_COMPANY_SIZE = 1000;
-    private static final int RESERVATIONS_PER_CUSTOMER_SIZE = 5;
-    private static final int REVIEWS_PER_RESERVATION_SIZE = 1;
-    private static final int REVIEW_TAGS_PER_REVIEW_SIZE = 5;
-    private static final int REVIEW_IMAGES_PER_REVIEW_SIZE = 2;
-    private static final int LIVE_SATISFACTIONS_PER_RESERVATION = 1;
-    private static final int LIVE_FEEDBACKS_PER_RESERVATION = 1;
+//    private static final int COMPANIES_SIZE = 2;
+//    private static final int MANAGERS_SIZE = 10;
+//    private static final int SELLERS_SIZE = 20;
+//    private static final int PRODUCTS_SIZE = 20;
+//    private static final int CUSTOMERS_SIZE = 10;
+//    private static final int RESERVATIONS_SIZE = 50;
+//    private static final int REVIEWS_SIZE = 50;
+//    private static final int REVIEW_TAGS_SIZE = 250;
+//    private static final int REVIEW_IMAGES_SIZE = 100;
+//    private static final int LIVE_SATISFACTIONS_SIZE = 50;
+//    private static final int LIVE_FEEDBACKS_SIZE = 50;
 
-//    private static final int COMPANIES_SIZE = 1;
-//    private static final int MANAGERS_PER_COMPANY_SIZE = 1;
-//    private static final int SELLERS_PER_COMPANY_SIZE = 1;
-//    private static final int PRODUCTS_PER_SELLER_SIZE = 1;
-//    private static final int CUSTOMERS_PER_COMPANY_SIZE = 1;
-//    private static final int RESERVATIONS_PER_CUSTOMER_SIZE = 1;
-//    private static final int REVIEWS_PER_RESERVATION_SIZE = 1;
-//    private static final int REVIEW_TAGS_PER_REVIEW_SIZE = 1;
-//    private static final int REVIEW_IMAGES_PER_REVIEW_SIZE = 1;
-//    private static final int LIVE_SATISFACTIONS_PER_RESERVATION = 1;
-//    private static final int LIVE_FEEDBACKS_PER_RESERVATION = 1;
+    private static final int COMPANIES_SIZE = 1;
+    private static final int MANAGERS_SIZE = 10;
+    private static final int SELLERS_SIZE = 1_000;
+    private static final int PRODUCTS_SIZE = 1_000;
+    private static final int CUSTOMERS_SIZE = 5_000;
+    private static final int RESERVATIONS_SIZE = 200_000;
+    private static final int REVIEWS_SIZE = 200_000;
+    private static final int REVIEW_TAGS_SIZE = 1_000_000;
+    private static final int REVIEW_IMAGES_SIZE = 400_000;
+    private static final int LIVE_SATISFACTIONS_SIZE = 200_000;
+    private static final int LIVE_FEEDBACKS_SIZE = 200_000;
+
+//    private static final int COMPANIES_SIZE = 2;
+//    private static final int MANAGERS_SIZE = 20;
+//    private static final int SELLERS_SIZE = 2_000;
+//    private static final int PRODUCTS_SIZE = 2_000;
+//    private static final int CUSTOMERS_SIZE = 10_000;
+//    private static final int RESERVATIONS_SIZE = 400_000;
+//    private static final int REVIEWS_SIZE = 400_000;
+//    private static final int REVIEW_TAGS_SIZE = 2_000_000;
+//    private static final int REVIEW_IMAGES_SIZE = 800_000;
+//    private static final int LIVE_SATISFACTIONS_SIZE = 400_000;
+//    private static final int LIVE_FEEDBACKS_SIZE = 400_000;
 
     private static final Logger log = LoggerFactory.getLogger("PERFORMANCE");
 
@@ -77,43 +96,40 @@ class PerformanceTest {
         log.info("===== 데미데이터 추가 시작 =====");
         long startTime = System.currentTimeMillis();
 
-        long sellerIdIdx = 1;
-        long customerIdIdx = 1;
-        long travelProductIdLowerIdx = 1;
-        long travelProductIdUpperIdx = 1;
-        long reservationIdIdx = 1;
-        long reviewIdIdx = 1;
+        long[] companyIds = LongStream.range(1, COMPANIES_SIZE + 1).toArray();
+        long[] sellerIds = LongStream.range(1, SELLERS_SIZE + 1).toArray();
+        long[] customerIds = LongStream.range(1, CUSTOMERS_SIZE + 1).toArray();
+        long[] travelProductIds = LongStream.range(1, PRODUCTS_SIZE + 1).toArray();
+        long[] reservationIds = LongStream.range(1, RESERVATIONS_SIZE + 1).toArray();
+        long[] reviewIds = LongStream.range(1, REVIEWS_SIZE + 1).toArray();
 
+
+        log.info("(1/11) INSERT INTO PARTNER_COMPANIES");
         partnerDao.batchInsertPartnerCompanies(COMPANIES_SIZE);
-        for (long companyId = 1; companyId <= COMPANIES_SIZE; companyId++) {
-            partnerDao.batchInsertPartnerManagers(companyId, MANAGERS_PER_COMPANY_SIZE);
-            partnerDao.batchInsertPartnerSellers(companyId, SELLERS_PER_COMPANY_SIZE);
+        log.info("(2/11) INSERT INTO PARTNER_MANAGERS");
+        partnerDao.batchInsertPartnerManagers(companyIds, MANAGERS_SIZE);
+        log.info("(3/11) INSERT INTO PARTNER_SELLERS");
+        partnerDao.batchInsertPartnerSellers(companyIds, SELLERS_SIZE);
 
-            for (long sellerId = sellerIdIdx; sellerId < sellerIdIdx + SELLERS_PER_COMPANY_SIZE; sellerId++) {
-                productDao.batchInsertSingleTravelProduct(sellerId, companyId, PRODUCTS_PER_SELLER_SIZE, PRODUCTS_PER_SELLER_SIZE);
-            }
-            sellerIdIdx += SELLERS_PER_COMPANY_SIZE;
-            travelProductIdLowerIdx = travelProductIdUpperIdx;
-            travelProductIdUpperIdx += PRODUCTS_PER_SELLER_SIZE;
+        log.info("(4/11) INSERT INTO SINGLE_TRAVEL_PRODUCTS");
+        productDao.batchInsertSingleTravelProduct(companyIds, sellerIds, PRODUCTS_SIZE, REVIEWS_SIZE);
+        log.info("(5/11) INSERT INTO CUSTOMERS");
+        productDao.batchInsertCustomers(companyIds, CUSTOMERS_SIZE);
 
-            productDao.batchInsertCustomers(companyId, CUSTOMERS_PER_COMPANY_SIZE);
+        log.info("(6/11) INSERT INTO RESERVATIONS");
+        reviewDao.batchInsertReservations(travelProductIds, customerIds, RESERVATIONS_SIZE);
+        log.info("(7/11) INSERT INTO REVIEWS");
+        reviewDao.batchInsertReviews(reservationIds, REVIEWS_SIZE);
+        log.info("(8/11) INSERT INTO REVIEW_TAGS");
+        reviewDao.batchInsertReviewTags(reviewIds, REVIEW_TAGS_SIZE);
+        log.info("(9/11) INSERT INTO REVIEW_IMAGES");
+        reviewDao.batchInsertReviewImages(reviewIds, REVIEW_IMAGES_SIZE);
 
-            for (long customerId = customerIdIdx; customerId < customerIdIdx + CUSTOMERS_PER_COMPANY_SIZE; customerId++) {
-                reviewDao.batchInsertReservations(customerId, ThreadLocalRandom.current().nextLong(travelProductIdLowerIdx, travelProductIdUpperIdx), RESERVATIONS_PER_CUSTOMER_SIZE);
+        log.info("(10/11) INSERT INTO LIVE_FEEDBACKS");
+        liveDao.batchInsertLiveFeedbacks(reservationIds, LIVE_FEEDBACKS_SIZE);
+        log.info("(11/11) INSERT INTO LIVE_SATISFACTIONS");
+        liveDao.batchInsertLiveSatisfactions(reservationIds, LIVE_SATISFACTIONS_SIZE);
 
-                for (long reservationId = reservationIdIdx; reservationId < reservationIdIdx + RESERVATIONS_PER_CUSTOMER_SIZE; reservationId++) {
-                    reviewDao.batchInsertReviews(reservationId, REVIEWS_PER_RESERVATION_SIZE);
-                    reviewDao.batchInsertReviewTags(reviewIdIdx, REVIEW_TAGS_PER_REVIEW_SIZE);
-                    reviewDao.batchInsertReviewImages(reviewIdIdx, REVIEW_IMAGES_PER_REVIEW_SIZE);
-                    liveDao.batchInsertLiveFeedbacks(reservationId, LIVE_FEEDBACKS_PER_RESERVATION);
-                    liveDao.batchInsertLiveSatisfactions(reservationId, LIVE_SATISFACTIONS_PER_RESERVATION);
-
-                    reviewIdIdx++;
-                }
-                reservationIdIdx += RESERVATIONS_PER_CUSTOMER_SIZE;
-            }
-            customerIdIdx += CUSTOMERS_PER_COMPANY_SIZE;
-        }
 
         double dummyQueryTime = (System.currentTimeMillis() - startTime) / 1000.0;
         log.info("===== 데미데이터 추가 종료 =====");

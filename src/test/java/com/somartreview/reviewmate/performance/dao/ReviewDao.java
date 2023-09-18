@@ -24,16 +24,16 @@ public class ReviewDao {
     }
 
 
-    public void batchInsertReservations(long customerId, long travelProductId, int reservationsSize) {
+    public void batchInsertReservations(long[] travelProductIds, long[] customerIds, int reservationsSize) {
         jdbcTemplate.batchUpdate(
                 "INSERT INTO reservation (created_at, updated_at, partner_custom_id, start_date_time, end_date_time, customer_id, travel_product_id) " +
                         "VALUES (now(), now(), ?, '2023-10-18T13:00:00', '2023-10-19T12:00:00', ?, ?)",
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        ps.setString(1, "RESERVATION_" + String.valueOf(System.nanoTime()));
-                        ps.setLong(2, customerId);
-                        ps.setLong(3, travelProductId);
+                        ps.setString(1, "RESERVATION_" + i);
+                        ps.setLong(2, customerIds[i % customerIds.length]);
+                        ps.setLong(3, travelProductIds[i % travelProductIds.length]);
                     }
 
                     @Override
@@ -43,7 +43,7 @@ public class ReviewDao {
                 });
     }
 
-    public void batchInsertReviews(long reservationId, int reviewsSize) {
+    public void batchInsertReviews(long[] reservationIds, int reviewsSize) {
         ReviewPolarity[] polarities = ReviewPolarity.values();
 
         jdbcTemplate.batchUpdate(
@@ -56,7 +56,7 @@ public class ReviewDao {
                         ps.setString(2, "content" + i);
                         ps.setInt(3, random.nextInt(5) + 1);
                         ps.setString(4, "title" + i);
-                        ps.setLong(5, reservationId);
+                        ps.setLong(5, reservationIds[i % reservationIds.length]);
                     }
 
                     @Override
@@ -66,7 +66,7 @@ public class ReviewDao {
                 });
     }
 
-    public void batchInsertReviewTags(long reviewId, int reviewTagsSize) {
+    public void batchInsertReviewTags(long[] reviewIds, int reviewTagsSize) {
         ReviewPolarity[] polarities = ReviewPolarity.values();
         ReviewProperty[] properties = ReviewProperty.values();
 
@@ -79,7 +79,7 @@ public class ReviewDao {
                         ps.setString(1, "tag" + i);
                         ps.setString(2, polarities[i % polarities.length].name());
                         ps.setString(3, properties[i % properties.length].name());
-                        ps.setLong(4, reviewId);
+                        ps.setLong(4, reviewIds[i % reviewIds.length]);
                     }
 
                     @Override
@@ -89,7 +89,7 @@ public class ReviewDao {
                 });
     }
 
-    public void batchInsertReviewImages(long reviewId, int reviewImagesSize) {
+    public void batchInsertReviewImages(long[] reviewIds, int reviewImagesSize) {
         jdbcTemplate.batchUpdate(
                 "INSERT INTO review_image (created_at, updated_at, url, review_id) " +
                         "VALUES (now(), now(), ?, ?)",
@@ -97,7 +97,7 @@ public class ReviewDao {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
                         ps.setString(1, "www.review-image" + i + ".com");
-                        ps.setLong(2, reviewId);
+                        ps.setLong(2, reviewIds[i % reviewIds.length]);
                     }
 
                     @Override

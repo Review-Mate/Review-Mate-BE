@@ -22,7 +22,7 @@ public class LiveDao {
         this.random = new Random();
     }
 
-    public void batchInsertLiveFeedbacks(long reservationId, int liveFeedbacksSize) {
+    public void batchInsertLiveFeedbacks(long[] reservationIds, int liveFeedbacksSize) {
         boolean[][] statusSets = {
                 {false, false, false},
                 {true, true, false},
@@ -41,7 +41,7 @@ public class LiveDao {
                         ps.setBoolean(4, statusSets[i % statusSets.length][1]);
                         ps.setBoolean(5, statusSets[i % statusSets.length][2]);
                         ps.setString(6, "seller-message" + i);
-                        ps.setLong(7, reservationId);
+                        ps.setLong(7, reservationIds[i % reservationIds.length]);
                     }
 
                     @Override
@@ -51,7 +51,7 @@ public class LiveDao {
                 });
     }
 
-    public void batchInsertLiveSatisfactions(long reservationId, int liveSatisfactionsSize) {
+    public void batchInsertLiveSatisfactions(long[] reservationIds, int liveSatisfactionsSize) {
         ReviewProperty[] properties = ReviewProperty.values();
 
         jdbcTemplate.batchUpdate(
@@ -63,7 +63,7 @@ public class LiveDao {
                         ps.setString(1, properties[i % properties.length].name());
                         ps.setLong(2, random.nextInt(5) + 1);
                         ps.setString(3, properties[i % properties.length].name());
-                        ps.setLong(4, reservationId);
+                        ps.setLong(4, reservationIds[i % reservationIds.length]);
                     }
 
                     @Override

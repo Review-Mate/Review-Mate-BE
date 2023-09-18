@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.stream.LongStream;
 
 @Repository
 @Profile("performance")
@@ -35,16 +36,17 @@ public class PartnerDao {
                 });
     }
 
-    public void batchInsertPartnerManagers(long companyId, int managersSize) {
+    public void batchInsertPartnerManagers(long[] companyIds, int managersSize) {
         jdbcTemplate.batchUpdate(
-                "INSERT INTO partner_manager (created_at, updated_at, name, email, password, role, partner_company_id) VALUES (now(), now(), ?, ?, ?, 'ADMIN', ?)",
+                "INSERT INTO partner_manager (created_at, updated_at, name, email, password, role, partner_company_id) " +
+                        "VALUES (now(), now(), ?, ?, ?, 'ADMIN', ?)",
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
                         ps.setString(1, "manager" + i);
                         ps.setString(2, "manager" + i + "@company.com");
                         ps.setString(3, "password" + i);
-                        ps.setLong(4, companyId);
+                        ps.setLong(4, companyIds[i % companyIds.length]);
                     }
 
                     @Override
@@ -54,16 +56,17 @@ public class PartnerDao {
                 });
     }
 
-    public void batchInsertPartnerSellers(long companyId, int sellersSize) {
+    public void batchInsertPartnerSellers(long[] companyIds, int sellersSize) {
         jdbcTemplate.batchUpdate(
-                "INSERT INTO partner_seller (created_at, updated_at, kakao_id, name, phone_number, partner_company_id) VALUES (now(), now(), ?, ?, ?, ?)",
+                "INSERT INTO partner_seller (created_at, updated_at, kakao_id, name, phone_number, partner_company_id) " +
+                        "VALUES (now(), now(), ?, ?, ?, ?)",
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        ps.setString(1, "kakaoId" + String.valueOf(System.nanoTime()));
+                        ps.setString(1, "kakaoId" + i);
                         ps.setString(2, "seller" + i);
-                        ps.setString(3, String.valueOf(System.nanoTime()));
-                        ps.setLong(4, companyId);
+                        ps.setString(3, "010" + i);
+                        ps.setLong(4, companyIds[i % companyIds.length]);
                     }
 
                     @Override
