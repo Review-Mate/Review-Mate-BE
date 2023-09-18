@@ -26,15 +26,13 @@
 # 💻 서버 아키텍처
 
 ### ERD Diagram
-![리뷰메이트.png](..%2F..%2F..%2FLibrary%2FMobile%20Documents%2Fcom%7Eapple%7ECloudDocs%2F%EC%B7%A8%EC%A4%80%2F%EC%82%AC%EC%A7%84%20%EC%9E%90%EB%A3%8C%2F%EB%A6%AC%EB%B7%B0%EB%A9%94%EC%9D%B4%ED%8A%B8.png)
+![erd.png](docs%2Ferd.png)
 
 ### AWS Architecutre
-![aws.png](..%2F..%2F..%2FDownloads%2Faws.png)
-
+![erd.png](docs%2Ferd.png)
 
 ### Deployment pipeline - GitOps
-![gitops.png](..%2F..%2F..%2FDownloads%2Fgitops.png)
-
+![gitops.png](docs%2Fgitops.png)
 
 # 🛠 기술 스택
 ![image_reviewmate-be-stack.png](docs%2Fimage_reviewmate-be-stack.png)
