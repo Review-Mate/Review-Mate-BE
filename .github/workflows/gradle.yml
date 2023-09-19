@@ -41,12 +41,12 @@ jobs:
     ## create application-test.properties
     - name: make application-test.properties
       run: |
-        mkdir -p ./src/main/resources
-        cd ./src/main/resources
-        touch ./application-test.properties
-        echo "${{ secrets.PROPERTIES_TEST }}" > ./application-test.properties
-        touch ./sonarqube.properties
-        echo "${{ secrets.SONAR_PROPERTIES }}" > ./sonarqube.properties
+          mkdir -p ./src/main/resources
+          cd ./src/main/resources
+          touch ./application-test.properties
+          echo "${{ secrets.PROPERTIES_TEST }}" > ./application-test.properties
+          touch ./sonarqube.properties
+          echo "${{ secrets.SONAR_PROPERTIES }}" > ./sonarqube.properties
       shell: bash
 
     ## gradle build
