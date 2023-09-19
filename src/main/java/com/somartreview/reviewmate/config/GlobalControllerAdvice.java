@@ -41,6 +41,7 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ExceptionResponse> handleConstraintViolation(ConstraintViolationException e) {
         log.warn(INVALID_PROPERTY_ERROR.toString() + " : " + e.getMessage());
+        log.warn(e.getConstraintViolations().toString());
 
         String messages = extractErrorMessages(e.getConstraintViolations());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -59,6 +60,7 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleMismatchedInput(MethodArgumentNotValidException e) {
         log.warn(INVALID_PROPERTY_ERROR.toString() + " : " + e.getMessage());
+        log.warn(e.getBindingResult().getFieldErrors().toString());
 
         String messages = extractErrorMessages(e.getBindingResult().getFieldErrors());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -78,6 +80,7 @@ public class GlobalControllerAdvice {
     @ExceptionHandler({HttpMessageNotReadableException.class})
     public ResponseEntity<ExceptionResponse> handleMismatchedInput(Exception e) {
         log.warn(INVALID_PROPERTY_ERROR.toString() + " : " + e.getMessage());
+        log.error(e.toString());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ExceptionResponse.builder()
@@ -89,6 +92,7 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<ExceptionResponse> noHandlerFoundHandle(NoHandlerFoundException e) {
         log.warn(API_NOT_FOUND_ERROR.toString() + " : " + e.getMessage());
+        log.error(e.toString());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ExceptionResponse.builder()
@@ -100,6 +104,7 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ExceptionResponse> handleDataIntegrityViolation(DataIntegrityViolationException e) {
         log.warn(DB_CONFLICT_ERROR.toString() + " : " + e.getMessage());
+        log.warn(DB_CONFLICT_ERROR.getMessage() + " : " + e.getCause().getMessage());
 
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(ExceptionResponse.builder()
@@ -111,6 +116,7 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(ReviewMateException.class)
     public ResponseEntity<ExceptionResponse> handleReviewMateException(ReviewMateException e) {
         log.warn(e.getErrorCode().toString() + " : " + e.getMessage());
+        log.error(e.toString());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ExceptionResponse.builder()
@@ -122,6 +128,7 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ExceptionResponse> handleRuntimeException(RuntimeException e) {
         log.warn(RUNTIME_ERROR.toString() + " : " + RUNTIME_ERROR.getMessage());
+        log.error(e.toString());
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionResponse.builder()
