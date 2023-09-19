@@ -34,8 +34,10 @@ public class ReviewService {
         Review review = reviewCreateRequest.toEntity(reservation);
         reviewRepository.save(review);
 
-        List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
-        review.appendReviewImage(reviewImages);
+        if (reviewImageFiles != null) {
+            List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
+            review.appendReviewImage(reviewImages);
+        }
 
         // Impl Requesting review inference through API gateway
         // Impl Requesting review inference through kafka
