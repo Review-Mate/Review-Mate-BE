@@ -37,7 +37,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: ./gradlew build sonar --info --warning-mode=all
+        run: |
+          mkdir -p ./src/main/resources
+          touch ./src/main/resources/sonarqube.properties
+          echo "${{ secrets.SONAR_PROPERTIES }}" > ./src/main/resources/sonarqube.properties
+          ./gradlew build sonar --info --warning-mode=all
 
 
       - name: action-slack
