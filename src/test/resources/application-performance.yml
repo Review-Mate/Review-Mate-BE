@@ -8,13 +8,12 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     properties:
       hibernate:
-        #        show-sql: true
+#        show-sql: true
 #        format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
-#    defer-datasource-initialization: true
 
   servlet:
     multipart:
@@ -24,5 +23,5 @@ spring:
   session:
     store-type: jdbc
 
-logging.level:
-  org.hibernate.SQL: DEBUG
+#logging.level:
+#  org.hibernate.SQL: DEBUG
