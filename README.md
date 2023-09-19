@@ -29,7 +29,7 @@
 ![erd.png](docs%2Ferd.png)
 
 ### AWS Architecutre
-![erd.png](docs%2Ferd.png)
+![erd.png](docs%2Faws.png)
 
 ### Deployment pipeline - GitOps
 ![gitops.png](docs%2Fgitops.png)
