@@ -14,19 +14,19 @@ public class ReservationApi {
 
     public static ExtractableResponse<Response> 예약을_생성한다() {
         Map<String, Object> customerCreateRequest = Map.of(
-                "partnerCustomId", "CUSTOMER_" + PARTNER_CUSTOMER_ID_POSTFIX,
+                "partnerCustomId", "CUSTOMER_" + PARTNER_CUSTOM_ID_POSTFIX,
                 "name", "권순찬",
-                "phoneNumber", "01009159941",
-                "kakaoId", "sckwon770_" + PARTNER_CUSTOMER_ID_POSTFIX
+                "phoneNumber", "01309159941",
+                "kakaoId", "sckwon770_" + PARTNER_CUSTOM_ID_POSTFIX
         );
         Map<String, Object> singleTravelProductCreateRequest = Map.of(
-                "partnerCustomId", "PRODUCT_" + PARTNER_CUSTOMER_ID_POSTFIX,
+                "partnerCustomId", "PRODUCT_" + PARTNER_CUSTOM_ID_POSTFIX,
                 "name", "신라더스테이 호텔",
                 "singleTravelProductCategory", "ACCOMMODATION",
                 "partnerSellerId", 1L
         );
         Map<String, Object> singleTravelReservationCreateRequest = Map.of(
-                "partnerCustomId", "RESERVATION_" + PARTNER_CUSTOMER_ID_POSTFIX,
+                "partnerCustomId", "RESERVATION_" + PARTNER_CUSTOM_ID_POSTFIX,
                 "startDateTime", "2023-10-18T13:00:00",
                 "endDateTime", "2023-10-19T12:00:00",
                 "customerCreateRequest", customerCreateRequest,
@@ -51,22 +51,6 @@ public class ReservationApi {
                 .extract();
     }
 
-    public static ExtractableResponse<Response> 고객Id와_예약목록을_조회한다() {
-        return RestAssured.given()
-                .param("customerId", 2L)
-                .when().get("api/console/v1/products/travel/single/reservations")
-                .then()
-                .extract();
-    }
-
-    public static ExtractableResponse<Response> 상품Id와_예약목록을_조회한다() {
-        return RestAssured.given()
-                .param("singleTravelProductId", 2L)
-                .when().get("api/console/v1/products/travel/single/reservations")
-                .then()
-                .extract();
-    }
-
     public static ExtractableResponse<Response> 고객Id와_상품Id로_예약목록을_조회한다() {
         return RestAssured.given()
                 .param("customerId", 2L)
@@ -76,9 +60,9 @@ public class ReservationApi {
                 .extract();
     }
 
-    public static ExtractableResponse<Response> 예약Id로_예약을_삭제한다() {
+    public static ExtractableResponse<Response> 예약Id로_예약을_삭제한다(long createdReservationId) {
         return RestAssured.given()
-                .pathParam("reservationId", NEW_RESERVATION_ID)
+                .pathParam("reservationId", createdReservationId)
                 .when().delete("api/console/products/travel/single/reservations/{reservationId}")
                 .then()
                 .extract();

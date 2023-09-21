@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.somartreview.reviewmate.exception.ErrorCode.REVIEW_NOT_FOUND;
 
@@ -56,11 +57,6 @@ public class ReviewService {
 
     public Review findById(Long id) {
         return reviewRepository.findById(id)
-                .orElseThrow(() -> new DomainLogicException(REVIEW_NOT_FOUND));
-    }
-
-    public Review findByReservationId(Long reservationId) {
-        return reviewRepository.findByReservation_Id(reservationId)
                 .orElseThrow(() -> new DomainLogicException(REVIEW_NOT_FOUND));
     }
 
@@ -116,7 +112,11 @@ public class ReviewService {
 
     @Transactional
     public void deleteByReservationId(Long reservationId) {
-        final Long reviewId = findByReservationId(reservationId).getId();
-        deleteById(reviewId);
+        Optional<Review> foundReview = reviewRepository.findByReservation_Id(reservationId);
+        if (foundReview.isEmpty()) {
+            return;
+        }
+
+        deleteById(foundReview.get().getId());
     }
 }
