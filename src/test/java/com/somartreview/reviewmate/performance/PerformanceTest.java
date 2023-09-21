@@ -53,14 +53,14 @@ public class PerformanceTest {
     void 예약_API의_성능을_테스트한다() {
         log.info("(1/5) 예약 API");
 
-        ExtractableResponse<Response> response = 예약을_생성한다(PARTNER_DOMAIN, PARTNER_CUSTOM_ID_POSTFIX, CUSTOMER_PHONE_NUMBER);
+        ExtractableResponse<Response> response = 예약을_생성한다();
         String[] urls = response.header("Location").split("/");
         long reservationId = Long.parseLong(urls[urls.length - 1]);
 
-        예약Id로_예약을_조회한다(SAFE_ID);
-        고객Id와_예약목록을_조회한다(SAFE_ID);
-        상품Id와_예약목록을_조회한다(SAFE_ID);
-        고객Id와_상품Id로_예약목록을_조회한다(SAFE_ID);
+        예약Id로_예약을_조회한다();
+        고객Id와_예약목록을_조회한다();
+        상품Id와_예약목록을_조회한다();
+        고객Id와_상품Id로_예약목록을_조회한다();
 
         예약Id로_예약을_삭제한다(reservationId);
     }
@@ -101,8 +101,8 @@ public class PerformanceTest {
     삭제 요청들을 테스트한다.
      */
     void 파트너_API의_성능을_테스트한다() {
-        파트너사를_삭제한다(DELETING_PARTNER_COMPANY_DOMAIN);
-        파트너사_관리자를_삭제한다(DELETING_PARTNER_MANAGER_ID);
-        파트너사_판매자를_삭제한다(DELETING_PARTNER_SELLER_ID);
+        파트너사를_삭제한다();
+        파트너사_관리자를_삭제한다();
+        파트너사_판매자를_삭제한다();
     }
 }
