@@ -33,8 +33,10 @@ public class ReviewService {
         reservation.getTravelProduct().updateReviewData(review.getRating());
         reservation.addReview(review);
 
-        List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
-        review.appendReviewImage(reviewImages);
+        if (reviewImageFiles != null) {
+            List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
+            review.appendReviewImage(reviewImages);
+        }
 
         // Impl Requesting review inference through API gateway
         // Impl Requesting review inference through kafka

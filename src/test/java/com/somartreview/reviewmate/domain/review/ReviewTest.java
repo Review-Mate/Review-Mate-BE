@@ -49,9 +49,10 @@ class ReviewTest {
     void 리뷰_점수는_1점_보다_낮으면_안된다() {
         // given
         int rating = 0;
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new Review(rating, "제목", "내용", new Reservation()))
+        assertThatThrownBy(() -> new Review(rating, "제목", "내용", mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(REVIEW_RATING_ERROR.getMessage());
     }
@@ -60,9 +61,10 @@ class ReviewTest {
     void 리뷰_점수는_5점_보다_낮으면_안된다() {
         // given
         int rating = 6;
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new Review(rating, "제목", "내용", new Reservation()))
+        assertThatThrownBy(() -> new Review(rating, "제목", "내용", mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(REVIEW_RATING_ERROR.getMessage());
     }
@@ -71,9 +73,10 @@ class ReviewTest {
     void 리뷰_제목은_공백이면_안된다() {
         // given
         String title = " ";
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new Review(5, title, "내용", new Reservation()))
+        assertThatThrownBy(() -> new Review(5, title, "내용", mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(REVIEW_TITLE_ERROR.getMessage());
     }
@@ -82,9 +85,10 @@ class ReviewTest {
     void 리뷰_제목은_255자_보다_길면_안된다() {
         // given
         String title = "a".repeat(256);
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new Review(5, title, "내용", new Reservation()))
+        assertThatThrownBy(() -> new Review(5, title, "내용", mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(REVIEW_TITLE_ERROR.getMessage());
     }
@@ -93,9 +97,10 @@ class ReviewTest {
     void 리뷰_내용은_공백이면_안된다() {
         // given
         String content = " ";
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new Review(5, "제목", content, new Reservation()))
+        assertThatThrownBy(() -> new Review(5, "제목", content, mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(REVIEW_CONTENT_ERROR.getMessage());
     }
@@ -104,9 +109,10 @@ class ReviewTest {
     void 리뷰_내용은_255자_보다_길면_안된다() {
         // given
         String content = "a".repeat(256);
+        Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new Review(5, "제목", content, new Reservation()))
+        assertThatThrownBy(() -> new Review(5, "제목", content, mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(REVIEW_CONTENT_ERROR.getMessage());
     }

@@ -41,9 +41,12 @@ jobs:
     ## create application-test.properties
     - name: make application-test.properties
       run: |
+        mkdir -p ./src/main/resources
         cd ./src/main/resources
         touch ./application-test.properties
         echo "${{ secrets.PROPERTIES_TEST }}" > ./application-test.properties
+        touch ./sonarqube.properties
+        echo "${{ secrets.SONAR_PROPERTIES }}" > ./sonarqube.properties
       shell: bash
 
     ## gradle build
@@ -71,8 +74,8 @@ jobs:
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             sudo docker rm -f $(docker ps -qa)
             sudo docker pull ${{ secrets.DOCKER_REPO_TEST }}
-            docker-compose up -d
-            docker image prune -f
+            sudo docker-compose up -d
+            sudo docker image prune -f
 
 
 ####################################################################################################################################
@@ -104,9 +107,12 @@ jobs:
     ## create application-prod.properties
     - name: make application-prod.properties
       run: |
+          mkdir -p ./src/main/resources
           cd ./src/main/resources
           touch ./application-prod.properties
           echo "${{ secrets.PROPERTIES_PROD }}" > ./application-prod.properties
+          touch ./sonarqube.properties
+          echo "${{ secrets.SONAR_PROPERTIES }}" > ./sonarqube.properties
       shell: bash
 
     ## gradle build
@@ -134,8 +140,8 @@ jobs:
               docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
               sudo docker rm -f $(docker ps -qa)
               sudo docker pull ${{ secrets.DOCKER_REPO_PROD }}
-              docker-compose up -d
-              docker image prune -f
+              sudo docker-compose up -d
+              sudo docker image prune -f
 
 
 ####################################################################################################################################
@@ -180,8 +186,8 @@ jobs:
               docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
               sudo docker rm -f $(docker ps -qa)
               sudo docker pull ${{ secrets.DOCKER_REPO_PROD }}
-              docker-compose up -d
-              docker image prune -f
+              sudo docker-compose up -d
+              sudo docker image prune -f
 
 ####################################################################################################################################
 
