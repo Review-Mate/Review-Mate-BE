@@ -12,6 +12,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
 import static com.somartreview.reviewmate.performance.api.CustomerAPIRequester.*;
+import static com.somartreview.reviewmate.performance.api.PartnerAPIRequester.*;
 import static com.somartreview.reviewmate.performance.api.ReservationAPIRequester.*;
 import static com.somartreview.reviewmate.performance.api.ReviewAPIRequester.*;
 import static com.somartreview.reviewmate.performance.api.SingleTravelProductAPIRequester.*;
@@ -23,9 +24,14 @@ public class PerformanceTest {
 
     private static final Logger log = LoggerFactory.getLogger("PERFORMANCE");
 
-    public static final String PARTNER_DOMAIN = "goodchoice.kr";
     public static final long SAFE_ID = 3L;
+    public static final String PARTNER_DOMAIN = "goodchoice.kr";
     public static final String PARTNER_CUSTOM_ID_POSTFIX = "_1019_12";
+    public static final String CUSTOMER_PHONE_NUMBER = "02209159941";
+    public static final String DELETING_PARTNER_COMPANY_DOMAIN = "goodchoice.kr";
+    public static final Long DELETING_PARTNER_SELLER_ID = 2L;
+    public static final Long DELETING_PARTNER_MANAGER_ID = 2L;
+
 
     @LocalServerPort
     int port;
@@ -47,14 +53,14 @@ public class PerformanceTest {
     void 예약_API의_성능을_테스트한다() {
         log.info("(1/5) 예약 API");
 
-        ExtractableResponse<Response> response = 예약을_생성한다();
+        ExtractableResponse<Response> response = 예약을_생성한다(PARTNER_DOMAIN, PARTNER_CUSTOM_ID_POSTFIX, CUSTOMER_PHONE_NUMBER);
         String[] urls = response.header("Location").split("/");
         long reservationId = Long.parseLong(urls[urls.length - 1]);
 
-        예약Id로_예약을_조회한다();
-        고객Id와_예약목록을_조회한다();
-        상품Id와_예약목록을_조회한다();
-        고객Id와_상품Id로_예약목록을_조회한다();
+        예약Id로_예약을_조회한다(SAFE_ID);
+        고객Id와_예약목록을_조회한다(SAFE_ID);
+        상품Id와_예약목록을_조회한다(SAFE_ID);
+        고객Id와_상품Id로_예약목록을_조회한다(SAFE_ID);
 
         예약Id로_예약을_삭제한다(reservationId);
     }
@@ -89,5 +95,14 @@ public class PerformanceTest {
 
         리뷰Id로_리뷰를_조회한다();
         상품의_파트너Id로_리뷰목록을_조회한다();
+    }
+
+    /*
+    삭제 요청들을 테스트한다.
+     */
+    void 파트너_API의_성능을_테스트한다() {
+        파트너사를_삭제한다(DELETING_PARTNER_COMPANY_DOMAIN);
+        파트너사_관리자를_삭제한다(DELETING_PARTNER_MANAGER_ID);
+        파트너사_판매자를_삭제한다(DELETING_PARTNER_SELLER_ID);
     }
 }
