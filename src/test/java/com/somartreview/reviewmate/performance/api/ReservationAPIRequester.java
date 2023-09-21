@@ -10,13 +10,13 @@ import java.util.Map;
 
 import static com.somartreview.reviewmate.performance.PerformanceTest.*;
 
-public class ReservationAPIRequestTest {
+public class ReservationAPIRequester {
 
     public static ExtractableResponse<Response> 예약을_생성한다() {
         Map<String, Object> customerCreateRequest = Map.of(
                 "partnerCustomId", "CUSTOMER_" + PARTNER_CUSTOM_ID_POSTFIX,
                 "name", "권순찬",
-                "phoneNumber", "01509159941",
+                "phoneNumber", "02009159941",
                 "kakaoId", "sckwon770_" + PARTNER_CUSTOM_ID_POSTFIX
         );
         Map<String, Object> singleTravelProductCreateRequest = Map.of(
@@ -45,7 +45,7 @@ public class ReservationAPIRequestTest {
 
     public static ExtractableResponse<Response> 예약Id로_예약을_조회한다() {
         return RestAssured.given()
-                .pathParam("reservationId", 3L)
+                .pathParam("reservationId", SAFE_ID)
                 .when().get("api/console/v1/products/travel/single/reservations/{reservationId}")
                 .then()
                 .extract();
@@ -53,8 +53,8 @@ public class ReservationAPIRequestTest {
 
     public static ExtractableResponse<Response> 고객Id와_상품Id로_예약목록을_조회한다() {
         return RestAssured.given()
-                .param("customerId", 2L)
-                .param("singleTravelProductId", 2L)
+                .param("customerId", SAFE_ID)
+                .param("singleTravelProductId", SAFE_ID)
                 .when().get("api/console/v1/products/travel/single/reservations")
                 .then()
                 .extract();

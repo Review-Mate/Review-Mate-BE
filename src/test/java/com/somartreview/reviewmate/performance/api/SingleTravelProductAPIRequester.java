@@ -1,7 +1,6 @@
 package com.somartreview.reviewmate.performance.api;
 
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.springframework.http.MediaType;
@@ -11,7 +10,7 @@ import java.util.Map;
 import static com.somartreview.reviewmate.performance.PerformanceTest.PARTNER_CUSTOM_ID_POSTFIX;
 import static com.somartreview.reviewmate.performance.PerformanceTest.PARTNER_DOMAIN;
 
-public class SingleTravelProductAPIRequestTest {
+public class SingleTravelProductAPIRequester {
 
     public static ExtractableResponse<Response> 파트너ID로_단일_여행상품_목록을_조회한다() {
         return RestAssured.given()

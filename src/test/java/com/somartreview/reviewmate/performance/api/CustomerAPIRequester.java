@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static com.somartreview.reviewmate.performance.PerformanceTest.*;
 
-public class CustomerAPIRequestTest {
+public class CustomerAPIRequester {
 
     public static void 커스텀Id로_고객을_조회한다() {
         RestAssured.given()

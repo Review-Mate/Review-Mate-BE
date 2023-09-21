@@ -6,7 +6,6 @@ import com.somartreview.reviewmate.dto.review.ReviewCreateRequest;
 import com.somartreview.reviewmate.dto.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
-import com.somartreview.reviewmate.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,10 +27,11 @@ public class ReviewService {
 
     @Transactional
     public Long create(final Reservation reservation, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
-        reservation.getTravelProduct().addReview(reviewCreateRequest.getRating());
-
         Review review = reviewCreateRequest.toEntity(reservation);
         reviewRepository.save(review);
+
+        reservation.getTravelProduct().updateReviewData(review.getRating());
+        reservation.addReview(review);
 
         List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
         review.appendReviewImage(reviewImages);
@@ -91,7 +91,7 @@ public class ReviewService {
         review.clearReviewImages();
 
         review.updateReview(reviewUpdateRequest);
-        review.getReservation().getTravelProduct().addReview(reviewUpdateRequest.getRating());
+        review.getReservation().getTravelProduct().updateReviewData(reviewUpdateRequest.getRating());
         List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
         review.appendReviewImage(reviewImages);
 

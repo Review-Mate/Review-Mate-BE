@@ -78,4 +78,8 @@ public class Reservation extends BaseEntity {
             throw new DomainLogicException(ErrorCode.RESERVATION_FRONT_END_TIME_ERROR);
         }
     }
+
+    public void addReview(final Review review) {
+        this.review = review;
+    }
 }
