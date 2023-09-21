@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static com.somartreview.reviewmate.performance.PerformanceTest.*;
 
-public class ReservationApi {
+public class ReservationAPIRequestTest {
 
     public static ExtractableResponse<Response> 예약을_생성한다() {
         Map<String, Object> customerCreateRequest = Map.of(

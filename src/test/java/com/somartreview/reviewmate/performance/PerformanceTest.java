@@ -11,8 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
-import static com.somartreview.reviewmate.performance.api.CustomerApi.*;
-import static com.somartreview.reviewmate.performance.api.ReservationApi.*;
+import static com.somartreview.reviewmate.performance.api.CustomerAPIRequestTest.*;
+import static com.somartreview.reviewmate.performance.api.ReservationAPIRequestTest.*;
 import static org.springframework.boot.test.context.SpringBootTest.*;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
