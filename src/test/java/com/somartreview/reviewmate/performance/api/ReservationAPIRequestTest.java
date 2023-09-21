@@ -16,7 +16,7 @@ public class ReservationAPIRequestTest {
         Map<String, Object> customerCreateRequest = Map.of(
                 "partnerCustomId", "CUSTOMER_" + PARTNER_CUSTOM_ID_POSTFIX,
                 "name", "권순찬",
-                "phoneNumber", "01309159941",
+                "phoneNumber", "01509159941",
                 "kakaoId", "sckwon770_" + PARTNER_CUSTOM_ID_POSTFIX
         );
         Map<String, Object> singleTravelProductCreateRequest = Map.of(

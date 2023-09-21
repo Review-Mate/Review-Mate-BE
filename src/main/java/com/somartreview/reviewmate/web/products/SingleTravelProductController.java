@@ -67,15 +67,29 @@ public class SingleTravelProductController {
     @Parameter(name = "travelProductId", description = "단일 여행상품 ID")
     @ApiResponse(responseCode = "204", description = "단일 여행상품 정보 수정 성공")
     @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
-    @PatchMapping(value = "/products/travel/single/{travelProductId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> updateSingleTravelProductByTravelProductId(@PathVariable Long travelProductId,
+    @PatchMapping(value = "/{partnerDomain}/products/travel/single/{partnerCustomId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> updateSingleTravelProductByTravelProductId(@PathVariable String partnerDomain,
+                                                                           @PathVariable String partnerCustomId,
                                                                            @Valid @RequestPart SingleTravelProductUpdateRequest singleTravelProductUpdateRequest,
                                                                            @RequestPart(required = false) MultipartFile thumbnailFile) {
+        long travelProductId = singleTravelProductService.findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId).getId();
         singleTravelProductService.updateByTravelProductId(travelProductId, singleTravelProductUpdateRequest, thumbnailFile);
 
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(operationId = "deleteSingleTravelProductByPartnerCustomId", summary = "단일 여행상품 삭제")
+    @Parameter(name = "travelProductId", description = "단일 여행상품 ID")
+    @ApiResponse(responseCode = "204", description = "단일 여행상품 삭제 성공")
+    @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 파트너 커스텀 ID")
+    @DeleteMapping("/{partnerDomain}/products/travel/single/{partnerCustomId}")
+    public ResponseEntity<Void> deleteSingleTravelProductByPartnerCustomId(@PathVariable String partnerDomain,
+                                                                           @PathVariable String partnerCustomId) {
+        long travelProductId = singleTravelProductService.findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId).getId();
+        singleTravelProductService.deleteByTravelProductId(travelProductId);
+
+        return ResponseEntity.noContent().build();
+    }
 
     @Operation(operationId = "deleteSingleTravelProductByTravelProductId", summary = "단일 여행상품 삭제")
     @Parameter(name = "travelProductId", description = "단일 여행상품 ID")
@@ -88,3 +102,4 @@ public class SingleTravelProductController {
         return ResponseEntity.noContent().build();
     }
 }
+

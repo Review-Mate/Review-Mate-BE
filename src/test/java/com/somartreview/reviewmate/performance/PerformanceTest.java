@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static com.somartreview.reviewmate.performance.api.CustomerAPIRequestTest.*;
 import static com.somartreview.reviewmate.performance.api.ReservationAPIRequestTest.*;
+import static com.somartreview.reviewmate.performance.api.SingleTravelProductAPIRequestTest.*;
 import static org.springframework.boot.test.context.SpringBootTest.*;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -23,7 +24,7 @@ public class PerformanceTest {
 
     public static final String PARTNER_DOMAIN = "goodchoice.kr";
     public static final long SAFE_ID = 5L;
-    public static final String PARTNER_CUSTOM_ID_POSTFIX = "_1018_3";
+    public static final String PARTNER_CUSTOM_ID_POSTFIX = "_1018_5";
 
     @LocalServerPort
     int port;
@@ -38,6 +39,7 @@ public class PerformanceTest {
         log.info("===== 성능 테스트 시작 =====");
         예약_API의_성능을_테스트한다();
         고객_API의_성능을_테스트한다();
+        여행상품_API의_성능을_테스트한다();
     }
 
     void 예약_API의_성능을_테스트한다() {
@@ -55,5 +57,12 @@ public class PerformanceTest {
         커스텀Id로_고객을_조회한다();
         커스텀Id로_고객_정보를_수정한다();
         커스텀Id로_고객을_삭제한다();
+    }
+
+    void 여행상품_API의_성능을_테스트한다() {
+        파트너ID로_단일_여행상품_목록을_조회한다();
+        카테고리별_단일_여행상품_목록을_조회한다();
+        단일_여행상품_정보를_수정한다();
+        파트너ID로_단일_여행상품을_삭제한다();
     }
 }
