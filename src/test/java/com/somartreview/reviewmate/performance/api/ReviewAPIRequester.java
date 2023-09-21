@@ -27,7 +27,6 @@ public class ReviewAPIRequester {
                 .pathParam("reservationPartnerCustomId", "RESERVATION_" + PARTNER_CUSTOM_ID_POSTFIX)
                 .when().post("api/widget/v1/{partnerDomain}/reservations/{reservationPartnerCustomId}/reviews")
                 .then()
-                .log().all()
                 .extract();
     }
 

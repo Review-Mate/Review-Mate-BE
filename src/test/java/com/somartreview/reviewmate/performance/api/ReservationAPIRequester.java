@@ -16,7 +16,7 @@ public class ReservationAPIRequester {
         Map<String, Object> customerCreateRequest = Map.of(
                 "partnerCustomId", "CUSTOMER_" + PARTNER_CUSTOM_ID_POSTFIX,
                 "name", "권순찬",
-                "phoneNumber", "02009159941",
+                "phoneNumber", "02209159941",
                 "kakaoId", "sckwon770_" + PARTNER_CUSTOM_ID_POSTFIX
         );
         Map<String, Object> singleTravelProductCreateRequest = Map.of(
@@ -47,6 +47,22 @@ public class ReservationAPIRequester {
         return RestAssured.given()
                 .pathParam("reservationId", SAFE_ID)
                 .when().get("api/console/v1/products/travel/single/reservations/{reservationId}")
+                .then()
+                .extract();
+    }
+
+    public static ExtractableResponse<Response> 고객Id와_예약목록을_조회한다() {
+        return RestAssured.given()
+                .param("customerId", 2L)
+                .when().get("api/console/v1/products/travel/single/reservations")
+                .then()
+                .extract();
+    }
+
+    public static ExtractableResponse<Response> 상품Id와_예약목록을_조회한다() {
+        return RestAssured.given()
+                .param("singleTravelProductId", 2L)
+                .when().get("api/console/v1/products/travel/single/reservations")
                 .then()
                 .extract();
     }

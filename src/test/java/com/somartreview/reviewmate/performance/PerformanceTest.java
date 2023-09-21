@@ -25,7 +25,7 @@ public class PerformanceTest {
 
     public static final String PARTNER_DOMAIN = "goodchoice.kr";
     public static final long SAFE_ID = 3L;
-    public static final String PARTNER_CUSTOM_ID_POSTFIX = "_1019_10";
+    public static final String PARTNER_CUSTOM_ID_POSTFIX = "_1019_12";
 
     @LocalServerPort
     int port;
@@ -35,16 +35,15 @@ public class PerformanceTest {
         RestAssured.port = port;
     }
 
-//    @Test
-//    void 성능을_테스트한다() {
-//        log.info("===== 성능 테스트 시작 =====");
-//        예약_API의_성능을_테스트한다();
-//        고객_API의_성능을_테스트한다();
-//        여행상품_API의_성능을_테스트한다();
-//        리뷰_API의_성능을_테스트한다();
-//    }
-
     @Test
+    void 성능을_테스트한다() {
+        log.info("===== 성능 테스트 시작 =====");
+        예약_API의_성능을_테스트한다();
+        고객_API의_성능을_테스트한다();
+        여행상품_API의_성능을_테스트한다();
+        리뷰_API의_성능을_테스트한다();
+    }
+
     void 예약_API의_성능을_테스트한다() {
         log.info("(1/5) 예약 API");
 
@@ -53,12 +52,13 @@ public class PerformanceTest {
         long reservationId = Long.parseLong(urls[urls.length - 1]);
 
         예약Id로_예약을_조회한다();
+        고객Id와_예약목록을_조회한다();
+        상품Id와_예약목록을_조회한다();
         고객Id와_상품Id로_예약목록을_조회한다();
 
         예약Id로_예약을_삭제한다(reservationId);
     }
 
-    @Test
     void 고객_API의_성능을_테스트한다() {
         log.info("(2/5) 고객 API");
 
@@ -67,7 +67,6 @@ public class PerformanceTest {
         커스텀Id로_고객을_삭제한다();
     }
 
-    @Test
     void 여행상품_API의_성능을_테스트한다() {
         log.info("(3/5) 여행상품 API");
 
@@ -77,7 +76,6 @@ public class PerformanceTest {
         파트너ID로_단일_여행상품을_삭제한다();
     }
 
-    @Test
     void 리뷰_API의_성능을_테스트한다() {
         log.info("(4/5) 리뷰 API");
 
@@ -89,7 +87,7 @@ public class PerformanceTest {
         커스텀Id로_고객을_삭제한다();
         파트너ID로_단일_여행상품을_삭제한다();
 
-//        리뷰Id로_리뷰를_조회한다();
-//        상품의_파트너Id로_리뷰목록을_조회한다();
+        리뷰Id로_리뷰를_조회한다();
+        상품의_파트너Id로_리뷰목록을_조회한다();
     }
 }

@@ -30,7 +30,7 @@ public class PerformanceInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         if (isPreflight(request) || performanceMonitor.getUri() == null) {
             return;
         }
@@ -38,6 +38,16 @@ public class PerformanceInterceptor implements HandlerInterceptor {
         performanceMonitor.end();
         logPerformanceMonitorResult();
     }
+
+//    @Override
+//    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+//        if (isPreflight(request) || performanceMonitor.getUri() == null) {
+//            return;
+//        }
+//
+//        performanceMonitor.end();
+//        logPerformanceMonitorResult();
+//    }
 
     private void logPerformanceMonitorResult() {
         if (performanceMonitor.isWarning()) {
