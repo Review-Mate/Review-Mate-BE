@@ -55,7 +55,7 @@ public class ReservationController {
     }
 
 
-    @Operation(operationId = "getSingleTravelProductReservationResponseByCustomerOrSingleTravelProduct", summary = "예약 목록 조회", description = "⚠️ 아직 정렬이 작동하지 않고, 모든 예약을 불러오기만 함")
+    @Operation(operationId = "getSingleTravelProductReservationResponseByCustomerOrSgiutingleTravelProduct", summary = "예약 목록 조회", description = "⚠️ 아직 정렬이 작동하지 않고, 모든 예약을 불러오기만 함")
     @Parameter(name = "customerId", description = "고객 ID")
     @Parameter(name = "singleTravelProductId", description = "여행상품 ID")
     @ApiResponse(responseCode = "200", description = "조회 성공")

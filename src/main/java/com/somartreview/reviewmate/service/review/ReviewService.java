@@ -1,10 +1,9 @@
 package com.somartreview.reviewmate.service.review;
 
+import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
 import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.domain.review.*;
-import com.somartreview.reviewmate.dto.review.ReviewCreateRequest;
-import com.somartreview.reviewmate.dto.review.ReviewUpdateRequest;
-import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
+import com.somartreview.reviewmate.dto.review.*;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.ReservationService;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.somartreview.reviewmate.exception.ErrorCode.REVIEW_NOT_FOUND;
 
@@ -111,5 +109,52 @@ public class ReviewService {
         review.clearReviewImages();
 
         reviewRepository.delete(review);
+    }
+
+    public ProductReviewStatisticsResponse getReviewStatisticsResponses(final SingleTravelProduct singleTravelProduct) {
+        float averageRating = singleTravelProduct.getRating();
+        long reviewCount = singleTravelProduct.getReviewCount();
+        int fiveStarRatingCount = singleTravelProduct.getFiveStarRatingCount();
+        int fourStarRatingCount = singleTravelProduct.getFourStarRatingCount();
+        int threeStarRatingCount = singleTravelProduct.getThreeStarRatingCount();
+        int twoStarRatingCount = singleTravelProduct.getTwoStarRatingCount();
+        int oneStarRatingCount = singleTravelProduct.getOneStarRatingCount();
+
+        return ProductReviewStatisticsResponse.builder()
+                .averageRating(averageRating)
+                .reviewCount(reviewCount)
+                .fiveStarRatingCount(fiveStarRatingCount)
+                .fourStarRatingCount(fourStarRatingCount)
+                .threeStarRatingCount(threeStarRatingCount)
+                .twoStarRatingCount(twoStarRatingCount)
+                .oneStarRatingCount(oneStarRatingCount)
+                .build();
+    }
+
+    public List<ProductReviewTagStatisticsResponse> getProductReviewTagStatisticsResponses(SingleTravelProduct singleTravelProduct) {
+        Map<ReviewProperty, ProductReviewTagStatisticsResponse> reviewTagStatisticsMap = new EnumMap<>(ReviewProperty.class);
+        List<ReviewTagStatisticsDto> reviewTagStatisticsDtos = reviewRepository.findReviewTagStatisticsByTravelProductId(singleTravelProduct.getId());
+
+        for (ReviewTagStatisticsDto reviewTagStatisticDto : reviewTagStatisticsDtos) {
+            if (reviewTagStatisticsMap.get(reviewTagStatisticDto.getProperty()) == null) {
+                ProductReviewTagStatisticsResponse productReviewTagStatisticsResponse = new ProductReviewTagStatisticsResponse(reviewTagStatisticDto.getProperty());
+                reviewTagStatisticsMap.put(reviewTagStatisticDto.getProperty(), productReviewTagStatisticsResponse);
+            }
+
+            if (reviewTagStatisticDto.getPolarity() == ReviewPolarity.POSITIVE) {
+                reviewTagStatisticsMap.get(reviewTagStatisticDto.getProperty()).setPositiveCount(reviewTagStatisticDto.getCount());
+            } else {
+                reviewTagStatisticsMap.get(reviewTagStatisticDto.getProperty()).setNegativeCount(reviewTagStatisticDto.getCount());
+            }
+        }
+
+        List<ProductReviewTagStatisticsResponse> reviewTagStatisticsResponses = new ArrayList<>(reviewTagStatisticsMap.values().stream().toList());
+        reviewTagStatisticsResponses.sort(ReviewService::reviewTagCountDescComparator);
+
+        return reviewTagStatisticsResponses;
+    }
+
+    private static int reviewTagCountDescComparator(ProductReviewTagStatisticsResponse o1, ProductReviewTagStatisticsResponse o2) {
+        return -1 * Long.compare(o1.getPositiveCount() + o1.getNegativeCount(), o2.getPositiveCount() + o2.getNegativeCount());
     }
 }

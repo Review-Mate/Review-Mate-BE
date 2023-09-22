@@ -37,10 +37,25 @@ public abstract class TravelProduct extends BaseEntity {
     private String name;
 
     @Column(nullable = false)
-    private Integer reviewCount = 0;
+    private Float rating = 0.0f;
 
     @Column(nullable = false)
-    private Float rating = 0.0f;
+    private Long reviewCount = 0L;
+
+    @Column(nullable = false)
+    private Integer fiveStarRatingCount = 0;
+
+    @Column(nullable = false)
+    private Integer fourStarRatingCount = 0;
+
+    @Column(nullable = false)
+    private Integer threeStarRatingCount = 0;
+
+    @Column(nullable = false)
+    private Integer twoStarRatingCount = 0;
+
+    @Column(nullable = false)
+    private Integer oneStarRatingCount = 0;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "partner_company_id", nullable = false)
@@ -91,6 +106,12 @@ public abstract class TravelProduct extends BaseEntity {
     public void addReview(int newReviewRating) {
         this.reviewCount++;
         this.rating = (this.rating * (this.reviewCount - 1) + newReviewRating) / this.reviewCount;
+
+        if (newReviewRating == 5) fiveStarRatingCount++;
+        else if (newReviewRating == 4) fourStarRatingCount++;
+        else if (newReviewRating == 3) threeStarRatingCount++;
+        else if (newReviewRating == 2) twoStarRatingCount++;
+        else if (newReviewRating == 1) oneStarRatingCount++;
     }
 
     public void removeReview(int removedReviewRating) {

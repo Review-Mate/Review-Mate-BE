@@ -29,8 +29,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ReviewController.class)
-class ReviewControllerTest {
+@WebMvcTest(ReviewBasicWidgetController.class)
+class ReviewBasicWidgetControllerTest {
 
     private final String PARTNER_DOMAIN = "goodchoice.kr";
     private final String RESERVATION_PARTNER_CUSTOM_ID = "RESERVATION_0001";
