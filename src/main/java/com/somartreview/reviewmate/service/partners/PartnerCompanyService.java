@@ -25,44 +25,39 @@ public class PartnerCompanyService {
         return partnerCompanyRepository.save(request.toEntity()).getPartnerDomain();
     }
 
-    public void validateUniquePartnerDomain(String partnerDomain) {
-        if (partnerCompanyRepository.existsByPartnerDomain(partnerDomain)) {
+    private void validateUniquePartnerDomain(String domain) {
+        if (partnerCompanyRepository.existsByPartnerDomain(domain)) {
             throw new DomainLogicException(PARTNER_COMPANY_NOT_UNIQUE_PARTNER_DOMAIN);
         }
     }
 
-    public PartnerCompany findById(Long id) {
-        return partnerCompanyRepository.findById(id)
+    public PartnerCompany findByPartnerDomain(String domain) {
+        return partnerCompanyRepository.findByPartnerDomain(domain)
                 .orElseThrow(() -> new DomainLogicException(PARTNER_COMPANY_NOT_FOUND));
     }
 
-    public PartnerCompany findByPartnerDomain(String partnerDomain) {
-        return partnerCompanyRepository.findByPartnerDomain(partnerDomain)
-                .orElseThrow(() -> new DomainLogicException(PARTNER_COMPANY_NOT_FOUND));
-    }
-
-    public PartnerCompanyResponse getPartnerCompanyResponseByDomain(String partnerDomain) {
-        PartnerCompany partnerCompany = findByPartnerDomain(partnerDomain);
+    public PartnerCompanyResponse getPartnerCompanyResponseByPartnerDomain(String domain) {
+        PartnerCompany partnerCompany = findByPartnerDomain(domain);
         return new PartnerCompanyResponse(partnerCompany);
     }
 
     @Transactional
-    public void updateByPartnerDomain(String partnerDomain, PartnerCompanyUpdateRequest request) {
-        PartnerCompany partnerCompany = findByPartnerDomain(partnerDomain);
+    public void update(String domain, PartnerCompanyUpdateRequest request) {
+        PartnerCompany partnerCompany = findByPartnerDomain(domain);
 
         validateDuplicatedPartnerDomain(partnerCompany.getPartnerDomain(), request.getPartnerDomain());
 
         partnerCompany.update(request);
     }
 
-    public void validateDuplicatedPartnerDomain(String oldDomain, String newDomain) {
+    private void validateDuplicatedPartnerDomain(String oldDomain, String newDomain) {
         if (!oldDomain.equals(newDomain) && partnerCompanyRepository.existsByPartnerDomain(newDomain)) {
             throw new DomainLogicException(PARTNER_COMPANY_DUPLICATED_PARTNER_DOMAIN);
         }
     }
 
     @Transactional
-    public void deleteByPartnerDomain(String partnerDomain) {
-        partnerCompanyRepository.deleteByPartnerDomain(partnerDomain);
+    public void delete(String domain) {
+        partnerCompanyRepository.deleteByPartnerDomain(domain);
     }
 }
