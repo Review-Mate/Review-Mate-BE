@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReviewStatisticsResponse {
+public class ProductReviewStatisticsResponse {
 
     @Schema(description = "평균 평점")
     private Float averageRating;
