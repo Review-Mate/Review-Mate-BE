@@ -111,7 +111,7 @@ public class ReviewService {
         reviewRepository.delete(review);
     }
 
-    public ProductReviewStatisticsResponse getReviewStatisticsResponseBySingleTravelProductId(final SingleTravelProduct singleTravelProduct) {
+    public ProductReviewStatisticsResponse getReviewStatisticsResponses(final SingleTravelProduct singleTravelProduct) {
         float averageRating = singleTravelProduct.getRating();
         long reviewCount = singleTravelProduct.getReviewCount();
         int fiveStarRatingCount = singleTravelProduct.getFiveStarRatingCount();
@@ -131,7 +131,7 @@ public class ReviewService {
                 .build();
     }
 
-    public List<ProductReviewTagStatisticsResponse> getProductReviewTagStatistics(SingleTravelProduct singleTravelProduct) {
+    public List<ProductReviewTagStatisticsResponse> getProductReviewTagStatisticsResponses(SingleTravelProduct singleTravelProduct) {
         Map<ReviewProperty, ProductReviewTagStatisticsResponse> reviewTagStatisticsMap = new EnumMap<>(ReviewProperty.class);
         List<ReviewTagStatisticsDto> reviewTagStatisticsDtos = reviewRepository.findReviewTagStatisticsByTravelProductId(singleTravelProduct.getId());
 
@@ -157,6 +157,4 @@ public class ReviewService {
     private static int reviewTagCountDescComparator(ProductReviewTagStatisticsResponse o1, ProductReviewTagStatisticsResponse o2) {
         return -1 * Long.compare(o1.getPositiveCount() + o1.getNegativeCount(), o2.getPositiveCount() + o2.getNegativeCount());
     }
-
-
 }

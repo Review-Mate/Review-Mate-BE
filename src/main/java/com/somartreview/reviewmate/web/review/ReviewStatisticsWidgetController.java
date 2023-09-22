@@ -28,16 +28,16 @@ public class ReviewStatisticsWidgetController {
     private final SingleTravelProductService singleTravelProductService;
 
 
-    @Operation(operationId = "getReviewStatisticsResponseByPartnerDomainAndSingleTravelProductPartnerCustomId", summary = "단일 여행상품에 등록된 리뷰 목록 조회")
+    @Operation(operationId = "getReviewStatistics", summary = "단일 여행상품에 등록된 리뷰 목록 조회")
     @Parameter(name = "partnerDomain", description = "파트너사 도메인", example = "goodchoice.kr")
     @Parameter(name = "singleTravelProductPartnerCustomId", description = "단일 여행상품의 파트너사 커스텀 ID", example = "PRODUCT_0001")
     @ApiResponse(responseCode = "200", description = "리뷰 조회 성공")
     @ApiResponse(responseCode = "400", description = "존재하지 않는 상품 ID")
     @GetMapping("/{partnerDomain}/products/{singleTravelProductPartnerCustomId}/statistic/reviews")
-    public ResponseEntity<ProductReviewStatisticsResponse> getReviewStatisticsResponseByPartnerDomainAndSingleTravelProductPartnerCustomId(@PathVariable String partnerDomain,
-                                                                                                                                           @PathVariable String singleTravelProductPartnerCustomId) {
+    public ResponseEntity<ProductReviewStatisticsResponse> getReviewStatistics(@PathVariable String partnerDomain,
+                                                                               @PathVariable String singleTravelProductPartnerCustomId) {
         final SingleTravelProduct singleTravelProduct = singleTravelProductService.findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductPartnerCustomId);
-        ProductReviewStatisticsResponse productReviewStatisticsResponse = reviewService.getReviewStatisticsResponseBySingleTravelProductId(singleTravelProduct);
+        ProductReviewStatisticsResponse productReviewStatisticsResponse = reviewService.getReviewStatisticsResponses(singleTravelProduct);
 
         return ResponseEntity.ok(productReviewStatisticsResponse);
     }
@@ -52,7 +52,7 @@ public class ReviewStatisticsWidgetController {
     public ResponseEntity<List<ProductReviewTagStatisticsResponse>> getProductReviewTagStatistics(@PathVariable String partnerDomain,
                                                                                                   @PathVariable String singleTravelProductPartnerCustomId) {
         final SingleTravelProduct singleTravelProduct = singleTravelProductService.findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductPartnerCustomId);
-        List<ProductReviewTagStatisticsResponse> productReviewTagStatisticsResponses = reviewService.getProductReviewTagStatistics(singleTravelProduct);
+        List<ProductReviewTagStatisticsResponse> productReviewTagStatisticsResponses = reviewService.getProductReviewTagStatisticsResponses(singleTravelProduct);
 
         return ResponseEntity.ok(productReviewTagStatisticsResponses);
     }
