@@ -131,7 +131,7 @@ class SingleTravelProductTest {
         // then
         assertThat(singleTravelProduct)
                 .extracting("reviewCount", "rating")
-                .containsExactly(1, 5.0f);
+                .containsExactly(1L, 5.0f);
     }
 
     @Test
@@ -144,7 +144,7 @@ class SingleTravelProductTest {
         // then
         assertThat(singleTravelProduct)
                 .extracting("reviewCount", "rating")
-                .containsExactly(1, 5.0f);
+                .containsExactly(1L, 5.0f);
     }
 
     @Test
@@ -156,6 +156,6 @@ class SingleTravelProductTest {
         // then
         assertThat(singleTravelProduct)
                 .extracting("reviewCount", "rating")
-                .containsExactly(0, 0.0f);
+                .containsExactly(0L, 0.0f);
     }
 }
