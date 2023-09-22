@@ -39,19 +39,19 @@ public class PartnerManagerService {
     }
 
     @Transactional
-    public void updateById(Long id, PartnerManagerUpdateRequest request) {
+    public void update(Long id, PartnerManagerUpdateRequest request) {
         PartnerManager partnerManager = findById(id);
         partnerManager.update(request);
     }
 
     @Transactional
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         validateExistPartnerManagerById(id);
 
         partnerManagerRepository.deleteById(id);
     }
 
-    public void validateExistPartnerManagerById(Long id) {
+    private void validateExistPartnerManagerById(Long id) {
         if (!partnerManagerRepository.existsById(id)) {
             throw new DomainLogicException(PARTNER_MANAGER_NOT_FOUND);
         }

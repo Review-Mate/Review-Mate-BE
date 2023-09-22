@@ -57,7 +57,7 @@ public class PartnerManagerController {
     @PutMapping("/{partnerManagerId}")
     public ResponseEntity<Void> updatePartnerManagerById(@PathVariable Long partnerManagerId,
                                                          @Valid @RequestBody PartnerManagerUpdateRequest partnerManagerUpdateRequest) {
-        partnerManagerService.updateById(partnerManagerId, partnerManagerUpdateRequest);
+        partnerManagerService.update(partnerManagerId, partnerManagerUpdateRequest);
 
         return ResponseEntity.noContent().build();
     }
@@ -69,7 +69,7 @@ public class PartnerManagerController {
             @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 관리자 ID")
     @DeleteMapping("/{partnerManagerId}")
     public ResponseEntity<Void> deletePartnerManagerById(@PathVariable Long partnerManagerId) {
-        partnerManagerService.deleteById(partnerManagerId);
+        partnerManagerService.delete(partnerManagerId);
 
         return ResponseEntity.noContent().build();
     }

@@ -71,7 +71,7 @@ class PartnerManagerControllerTest {
     @Test
     void 파트너사의_관리자_정보를_수정한다() throws Exception {
         // given
-        doNothing().when(partnerManagerService).updateById(anyLong(), any());
+        doNothing().when(partnerManagerService).update(anyLong(), any());
         PartnerManagerUpdateRequest partnerManagerUpdateRequest = new PartnerManagerUpdateRequest("권순찬", "sckwon770@gmail.com", "password1234");
 
         // when & then
@@ -86,7 +86,7 @@ class PartnerManagerControllerTest {
     @Test
     void 파트너사의_관리자를_삭제한다() throws Exception {
         // given
-        doNothing().when(partnerManagerService).deleteById(anyLong());
+        doNothing().when(partnerManagerService).delete(anyLong());
 
         // when & then
         mockMvc.perform(
