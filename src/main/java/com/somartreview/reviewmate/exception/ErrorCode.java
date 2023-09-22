@@ -46,6 +46,7 @@ public enum ErrorCode {
     REVIEW_TITLE_ERROR("1301", "리뷰의 제목이 너무 길거나 공백입니다."),
     REVIEW_CONTENT_ERROR("1302", "리뷰의 내용이 너무 길거나 공백입니다."),
     REVIEW_NOT_FOUND("1303", "리뷰를 찾을 수 없습니다."),
+    REVIEW_ALREADY_EXISTS_ON_RESERVATION("1304", "해당 예약에 이미 리뷰가 작성됐습니다."),
 
     REVIEW_TAG_OUT_OF_BOUND_INDEX_ERROR("1310", "리뷰 태그의 인덱스가 범위가 벗어났습니다."),
     REVIEW_TAG_FRONT_END_INDEX_ERROR("1311", "리뷰 태그의 끝 인덱스가 시작 인덱스보다 앞에 있습니다."),
