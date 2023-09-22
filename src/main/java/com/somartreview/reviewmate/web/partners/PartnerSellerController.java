@@ -59,7 +59,7 @@ public class PartnerSellerController {
     @PutMapping("/{partnerSellerId}")
     public ResponseEntity<Void> updatePartnerSellerById(@PathVariable Long partnerSellerId,
                                                         @Valid @RequestBody PartnerSellerUpdateRequest partnerSellerUpdateRequest) {
-        partnerSellerService.updateById(partnerSellerId, partnerSellerUpdateRequest);
+        partnerSellerService.update(partnerSellerId, partnerSellerUpdateRequest);
 
         return ResponseEntity.noContent().build();
     }
@@ -72,7 +72,7 @@ public class PartnerSellerController {
     @ApiResponse(responseCode = "400", description = "파트너사 도메인과 판매자가 소속된 도메인이 다름")
     @DeleteMapping("/{partnerSellerId}")
     public ResponseEntity<Void> deletePartnerSellerById(@PathVariable Long partnerSellerId) {
-        partnerSellerService.deleteById(partnerSellerId);
+        partnerSellerService.delete(partnerSellerId);
 
         return ResponseEntity.noContent().build();
     }

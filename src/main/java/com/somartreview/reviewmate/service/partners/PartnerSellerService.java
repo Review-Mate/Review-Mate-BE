@@ -42,8 +42,8 @@ public class PartnerSellerService {
         }
     }
 
-    public PartnerSeller findById(Long partnerSellerId) {
-        return partnerSellerRepository.findById(partnerSellerId)
+    public PartnerSeller findById(Long id) {
+        return partnerSellerRepository.findById(id)
                 .orElseThrow(() -> new DomainLogicException(PARTNER_SELLER_NOT_FOUND));
     }
 
@@ -54,14 +54,14 @@ public class PartnerSellerService {
     }
 
     @Transactional
-    public void updateById(Long id, PartnerSellerUpdateRequest request) {
+    public void update(Long id, PartnerSellerUpdateRequest request) {
 
         PartnerSeller partnerSeller = findById(id);
         partnerSeller.update(request);
     }
 
     @Transactional
-    public void deleteById(Long id) {
+    public void delete(Long id) {
 
         partnerSellerRepository.deleteById(id);
     }

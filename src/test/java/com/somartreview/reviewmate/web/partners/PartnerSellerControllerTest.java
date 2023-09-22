@@ -71,7 +71,7 @@ class PartnerSellerControllerTest {
     @Test
     void 파트너사의_판매자_정보를_수정한다() throws Exception {
         // given
-        doNothing().when(partnerSellerService).updateById(any(), any());
+        doNothing().when(partnerSellerService).update(any(), any());
         PartnerSellerUpdateRequest partnerSellerUpdateRequest = new PartnerSellerUpdateRequest("권순찬", "01012345678", "sckwon770");
 
         // when & then
@@ -86,7 +86,7 @@ class PartnerSellerControllerTest {
     @Test
     void 파트너사의_판매자를_삭제한다() throws Exception {
         // given
-        doNothing().when(partnerSellerService).deleteById(any());
+        doNothing().when(partnerSellerService).delete(any());
 
         // when & then
         mockMvc.perform(
