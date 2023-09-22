@@ -31,7 +31,7 @@ public class SingleTravelProductController {
     @Parameter(name = "travelProductId", description = "단일 여행상품 ID")
     @GetMapping("/products/travel/single/{travelProductId}")
     public ResponseEntity<SingleTravelProductConsoleElementResponse> getSingleTravelProductConsoleElementResponseByTravelProductId(@PathVariable Long travelProductId) {
-        SingleTravelProductConsoleElementResponse singleTravelProductConsoleElementResponse = singleTravelProductService.getSingleTravelProductConsoleElementResponseByTravelProductId(travelProductId);
+        SingleTravelProductConsoleElementResponse singleTravelProductConsoleElementResponse = singleTravelProductService.getSingleTravelProductConsoleElementResponseById(travelProductId);
 
         return ResponseEntity.ok(singleTravelProductConsoleElementResponse);
     }
@@ -71,7 +71,7 @@ public class SingleTravelProductController {
     public ResponseEntity<Void> updateSingleTravelProductByTravelProductId(@PathVariable Long travelProductId,
                                                                            @Valid @RequestPart SingleTravelProductUpdateRequest singleTravelProductUpdateRequest,
                                                                            @RequestPart(required = false) MultipartFile thumbnailFile) {
-        singleTravelProductService.updateByTravelProductId(travelProductId, singleTravelProductUpdateRequest, thumbnailFile);
+        singleTravelProductService.update(travelProductId, singleTravelProductUpdateRequest, thumbnailFile);
 
         return ResponseEntity.noContent().build();
     }
@@ -83,7 +83,7 @@ public class SingleTravelProductController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
     @DeleteMapping("/products/travel/single/{travelProductId}")
     public ResponseEntity<Void> deleteSingleTravelProductByTravelProductId(@PathVariable Long travelProductId) {
-        singleTravelProductService.deleteByTravelProductId(travelProductId);
+        singleTravelProductService.delete(travelProductId);
 
         return ResponseEntity.noContent().build();
     }

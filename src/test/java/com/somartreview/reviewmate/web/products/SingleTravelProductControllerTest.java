@@ -21,8 +21,6 @@ import static com.somartreview.reviewmate.domain.product.SingleTravelProductCate
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,7 +46,7 @@ class SingleTravelProductControllerTest {
     @Test
     void 여행상품_ID로_단일_여행상품을_조회한다() throws Exception {
         // given
-        given(singleTravelProductService.getSingleTravelProductConsoleElementResponseByTravelProductId(anyLong())).willReturn(new SingleTravelProductConsoleElementResponse());
+        given(singleTravelProductService.getSingleTravelProductConsoleElementResponseById(anyLong())).willReturn(new SingleTravelProductConsoleElementResponse());
 
         // when & then
         mockMvc.perform(
@@ -85,7 +83,7 @@ class SingleTravelProductControllerTest {
     @Test
     void 여행상품_ID로_단일_여행상품의_정보를_수정한다() throws Exception {
         // given
-        doNothing().when(singleTravelProductService).updateByTravelProductId(anyLong(), any(), any());
+        doNothing().when(singleTravelProductService).update(anyLong(), any(), any());
 
         MockMultipartFile singleTravelProductUpdateRequest = new MockMultipartFile(
                 "singleTravelProductUpdateRequest",

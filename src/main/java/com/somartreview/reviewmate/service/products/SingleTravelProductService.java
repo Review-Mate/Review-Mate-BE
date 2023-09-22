@@ -25,8 +25,6 @@ import static com.somartreview.reviewmate.exception.ErrorCode.TRAVEL_PRODUCT_NOT
 @RequiredArgsConstructor
 public class SingleTravelProductService {
 
-
-
     private final SingleTravelProductRepository singleTravelProductRepository;
     private final TravelProductService travelProductService;
     private final PartnerCompanyService partnerCompanyService;
@@ -60,13 +58,13 @@ public class SingleTravelProductService {
         return findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductCreateRequest.getPartnerCustomId());
     }
 
-    public boolean existsByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
+    private boolean existsByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
         return singleTravelProductRepository.existsByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
     }
 
     @Transactional
-    public void updateByTravelProductId(Long travelProductId, SingleTravelProductUpdateRequest request, MultipartFile thumbnailFile) {
-        SingleTravelProduct foundTravelProduct = findByTravelProductId(travelProductId);
+    public void update(Long id, SingleTravelProductUpdateRequest request, MultipartFile thumbnailFile) {
+        SingleTravelProduct foundTravelProduct = findById(id);
         String thumbnailUrl = uploadThumbnailOnS3(thumbnailFile);
 
         foundTravelProduct.update(request, thumbnailUrl);
@@ -81,8 +79,8 @@ public class SingleTravelProductService {
         return "https://www.testThumbnailUrl.com";
     }
 
-    public SingleTravelProduct findByTravelProductId(Long travelProductId) {
-        return singleTravelProductRepository.findById(travelProductId)
+    public SingleTravelProduct findById(Long id) {
+        return singleTravelProductRepository.findById(id)
                 .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
     }
 
@@ -95,8 +93,8 @@ public class SingleTravelProductService {
         return singleTravelProductRepository.findAllByPartnerCompany_PartnerDomainAndSingleTravelProductCategory(partnerDomain, singleTravelProductCategory);
     }
 
-    public SingleTravelProductConsoleElementResponse getSingleTravelProductConsoleElementResponseByTravelProductId(Long travelProductId) {
-        SingleTravelProduct singleTravelProduct = findByTravelProductId(travelProductId);
+    public SingleTravelProductConsoleElementResponse getSingleTravelProductConsoleElementResponseById(Long id) {
+        SingleTravelProduct singleTravelProduct = findById(id);
 
         return new SingleTravelProductConsoleElementResponse(singleTravelProduct);
     }
@@ -115,14 +113,14 @@ public class SingleTravelProductService {
     }
 
     @Transactional
-    public void deleteByTravelProductId(Long travelProductId) {
-        validateExistTravelProductId(travelProductId);
+    public void delete(Long id) {
+        validateExistId(id);
 
-        singleTravelProductRepository.deleteById(travelProductId);
+        singleTravelProductRepository.deleteById(id);
     }
 
-    public void validateExistTravelProductId(Long travelProductId) {
-        if (!singleTravelProductRepository.existsById(travelProductId))
+    private void validateExistId(Long id) {
+        if (!singleTravelProductRepository.existsById(id))
             throw new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND);
     }
 }
