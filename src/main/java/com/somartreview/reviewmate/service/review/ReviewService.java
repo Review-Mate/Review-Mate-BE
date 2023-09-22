@@ -1,8 +1,10 @@
 package com.somartreview.reviewmate.service.review;
 
+import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
 import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.domain.review.*;
 import com.somartreview.reviewmate.dto.review.ReviewCreateRequest;
+import com.somartreview.reviewmate.dto.review.ReviewStatisticsResponse;
 import com.somartreview.reviewmate.dto.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
@@ -111,5 +113,25 @@ public class ReviewService {
         review.clearReviewImages();
 
         reviewRepository.delete(review);
+    }
+
+    public ReviewStatisticsResponse getReviewStatisticsResponseBySingleTravelProductId(final SingleTravelProduct singleTravelProduct) {
+        float averageRating = singleTravelProduct.getRating();
+        long reviewCount = singleTravelProduct.getReviewCount();
+        int fiveStarRatingCount = singleTravelProduct.getFiveStarRatingCount();
+        int fourStarRatingCount = singleTravelProduct.getFourStarRatingCount();
+        int threeStarRatingCount = singleTravelProduct.getThreeStarRatingCount();
+        int twoStarRatingCount = singleTravelProduct.getTwoStarRatingCount();
+        int oneStarRatingCount = singleTravelProduct.getOneStarRatingCount();
+
+        return ReviewStatisticsResponse.builder()
+                .averageRating(averageRating)
+                .reviewCount(reviewCount)
+                .fiveStarRatingCount(fiveStarRatingCount)
+                .fourStarRatingCount(fourStarRatingCount)
+                .threeStarRatingCount(threeStarRatingCount)
+                .twoStarRatingCount(twoStarRatingCount)
+                .oneStarRatingCount(oneStarRatingCount)
+                .build();
     }
 }

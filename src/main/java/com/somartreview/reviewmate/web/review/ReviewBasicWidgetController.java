@@ -24,11 +24,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URI;
 import java.util.List;
 
-@Tag(name = "리뷰")
+@Tag(name = "리뷰 기본 위젯")
 @RestController
 @RequestMapping("/api/widget/v1")
 @RequiredArgsConstructor
-public class ReviewController {
+public class ReviewBasicWidgetController {
 
     private final ReviewService reviewService;
 

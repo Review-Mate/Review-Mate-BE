@@ -28,7 +28,7 @@ public class SingleTravelProductConsoleElementResponse {
     private String name;
 
     @Schema(description = "상품 리뷰 수", example = "10")
-    private Integer reviewsCount;
+    private Long reviewsCount;
 
     @Schema(description = "상품 평점", example = "4.5")
     private Float rating;

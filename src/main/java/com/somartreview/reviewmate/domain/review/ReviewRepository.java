@@ -10,4 +10,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
 
     List<Review> findAllByReservation_TravelProduct_PartnerCompany_PartnerDomainAndReservation_TravelProduct_PartnerCustomId(String partnerDomain, String partnerCustomId);
+
+    List<Review> findAllByReservation_TravelProduct_Id(long singleTravelProductId);
 }
