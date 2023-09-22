@@ -42,12 +42,12 @@ public class CustomerService {
         return findByPartnerDomainAndPartnerCustomId(partnerDomain, customerCreateRequest.getPartnerCustomId());
     }
 
-    public boolean existsByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
+    private boolean existsByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
         return customerRepository.existsByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
     }
 
     @Transactional
-    public void updateByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId, CustomerUpdateRequest request) {
+    public void update(String partnerDomain, String partnerCustomId, CustomerUpdateRequest request) {
         validateUniquePhoneNumber(request.getPhoneNumber());
         validateUniqueKakaoId(request.getKakaoId());
 
@@ -56,11 +56,11 @@ public class CustomerService {
     }
 
     @Transactional
-    public void updateByCustomerId(Long customerId, CustomerUpdateRequest request) {
+    public void update(Long id, CustomerUpdateRequest request) {
         validateUniquePhoneNumber(request.getPhoneNumber());
         validateUniqueKakaoId(request.getKakaoId());
 
-        Customer customer = findByCustomerId(customerId);
+        Customer customer = findById(id);
         customer.update(request);
     }
 
@@ -82,8 +82,8 @@ public class CustomerService {
         }
     }
 
-    public Customer findByCustomerId(Long customerId) {
-        return customerRepository.findById(customerId)
+    public Customer findById(Long id) {
+        return customerRepository.findById(id)
                 .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND));
     }
 
@@ -92,8 +92,8 @@ public class CustomerService {
                 .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND));
     }
 
-    public CustomerResponse getCustomerResponseByCustomerId(Long customerId) {
-        final Customer customer = findByCustomerId(customerId);
+    public CustomerResponse getCustomerResponseById(Long id) {
+        final Customer customer = findById(id);
 
         return new CustomerResponse(customer);
     }
@@ -105,14 +105,14 @@ public class CustomerService {
     }
 
     @Transactional
-    public void deleteByCustomerId(Long customerId) {
-        validateExistCustomer(customerId);
+    public void delete(Long id) {
+        validateExistCustomer(id);
 
-        customerRepository.deleteById(customerId);
+        customerRepository.deleteById(id);
     }
 
-    public void validateExistCustomer(Long customerId) {
-        if (!customerRepository.existsById(customerId)) {
+    public void validateExistCustomer(Long id) {
+        if (!customerRepository.existsById(id)) {
             throw new DomainLogicException(CUSTOMER_NOT_FOUND);
         }
     }

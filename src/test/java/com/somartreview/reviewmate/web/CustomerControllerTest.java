@@ -71,7 +71,7 @@ class CustomerControllerTest {
     @Test
     void 고객_ID로_고객을_조회한다() throws Exception {
         // given
-        given(customerService.getCustomerResponseByCustomerId(anyLong())).willReturn(new CustomerResponse());
+        given(customerService.getCustomerResponseById(anyLong())).willReturn(new CustomerResponse());
 
         // when & then
         mockMvc.perform(
@@ -83,7 +83,7 @@ class CustomerControllerTest {
     @Test
     void 파트너의_커스텀_ID로_고객의_정보를_수정한다() throws Exception {
         // given
-        doNothing().when(customerService).updateByPartnerDomainAndPartnerCustomId(anyString(), anyString(), any());
+        doNothing().when(customerService).update(anyString(), anyString(), any());
         CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest("권순찬", "01012345678", "sckwon770");
 
         // when & then
@@ -98,7 +98,7 @@ class CustomerControllerTest {
     @Test
     void 고객_ID로_고객의_정보를_수정한다() throws Exception {
         // given
-        doNothing().when(customerService).updateByPartnerDomainAndPartnerCustomId(anyString(), anyString(), any());
+        doNothing().when(customerService).update(anyString(), anyString(), any());
         CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest("권순찬", "01012345678", "sckwon770");
 
         // when & then
@@ -125,7 +125,7 @@ class CustomerControllerTest {
     @Test
     void 고객_ID로_고객을_삭제한다() throws Exception {
         // given
-        doNothing().when(customerService).deleteByCustomerId(anyLong());
+        doNothing().when(customerService).delete(anyLong());
 
         // when & then
         mockMvc.perform(

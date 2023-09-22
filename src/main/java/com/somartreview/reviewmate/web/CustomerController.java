@@ -60,7 +60,7 @@ public class CustomerController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 고객 ID")
     @GetMapping("/customers/{customerId}")
     public ResponseEntity<CustomerResponse> getCustomerResponseByCustomerId(@PathVariable Long customerId) {
-        CustomerResponse customerResponse = customerService.getCustomerResponseByCustomerId(customerId);
+        CustomerResponse customerResponse = customerService.getCustomerResponseById(customerId);
 
         return ResponseEntity.ok(customerResponse);
     }
@@ -75,7 +75,7 @@ public class CustomerController {
     public ResponseEntity<Void> updateCustomerByPartnerCustomId(@PathVariable String partnerDomain,
                                                                 @PathVariable String partnerCustomId,
                                                                 @Valid @RequestBody CustomerUpdateRequest request) {
-        customerService.updateByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId, request);
+        customerService.update(partnerDomain, partnerCustomId, request);
 
         return ResponseEntity.noContent().build();
     }
@@ -88,7 +88,7 @@ public class CustomerController {
     @PutMapping("/customers/{customerId}")
     public ResponseEntity<Void> updateCustomerByCustomerId(@PathVariable Long customerId,
                                                            @Valid @RequestBody CustomerUpdateRequest request) {
-        customerService.updateByCustomerId(customerId, request);
+        customerService.update(customerId, request);
 
         return ResponseEntity.noContent().build();
     }
@@ -114,7 +114,7 @@ public class CustomerController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 고객 ID")
     @DeleteMapping("/customers/{customerId}")
     public ResponseEntity<Void> deleteCustomerByCustomerId(@PathVariable Long customerId) {
-        customerService.deleteByCustomerId(customerId);
+        customerService.delete(customerId);
 
         return ResponseEntity.noContent().build();
     }
