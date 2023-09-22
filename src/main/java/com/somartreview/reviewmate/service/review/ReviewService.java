@@ -27,11 +27,11 @@ public class ReviewService {
     private final SingleTravelProductService singleTravelProductService;
 
     @Transactional
-    public Long create(String partnerDomain, String travelProductPartnerCustomId, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
+    public Long create(String partnerDomain, String travelProductPartnerCustomId, ReviewCreateRequest request, List<MultipartFile> reviewImageFiles) {
         final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, travelProductPartnerCustomId);
-        reservation.getTravelProduct().addReview(reviewCreateRequest.getRating());
+        reservation.getTravelProduct().addReview(request.getRating());
 
-        Review review = reviewCreateRequest.toEntity(reservation);
+        Review review = request.toEntity(reservation);
         reviewRepository.save(review);
 
         if (reviewImageFiles != null) {
@@ -85,34 +85,6 @@ public class ReviewService {
         return widgetReviewResponses;
     }
 
-    @Transactional
-    public void updateById(Long id, ReviewUpdateRequest reviewUpdateRequest, List<MultipartFile> reviewImageFiles) {
-        Review review = findById(id);
-
-        review.getReservation().getTravelProduct().removeReview(review.getRating());
-        review.clearReviewTags();
-        review.clearReviewImages();
-
-        review.updateReview(reviewUpdateRequest);
-        review.getReservation().getTravelProduct().addReview(reviewUpdateRequest.getRating());
-        List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
-        review.appendReviewImage(reviewImages);
-
-        // Impl Requesting review inference through API gateway
-        // Impl Requesting review inference through kafka
-    }
-
-    @Transactional
-    public void deleteById(Long id) {
-        Review review = findById(id);
-
-        review.getReservation().getTravelProduct().removeReview(review.getRating());
-        review.clearReviewTags();
-        review.clearReviewImages();
-
-        reviewRepository.delete(review);
-    }
-
     public ProductReviewStatisticsResponse getReviewStatisticsResponses(String partnerDomain, String singleTravelProductPartnerCustomId) {
         final SingleTravelProduct singleTravelProduct = singleTravelProductService.findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductPartnerCustomId);
 
@@ -154,5 +126,33 @@ public class ReviewService {
 
     private static int reviewTagCountDescComparator(ProductReviewTagStatisticsResponse o1, ProductReviewTagStatisticsResponse o2) {
         return -1 * Long.compare(o1.getPositiveCount() + o1.getNegativeCount(), o2.getPositiveCount() + o2.getNegativeCount());
+    }
+
+    @Transactional
+    public void update(Long id, ReviewUpdateRequest request, List<MultipartFile> reviewImageFiles) {
+        Review review = findById(id);
+
+        review.getReservation().getTravelProduct().removeReview(review.getRating());
+        review.clearReviewTags();
+        review.clearReviewImages();
+
+        review.updateReview(request);
+        review.getReservation().getTravelProduct().addReview(request.getRating());
+        List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
+        review.appendReviewImage(reviewImages);
+
+        // Impl Requesting review inference through API gateway
+        // Impl Requesting review inference through kafka
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Review review = findById(id);
+
+        review.getReservation().getTravelProduct().removeReview(review.getRating());
+        review.clearReviewTags();
+        review.clearReviewImages();
+
+        reviewRepository.delete(review);
     }
 }

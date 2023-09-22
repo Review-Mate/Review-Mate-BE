@@ -94,7 +94,7 @@ public class ReviewBasicWidgetController {
     public ResponseEntity<Void> updateReviewByReviewId(@PathVariable Long reviewId,
                                                        @Valid @RequestPart ReviewUpdateRequest reviewUpdateRequest,
                                                        @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {
-        reviewService.updateById(reviewId, reviewUpdateRequest, reviewImageFiles);
+        reviewService.update(reviewId, reviewUpdateRequest, reviewImageFiles);
 
         return ResponseEntity.noContent().build();
     }
@@ -106,7 +106,7 @@ public class ReviewBasicWidgetController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 리뷰 ID")
     @DeleteMapping("/reviews/{reviewId}")
     public ResponseEntity<Void> deleteReviewByReviewId(@PathVariable Long reviewId) {
-        reviewService.deleteById(reviewId);
+        reviewService.delete(reviewId);
 
         return ResponseEntity.noContent().build();
     }

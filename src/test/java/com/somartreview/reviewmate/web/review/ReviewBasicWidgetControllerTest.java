@@ -123,7 +123,7 @@ class ReviewBasicWidgetControllerTest {
     @Test
     void 리뷰를_수정한다() throws Exception {
         // given
-        doNothing().when(reviewService).updateById(anyLong(), any(), any());
+        doNothing().when(reviewService).update(anyLong(), any(), any());
 
         MockMultipartFile image2 = new MockMultipartFile(
                 "reviewImages[0]",
@@ -152,7 +152,7 @@ class ReviewBasicWidgetControllerTest {
     @Test
     void 리뷰를_삭제한다() throws Exception {
         // given
-        doNothing().when(reviewService).deleteById(anyLong());
+        doNothing().when(reviewService).delete(anyLong());
 
         // when & then
         mockMvc.perform(
