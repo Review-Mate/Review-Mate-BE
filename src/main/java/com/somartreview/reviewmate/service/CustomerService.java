@@ -22,14 +22,14 @@ public class CustomerService {
     private final PartnerCompanyService partnerCompanyService;
 
     @Transactional
-    public Long create(String partnerDomain, CustomerCreateRequest request) {
+    public Customer create(String partnerDomain, CustomerCreateRequest request) {
         validateUniquePartnerCustomerId(partnerDomain, request.getPartnerCustomId());
         validateUniquePhoneNumber(request.getPhoneNumber());
         validateUniqueKakaoId(request.getKakaoId());
 
-        PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(partnerDomain);
+        final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(partnerDomain);
 
-        return customerRepository.save(request.toEntity(partnerCompany)).getId();
+        return customerRepository.save(request.toEntity(partnerCompany));
     }
 
     @Transactional
@@ -38,8 +38,7 @@ public class CustomerService {
             return findByPartnerDomainAndPartnerCustomId(partnerDomain, customerCreateRequest.getPartnerCustomId());
         }
 
-        create(partnerDomain, customerCreateRequest);
-        return findByPartnerDomainAndPartnerCustomId(partnerDomain, customerCreateRequest.getPartnerCustomId());
+        return create(partnerDomain, customerCreateRequest);
     }
 
     private boolean existsByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
@@ -102,31 +101,5 @@ public class CustomerService {
         final Customer customer = findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
 
         return new CustomerResponse(customer);
-    }
-
-    @Transactional
-    public void delete(Long id) {
-        validateExistCustomer(id);
-
-        customerRepository.deleteById(id);
-    }
-
-    public void validateExistCustomer(Long id) {
-        if (!customerRepository.existsById(id)) {
-            throw new DomainLogicException(CUSTOMER_NOT_FOUND);
-        }
-    }
-
-    @Transactional
-    public void deleteByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
-        validateExistCustomer(partnerDomain, partnerCustomId);
-
-        customerRepository.deleteByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
-    }
-
-    public void validateExistCustomer(String partnerDomain, String partnerCustomId) {
-        if (!customerRepository.existsByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)) {
-            throw new DomainLogicException(CUSTOMER_NOT_FOUND);
-        }
     }
 }

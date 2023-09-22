@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.domain.chatbot.feedback;
+package com.somartreview.reviewmate.domain.live.feedback;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.reservation.Reservation;
@@ -63,6 +63,10 @@ public class LiveFeedback extends BaseEntity {
     }
 
     private void validateCustomerMediaUrl(final String customerMediaUrl) {
+        if (customerMediaUrl == null) {
+            return;
+        }
+
         if (customerMediaUrl.isBlank() || customerMediaUrl.length() > MAX_URL_LENGTH) {
             throw new DomainLogicException(LIVE_FEEDBACK_MEDIA_URL_ERROR);
         }

@@ -16,7 +16,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -126,8 +130,9 @@ public class GlobalControllerAdvice {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ExceptionResponse> handleRuntimeException(RuntimeException e) {
+    public ResponseEntity<ExceptionResponse> handleRuntimeException(RuntimeException e, ContentCachingRequestWrapper requestWrapper) {
         log.warn(RUNTIME_ERROR.toString() + " : " + RUNTIME_ERROR.getMessage());
+        logUndefinedError(e, requestWrapper);
         log.error(e.toString());
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -135,5 +140,51 @@ public class GlobalControllerAdvice {
                         .code(RUNTIME_ERROR.getCode())
                         .message(RUNTIME_ERROR.toString() + " : " + RUNTIME_ERROR.getMessage())
                         .build());
+    }
+
+    private void logUndefinedError(RuntimeException e, ContentCachingRequestWrapper requestWrapper) {
+        String message = e.getMessage()
+                + " <- "
+                + makeStackTraceMessage(e)
+                + toPrettyRequestString(requestWrapper);
+        log.error(message);
+    }
+
+    private String makeStackTraceMessage(RuntimeException e) {
+        return Arrays.stream(e.getStackTrace())
+                .map(StackTraceElement::toString)
+                .collect(Collectors.joining(" <- "));
+    }
+
+    private static final String NEWLINE = System.getProperty("line.separator");
+
+    public static String toPrettyRequestString(ContentCachingRequestWrapper requestWrapper) {
+        return NEWLINE + getMethodAndURI(requestWrapper)
+                + getHeaders(requestWrapper)
+                + getBody(requestWrapper);
+    }
+
+    private static StringBuilder getHeaders(ContentCachingRequestWrapper requestWrapper) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Enumeration<String> headerNames = requestWrapper.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            stringBuilder.append(headerName).append(": ").append(requestWrapper.getHeader(headerName)).append(NEWLINE);
+        }
+        return stringBuilder;
+    }
+
+    private static StringBuilder getMethodAndURI(ContentCachingRequestWrapper requestWrapper) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("method: ").append(requestWrapper.getMethod()).append(NEWLINE);
+        stringBuilder.append("uri: ").append(requestWrapper.getRequestURI()).append(NEWLINE);
+        return stringBuilder;
+    }
+
+    private static StringBuilder getBody(ContentCachingRequestWrapper requestWrapper) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("body: ").append(NEWLINE);
+        stringBuilder.append(new String(requestWrapper.getContentAsByteArray(), StandardCharsets.UTF_8));
+        return stringBuilder;
     }
 }

@@ -1,8 +1,18 @@
 package com.somartreview.reviewmate.web;
 
+import com.somartreview.reviewmate.domain.customer.Customer;
+import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
+import com.somartreview.reviewmate.domain.partner.seller.PartnerSeller;
+import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
+import com.somartreview.reviewmate.dto.product.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.reservation.SingleTravelReservationCreateRequest;
 import com.somartreview.reviewmate.dto.reservation.SingleTravelProductReservationResponse;
+import com.somartreview.reviewmate.service.CustomerService;
+import com.somartreview.reviewmate.service.ReservationDeleteService;
 import com.somartreview.reviewmate.service.ReservationService;
+import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
+import com.somartreview.reviewmate.service.partners.PartnerSellerService;
+import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.headers.Header;
@@ -10,6 +20,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +36,7 @@ import java.util.List;
 public class ReservationController {
 
     private final ReservationService reservationService;
+    private final ReservationDeleteService reservationDeleteService;
 
 
     @Operation(operationId = "createSingleTravelProductReservation", summary = "예약 생성", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
@@ -33,7 +45,7 @@ public class ReservationController {
             @Header(name = "Location", description = "생성된 예약의 URI, /api/console/v1/products/travel/single/reservations/{reservationId}", schema = @Schema(type = "string"))
     })
     @ApiResponse(responseCode = "400", description = "존재하지 않는 고객 ID 혹은 여행상품 ID")
-    @PostMapping("/client/v1/{partnerDomain}/products/travel/single/reservations")
+    @PostMapping(value = "/client/v1/{partnerDomain}/products/travel/single/reservations", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> createSingleTravelProductReservation(@PathVariable String partnerDomain,
                                                                      @Valid @RequestPart SingleTravelReservationCreateRequest singleTravelReservationCreateRequest,
                                                                      @RequestPart(required = false) MultipartFile singleTravelProductThumbnail) {
@@ -75,7 +87,7 @@ public class ReservationController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 예약 ID")
     @DeleteMapping("console/products/travel/single/reservations/{reservationId}")
     public ResponseEntity<Void> deleteReservation(@PathVariable Long reservationId) {
-        reservationService.deleteBy(reservationId);
+        reservationDeleteService.delete(reservationId);
 
         return ResponseEntity.noContent().build();
     }

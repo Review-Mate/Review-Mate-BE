@@ -7,6 +7,7 @@ import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerCreateRequest
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerUpdateRequest;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,8 @@ public class PartnerSellerService {
 
     private final PartnerSellerRepository partnerSellerRepository;
     private final PartnerCompanyService partnerCompanyService;
+    private final SingleTravelProductService singleTravelProductService;
+
 
     @Transactional
     public Long create(PartnerSellerCreateRequest request) {
@@ -47,22 +50,15 @@ public class PartnerSellerService {
                 .orElseThrow(() -> new DomainLogicException(PARTNER_SELLER_NOT_FOUND));
     }
 
-    public PartnerSellerResponse getPartnerSellerResponseById(Long id) {
+    public PartnerSellerResponse getPartnerSellerResponseByPartnerSellerId(Long partnerSellerId) {
 
-        PartnerSeller partnerSeller = findById(id);
+        PartnerSeller partnerSeller = findById(partnerSellerId);
         return new PartnerSellerResponse(partnerSeller);
     }
 
     @Transactional
     public void update(Long id, PartnerSellerUpdateRequest request) {
-
         PartnerSeller partnerSeller = findById(id);
         partnerSeller.update(request);
-    }
-
-    @Transactional
-    public void delete(Long id) {
-
-        partnerSellerRepository.deleteById(id);
     }
 }

@@ -43,17 +43,4 @@ public class PartnerManagerService {
         PartnerManager partnerManager = findById(id);
         partnerManager.update(request);
     }
-
-    @Transactional
-    public void delete(Long id) {
-        validateExistPartnerManagerById(id);
-
-        partnerManagerRepository.deleteById(id);
-    }
-
-    private void validateExistPartnerManagerById(Long id) {
-        if (!partnerManagerRepository.existsById(id)) {
-            throw new DomainLogicException(PARTNER_MANAGER_NOT_FOUND);
-        }
-    }
 }

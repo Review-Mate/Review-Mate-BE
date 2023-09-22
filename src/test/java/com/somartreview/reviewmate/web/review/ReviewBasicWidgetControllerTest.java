@@ -7,6 +7,8 @@ import com.somartreview.reviewmate.domain.review.ReviewProperty;
 import com.somartreview.reviewmate.dto.review.ReviewCreateRequest;
 import com.somartreview.reviewmate.dto.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
+import com.somartreview.reviewmate.service.ReservationService;
+import com.somartreview.reviewmate.service.review.ReviewDeleteService;
 import com.somartreview.reviewmate.service.review.ReviewService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,12 @@ class ReviewBasicWidgetControllerTest {
 
     @MockBean
     private ReviewService reviewService;
+
+    @MockBean
+    private ReviewDeleteService reviewDeleteService;
+
+    @MockBean
+    private ReservationService reservationService;
 
     @Test
     void 리뷰를_생성한다() throws Exception {
@@ -152,7 +160,7 @@ class ReviewBasicWidgetControllerTest {
     @Test
     void 리뷰를_삭제한다() throws Exception {
         // given
-        doNothing().when(reviewService).delete(anyLong());
+        doNothing().when(reviewDeleteService).delete(anyLong());
 
         // when & then
         mockMvc.perform(

@@ -1,8 +1,11 @@
 package com.somartreview.reviewmate.web.partners;
 
+import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
 import com.somartreview.reviewmate.dto.partner.manager.PartnerManagerCreateRequest;
 import com.somartreview.reviewmate.dto.partner.manager.PartnerManagerUpdateRequest;
 import com.somartreview.reviewmate.dto.partner.manager.PartnerManagerResponse;
+import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
+import com.somartreview.reviewmate.service.partners.PartnerManagerDeleteService;
 import com.somartreview.reviewmate.service.partners.PartnerManagerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,6 +27,7 @@ import java.net.URI;
 public class PartnerManagerController {
 
     private final PartnerManagerService partnerManagerService;
+    private final PartnerManagerDeleteService partnerManagerDeleteService;
 
 
     @Operation(operationId = "createPartnerManager", summary = "파트너사 관리자 생성")
@@ -69,7 +73,7 @@ public class PartnerManagerController {
             @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 관리자 ID")
     @DeleteMapping("/{partnerManagerId}")
     public ResponseEntity<Void> deletePartnerManagerById(@PathVariable Long partnerManagerId) {
-        partnerManagerService.delete(partnerManagerId);
+        partnerManagerDeleteService.delete(partnerManagerId);
 
         return ResponseEntity.noContent().build();
     }

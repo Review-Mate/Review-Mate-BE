@@ -82,4 +82,8 @@ public class Customer extends BaseEntity {
             throw new DomainLogicException(CUSTOMER_PHONE_NUMBER_ERROR);
         }
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

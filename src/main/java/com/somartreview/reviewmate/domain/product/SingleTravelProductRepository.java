@@ -14,4 +14,6 @@ public interface SingleTravelProductRepository extends JpaRepository<SingleTrave
     Optional<SingleTravelProduct> findByPartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
 
     List<SingleTravelProduct> findAllByPartnerCompany_PartnerDomainAndSingleTravelProductCategory(String partnerDomain, SingleTravelProductCategory singleTravelProductCategory);
+
+    List<SingleTravelProduct> findAllByPartnerSeller_Id(Long partnerSellerId);
 }

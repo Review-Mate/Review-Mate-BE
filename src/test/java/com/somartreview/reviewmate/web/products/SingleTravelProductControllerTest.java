@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.somartreview.reviewmate.dto.product.SingleTravelProductConsoleElementResponse;
 import com.somartreview.reviewmate.dto.product.SingleTravelProductUpdateRequest;
 import com.somartreview.reviewmate.service.products.SingleTravelProductService;
+import com.somartreview.reviewmate.service.products.TravelProductDeleteService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -41,6 +42,9 @@ class SingleTravelProductControllerTest {
 
     @MockBean
     private SingleTravelProductService singleTravelProductService;
+
+    @MockBean
+    private TravelProductDeleteService travelProductDeleteService;
 
 
     @Test
@@ -81,9 +85,9 @@ class SingleTravelProductControllerTest {
     }
 
     @Test
-    void 여행상품_ID로_단일_여행상품의_정보를_수정한다() throws Exception {
+    void 파트너ID로_단일_여행상품의_정보를_수정한다() throws Exception {
         // given
-        doNothing().when(singleTravelProductService).update(anyLong(), any(), any());
+        doNothing().when(singleTravelProductService).update(anyString(), anyString(), any(), any());
 
         MockMultipartFile singleTravelProductUpdateRequest = new MockMultipartFile(
                 "singleTravelProductUpdateRequest",
@@ -101,7 +105,7 @@ class SingleTravelProductControllerTest {
 
         // when & then
         mockMvc.perform(
-                        multipart(HttpMethod.PATCH, "/api/console/v1/products/travel/single/{travelProductId}", 1)
+                        multipart(HttpMethod.PATCH, "/api/console/v1/{partnerDomain}/products/travel/single/{partnerCustomId}", PARTNER_DOMAIN, "PRODUCT-0001")
                                 .file(singleTravelProductUpdateRequest)
                                 .file(thumbnailFile)
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -112,7 +116,7 @@ class SingleTravelProductControllerTest {
     @Test
     void 여행상품_ID로_단일_여행상품을_삭제한다() throws Exception {
         // given
-        doNothing().when(singleTravelProductService).deleteByTravelProductId(anyLong());
+        doNothing().when(travelProductDeleteService).delete(anyLong());
 
         // when & then
         mockMvc.perform(

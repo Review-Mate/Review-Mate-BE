@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.somartreview.reviewmate.exception.ErrorCode.REVIEW_NOT_FOUND;
 
@@ -27,12 +29,14 @@ public class ReviewService {
     private final SingleTravelProductService singleTravelProductService;
 
     @Transactional
-    public Long create(String partnerDomain, String travelProductPartnerCustomId, ReviewCreateRequest request, List<MultipartFile> reviewImageFiles) {
-        final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, travelProductPartnerCustomId);
-        reservation.getTravelProduct().addReview(request.getRating());
-
+    public Long create(String partnerDomain, String reservationPartnerCustomId, ReviewCreateRequest request, List<MultipartFile> reviewImageFiles) {
+        final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, reservationPartnerCustomId);
         Review review = request.toEntity(reservation);
         reviewRepository.save(review);
+
+        reservation.getTravelProduct().updateReviewData(request.getRating());
+        reservation.getTravelProduct().updateReviewData(review.getRating());
+        reservation.addReview(review);
 
         if (reviewImageFiles != null) {
             List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
@@ -132,27 +136,16 @@ public class ReviewService {
     public void update(Long id, ReviewUpdateRequest request, List<MultipartFile> reviewImageFiles) {
         Review review = findById(id);
 
-        review.getReservation().getTravelProduct().removeReview(review.getRating());
+        review.getReservation().getTravelProduct().removeReviewData(review.getRating());
         review.clearReviewTags();
         review.clearReviewImages();
 
         review.updateReview(request);
-        review.getReservation().getTravelProduct().addReview(request.getRating());
+        review.getReservation().getTravelProduct().updateReviewData(request.getRating());
         List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
         review.appendReviewImage(reviewImages);
 
         // Impl Requesting review inference through API gateway
         // Impl Requesting review inference through kafka
-    }
-
-    @Transactional
-    public void delete(Long id) {
-        Review review = findById(id);
-
-        review.getReservation().getTravelProduct().removeReview(review.getRating());
-        review.clearReviewTags();
-        review.clearReviewImages();
-
-        reviewRepository.delete(review);
     }
 }

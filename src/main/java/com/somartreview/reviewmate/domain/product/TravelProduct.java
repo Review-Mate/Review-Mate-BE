@@ -91,6 +91,10 @@ public abstract class TravelProduct extends BaseEntity {
     }
 
     private void validateThumbnailUrl(final String thumbnailUrl) {
+        if (thumbnailUrl == null) {
+            return;
+        }
+
         if (thumbnailUrl.isBlank() || thumbnailUrl.length() > MAX_THUMBNAIL_URL_LENGTH) {
             throw new DomainLogicException(ErrorCode.TRAVEL_PRODUCT_THUMBNAIL_URL_ERROR);
         }
@@ -103,7 +107,7 @@ public abstract class TravelProduct extends BaseEntity {
     }
 
 
-    public void addReview(int newReviewRating) {
+    public void updateReviewData(int newReviewRating) {
         this.reviewCount++;
         this.rating = (this.rating * (this.reviewCount - 1) + newReviewRating) / this.reviewCount;
 
@@ -114,12 +118,18 @@ public abstract class TravelProduct extends BaseEntity {
         else if (newReviewRating == 1) oneStarRatingCount++;
     }
 
-    public void removeReview(int removedReviewRating) {
+    public void removeReviewData(int removedReviewRating) {
         this.reviewCount--;
         if (reviewCount == 0) {
             this.rating = 0.0f;
             return;
         }
+
+        if (removedReviewRating == 5) fiveStarRatingCount--;
+        else if (removedReviewRating == 4) fourStarRatingCount--;
+        else if (removedReviewRating == 3) threeStarRatingCount--;
+        else if (removedReviewRating == 2) twoStarRatingCount--;
+        else if (removedReviewRating == 1) oneStarRatingCount--;
 
         this.rating = (this.rating * (this.reviewCount + 1) - removedReviewRating) / this.reviewCount;
     }

@@ -1,9 +1,12 @@
 package com.somartreview.reviewmate.web;
 
+import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
 import com.somartreview.reviewmate.dto.customer.CustomerCreateRequest;
 import com.somartreview.reviewmate.dto.customer.CustomerUpdateRequest;
 import com.somartreview.reviewmate.dto.customer.CustomerResponse;
+import com.somartreview.reviewmate.service.CustomerDeleteService;
 import com.somartreview.reviewmate.service.CustomerService;
+import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.headers.Header;
@@ -24,7 +27,7 @@ import java.net.URI;
 public class CustomerController {
 
     private final CustomerService customerService;
-
+    private final CustomerDeleteService customerDeleteService;
 
     @Operation(operationId = "customerCreateRequest", summary = "고객 생성", description = "⚠️ 개발 환경 및 테스트 용도로만 사용하고, 프로덕션 코드에서는 예약 API를 통해 고객을 생성하세요.")
     @Parameter(name = "partnerDomain", description = "고객이 소속될 파트너사 도메인", example = "goodchoice.kr")
@@ -34,7 +37,7 @@ public class CustomerController {
     @PostMapping("/{partnerDomain}/customers")
     public ResponseEntity<Void> createCustomer(@PathVariable String partnerDomain,
                                                @Valid @RequestBody CustomerCreateRequest customerCreateRequest) {
-        final Long customerId = customerService.create(partnerDomain, customerCreateRequest);
+        long customerId = customerService.create(partnerDomain, customerCreateRequest).getId();
 
         return ResponseEntity.created(URI.create("/api/console/v1/customers/" + customerId)).build();
     }
@@ -102,7 +105,7 @@ public class CustomerController {
     @DeleteMapping("/{partnerDomain}/customers/{partnerCustomId}")
     public ResponseEntity<Void> deleteCustomerByPartnerCustomId(@PathVariable String partnerDomain,
                                                                 @PathVariable String partnerCustomId) {
-        customerService.deleteByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
+        customerDeleteService.deleteByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
 
         return ResponseEntity.noContent().build();
     }
@@ -114,7 +117,7 @@ public class CustomerController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 고객 ID")
     @DeleteMapping("/customers/{customerId}")
     public ResponseEntity<Void> deleteCustomerByCustomerId(@PathVariable Long customerId) {
-        customerService.delete(customerId);
+        customerDeleteService.delete(customerId);
 
         return ResponseEntity.noContent().build();
     }

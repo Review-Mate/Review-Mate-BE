@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface PartnerManagerRepository extends JpaRepository<PartnerManager, Long> {
 
     boolean existsById(Long id);
+
+    void deleteAllByPartnerCompany_PartnerDomain(String partnerDomain);
 }

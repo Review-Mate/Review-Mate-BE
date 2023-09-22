@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.somartreview.reviewmate.dto.partner.manager.PartnerManagerCreateRequest;
 import com.somartreview.reviewmate.dto.partner.manager.PartnerManagerResponse;
 import com.somartreview.reviewmate.dto.partner.manager.PartnerManagerUpdateRequest;
+import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
+import com.somartreview.reviewmate.service.partners.PartnerManagerDeleteService;
 import com.somartreview.reviewmate.service.partners.PartnerManagerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,12 @@ class PartnerManagerControllerTest {
 
     @MockBean
     private PartnerManagerService partnerManagerService;
+
+    @MockBean
+    private PartnerManagerDeleteService partnerManagerDeleteService;
+
+    @MockBean
+    private PartnerCompanyService partnerCompanyService;
 
 
     @Test
@@ -86,7 +94,7 @@ class PartnerManagerControllerTest {
     @Test
     void 파트너사의_관리자를_삭제한다() throws Exception {
         // given
-        doNothing().when(partnerManagerService).delete(anyLong());
+        doNothing().when(partnerManagerDeleteService).delete(anyLong());
 
         // when & then
         mockMvc.perform(

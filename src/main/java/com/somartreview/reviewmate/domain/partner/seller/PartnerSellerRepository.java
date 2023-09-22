@@ -3,6 +3,7 @@ package com.somartreview.reviewmate.domain.partner.seller;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,4 +20,6 @@ public interface PartnerSellerRepository extends JpaRepository<PartnerSeller, Lo
     Optional<PartnerSeller> findByPhoneNumber(String phoneNumber);
 
     void deleteByPhoneNumber(String phoneNumber);
+
+    List<PartnerSeller> findAllByPartnerCompany_PartnerDomain(String partnerDomain);
 }
