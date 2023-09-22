@@ -6,6 +6,7 @@ import com.somartreview.reviewmate.domain.review.*;
 import com.somartreview.reviewmate.dto.review.*;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.ReservationService;
+import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewTagService reviewTagService;
     private final ReservationService reservationService;
+    private final SingleTravelProductService singleTravelProductService;
 
     @Transactional
     public Long create(String partnerDomain, String travelProductPartnerCustomId, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
@@ -111,29 +113,25 @@ public class ReviewService {
         reviewRepository.delete(review);
     }
 
-    public ProductReviewStatisticsResponse getReviewStatisticsResponses(final SingleTravelProduct singleTravelProduct) {
-        float averageRating = singleTravelProduct.getRating();
-        long reviewCount = singleTravelProduct.getReviewCount();
-        int fiveStarRatingCount = singleTravelProduct.getFiveStarRatingCount();
-        int fourStarRatingCount = singleTravelProduct.getFourStarRatingCount();
-        int threeStarRatingCount = singleTravelProduct.getThreeStarRatingCount();
-        int twoStarRatingCount = singleTravelProduct.getTwoStarRatingCount();
-        int oneStarRatingCount = singleTravelProduct.getOneStarRatingCount();
+    public ProductReviewStatisticsResponse getReviewStatisticsResponses(String partnerDomain, String singleTravelProductPartnerCustomId) {
+        final SingleTravelProduct singleTravelProduct = singleTravelProductService.findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductPartnerCustomId);
 
         return ProductReviewStatisticsResponse.builder()
-                .averageRating(averageRating)
-                .reviewCount(reviewCount)
-                .fiveStarRatingCount(fiveStarRatingCount)
-                .fourStarRatingCount(fourStarRatingCount)
-                .threeStarRatingCount(threeStarRatingCount)
-                .twoStarRatingCount(twoStarRatingCount)
-                .oneStarRatingCount(oneStarRatingCount)
+                .averageRating(singleTravelProduct.getRating())
+                .reviewCount(singleTravelProduct.getReviewCount())
+                .fiveStarRatingCount(singleTravelProduct.getFiveStarRatingCount())
+                .fourStarRatingCount(singleTravelProduct.getFourStarRatingCount())
+                .threeStarRatingCount(singleTravelProduct.getThreeStarRatingCount())
+                .twoStarRatingCount(singleTravelProduct.getTwoStarRatingCount())
+                .oneStarRatingCount(singleTravelProduct.getOneStarRatingCount())
                 .build();
     }
 
-    public List<ProductReviewTagStatisticsResponse> getProductReviewTagStatisticsResponses(SingleTravelProduct singleTravelProduct) {
+    public List<ProductReviewTagStatisticsResponse> getProductReviewTagStatisticsResponses(String partnerDomain, String singleTravelProductPartnerCustomId) {
+        long singleTravelProductId = singleTravelProductService.findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductPartnerCustomId).getId();
+
         Map<ReviewProperty, ProductReviewTagStatisticsResponse> reviewTagStatisticsMap = new EnumMap<>(ReviewProperty.class);
-        List<ReviewTagStatisticsDto> reviewTagStatisticsDtos = reviewRepository.findReviewTagStatisticsByTravelProductId(singleTravelProduct.getId());
+        List<ReviewTagStatisticsDto> reviewTagStatisticsDtos = reviewRepository.findReviewTagStatisticsByTravelProductId(singleTravelProductId);
 
         for (ReviewTagStatisticsDto reviewTagStatisticDto : reviewTagStatisticsDtos) {
             if (reviewTagStatisticsMap.get(reviewTagStatisticDto.getProperty()) == null) {

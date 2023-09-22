@@ -25,7 +25,6 @@ import java.util.List;
 public class ReviewStatisticsWidgetController {
 
     private final ReviewService reviewService;
-    private final SingleTravelProductService singleTravelProductService;
 
 
     @Operation(operationId = "getReviewStatistics", summary = "단일 여행상품에 등록된 리뷰 목록 조회")
@@ -36,8 +35,7 @@ public class ReviewStatisticsWidgetController {
     @GetMapping("/{partnerDomain}/products/{singleTravelProductPartnerCustomId}/statistic/reviews")
     public ResponseEntity<ProductReviewStatisticsResponse> getReviewStatistics(@PathVariable String partnerDomain,
                                                                                @PathVariable String singleTravelProductPartnerCustomId) {
-        final SingleTravelProduct singleTravelProduct = singleTravelProductService.findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductPartnerCustomId);
-        ProductReviewStatisticsResponse productReviewStatisticsResponse = reviewService.getReviewStatisticsResponses(singleTravelProduct);
+        ProductReviewStatisticsResponse productReviewStatisticsResponse = reviewService.getReviewStatisticsResponses(partnerDomain, singleTravelProductPartnerCustomId);
 
         return ResponseEntity.ok(productReviewStatisticsResponse);
     }
@@ -51,8 +49,7 @@ public class ReviewStatisticsWidgetController {
     @GetMapping("/{partnerDomain}/products/{singleTravelProductPartnerCustomId}/statistics/tags")
     public ResponseEntity<List<ProductReviewTagStatisticsResponse>> getProductReviewTagStatistics(@PathVariable String partnerDomain,
                                                                                                   @PathVariable String singleTravelProductPartnerCustomId) {
-        final SingleTravelProduct singleTravelProduct = singleTravelProductService.findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductPartnerCustomId);
-        List<ProductReviewTagStatisticsResponse> productReviewTagStatisticsResponses = reviewService.getProductReviewTagStatisticsResponses(singleTravelProduct);
+        List<ProductReviewTagStatisticsResponse> productReviewTagStatisticsResponses = reviewService.getProductReviewTagStatisticsResponses(partnerDomain, singleTravelProductPartnerCustomId);
 
         return ResponseEntity.ok(productReviewTagStatisticsResponses);
     }
