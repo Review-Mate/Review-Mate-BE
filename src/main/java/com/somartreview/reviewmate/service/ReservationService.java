@@ -29,12 +29,12 @@ public class ReservationService {
 
     @Transactional
     public Long createSingleTravelProductReservation(String partnerDomain,
-                                                     SingleTravelReservationCreateRequest singleTravelReservationCreateRequest,
+                                                     SingleTravelReservationCreateRequest request,
                                                      MultipartFile thumbnail) {
-        final Customer customer = customerService.retreiveCustomer(partnerDomain, singleTravelReservationCreateRequest.getCustomerCreateRequest());
-        final SingleTravelProduct travelProduct = singleTravelProductService.retreiveSingleTravelProduct(partnerDomain, singleTravelReservationCreateRequest.getSingleTravelProductCreateRequest(), thumbnail);
+        final Customer customer = customerService.retreiveCustomer(partnerDomain, request.getCustomerCreateRequest());
+        final SingleTravelProduct travelProduct = singleTravelProductService.retreiveSingleTravelProduct(partnerDomain, request.getSingleTravelProductCreateRequest(), thumbnail);
 
-        return reservationRepository.save(singleTravelReservationCreateRequest.toEntity(customer, travelProduct)).getId();
+        return reservationRepository.save(request.toEntity(customer, travelProduct)).getId();
     }
 
     public Reservation findById(Long id) {
@@ -89,14 +89,14 @@ public class ReservationService {
     }
 
     @Transactional
-    public void deleteByReservationId(Long reservationId) {
-        validateExistReservation(reservationId);
+    public void deleteBy(Long id) {
+        validateExistReservation(id);
 
-        reservationRepository.deleteById(reservationId);
+        reservationRepository.deleteById(id);
     }
 
-    public void validateExistReservation(Long reservationId) {
-        if (!reservationRepository.existsById(reservationId)) {
+    private void validateExistReservation(Long id) {
+        if (!reservationRepository.existsById(id)) {
             throw new DomainLogicException(RESERVATION_NOT_FOUND);
         }
     }

@@ -107,7 +107,7 @@ class ReservationControllerTest {
     @Test
     void 예약_ID로_예약을_삭제한다() throws Exception {
         // given
-        doNothing().when(reservationService).deleteByReservationId(anyLong());
+        doNothing().when(reservationService).deleteBy(anyLong());
 
         // when & then
         mockMvc.perform(

@@ -75,7 +75,7 @@ public class ReservationController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 예약 ID")
     @DeleteMapping("console/products/travel/single/reservations/{reservationId}")
     public ResponseEntity<Void> deleteReservation(@PathVariable Long reservationId) {
-        reservationService.deleteByReservationId(reservationId);
+        reservationService.deleteBy(reservationId);
 
         return ResponseEntity.noContent().build();
     }
