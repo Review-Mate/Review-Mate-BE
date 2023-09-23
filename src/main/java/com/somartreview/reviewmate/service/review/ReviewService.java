@@ -5,6 +5,7 @@ import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.domain.review.*;
 import com.somartreview.reviewmate.dto.review.*;
 import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.exception.ErrorCode;
 import com.somartreview.reviewmate.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
+import static com.somartreview.reviewmate.exception.ErrorCode.*;
 import static com.somartreview.reviewmate.exception.ErrorCode.REVIEW_NOT_FOUND;
 
 
@@ -31,6 +33,8 @@ public class ReviewService {
     @Transactional
     public Long create(String partnerDomain, String travelProductPartnerCustomId, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
         final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, travelProductPartnerCustomId);
+
+        validateExistReviewByReservationId(reservation.getId());
         reservation.getTravelProduct().addReview(reviewCreateRequest.getRating());
 
         Review review = reviewCreateRequest.toEntity(reservation);
@@ -45,6 +49,11 @@ public class ReviewService {
         // Impl Requesting review inference through kafka
 
         return review.getId();
+    }
+
+    private void validateExistReviewByReservationId(Long reservationId) {
+        if (reviewRepository.existsByReservation_Id(reservationId))
+            throw new DomainLogicException(REVIEW_ALREADY_EXISTS_ON_RESERVATION);
     }
 
     private List<ReviewImage> createReviewImages(List<MultipartFile> reviewImageFiles) {
