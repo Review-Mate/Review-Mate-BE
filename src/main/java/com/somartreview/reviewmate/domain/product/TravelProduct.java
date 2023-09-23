@@ -42,21 +42,6 @@ public abstract class TravelProduct extends BaseEntity {
     @Column(nullable = false)
     private Long reviewCount = 0L;
 
-    @Column(nullable = false)
-    private Integer fiveStarRatingCount = 0;
-
-    @Column(nullable = false)
-    private Integer fourStarRatingCount = 0;
-
-    @Column(nullable = false)
-    private Integer threeStarRatingCount = 0;
-
-    @Column(nullable = false)
-    private Integer twoStarRatingCount = 0;
-
-    @Column(nullable = false)
-    private Integer oneStarRatingCount = 0;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "partner_company_id", nullable = false)
     private PartnerCompany partnerCompany;
@@ -110,12 +95,6 @@ public abstract class TravelProduct extends BaseEntity {
     public void updateReviewData(int newReviewRating) {
         this.reviewCount++;
         this.rating = (this.rating * (this.reviewCount - 1) + newReviewRating) / this.reviewCount;
-
-        if (newReviewRating == 5) fiveStarRatingCount++;
-        else if (newReviewRating == 4) fourStarRatingCount++;
-        else if (newReviewRating == 3) threeStarRatingCount++;
-        else if (newReviewRating == 2) twoStarRatingCount++;
-        else if (newReviewRating == 1) oneStarRatingCount++;
     }
 
     public void removeReviewData(int removedReviewRating) {
@@ -124,12 +103,6 @@ public abstract class TravelProduct extends BaseEntity {
             this.rating = 0.0f;
             return;
         }
-
-        if (removedReviewRating == 5) fiveStarRatingCount--;
-        else if (removedReviewRating == 4) fourStarRatingCount--;
-        else if (removedReviewRating == 3) threeStarRatingCount--;
-        else if (removedReviewRating == 2) twoStarRatingCount--;
-        else if (removedReviewRating == 1) oneStarRatingCount--;
 
         this.rating = (this.rating * (this.reviewCount + 1) - removedReviewRating) / this.reviewCount;
     }

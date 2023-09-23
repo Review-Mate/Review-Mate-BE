@@ -91,4 +91,16 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
         else if (orderCriteria.equals(NEGATIVE_DESC)) return Expressions.stringPath("negativeTagsCount").desc();
         else return null;
     }
+
+    @Override
+    public List<Long> countReviewRatingByTravelProductId(Long travelProductId) {
+        return queryFactory
+                .select(review.count())
+                .from(review)
+                .where(review.reservation.travelProduct.id.eq(travelProductId))
+                .groupBy(review.rating)
+                .having(review.rating.in(1, 2, 3, 4, 5))
+                .orderBy(review.rating.asc())
+                .fetch();
+    }
 }

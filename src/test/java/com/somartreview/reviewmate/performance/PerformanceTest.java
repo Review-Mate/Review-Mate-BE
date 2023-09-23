@@ -19,7 +19,7 @@ import static com.somartreview.reviewmate.performance.api.ReviewAPIRequester.*;
 import static com.somartreview.reviewmate.performance.api.SingleTravelProductAPIRequester.*;
 import static org.springframework.boot.test.context.SpringBootTest.*;
 
-@Disabled // Disable this from the main application test
+//@Disabled // Disable this from the main application test
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("performance")
 public class PerformanceTest {

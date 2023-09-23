@@ -105,15 +105,16 @@ public class ReviewService {
 
     public ProductReviewStatisticsResponse getReviewStatisticsResponses(String partnerDomain, String singleTravelProductPartnerCustomId) {
         final SingleTravelProduct singleTravelProduct = singleTravelProductService.findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductPartnerCustomId);
+        List<Long> ratingCounts = reviewRepository.countReviewRatingByTravelProductId(singleTravelProduct.getId());
 
         return ProductReviewStatisticsResponse.builder()
                 .averageRating(singleTravelProduct.getRating())
                 .reviewCount(singleTravelProduct.getReviewCount())
-                .fiveStarRatingCount(singleTravelProduct.getFiveStarRatingCount())
-                .fourStarRatingCount(singleTravelProduct.getFourStarRatingCount())
-                .threeStarRatingCount(singleTravelProduct.getThreeStarRatingCount())
-                .twoStarRatingCount(singleTravelProduct.getTwoStarRatingCount())
-                .oneStarRatingCount(singleTravelProduct.getOneStarRatingCount())
+                .oneStarRatingCount(ratingCounts.get(0))
+                .twoStarRatingCount(ratingCounts.get(1))
+                .threeStarRatingCount(ratingCounts.get(2))
+                .fourStarRatingCount(ratingCounts.get(3))
+                .fiveStarRatingCount(ratingCounts.get(4))
                 .build();
     }
 
