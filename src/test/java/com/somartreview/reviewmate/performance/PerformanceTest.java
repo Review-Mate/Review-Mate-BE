@@ -29,8 +29,8 @@ public class PerformanceTest {
     public static final String PARTNER_DOMAIN = "goodchoice.kr";
     public static final Long SAFE_COMMON_ID = 3L;
     public static final String SAGE_PRODUCT_PARTNER_CUSTOM_ID = "4e16aa67-a2fd-4c92-ad11-775a3ad190e4";
-    public static final String PARTNER_CUSTOM_ID_POSTFIX = "_1019_14";
-    public static final String CUSTOMER_PHONE_NUMBER = "02409159941";
+    public static final String PARTNER_CUSTOM_ID_POSTFIX = "_1019_15";
+    public static final String CUSTOMER_PHONE_NUMBER = "02509159941";
     public static final String DELETING_PARTNER_COMPANY_DOMAIN = "goodchoice.kr";
     public static final Long DELETING_PARTNER_SELLER_ID = 2L;
     public static final Long DELETING_PARTNER_MANAGER_ID = 2L;

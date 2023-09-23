@@ -33,7 +33,7 @@ public class ReviewDeleteService {
     public void deleteByReservationId(Long reservationId) {
         Optional<Review> foundReview = reviewRepository.findByReservation_Id(reservationId);
         if (foundReview.isEmpty()) {
-            throw new DomainLogicException(REVIEW_NOT_FOUND);
+            return;
         }
 
         delete(foundReview.get().getId());
