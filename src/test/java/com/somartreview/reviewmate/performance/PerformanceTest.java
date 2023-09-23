@@ -26,8 +26,9 @@ public class PerformanceTest {
 
     private static final Logger log = LoggerFactory.getLogger("PERFORMANCE");
 
-    public static final long SAFE_ID = 3L;
     public static final String PARTNER_DOMAIN = "goodchoice.kr";
+    public static final Long SAFE_COMMON_ID = 3L;
+    public static final String SAGE_PRODUCT_PARTNER_CUSTOM_ID = "4e16aa67-a2fd-4c92-ad11-775a3ad190e4";
     public static final String PARTNER_CUSTOM_ID_POSTFIX = "_1019_12";
     public static final String CUSTOMER_PHONE_NUMBER = "02209159941";
     public static final String DELETING_PARTNER_COMPANY_DOMAIN = "goodchoice.kr";
@@ -97,10 +98,16 @@ public class PerformanceTest {
 
         리뷰Id로_리뷰를_조회한다();
         상품의_파트너Id로_리뷰목록을_조회한다();
+        상품의_파트너Id로_속성_필터링으로_리뷰목록을_조회한다();
+        상품의_파트너Id로_키워드_필터링으로_리뷰목록을_조회한다();
+        상품의_파트너Id로_별점순_정렬로_리뷰목록을_조회한다();
+        상품의_파트너Id로_긍정적인순_정렬로_리뷰목록을_조회한다();
+        단일_여행상품의_리뷰_통계를_조회한다();
+        단일_여행상품의_리뷰태그_통계를_조회한다();
     }
 
     /*
-    삭제 요청들을 테스트한다.
+    파트너 엔티티의 삭제 요청들을 테스트한다.
      */
     void 파트너_API의_성능을_테스트한다() {
         파트너사를_삭제한다();

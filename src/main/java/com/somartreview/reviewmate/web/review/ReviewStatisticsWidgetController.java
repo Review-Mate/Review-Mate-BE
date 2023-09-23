@@ -27,7 +27,7 @@ public class ReviewStatisticsWidgetController {
     private final ReviewService reviewService;
 
 
-    @Operation(operationId = "getReviewStatistics", summary = "단일 여행상품에 등록된 리뷰 목록 조회")
+    @Operation(operationId = "getReviewStatistics", summary = "단일 여행상품에 등록된 리뷰 통계 조회")
     @Parameter(name = "partnerDomain", description = "파트너사 도메인", example = "goodchoice.kr")
     @Parameter(name = "singleTravelProductPartnerCustomId", description = "단일 여행상품의 파트너사 커스텀 ID", example = "PRODUCT_0001")
     @ApiResponse(responseCode = "200", description = "리뷰 조회 성공")

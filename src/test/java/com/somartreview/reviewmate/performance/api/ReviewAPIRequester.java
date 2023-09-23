@@ -5,7 +5,6 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.springframework.http.MediaType;
 
-import java.io.File;
 import java.util.Map;
 
 import static com.somartreview.reviewmate.performance.PerformanceTest.*;
@@ -32,7 +31,7 @@ public class ReviewAPIRequester {
 
     public static ExtractableResponse<Response> 리뷰Id로_리뷰를_조회한다() {
         return RestAssured.given()
-                .pathParam("reviewId", SAFE_ID)
+                .pathParam("reviewId", SAFE_COMMON_ID)
                 .when().get("/api/widget/v1/reviews/{reviewId}")
                 .then()
                 .extract();
@@ -41,8 +40,67 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 상품의_파트너Id로_리뷰목록을_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("travelProductPartnerCustomId", SAFE_ID)
+                .pathParam("travelProductPartnerCustomId", SAFE_COMMON_ID)
                 .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
+                .then()
+                .extract();
+    }
+
+    public static ExtractableResponse<Response> 상품의_파트너Id로_속성_필터링으로_리뷰목록을_조회한다() {
+        return RestAssured.given()
+                .pathParam("partnerDomain", PARTNER_DOMAIN)
+                .pathParam("travelProductPartnerCustomId", SAFE_COMMON_ID)
+                .param("property", "CLEANNESS")
+                .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
+                .then()
+                .extract();
+    }
+
+    public static ExtractableResponse<Response> 상품의_파트너Id로_키워드_필터링으로_리뷰목록을_조회한다() {
+        return RestAssured.given()
+                .pathParam("partnerDomain", PARTNER_DOMAIN)
+                .pathParam("travelProductPartnerCustomId", SAFE_COMMON_ID)
+                .param("property", "CLEANNESS")
+                .param("keyword", "냄새")
+                .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
+                .then()
+                .extract();
+    }
+
+    public static ExtractableResponse<Response> 상품의_파트너Id로_별점순_정렬로_리뷰목록을_조회한다() {
+        return RestAssured.given()
+                .pathParam("partnerDomain", PARTNER_DOMAIN)
+                .pathParam("travelProductPartnerCustomId", SAFE_COMMON_ID)
+                .param("orderCriteria", "RATING_DESC")
+                .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
+                .then()
+                .extract();
+    }
+
+    public static ExtractableResponse<Response> 상품의_파트너Id로_긍정적인순_정렬로_리뷰목록을_조회한다() {
+        return RestAssured.given()
+                .pathParam("partnerDomain", PARTNER_DOMAIN)
+                .pathParam("travelProductPartnerCustomId", SAFE_COMMON_ID)
+                .param("orderCriteria", "POSITIVE_DESC")
+                .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
+                .then()
+                .extract();
+    }
+
+    public static ExtractableResponse<Response> 단일_여행상품의_리뷰_통계를_조회한다() {
+        return RestAssured.given()
+                .pathParam("partnerDomain", PARTNER_DOMAIN)
+                .pathParam("singleTravelProductPartnerCustomId", SAGE_PRODUCT_PARTNER_CUSTOM_ID)
+                .when().get("/api/widget/v1/{partnerDomain}/products/{singleTravelProductPartnerCustomId}/statistic/reviews")
+                .then()
+                .extract();
+    }
+
+    public static ExtractableResponse<Response> 단일_여행상품의_리뷰태그_통계를_조회한다() {
+        return RestAssured.given()
+                .pathParam("partnerDomain", PARTNER_DOMAIN)
+                .pathParam("singleTravelProductPartnerCustomId", SAGE_PRODUCT_PARTNER_CUSTOM_ID)
+                .when().get("/api/widget/v1/{partnerDomain}/products/{singleTravelProductPartnerCustomId}/statistic/tags")
                 .then()
                 .extract();
     }

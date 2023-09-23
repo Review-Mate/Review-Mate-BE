@@ -4,7 +4,6 @@ import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.springframework.http.MediaType;
-import org.springframework.lang.NonNull;
 
 import java.io.File;
 import java.util.Map;
@@ -52,7 +51,7 @@ public class ReservationAPIRequester {
 
     public static ExtractableResponse<Response> 예약Id로_예약을_조회한다() {
         return RestAssured.given()
-                .pathParam("reservationId", SAFE_ID)
+                .pathParam("reservationId", SAFE_COMMON_ID)
                 .when().get("api/console/v1/products/travel/single/reservations/{reservationId}")
                 .then()
                 .extract();
@@ -60,7 +59,7 @@ public class ReservationAPIRequester {
 
     public static ExtractableResponse<Response> 고객Id와_예약목록을_조회한다() {
         return RestAssured.given()
-                .param("customerId", SAFE_ID)
+                .param("customerId", SAFE_COMMON_ID)
                 .when().get("api/console/v1/products/travel/single/reservations")
                 .then()
                 .extract();
@@ -68,7 +67,7 @@ public class ReservationAPIRequester {
 
     public static ExtractableResponse<Response> 상품Id와_예약목록을_조회한다() {
         return RestAssured.given()
-                .param("singleTravelProductId", SAFE_ID)
+                .param("singleTravelProductId", SAFE_COMMON_ID)
                 .when().get("api/console/v1/products/travel/single/reservations")
                 .then()
                 .extract();
@@ -76,8 +75,8 @@ public class ReservationAPIRequester {
 
     public static ExtractableResponse<Response> 고객Id와_상품Id로_예약목록을_조회한다() {
         return RestAssured.given()
-                .param("customerId", SAFE_ID)
-                .param("singleTravelProductId", SAFE_ID)
+                .param("customerId", SAFE_COMMON_ID)
+                .param("singleTravelProductId", SAFE_COMMON_ID)
                 .when().get("api/console/v1/products/travel/single/reservations")
                 .then()
                 .extract();
