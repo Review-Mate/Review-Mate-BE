@@ -133,6 +133,7 @@ jacocoTestReport {
                             '**/BaseEntity*',
                             '**/*Response*',
                             '**/*Request*',
+                            '**/domain/**/Q*',
                     ])
                 })
         )

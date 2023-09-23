@@ -167,7 +167,7 @@ class ReviewCustomRepositoryTest {
     @Test
     void 위젯_리뷰를_페이징한다() {
         // given
-        WidgetReviewSearchCond widgetReviewSearchCond = new WidgetReviewSearchCond(null, null, LATEST);
+        WidgetReviewSearchCond widgetReviewSearchCond = new WidgetReviewSearchCond(null, null, null);
 
         // when
         Page<Review> results = reviewRepository.searchWidgetReviews(
