@@ -20,7 +20,7 @@ import static com.somartreview.reviewmate.exception.ErrorCode.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Review extends BaseEntity {
+public class Review extends BaseEntity{
 
     private static final int MAX_TITLE_LENGTH = 255;
     private static final int MAX_CONTENT_LENGTH = 255;

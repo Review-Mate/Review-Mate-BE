@@ -4,6 +4,6 @@ public enum ReviewOrderCriteria {
     LATEST,
     RATING_ASC,
     RATING_DESC,
-    POSITIVE,
-    NEGATIVE
+    POSITIVE_DESC,
+    NEGATIVE_DESC
 }
