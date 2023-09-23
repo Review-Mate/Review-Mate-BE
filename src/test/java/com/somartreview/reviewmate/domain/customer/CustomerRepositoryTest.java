@@ -11,9 +11,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // Use the Datasource defined in application.yml
 class CustomerRepositoryTest {
 
     @Autowired
@@ -118,3 +117,4 @@ class CustomerRepositoryTest {
         assertThat(customerRepository.existsById(customerId)).isFalse();
     }
 }
+
