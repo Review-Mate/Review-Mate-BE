@@ -90,7 +90,7 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 단일_여행상품의_리뷰_통계를_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("singleTravelProductPartnerCustomId", SAGE_PRODUCT_PARTNER_CUSTOM_ID)
+                .pathParam("singleTravelProductPartnerCustomId", SAFE_PRODUCT_PARTNER_CUSTOM_ID)
                 .when().get("/api/widget/v1/{partnerDomain}/products/{singleTravelProductPartnerCustomId}/statistic/reviews")
                 .then()
                 .extract();
@@ -99,7 +99,7 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 단일_여행상품의_리뷰태그_통계를_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("singleTravelProductPartnerCustomId", SAGE_PRODUCT_PARTNER_CUSTOM_ID)
+                .pathParam("singleTravelProductPartnerCustomId", SAFE_PRODUCT_PARTNER_CUSTOM_ID)
                 .when().get("/api/widget/v1/{partnerDomain}/products/{singleTravelProductPartnerCustomId}/statistic/tags")
                 .then()
                 .extract();

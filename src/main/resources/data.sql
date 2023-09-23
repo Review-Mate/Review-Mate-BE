@@ -18,8 +18,8 @@ VALUES ('2023-08-30 12:00:00', '2023-08-30 12:00:00', 'sckwon770kakao', '권순�
 INSERT INTO customer (created_at, updated_at, kakao_id, name, partner_custom_id, phone_number, partner_company_id)
 VALUES ('2023-08-30 12:00:00', '2023-08-30 12:00:00', 'sckwon770kakao', '권순찬', 'CUSTOMER-0001', '010-1234-1234', 1);
 
-INSERT INTO travel_product (dtype, created_at, updated_at, name, partner_custom_id, review_count, rating, thumbnail_url, category, partner_company_id, partner_seller_id, five_star_rating_count, four_star_rating_count, three_star_rating_count, two_star_rating_count, one_star_rating_count)
-VALUES ('SingleTravelProduct', '2023-08-30 12:00:00', '2023-08-30 12:00:00', '신라더스테이 호텔 - 스위트룸', 'HOTEL-0001', 1, 5, 'testurl.com', 'ACCOMMODATION', 1, 1, 0, 0, 0, 0, 0);
+INSERT INTO travel_product (dtype, created_at, updated_at, name, partner_custom_id, review_count, rating, thumbnail_url, category, partner_company_id, partner_seller_id)
+VALUES ('SingleTravelProduct', '2023-08-30 12:00:00', '2023-08-30 12:00:00', '신라더스테이 호텔 - 스위트룸', 'HOTEL-0001', 1, 5, 'testurl.com', 'ACCOMMODATION', 1, 1);
 
 
 --  Review  #####################################################################################################################################################################################################################

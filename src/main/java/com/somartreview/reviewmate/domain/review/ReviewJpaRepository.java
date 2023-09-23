@@ -18,7 +18,7 @@ public interface ReviewJpaRepository extends JpaRepository<Review, Long> {
             "FROM ReviewTag rt " +
             "JOIN Review r ON rt.review.id = r.id " +
             "WHERE rt.review.reservation.travelProduct.id = :travelProductId " +
-            "GROUP BY rt.keyword, rt.reviewProperty")
+            "GROUP BY rt.reviewProperty, rt.polarity")
     List<ReviewTagStatisticsDto> findReviewTagStatisticsByTravelProductId(Long travelProductId);
 
     Optional<Review> findByReservation_Id(Long reservationId);
