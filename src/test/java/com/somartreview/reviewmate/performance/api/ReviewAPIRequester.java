@@ -91,7 +91,7 @@ public class ReviewAPIRequester {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
                 .pathParam("singleTravelProductPartnerCustomId", SAFE_PRODUCT_PARTNER_CUSTOM_ID)
-                .when().get("/api/widget/v1/{partnerDomain}/products/{singleTravelProductPartnerCustomId}/statistic/reviews")
+                .when().get("/api/widget/v1/{partnerDomain}/products/{singleTravelProductPartnerCustomId}/statistics/reviews")
                 .then()
                 .extract();
     }
@@ -100,7 +100,7 @@ public class ReviewAPIRequester {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
                 .pathParam("singleTravelProductPartnerCustomId", SAFE_PRODUCT_PARTNER_CUSTOM_ID)
-                .when().get("/api/widget/v1/{partnerDomain}/products/{singleTravelProductPartnerCustomId}/statistic/tags")
+                .when().get("/api/widget/v1/{partnerDomain}/products/{singleTravelProductPartnerCustomId}/statistics/tags")
                 .then()
                 .extract();
     }
