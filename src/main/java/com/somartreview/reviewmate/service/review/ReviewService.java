@@ -7,6 +7,10 @@ import com.somartreview.reviewmate.dto.review.*;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.ReservationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,19 +72,23 @@ public class ReviewService {
         return new WidgetReviewResponse(review, foundReviewTags);
     }
 
-    // Impl complicated condition query with QueryDSL
-    public List<WidgetReviewResponse> getWidgetReviewResponsesByPartnerDomainAndTravelProductIdWithCondition(String partnerDomain, String travelProductPartnerCustomId,
-                                                                                                             ReviewProperty reviewProperty, String keyword,
-                                                                                                             ReviewOrderCriteria reviewOrderCriteria,
-                                                                                                             Integer page, Integer size) {
+    public Page<WidgetReviewResponse> searchWidgetReviewResponsesWithPaging(String partnerDomain, String travelProductPartnerCustomId,
+                                                                            ReviewProperty property, String keyword,
+                                                                            ReviewOrderCriteria orderCriteria,
+                                                                            Integer page, Integer size) {
         List<WidgetReviewResponse> widgetReviewResponses = new ArrayList<>();
-        List<Review> foundReviews = reviewRepository.findAllByReservation_TravelProduct_PartnerCompany_PartnerDomainAndReservation_TravelProduct_PartnerCustomId(partnerDomain, travelProductPartnerCustomId);
+        WidgetReviewSearchCond widgetReviewSearchCond = new WidgetReviewSearchCond(property, keyword, orderCriteria);
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Review> foundReviews = reviewRepository.searchWidgetReviews(partnerDomain, travelProductPartnerCustomId, widgetReviewSearchCond, pageable);
         for (Review review : foundReviews) {
             List<ReviewTag> foundReviewTags = reviewTagService.findReviewTagsByReviewId(review.getId());
             widgetReviewResponses.add(new WidgetReviewResponse(review, foundReviewTags));
         }
 
-        return widgetReviewResponses;
+        long totalCount = foundReviews.getTotalElements();
+
+        return new PageImpl<>(widgetReviewResponses, pageable, totalCount);
     }
 
     @Transactional
