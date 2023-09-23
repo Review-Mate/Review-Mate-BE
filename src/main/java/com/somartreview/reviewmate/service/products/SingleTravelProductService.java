@@ -36,6 +36,8 @@ public class SingleTravelProductService {
     public Long create(String partnerDomain, SingleTravelProductCreateRequest request, MultipartFile thumbnailFile) {
         validateUniquePartnerCustomId(partnerDomain, request.getPartnerCustomId());
 
+
+
         String thumbnailUrl = uploadThumbnailOnS3(thumbnailFile);
 
         return singleTravelProductRepository.save(request.toEntity(thumbnailUrl)).getId();

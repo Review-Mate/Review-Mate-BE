@@ -36,7 +36,6 @@ public class ReviewBasicWidgetController {
 
     private final ReviewService reviewService;
     private final ReviewDeleteService reviewDeleteService;
-    private final ReservationService reservationService;
 
     @Operation(operationId = "reviewCreateRequest", summary = "리뷰 생성", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
     @Parameter(name = "partnerDomain", description = "파트너사 도메인", example = "goodchoice.kr")
@@ -49,8 +48,6 @@ public class ReviewBasicWidgetController {
                                              @PathVariable String reservationPartnerCustomId,
                                              @Valid @RequestPart ReviewCreateRequest reviewCreateRequest,
                                              @RequestPart(required = false) List<MultipartFile> reviewImageFiles) {
-
-        final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, reservationPartnerCustomId);
         Long reviewId = reviewService.create(partnerDomain, reservationPartnerCustomId, reviewCreateRequest, reviewImageFiles);
 
         return ResponseEntity.created(URI.create("/api/widget/v1/reviews/" + reviewId)).build();

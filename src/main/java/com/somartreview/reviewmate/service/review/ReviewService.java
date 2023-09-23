@@ -5,7 +5,6 @@ import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.domain.review.*;
 import com.somartreview.reviewmate.dto.review.*;
 import com.somartreview.reviewmate.exception.DomainLogicException;
-import com.somartreview.reviewmate.exception.ErrorCode;
 import com.somartreview.reviewmate.service.ReservationService;
 import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import lombok.RequiredArgsConstructor;
