@@ -20,7 +20,6 @@ public class PartnerSellerService {
 
     private final PartnerSellerRepository partnerSellerRepository;
     private final PartnerCompanyService partnerCompanyService;
-    private final SingleTravelProductService singleTravelProductService;
 
 
     @Transactional
