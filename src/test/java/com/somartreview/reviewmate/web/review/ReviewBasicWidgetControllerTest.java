@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -102,7 +103,7 @@ class ReviewBasicWidgetControllerTest {
     @Test
     void 상품에_등록된_리뷰들을_조건없이_조회한다() throws Exception {
         // given
-        given(reviewService.getWidgetReviewResponsesByPartnerDomainAndTravelProductIdWithCondition(anyString(), anyString(), any(), any(), any(), anyInt(), anyInt())).willReturn(Collections.emptyList());
+        given(reviewService.searchWidgetReviewResponsesWithPaging(anyString(), anyString(), any(), any(), any(), anyInt(), anyInt())).willReturn(Page.empty());
 
         // when & then
         mockMvc.perform(
@@ -114,7 +115,7 @@ class ReviewBasicWidgetControllerTest {
     @Test
     void 상품에_등록된_리뷰들을_조건과_함께_조회한다() throws Exception {
         // given
-        given(reviewService.getWidgetReviewResponsesByPartnerDomainAndTravelProductIdWithCondition(anyString(), anyString(), any(), any(), any(), anyInt(), anyInt())).willReturn(Collections.emptyList());
+        given(reviewService.searchWidgetReviewResponsesWithPaging(anyString(), anyString(), any(), any(), any(), anyInt(), anyInt())).willReturn(Page.empty());
 
         // when & then
         mockMvc.perform(

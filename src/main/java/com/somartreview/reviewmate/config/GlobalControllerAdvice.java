@@ -45,9 +45,9 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ExceptionResponse> handleConstraintViolation(ConstraintViolationException e) {
         log.warn(INVALID_PROPERTY_ERROR.toString() + " : " + e.getMessage());
-        log.warn(e.getConstraintViolations().toString());
 
         String messages = extractErrorMessages(e.getConstraintViolations());
+        log.warn(messages);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ExceptionResponse.builder()
                         .code(INVALID_PROPERTY_ERROR.getCode())
@@ -64,9 +64,9 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleMismatchedInput(MethodArgumentNotValidException e) {
         log.warn(INVALID_PROPERTY_ERROR.toString() + " : " + e.getMessage());
-        log.warn(e.getBindingResult().getFieldErrors().toString());
 
         String messages = extractErrorMessages(e.getBindingResult().getFieldErrors());
+        log.warn(messages);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ExceptionResponse.builder()
                         .code(INVALID_PROPERTY_ERROR.getCode())
@@ -89,7 +89,7 @@ public class GlobalControllerAdvice {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ExceptionResponse.builder()
                         .code(INVALID_PROPERTY_ERROR.getCode())
-                        .message(INVALID_PROPERTY_ERROR.toString() + " : " + "잘못된 요청입니다.")
+                        .message(INVALID_PROPERTY_ERROR.toString() + " : " + "잘못된 요청입니다. " + e.toString())
                         .build());
     }
 
@@ -101,7 +101,7 @@ public class GlobalControllerAdvice {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ExceptionResponse.builder()
                         .code(API_NOT_FOUND_ERROR.getCode())
-                        .message(API_NOT_FOUND_ERROR.toString() + " : " + "처리할 수 없는 요청입니다.")
+                        .message(API_NOT_FOUND_ERROR.toString() + " : " + "처리할 수 없는 요청입니다. " + e.toString())
                         .build());
     }
 
@@ -125,7 +125,7 @@ public class GlobalControllerAdvice {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ExceptionResponse.builder()
                         .code(e.getErrorCode().getCode())
-                        .message(e.getErrorCode().toString() + " : " + e.getMessage())
+                        .message(e.getErrorCode().toString() + " : " + e.getMessage() + ". " + e.toString())
                         .build());
     }
 
@@ -138,7 +138,7 @@ public class GlobalControllerAdvice {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionResponse.builder()
                         .code(RUNTIME_ERROR.getCode())
-                        .message(RUNTIME_ERROR.toString() + " : " + RUNTIME_ERROR.getMessage())
+                        .message(RUNTIME_ERROR.toString() + " : " + RUNTIME_ERROR.getMessage() + ". " + e.toString())
                         .build());
     }
 

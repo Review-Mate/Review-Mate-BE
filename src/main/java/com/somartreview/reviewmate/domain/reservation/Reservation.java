@@ -31,7 +31,6 @@ public class Reservation extends BaseEntity {
     @Column(nullable = false, unique = true, length = MAX_PARTNER_CUSTOM_ID_LENGTH)
     private String partnerCustomId;
 
-
     @Column(nullable = false)
     private LocalDateTime startDateTime;
 

@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface ReviewJpaRepository extends JpaRepository<Review, Long> {
 
+    boolean existsByReservation_Id(Long reservationId);
 
     List<Review> findAllByReservation_TravelProduct_PartnerCompany_PartnerDomainAndReservation_TravelProduct_PartnerCustomId(String partnerDomain, String partnerCustomId);
 
