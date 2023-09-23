@@ -6,6 +6,7 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.somartreview.reviewmate.dto.review.ReviewRatingCountsDto;
 import com.somartreview.reviewmate.service.review.WidgetReviewSearchCond;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -93,14 +94,25 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
     }
 
     @Override
-    public List<Long> countReviewRatingByTravelProductId(Long travelProductId) {
-        return queryFactory
-                .select(review.count())
+    public ReviewRatingCountsDto countReviewRatingByTravelProductId(Long travelProductId) {
+        List<Tuple> results = queryFactory
+                .select(review.rating, review.count())
                 .from(review)
                 .where(review.reservation.travelProduct.id.eq(travelProductId))
                 .groupBy(review.rating)
                 .having(review.rating.in(1, 2, 3, 4, 5))
                 .orderBy(review.rating.asc())
                 .fetch();
+
+        ReviewRatingCountsDto reviewRatingCountsDto = new ReviewRatingCountsDto();
+        for (Tuple tuple : results) {
+            if (tuple.get(review.rating) == 1) reviewRatingCountsDto.setOneStarRatingCount(tuple.get(review.count()));
+            else if (tuple.get(review.rating) == 2) reviewRatingCountsDto.setTwoStarRatingCount(tuple.get(review.count()));
+            else if (tuple.get(review.rating) == 3) reviewRatingCountsDto.setThreeStarRatingCount(tuple.get(review.count()));
+            else if (tuple.get(review.rating) == 4) reviewRatingCountsDto.setFourStarRatingCount(tuple.get(review.count()));
+            else if (tuple.get(review.rating) == 5) reviewRatingCountsDto.setFiveStarRatingCount(tuple.get(review.count()));
+        }
+
+        return reviewRatingCountsDto;
     }
 }

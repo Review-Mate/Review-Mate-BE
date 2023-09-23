@@ -49,18 +49,6 @@ public class ReservationService {
                 .orElseThrow(() -> new DomainLogicException(RESERVATION_NOT_FOUND));
     }
 
-    public List<Reservation> findAllByTravelProductId(Long travelProductId) {
-        return reservationRepository.findAllByTravelProduct_Id(travelProductId);
-    }
-
-    public List<Reservation> findAllByCustomerId(Long customerId) {
-        return reservationRepository.findAllByCustomer_Id(customerId);
-    }
-
-    public List<Reservation> findAllByTravelProductIdAndCustomerId(Long travelProductId, Long customerId) {
-        return reservationRepository.findAllByTravelProduct_IdAndCustomer_Id(travelProductId, customerId);
-    }
-
     public SingleTravelProductReservationResponse getSingleTravelProductReservationResponseById(Long id) {
         Reservation reservation = findById(id);
 
@@ -69,17 +57,11 @@ public class ReservationService {
 
     public List<SingleTravelProductReservationResponse> getSingleTravelProductReservationResponseByCustomerOrSingleTravelProduct(Long customerId, Long singleTravelProductId) {
         if (singleTravelProductId == null) {
-            return findAllByCustomerId(customerId).stream()
-                    .map(SingleTravelProductReservationResponse::new)
-                    .toList();
+            return reservationRepository.findAllByCustomer_Id(customerId);
         } else if (customerId == null) {
-            return findAllByTravelProductId(singleTravelProductId).stream()
-                    .map(SingleTravelProductReservationResponse::new)
-                    .toList();
+            return reservationRepository.findAllByTravelProduct_Id(singleTravelProductId);
         } else {
-            return findAllByTravelProductIdAndCustomerId(singleTravelProductId, customerId).stream()
-                    .map(SingleTravelProductReservationResponse::new)
-                    .toList();
+            return reservationRepository.findAllByTravelProduct_IdAndCustomer_Id(singleTravelProductId, customerId);
         }
     }
 }
