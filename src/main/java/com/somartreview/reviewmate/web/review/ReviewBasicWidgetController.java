@@ -68,7 +68,7 @@ public class ReviewBasicWidgetController {
     @Parameter(name = "travelProductPartnerCustomId", description = "여행상품의 파트너사 커스텀 ID", example = "PRODUCT_0001")
     @Parameter(name = "property", description = "리뷰태그의 속성")
     @Parameter(name = "keyword", description = "리뷰태그의 키워드 \n\n⚠️ 속석과 함께 전달되어야 합니다. 속성과 키워드를 매칭되지 않으면, 조회디지 않습니다.")
-    @Parameter(name = "orderBy", description = "정렬 기준")
+    @Parameter(name = "orderCriteria", description = "정렬 기준")
     @Parameter(name = "page", description = "페이지 번호 \n\n⚠️ 0 페이지부터 시작")
     @Parameter(name = "size", description = "페이지 크기")
     @ApiResponse(responseCode = "200", description = "리뷰 조회 성공")
