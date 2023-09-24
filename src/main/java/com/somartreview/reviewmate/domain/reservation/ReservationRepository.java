@@ -1,7 +1,6 @@
 package com.somartreview.reviewmate.domain.reservation;
 
 import com.somartreview.reviewmate.dto.reservation.SingleTravelProductReservationResponse;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
@@ -22,19 +21,19 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("select new com.somartreview.reviewmate.dto.reservation.SingleTravelProductReservationResponse(" +
             "r.id, r.partnerCustomId, r.customer.partnerCustomId, r.customer.name, r.customer.phoneNumber, r.travelProduct.partnerCustomId, r.travelProduct.name" +
             ") from Reservation r left join r.customer left join r.travelProduct where r.customer.id = :customerId")
-    List<SingleTravelProductReservationResponse> findAllByCustomer_Id(Long customerId);
+    List<SingleTravelProductReservationResponse> findAllByCustomerId(Long customerId);
 
 
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     @Query("select new com.somartreview.reviewmate.dto.reservation.SingleTravelProductReservationResponse(" +
             "r.id, r.partnerCustomId, r.customer.partnerCustomId, r.customer.name, r.customer.phoneNumber, r.travelProduct.partnerCustomId, r.travelProduct.name" +
             ") from Reservation r left join r.customer left join r.travelProduct where r.travelProduct.id = :travelProductId")
-    List<SingleTravelProductReservationResponse> findAllByTravelProduct_Id(Long travelProductId);
+    List<SingleTravelProductReservationResponse> findAllByTravelProductId(Long travelProductId);
 
 
     @Query("select new com.somartreview.reviewmate.dto.reservation.SingleTravelProductReservationResponse(" +
             "r.id, r.partnerCustomId, r.customer.partnerCustomId, r.customer.name, r.customer.phoneNumber, r.travelProduct.partnerCustomId, r.travelProduct.name" +
             ") from Reservation r left join r.customer left join r.travelProduct where r.travelProduct.id = :travelProductId and r.customer.id = :customerId")
-    List<SingleTravelProductReservationResponse> findAllByTravelProduct_IdAndCustomer_Id(Long travelProductId, Long customerId);
+    List<SingleTravelProductReservationResponse> findAllByTravelProductIdAndCustomerId(Long travelProductId, Long customerId);
 
 }

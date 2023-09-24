@@ -57,11 +57,11 @@ public class ReservationService {
 
     public List<SingleTravelProductReservationResponse> getSingleTravelProductReservationResponseByCustomerOrSingleTravelProduct(Long customerId, Long singleTravelProductId) {
         if (singleTravelProductId == null) {
-            return reservationRepository.findAllByCustomer_Id(customerId);
+            return reservationRepository.findAllByCustomerId(customerId);
         } else if (customerId == null) {
-            return reservationRepository.findAllByTravelProduct_Id(singleTravelProductId);
+            return reservationRepository.findAllByTravelProductId(singleTravelProductId);
         } else {
-            return reservationRepository.findAllByTravelProduct_IdAndCustomer_Id(singleTravelProductId, customerId);
+            return reservationRepository.findAllByTravelProductIdAndCustomerId(singleTravelProductId, customerId);
         }
     }
 }

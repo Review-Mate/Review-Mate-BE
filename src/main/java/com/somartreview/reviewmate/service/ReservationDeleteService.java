@@ -39,14 +39,14 @@ public class ReservationDeleteService {
 
     @Transactional
     public void deleteAllByCustomerId(Long customerId) {
-        reservationRepository.findAllByCustomer_Id(customerId).forEach(reservation -> {
+        reservationRepository.findAllByCustomerId(customerId).forEach(reservation -> {
             delete(reservation.getId());
         });
     }
 
     @Transactional
     public void deleteAllByTravelProductId(Long travelProductId) {
-        reservationRepository.findAllByTravelProduct_Id(travelProductId).forEach(reservation -> {
+        reservationRepository.findAllByTravelProductId(travelProductId).forEach(reservation -> {
             delete(reservation.getId());
         });
     }
