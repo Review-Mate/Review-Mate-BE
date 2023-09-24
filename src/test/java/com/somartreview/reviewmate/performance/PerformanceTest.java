@@ -46,25 +46,25 @@ public class PerformanceTest {
     @Test
     void 성능을_테스트한다() {
         log.info("===== 성능 테스트 시작 =====");
-//        예약_API의_성능을_테스트한다();
+        예약_API의_성능을_테스트한다();
 //        고객_API의_성능을_테스트한다();
 //        여행상품_API의_성능을_테스트한다();
-        리뷰_API의_성능을_테스트한다();
+//        리뷰_API의_성능을_테스트한다();
     }
 
     void 예약_API의_성능을_테스트한다() {
         log.info("(1/5) 예약 API");
 
-        ExtractableResponse<Response> response = 예약을_생성한다();
-        String[] urls = response.header("Location").split("/");
-        long reservationId = Long.parseLong(urls[urls.length - 1]);
+//        ExtractableResponse<Response> response = 예약을_생성한다();
+//        String[] urls = response.header("Location").split("/");
+//        long reservationId = Long.parseLong(urls[urls.length - 1]);
 
         예약Id로_예약을_조회한다();
         고객Id와_예약목록을_조회한다();
         상품Id와_예약목록을_조회한다();
         고객Id와_상품Id로_예약목록을_조회한다();
 
-        예약Id로_예약을_삭제한다(reservationId);
+//        예약Id로_예약을_삭제한다(reservationId);
     }
 
     void 고객_API의_성능을_테스트한다() {
