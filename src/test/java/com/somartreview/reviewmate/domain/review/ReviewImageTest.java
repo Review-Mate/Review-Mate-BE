@@ -13,9 +13,10 @@ class ReviewImageTest {
     void 리뷰이미지의_url은_공백이어선_안된다() {
         // given
         String url = " ";
+        Review mockReview = new Review();
 
         // when & then
-        assertThatThrownBy(() -> new ReviewImage(url))
+        assertThatThrownBy(() -> new ReviewImage(url, mockReview))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessageContaining(REVIEW_IMAGE_URL_ERROR.getMessage());
     }
@@ -24,9 +25,10 @@ class ReviewImageTest {
     void 리뷰이미지의_url은_1024자_보다_길면_안된다() {
         // given
         String url = "a".repeat(1025);
+        Review mockReview = new Review();
 
         // when & then
-        assertThatThrownBy(() -> new ReviewImage(url))
+        assertThatThrownBy(() -> new ReviewImage(url, mockReview))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessageContaining(REVIEW_IMAGE_URL_ERROR.getMessage());
     }
