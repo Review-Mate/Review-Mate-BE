@@ -80,60 +80,60 @@ public class GlobalControllerAdvice {
     @ExceptionHandler({HttpMessageNotReadableException.class})
     public ResponseEntity<ExceptionResponse> handleMismatchedInput(Exception e) {
         log.warn(INVALID_PROPERTY_ERROR.toString() + " : " + e.getMessage());
-        log.error(e.toString());
+        log.error(e.getCause().getCause().getMessage());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ExceptionResponse.builder()
                         .code(INVALID_PROPERTY_ERROR.getCode())
-                        .message(INVALID_PROPERTY_ERROR.toString() + " : " + "잘못된 요청입니다. " + e.toString())
+                        .message(INVALID_PROPERTY_ERROR.toString() + " : " + "잘못된 요청입니다. " + e.getCause().getCause().getMessage())
                         .build());
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<ExceptionResponse> noHandlerFoundHandle(NoHandlerFoundException e) {
         log.warn(API_NOT_FOUND_ERROR.toString() + " : " + e.getMessage());
-        log.error(e.toString());
+        log.error(e.getCause().getCause().getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ExceptionResponse.builder()
                         .code(API_NOT_FOUND_ERROR.getCode())
-                        .message(API_NOT_FOUND_ERROR.toString() + " : " + "처리할 수 없는 요청입니다. " + e.toString())
+                        .message(API_NOT_FOUND_ERROR.toString() + " : " + "처리할 수 없는 요청입니다. " + e.getCause().getCause().getMessage())
                         .build());
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ExceptionResponse> handleDataIntegrityViolation(DataIntegrityViolationException e) {
         log.warn(DB_CONFLICT_ERROR.toString() + " : " + e.getMessage());
-        log.warn(DB_CONFLICT_ERROR.getMessage() + " : " + e.getCause().getMessage());
+        log.warn(DB_CONFLICT_ERROR.getMessage() + " : " + e.getCause().getCause().getMessage());
 
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(ExceptionResponse.builder()
                         .code(DB_CONFLICT_ERROR.getCode())
-                        .message(DB_CONFLICT_ERROR.toString() + " : " + DB_CONFLICT_ERROR.getMessage() + " : " + e.getCause().getMessage())
+                        .message(DB_CONFLICT_ERROR.toString() + " : " + DB_CONFLICT_ERROR.getMessage() + " : " + e.getCause().getCause().getMessage())
                         .build());
     }
 
     @ExceptionHandler(ReviewMateException.class)
     public ResponseEntity<ExceptionResponse> handleReviewMateException(ReviewMateException e) {
         log.warn(e.getErrorCode().toString() + " : " + e.getMessage());
-        log.error(e.toString());
+        log.error(e.getCause().getCause().getMessage());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ExceptionResponse.builder()
                         .code(e.getErrorCode().getCode())
-                        .message(e.getErrorCode().toString() + " : " + e.getMessage() + ". " + e.toString())
+                        .message(e.getErrorCode().toString() + " : " + e.getMessage() + ". " + e.getCause().getCause().getMessage())
                         .build());
     }
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ExceptionResponse> handleRuntimeException(RuntimeException e) {
         log.warn(RUNTIME_ERROR.toString() + " : " + RUNTIME_ERROR.getMessage());
-        log.error(e.toString());
+        log.error(e.getCause().getCause().getMessage());
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionResponse.builder()
                         .code(RUNTIME_ERROR.getCode())
-                        .message(RUNTIME_ERROR.toString() + " : " + RUNTIME_ERROR.getMessage() + ". " + e.toString())
+                        .message(RUNTIME_ERROR.toString() + " : " + RUNTIME_ERROR.getMessage() + ". " + e.getCause().getCause().getMessage())
                         .build());
     }
 }
