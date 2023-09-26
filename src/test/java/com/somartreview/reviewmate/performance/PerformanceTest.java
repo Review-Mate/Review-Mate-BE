@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ import static com.somartreview.reviewmate.performance.api.ReviewAPIRequester.*;
 import static com.somartreview.reviewmate.performance.api.SingleTravelProductAPIRequester.*;
 import static org.springframework.boot.test.context.SpringBootTest.*;
 
-//@Disabled // Disable this from the main application test
+@Disabled // Disable this from the main application test
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("performance")
 public class PerformanceTest {

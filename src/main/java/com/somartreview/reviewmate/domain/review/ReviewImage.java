@@ -29,14 +29,19 @@ public class ReviewImage extends BaseEntity {
     private Review review;
 
     @Builder
-    public ReviewImage(String url) {
+    public ReviewImage(String url, Review review) {
         validateUrl(url);
         this.url = url;
+        this.review = review;
     }
 
     private void validateUrl(final String url) {
         if (url.isBlank() || url.length() > MAX_URL_LENGTH) {
             throw new DomainLogicException(ErrorCode.REVIEW_IMAGE_URL_ERROR);
         }
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
     }
 }

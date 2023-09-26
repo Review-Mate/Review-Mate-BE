@@ -34,16 +34,18 @@ public class ReviewService {
     private final SingleTravelProductService singleTravelProductService;
 
     @Transactional
-    public Long create(String partnerDomain, String reservationPartnerCustomId, ReviewCreateRequest request, List<MultipartFile> reviewImageFiles) {
-        final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, reservationPartnerCustomId);
-        Review review = request.toEntity(reservation);
+    public Long create(String partnerDomain, String travelProductPartnerCustomId, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
+        final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, travelProductPartnerCustomId);
+        validateExistReviewByReservationId(reservation.getId());
+
+        Review review = reviewCreateRequest.toEntity(reservation);
         reviewRepository.save(review);
 
         reservation.getTravelProduct().updateReviewData(review.getRating());
         reservation.addReview(review);
 
         if (reviewImageFiles != null) {
-            List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
+            List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles, review);
             review.appendReviewImage(reviewImages);
         }
 
@@ -58,10 +60,11 @@ public class ReviewService {
             throw new DomainLogicException(REVIEW_ALREADY_EXISTS_ON_RESERVATION);
     }
 
-    private List<ReviewImage> createReviewImages(List<MultipartFile> reviewImageFiles) {
+    private List<ReviewImage> createReviewImages(List<MultipartFile> reviewImageFiles, Review review) {
         return reviewImageFiles.stream()
                 .map(reviewImageFile -> ReviewImage.builder()
                         .url(uploadReviewImageOnS3(reviewImageFile))
+                        .review(review)
                         .build())
                 .toList();
     }
@@ -156,7 +159,7 @@ public class ReviewService {
 
         review.updateReview(request);
         review.getReservation().getTravelProduct().updateReviewData(request.getRating());
-        List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
+        List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles, review);
         review.appendReviewImage(reviewImages);
 
         // Impl Requesting review inference through API gateway
