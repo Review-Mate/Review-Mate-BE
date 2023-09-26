@@ -33,7 +33,6 @@ public class ReviewService {
     @Transactional
     public Long create(String partnerDomain, String travelProductPartnerCustomId, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
         final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, travelProductPartnerCustomId);
-
         validateExistReviewByReservationId(reservation.getId());
         reservation.getTravelProduct().addReview(reviewCreateRequest.getRating());
 
@@ -41,7 +40,7 @@ public class ReviewService {
         reviewRepository.save(review);
 
         if (reviewImageFiles != null) {
-            List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
+            List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles, review);
             review.appendReviewImage(reviewImages);
         }
 
@@ -56,10 +55,11 @@ public class ReviewService {
             throw new DomainLogicException(REVIEW_ALREADY_EXISTS_ON_RESERVATION);
     }
 
-    private List<ReviewImage> createReviewImages(List<MultipartFile> reviewImageFiles) {
+    private List<ReviewImage> createReviewImages(List<MultipartFile> reviewImageFiles, Review review) {
         return reviewImageFiles.stream()
                 .map(reviewImageFile -> ReviewImage.builder()
                         .url(uploadReviewImageOnS3(reviewImageFile))
+                        .review(review)
                         .build())
                 .toList();
     }
@@ -110,7 +110,7 @@ public class ReviewService {
 
         review.updateReview(reviewUpdateRequest);
         review.getReservation().getTravelProduct().addReview(reviewUpdateRequest.getRating());
-        List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles);
+        List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles, review);
         review.appendReviewImage(reviewImages);
 
         // Impl Requesting review inference through API gateway

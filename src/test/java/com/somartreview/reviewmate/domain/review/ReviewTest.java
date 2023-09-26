@@ -172,9 +172,11 @@ class ReviewTest {
     @Test
     void 리뷰에_리뷰이미지를_설정한다() {
         // given
+        Review mockReview1 = new Review();
+        Review mockReview2 = new Review();
         List<ReviewImage> reviewImages = new ArrayList<>(Arrays.asList(
-                new ReviewImage("www.image1.com"),
-                new ReviewImage("www.image2.com")
+                new ReviewImage("www.image1.com", mockReview1),
+                new ReviewImage("www.image2.com", mockReview2)
         ));
 
         // then
