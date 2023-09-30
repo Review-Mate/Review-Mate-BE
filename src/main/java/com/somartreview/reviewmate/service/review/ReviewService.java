@@ -81,24 +81,19 @@ public class ReviewService {
 
     public WidgetReviewResponse getWidgetReviewResponseById(Long id) {
         final Review review = findById(id);
-        final List<ReviewTag> foundReviewTags = reviewTagService.findReviewTagsByReviewId(review.getId());
 
-        return new WidgetReviewResponse(review, foundReviewTags);
+        return new WidgetReviewResponse(review);
     }
 
     public Page<WidgetReviewResponse> searchWidgetReviewResponsesWithPaging(String partnerDomain, String travelProductPartnerCustomId,
                                                                             ReviewProperty property, String keyword,
                                                                             ReviewOrderCriteria orderCriteria,
                                                                             Integer page, Integer size) {
-        List<WidgetReviewResponse> widgetReviewResponses = new ArrayList<>();
         WidgetReviewSearchCond widgetReviewSearchCond = new WidgetReviewSearchCond(property, keyword, orderCriteria);
         Pageable pageable = PageRequest.of(page, size);
 
         Page<Review> foundReviews = reviewRepository.searchWidgetReviews(partnerDomain, travelProductPartnerCustomId, widgetReviewSearchCond, pageable);
-        for (Review review : foundReviews) {
-            List<ReviewTag> foundReviewTags = reviewTagService.findReviewTagsByReviewId(review.getId());
-            widgetReviewResponses.add(new WidgetReviewResponse(review, foundReviewTags));
-        }
+        List<WidgetReviewResponse> widgetReviewResponses = foundReviews.map(WidgetReviewResponse::new).stream().toList();
 
         long totalCount = foundReviews.getTotalElements();
 
