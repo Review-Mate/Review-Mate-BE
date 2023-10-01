@@ -32,7 +32,7 @@ INSERT INTO review (created_at, updated_at, polarity, content, rating, title, re
 VALUES ('2023-09-01 12:00:00', '2023-09-01 12:00:00', 'POSITIVE', '리뷰 내용 1', 3, '리뷰 제목 1', 1);
 
 INSERT INTO review_tag (created_at, updated_at, keyword, polarity, property, start_index, end_index, review_id)
-VALUES ('2023-09-01 12:00:00', '2023-09-01 12:00:00', '먼지', 'NEGATIVE', 'CLEANNESS', 0, 3, 1);
+VALUES ('2023-09-01 12:00:00', '2023-09-01 12:00:00', '먼지', 'NEGATIVE', 'CLEANNESS', 0, 1, 1);
 
 INSERT INTO review_image (created_at, updated_at, url, review_id)
 VALUES ('2023-09-01 12:00:00', '2023-09-01 12:00:00', 'testurl.com', 1);
@@ -46,13 +46,13 @@ INSERT INTO review (created_at, updated_at, polarity, content, rating, title, re
 VALUES ('2023-09-02 12:00:00', '2023-09-01 12:00:00', 'POSITIVE', '리뷰 내용 1', 5, '리뷰 제목 1', 2);
 
 INSERT INTO review_tag (created_at, updated_at, keyword, polarity, property, start_index, end_index, review_id)
-VALUES ('2023-09-01 12:00:00', '2023-09-01 12:00:00', '냄새', 'NEGATIVE', 'CLEANNESS', 0, 3, 2);
+VALUES ('2023-09-01 12:00:00', '2023-09-01 12:00:00', '냄새', 'NEGATIVE', 'CLEANNESS', 0, 2, 2);
 
 INSERT INTO review_tag (created_at, updated_at, keyword, polarity, property, start_index, end_index, review_id)
-VALUES ('2023-09-01 12:00:00', '2023-09-01 12:00:00', '냄새', 'NEGATIVE', 'CLEANNESS', 0, 3, 2);
+VALUES ('2023-09-01 12:00:00', '2023-09-01 12:00:00', '냄새', 'NEGATIVE', 'CLEANNESS', 0, 2, 2);
 
 INSERT INTO review_tag (created_at, updated_at, keyword, polarity, property, start_index, end_index, review_id)
-VALUES ('2023-09-01 12:00:00', '2023-09-01 12:00:00', '냄새', 'NEGATIVE', 'CLEANNESS', 0, 3, 2);
+VALUES ('2023-09-01 12:00:00', '2023-09-01 12:00:00', '냄새', 'NEGATIVE', 'CLEANNESS', 0, 2, 2);
 
 
 

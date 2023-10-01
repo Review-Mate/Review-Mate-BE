@@ -10,6 +10,7 @@ import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
 import com.somartreview.reviewmate.service.ReservationService;
 import com.somartreview.reviewmate.service.review.ReviewDeleteService;
 import com.somartreview.reviewmate.service.review.ReviewService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

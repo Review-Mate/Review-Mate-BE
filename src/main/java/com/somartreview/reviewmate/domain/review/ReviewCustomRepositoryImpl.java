@@ -1,12 +1,12 @@
 package com.somartreview.reviewmate.domain.review;
 
 import com.querydsl.core.Tuple;
-import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.dsl.*;
-import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.somartreview.reviewmate.dto.review.ReviewRatingCountsDto;
+import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
 import com.somartreview.reviewmate.service.review.WidgetReviewSearchCond;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,10 +15,15 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.querydsl.core.types.ExpressionUtils.as;
+import static com.querydsl.jpa.JPAExpressions.select;
+import static com.somartreview.reviewmate.domain.customer.QCustomer.customer;
+import static com.somartreview.reviewmate.domain.reservation.QReservation.reservation;
 import static com.somartreview.reviewmate.domain.review.QReview.review;
 import static com.somartreview.reviewmate.domain.review.QReviewTag.reviewTag;
 import static com.somartreview.reviewmate.domain.review.ReviewOrderCriteria.*;
-import static com.somartreview.reviewmate.domain.review.ReviewPolarity.*;
+import static com.somartreview.reviewmate.domain.review.ReviewPolarity.NEGATIVE;
+import static com.somartreview.reviewmate.domain.review.ReviewPolarity.POSITIVE;
 
 public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
 
@@ -31,16 +36,17 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
     @Override
     public Page<Review> searchWidgetReviews(String partnerDomain, String travelProductPartnerCustomId, WidgetReviewSearchCond searchCond, Pageable pageable) {
         List<Tuple> content = queryFactory
-                .select(review,
-                        ExpressionUtils.as(
-                                JPAExpressions.select(reviewTag.count())
+                .select(
+                        review,
+                        as(
+                                select(reviewTag.count())
                                         .from(reviewTag)
                                         .where(reviewTag.review.eq(review)
                                                 .and(reviewTag.polarity.eq(POSITIVE))),
                                 "positiveTagsCount"
                         ),
-                        ExpressionUtils.as(
-                                JPAExpressions.select(reviewTag.count())
+                        as(
+                                select(reviewTag.count())
                                         .from(reviewTag)
                                         .where(reviewTag.review.eq(review)
                                                 .and(reviewTag.polarity.eq(NEGATIVE))),
@@ -48,6 +54,8 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
                         )
                 )
                 .from(review)
+                .leftJoin(review.reservation, reservation).fetchJoin()
+                .leftJoin(reservation.customer, customer).fetchJoin()
                 .where(reviewTagEq(searchCond.getProperty(), searchCond.getKeyword()))
                 .orderBy(orderCriteria(searchCond.getOrderCriteria()))
                 .offset(pageable.getOffset())
@@ -107,10 +115,14 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
         ReviewRatingCountsDto reviewRatingCountsDto = new ReviewRatingCountsDto();
         for (Tuple tuple : results) {
             if (tuple.get(review.rating) == 1) reviewRatingCountsDto.setOneStarRatingCount(tuple.get(review.count()));
-            else if (tuple.get(review.rating) == 2) reviewRatingCountsDto.setTwoStarRatingCount(tuple.get(review.count()));
-            else if (tuple.get(review.rating) == 3) reviewRatingCountsDto.setThreeStarRatingCount(tuple.get(review.count()));
-            else if (tuple.get(review.rating) == 4) reviewRatingCountsDto.setFourStarRatingCount(tuple.get(review.count()));
-            else if (tuple.get(review.rating) == 5) reviewRatingCountsDto.setFiveStarRatingCount(tuple.get(review.count()));
+            else if (tuple.get(review.rating) == 2)
+                reviewRatingCountsDto.setTwoStarRatingCount(tuple.get(review.count()));
+            else if (tuple.get(review.rating) == 3)
+                reviewRatingCountsDto.setThreeStarRatingCount(tuple.get(review.count()));
+            else if (tuple.get(review.rating) == 4)
+                reviewRatingCountsDto.setFourStarRatingCount(tuple.get(review.count()));
+            else if (tuple.get(review.rating) == 5)
+                reviewRatingCountsDto.setFiveStarRatingCount(tuple.get(review.count()));
         }
 
         return reviewRatingCountsDto;
