@@ -10,7 +10,6 @@ import javax.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +52,12 @@ public class Review extends BaseEntity{
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewTag> reviewTags = new ArrayList<>();
 
+    @Column(nullable = false)
+    private Long positiveTagsCount = 0L;
+
+    @Column(nullable = false)
+    private Long negativeTagsCount = 0L;
+
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewImage> reviewImages = new ArrayList<>();
 
@@ -85,12 +90,10 @@ public class Review extends BaseEntity{
         }
     }
 
-    public void addReviewTag(ReviewTag reviewTag) {
-        this.reviewTags.add(reviewTag);
+    public void appendReviewTags(List<ReviewTag> reviewTags) {
+        this.reviewTags.addAll(reviewTags);
 
-        int positiveTagsCount = 0;
-        int negativeTagsCount = 0;
-        for (ReviewTag tag : this.reviewTags) {
+        for (ReviewTag tag : reviewTags) {
             if (tag.getPolarity().equals(POSITIVE)) {
                 positiveTagsCount++;
             }
@@ -113,6 +116,8 @@ public class Review extends BaseEntity{
 
     public void clearReviewTags() {
         this.reviewTags.clear();
+        this.positiveTagsCount = 0L;
+        this.negativeTagsCount = 0L;
         this.polarity = NEUTRAL;
     }
 

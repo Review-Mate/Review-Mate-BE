@@ -3,7 +3,6 @@ package com.somartreview.reviewmate.domain.review;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.somartreview.reviewmate.dto.review.ReviewRatingCountsDto;
 import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
@@ -15,15 +14,11 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static com.querydsl.core.types.ExpressionUtils.as;
-import static com.querydsl.jpa.JPAExpressions.select;
 import static com.somartreview.reviewmate.domain.customer.QCustomer.customer;
 import static com.somartreview.reviewmate.domain.reservation.QReservation.reservation;
 import static com.somartreview.reviewmate.domain.review.QReview.review;
 import static com.somartreview.reviewmate.domain.review.QReviewTag.reviewTag;
 import static com.somartreview.reviewmate.domain.review.ReviewOrderCriteria.*;
-import static com.somartreview.reviewmate.domain.review.ReviewPolarity.NEGATIVE;
-import static com.somartreview.reviewmate.domain.review.ReviewPolarity.POSITIVE;
 
 public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
 
@@ -34,28 +29,9 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
     }
 
     @Override
-    public Page<Review> searchWidgetReviews(String partnerDomain, String travelProductPartnerCustomId, WidgetReviewSearchCond searchCond, Pageable pageable) {
-        List<Tuple> content = queryFactory
-                .select(
-                        review,
-                        as(
-                                select(reviewTag.count())
-                                        .from(reviewTag)
-                                        .where(reviewTag.review.eq(review)
-                                                .and(reviewTag.polarity.eq(POSITIVE))),
-                                "positiveTagsCount"
-                        ),
-                        as(
-                                select(reviewTag.count())
-                                        .from(reviewTag)
-                                        .where(reviewTag.review.eq(review)
-                                                .and(reviewTag.polarity.eq(NEGATIVE))),
-                                "negativeTagsCount"
-                        )
-                )
-                .from(review)
-                .leftJoin(review.reservation, reservation).fetchJoin()
-                .leftJoin(reservation.customer, customer).fetchJoin()
+    public Page<WidgetReviewResponse> searchWidgetReviews(String partnerDomain, String travelProductPartnerCustomId, WidgetReviewSearchCond searchCond, Pageable pageable) {
+        List<Review> reviews = queryFactory
+                .selectFrom(review)
                 .where(reviewTagEq(searchCond.getProperty(), searchCond.getKeyword()))
                 .orderBy(orderCriteria(searchCond.getOrderCriteria()))
                 .offset(pageable.getOffset())
@@ -70,8 +46,8 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
                 )
                 .fetchOne();
 
-        List<Review> reviews = content.stream().map(tuple -> tuple.get(review)).toList();
-        return new PageImpl<>(reviews, pageable, totalCount);
+        List<WidgetReviewResponse> widgetReviewResponses = reviews.stream().map(WidgetReviewResponse::new).toList();
+        return new PageImpl<>(widgetReviewResponses, pageable, totalCount);
     }
 
     private BooleanExpression reviewTagEq(ReviewProperty property, String keyword) {
@@ -96,8 +72,8 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
         else if (orderCriteria.equals(LATEST)) return review.createdAt.desc();
         else if (orderCriteria.equals(RATING_ASC)) return review.rating.asc();
         else if (orderCriteria.equals(RATING_DESC)) return review.rating.desc();
-        else if (orderCriteria.equals(POSITIVE_DESC)) return Expressions.stringPath("positiveTagsCount").desc();
-        else if (orderCriteria.equals(NEGATIVE_DESC)) return Expressions.stringPath("negativeTagsCount").desc();
+        else if (orderCriteria.equals(POSITIVE_DESC)) return review.positiveTagsCount.desc();
+        else if (orderCriteria.equals(NEGATIVE_DESC)) return review.negativeTagsCount.desc();
         else return null;
     }
 

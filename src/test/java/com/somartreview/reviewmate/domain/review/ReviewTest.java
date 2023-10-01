@@ -121,9 +121,10 @@ class ReviewTest {
     void 리뷰에_긍정_리뷰태그를_추가한다() {
         // given
         ReviewTag reviewTag = new ReviewTag(ReviewProperty.LOCATION, "키워드", ReviewPolarity.POSITIVE, 0, 1);
+        List<ReviewTag> reviewTags = new ArrayList<>(List.of(reviewTag));
 
         // when
-        review.addReviewTag(reviewTag);
+        review.appendReviewTags(reviewTags);
 
         // then
         assertThat(review.getReviewTags()).hasSize(1);
@@ -134,9 +135,10 @@ class ReviewTest {
     void 리뷰에_부정_리뷰태그를_추가한다() {
         // given
         ReviewTag reviewTag = new ReviewTag(ReviewProperty.LOCATION, "키워드", ReviewPolarity.NEGATIVE, 0, 1);
+        List<ReviewTag> reviewTags = new ArrayList<>(List.of(reviewTag));
 
         // when
-        review.addReviewTag(reviewTag);
+        review.appendReviewTags(reviewTags);
 
         // then
         assertThat(review.getReviewTags()).hasSize(1);
@@ -148,10 +150,10 @@ class ReviewTest {
         // given
         ReviewTag positiveReviewTag = new ReviewTag(ReviewProperty.LOCATION, "키워드", ReviewPolarity.POSITIVE, 0, 1);
         ReviewTag negativeReviewTag = new ReviewTag(ReviewProperty.LOCATION, "키워드", ReviewPolarity.NEGATIVE, 0, 1);
+        List<ReviewTag> reviewTags = new ArrayList<>(List.of(positiveReviewTag, negativeReviewTag));
 
         // when
-        review.addReviewTag(positiveReviewTag);
-        review.addReviewTag(negativeReviewTag);
+        review.appendReviewTags(reviewTags);
 
 
         // then

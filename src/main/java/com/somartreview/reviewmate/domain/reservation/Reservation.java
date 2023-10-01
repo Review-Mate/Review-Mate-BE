@@ -48,6 +48,11 @@ public class Reservation extends BaseEntity {
     @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY)
     private Review review;
 
+//    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY)
+//    private LiveSatisfaction liveSatisfaction;
+//
+//    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY)
+//    private LiveFeedback liveFeedback;
 
 
     @Builder

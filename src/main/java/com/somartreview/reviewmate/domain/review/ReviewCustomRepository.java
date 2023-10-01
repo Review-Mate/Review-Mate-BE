@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ReviewCustomRepository {
 
-    Page<Review> searchWidgetReviews(String partnerDomain, String travelProductPartnerCustomId, WidgetReviewSearchCond searchCond, Pageable pageable);
+    Page<WidgetReviewResponse> searchWidgetReviews(String partnerDomain, String travelProductPartnerCustomId, WidgetReviewSearchCond searchCond, Pageable pageable);
 
     ReviewRatingCountsDto countReviewRatingByTravelProductId(Long travelProductId);
 }
