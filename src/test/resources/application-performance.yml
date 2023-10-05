@@ -11,8 +11,8 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
-        show-sql: true
-        format_sql: true
+        show-sql: false
+        format_sql: false
         dialect: org.hibernate.dialect.MySQL8Dialect
         default_batch_fetch_size: 1000
 

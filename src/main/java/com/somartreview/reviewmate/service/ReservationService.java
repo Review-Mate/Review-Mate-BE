@@ -39,29 +39,29 @@ public class ReservationService {
         return reservationRepository.save(request.toEntity(customer, travelProduct)).getId();
     }
 
-    public Reservation findById(Long id) {
-        return reservationRepository.findById(id)
-                .orElseThrow(() -> new DomainLogicException(RESERVATION_NOT_FOUND));
-    }
-
     public Reservation findByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
         return reservationRepository.findByTravelProduct_PartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)
                 .orElseThrow(() -> new DomainLogicException(RESERVATION_NOT_FOUND));
     }
 
     public SingleTravelProductReservationResponse getSingleTravelProductReservationResponseById(Long id) {
-        Reservation reservation = findById(id);
-
-        return new SingleTravelProductReservationResponse(reservation);
+        return reservationRepository.findByIdFetchJoin(id)
+                .map(SingleTravelProductReservationResponse::new)
+                .orElseThrow(() -> new DomainLogicException(RESERVATION_NOT_FOUND));
     }
 
     public List<SingleTravelProductReservationResponse> getSingleTravelProductReservationResponseByCustomerOrSingleTravelProduct(Long customerId, Long singleTravelProductId) {
         if (singleTravelProductId == null) {
-            return reservationRepository.findAllByCustomerId(customerId);
+            return reservationRepository.findAllByCustomerIdFetchJoin(customerId)
+                    .stream().map(SingleTravelProductReservationResponse::new).toList();
+
         } else if (customerId == null) {
-            return reservationRepository.findAllByTravelProductId(singleTravelProductId);
+            return reservationRepository.findAllByTravelProductIdFetchJoin(singleTravelProductId)
+                    .stream().map(SingleTravelProductReservationResponse::new).toList();
+
         } else {
-            return reservationRepository.findAllByTravelProductIdAndCustomerId(singleTravelProductId, customerId);
+            return reservationRepository.findAllByTravelProductIdAndCustomerIdFetchJoin(singleTravelProductId, customerId)
+                    .stream().map(SingleTravelProductReservationResponse::new).toList();
         }
     }
 }
