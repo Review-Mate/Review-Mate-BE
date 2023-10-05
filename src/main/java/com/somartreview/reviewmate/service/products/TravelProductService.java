@@ -15,7 +15,7 @@ public class TravelProductService {
     private final TravelProductRepository travelProductRepository;
 
 
-    public TravelProduct findByTravelProductId(String partnerDomain, String partnerCustomId) {
+    public TravelProduct findByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
         return travelProductRepository.findByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)
                 .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
     }

@@ -35,10 +35,10 @@ public class CustomerAPIRequester {
                 .extract();
     }
 
-    public static void 커스텀Id로_고객을_삭제한다() {
+    public static void 커스텀Id로_고객을_삭제한다(String partnerCustomId) {
         RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("partnerCustomId", "CUSTOMER_" + PARTNER_CUSTOM_ID_POSTFIX)
+                .pathParam("partnerCustomId", partnerCustomId)
                 .when().delete("api/console/v1/{partnerDomain}/customers/{partnerCustomId}")
                 .then()
                 .extract();

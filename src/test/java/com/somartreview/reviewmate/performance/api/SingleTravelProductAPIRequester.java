@@ -43,10 +43,10 @@ public class SingleTravelProductAPIRequester {
                 .then().extract();
     }
 
-    public static ExtractableResponse<Response> 파트너ID로_단일_여행상품을_삭제한다() {
+    public static ExtractableResponse<Response> 파트너ID로_단일_여행상품을_삭제한다(String partnerCustomId) {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("partnerCustomId", "PRODUCT_" + PARTNER_CUSTOM_ID_POSTFIX)
+                .pathParam("partnerCustomId", partnerCustomId)
                 .when().delete("api/console/v1/{partnerDomain}/products/travel/single/{partnerCustomId}")
                 .then().extract();
     }

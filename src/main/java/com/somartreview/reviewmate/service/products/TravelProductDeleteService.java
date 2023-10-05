@@ -19,6 +19,7 @@ import static com.somartreview.reviewmate.exception.ErrorCode.TRAVEL_PRODUCT_NOT
 public class TravelProductDeleteService {
 
     private final TravelProductRepository travelProductRepository;
+    private final TravelProductService travelProductService;
     private final ReservationDeleteService reservationDeleteService;
 
 
@@ -41,14 +42,9 @@ public class TravelProductDeleteService {
 
     @Transactional
     public void delete(String partnerDomain, String partnerCustomId) {
-        validateExistPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
+        Long id = travelProductService.findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId).getId();
 
-        travelProductRepository.deleteByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
-    }
-
-    private void validateExistPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
-        if (!travelProductRepository.existsByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId))
-            throw new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND);
+        delete(id);
     }
 
     public void deleteAllByPartnerSellerId(Long partnerSellerId) {

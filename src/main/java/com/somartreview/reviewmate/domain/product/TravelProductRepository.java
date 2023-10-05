@@ -15,7 +15,6 @@ public interface TravelProductRepository extends JpaRepository<TravelProduct, Lo
 
     void deleteAllByPartnerCompany_PartnerDomain(String partnerDomain);
 
-    void deleteByPartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
 
     List<TravelProduct> findAllByPartnerSeller_Id(Long partnerSellerId);
 }

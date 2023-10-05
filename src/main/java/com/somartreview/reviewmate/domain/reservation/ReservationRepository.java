@@ -23,10 +23,14 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("select r from Reservation r where r.customer.id = :customerId")
     List<Reservation> findAllByCustomerIdFetchJoin(Long customerId);
 
+    List<Reservation> findAllByCustomerId(Long customerId);
+
 
     @EntityGraph(attributePaths = {"customer", "travelProduct"})
     @Query("select r from Reservation r where r.travelProduct.id = :travelProductId")
     List<Reservation> findAllByTravelProductIdFetchJoin(Long travelProductId);
+
+    List<Reservation> findAllByTravelProductId(Long travelProductId);
 
 
     @EntityGraph(attributePaths = {"customer", "travelProduct"})
