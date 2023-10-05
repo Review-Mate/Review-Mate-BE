@@ -86,12 +86,8 @@ public class SingleTravelProductService {
     }
 
     public SingleTravelProduct findByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
-        return singleTravelProductRepository.findByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)
+        return singleTravelProductRepository.findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)
                 .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
-    }
-
-    public List<SingleTravelProduct> findAllByPartnerDomainAndTravelProductCategory(String partnerDomain, SingleTravelProductCategory singleTravelProductCategory) {
-        return singleTravelProductRepository.findAllByPartnerCompany_PartnerDomainAndSingleTravelProductCategory(partnerDomain, singleTravelProductCategory);
     }
 
     public SingleTravelProductConsoleElementResponse getSingleTravelProductConsoleElementResponseById(Long id) {
@@ -101,15 +97,15 @@ public class SingleTravelProductService {
     }
 
     public SingleTravelProductConsoleElementResponse getSingleTravelProductConsoleElementResponseByPartnerCustomId(String partnerDomain, String partnerCustomId) {
-        SingleTravelProduct singleTravelProduct = findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
+        SingleTravelProduct singleTravelProduct = singleTravelProductRepository.findByPartnerDomainAndPartnerCustomIdFetchJoin(partnerDomain, partnerCustomId)
+                .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
 
         return new SingleTravelProductConsoleElementResponse(singleTravelProduct);
     }
 
     public List<SingleTravelProductConsoleElementResponse> getSingleTravelProductConsoleElementResponsesByPartnerDomainAndTravelProductCategory(String partnerDomain, SingleTravelProductCategory singleTravelProductCategory) {
-        return findAllByPartnerDomainAndTravelProductCategory(partnerDomain, singleTravelProductCategory)
-                .stream()
-                .map(SingleTravelProductConsoleElementResponse::new)
+        return singleTravelProductRepository.findAllByPartnerDomainAndSingleTravelProductCategoryFetchJoin(partnerDomain, singleTravelProductCategory)
+                .stream().map(SingleTravelProductConsoleElementResponse::new)
                 .toList();
     }
 }
