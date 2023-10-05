@@ -41,8 +41,7 @@ public class LiveFeedback extends BaseEntity {
     @Column(nullable = false)
     private Boolean isSolved = false;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id")
+    @OneToOne(mappedBy = "liveFeedback", fetch = FetchType.EAGER)
     private Reservation reservation;
 
     @Builder

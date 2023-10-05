@@ -45,14 +45,17 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = "travel_product_id", nullable = false)
     private TravelProduct travelProduct;
 
-    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id")
     private Review review;
 
-//    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY)
-//    private LiveSatisfaction liveSatisfaction;
-//
-//    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY)
-//    private LiveFeedback liveFeedback;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "live_satisfaction_id")
+    private LiveSatisfaction liveSatisfaction;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "live_feedback_id")
+    private LiveFeedback liveFeedback;
 
 
     @Builder

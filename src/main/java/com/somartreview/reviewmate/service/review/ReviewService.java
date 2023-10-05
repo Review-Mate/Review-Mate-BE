@@ -93,11 +93,6 @@ public class ReviewService {
         Pageable pageable = PageRequest.of(page, size);
 
         return reviewRepository.searchWidgetReviews(partnerDomain, travelProductPartnerCustomId, widgetReviewSearchCond, pageable);
-//        List<WidgetReviewResponse> widgetReviewResponses = foundReviews.map(WidgetReviewResponse::new).stream().toList();
-//
-//        long totalCount = foundReviews.getTotalElements();
-//
-//        return new PageImpl<>(foundReviews, pageable, totalCount);
     }
 
     public ProductReviewStatisticsResponse getReviewStatisticsResponses(String partnerDomain, String singleTravelProductPartnerCustomId) {

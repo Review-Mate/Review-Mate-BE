@@ -17,7 +17,6 @@ import java.util.List;
 import static com.somartreview.reviewmate.domain.customer.QCustomer.customer;
 import static com.somartreview.reviewmate.domain.reservation.QReservation.reservation;
 import static com.somartreview.reviewmate.domain.review.QReview.review;
-import static com.somartreview.reviewmate.domain.review.QReviewTag.reviewTag;
 import static com.somartreview.reviewmate.domain.review.ReviewOrderCriteria.*;
 
 public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
@@ -33,6 +32,8 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
         List<Review> reviews = queryFactory
                 .selectFrom(review)
                 .where(reviewTagEq(searchCond.getProperty(), searchCond.getKeyword()))
+                .leftJoin(review.reservation, reservation).fetchJoin()
+                .leftJoin(reservation.customer, customer).fetchJoin()
                 .orderBy(orderCriteria(searchCond.getOrderCriteria()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
