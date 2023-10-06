@@ -1,12 +1,13 @@
 package com.somartreview.reviewmate.service.live;
 
-import com.somartreview.reviewmate.domain.live.feedback.LiveFeedback;
 import com.somartreview.reviewmate.domain.live.feedback.LiveFeedbackRepository;
+import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -14,18 +15,22 @@ public class LiveFeedbackDeleteService {
 
     private final LiveFeedbackRepository liveFeedbackRepository;
 
+
     @Transactional
-    public void delete(Long id) {
+    public void deleteById(Long id) {
+        validateExistId(id);
+
         liveFeedbackRepository.deleteById(id);
     }
 
-    @Transactional
-    public void deleteByReservationId(Long reservationId) {
-        Optional<LiveFeedback> foundLiveFeedback = liveFeedbackRepository.findByReservation_Id(reservationId);
-        if (foundLiveFeedback.isEmpty()) {
-            return;
+    private void validateExistId(Long id) {
+        if (!liveFeedbackRepository.existsById(id)) {
+            throw new DomainLogicException(ErrorCode.LIVE_FEEDBACK_NOT_FOUND);
         }
+    }
 
-        liveFeedbackRepository.deleteByReservation_Id(foundLiveFeedback.get().getId());
+    @Transactional
+    public void deleteAllByIds(List<Long> ids) {
+        liveFeedbackRepository.deleteAllByIdsInQuery(ids);
     }
 }

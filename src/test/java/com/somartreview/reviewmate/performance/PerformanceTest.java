@@ -33,7 +33,7 @@ public class PerformanceTest {
     public static final String CUSTOMER_PHONE_NUMBER = "02709159941";
     public static final String DELETING_PARTNER_COMPANY_DOMAIN = "goodchoice.kr";
     public static final Long DELETING_PARTNER_SELLER_ID = 2L;
-    public static final Long DELETING_PARTNER_MANAGER_ID = 2L;
+    public static final Long DELETING_PARTNER_MANAGER_ID = 5L;
 
 
     @LocalServerPort
@@ -107,18 +107,14 @@ public class PerformanceTest {
         단일_여행상품의_리뷰태그_통계를_조회한다();
     }
 
-    /*
-    파트너 엔티티의 삭제 요청들을 테스트한다.
-     */
-    void 파트너_API의_성능을_테스트한다() {
-        파트너사를_삭제한다();
-        파트너사_관리자를_삭제한다();
-        파트너사_판매자를_삭제한다();
-    }
-
     void 삭제_요청의_성능을_테스트한다() {
-//        예약Id로_예약을_삭제한다(999L);
-//        커스텀Id로_고객을_삭제한다("500");
-        파트너ID로_단일_여행상품을_삭제한다("83c1ef0d-34db-4227-8cae-2275370b5386");
+        예약Id로_예약을_삭제한다(179954L);
+//        커스텀Id로_고객을_삭제한다("490");
+//        리뷰Id로_리뷰를_삭제한다(6L);
+//        파트너ID로_단일_여행상품을_삭제한다("e7e5b11b-5b7a-47fd-942f-c7cf095fcdf1");
+
+        //        파트너사를_삭제한다();
+//        파트너사_관리자를_삭제한다();
+//        파트너사_판매자를_삭제한다();
     }
 }

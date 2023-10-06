@@ -104,4 +104,12 @@ public class ReviewAPIRequester {
                 .then()
                 .extract();
     }
+
+    public static ExtractableResponse<Response> 리뷰Id로_리뷰를_삭제한다(Long reviewId) {
+        return RestAssured.given()
+                .pathParam("reviewId", reviewId)
+                .when().delete("/api/widget/v1/reviews/{reviewId}")
+                .then()
+                .extract();
+    }
 }

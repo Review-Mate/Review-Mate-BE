@@ -1,37 +1,6 @@
 package com.somartreview.reviewmate.web.review;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.somartreview.reviewmate.domain.review.ReviewOrderCriteria;
-import com.somartreview.reviewmate.domain.review.ReviewPolarity;
-import com.somartreview.reviewmate.domain.review.ReviewProperty;
-import com.somartreview.reviewmate.dto.review.ReviewCreateRequest;
-import com.somartreview.reviewmate.dto.review.ReviewUpdateRequest;
-import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
-import com.somartreview.reviewmate.service.ReservationService;
-import com.somartreview.reviewmate.service.review.ReviewDeleteService;
-import com.somartreview.reviewmate.service.review.ReviewService;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.web.servlet.MockMvc;
-
-import java.io.FileInputStream;
-import java.util.Collections;
-
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ReviewBasicWidgetController.class)
 class ReviewBasicWidgetControllerTest {

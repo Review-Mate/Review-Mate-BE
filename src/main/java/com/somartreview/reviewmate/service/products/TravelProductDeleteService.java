@@ -23,10 +23,6 @@ public class TravelProductDeleteService {
     private final ReservationDeleteService reservationDeleteService;
 
 
-    public void deleteAllByPartnerDomain(String partnerDomain) {
-        travelProductRepository.deleteAllByPartnerCompany_PartnerDomain(partnerDomain);
-    }
-
     @Transactional
     public void delete(Long id) {
         validateExistId(id);
@@ -40,6 +36,11 @@ public class TravelProductDeleteService {
             throw new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND);
     }
 
+
+    public void deleteAllByPartnerDomain(String partnerDomain) {
+        travelProductRepository.deleteAllByPartnerCompany_PartnerDomain(partnerDomain);
+    }
+
     @Transactional
     public void delete(String partnerDomain, String partnerCustomId) {
         Long id = travelProductService.findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId).getId();
@@ -48,11 +49,11 @@ public class TravelProductDeleteService {
     }
 
     public void deleteAllByPartnerSellerId(Long partnerSellerId) {
-        List<TravelProduct> travelProducts = travelProductRepository.findAllByPartnerSeller_Id(partnerSellerId);
+        List<Long> ids = travelProductRepository.findTravelProductIdsByPartnerSeller_Id(partnerSellerId);
 
-        travelProducts.forEach(travelProduct -> {
-            reservationDeleteService.deleteAllByTravelProductId(travelProduct.getId());
-            travelProductRepository.deleteById(travelProduct.getId());
+        ids.forEach(id -> {
+            reservationDeleteService.deleteAllByTravelProductId(id);
+            travelProductRepository.deleteById(id);
         });
     }
 }

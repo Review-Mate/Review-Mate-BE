@@ -48,7 +48,7 @@ public class Review extends BaseEntity{
     @OneToOne(mappedBy = "review", fetch = FetchType.EAGER)
     private Reservation reservation;
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "review")
     private List<ReviewTag> reviewTags = new ArrayList<>();
 
     @Column(nullable = false)
@@ -57,7 +57,7 @@ public class Review extends BaseEntity{
     @Column(nullable = false)
     private Long negativeTagsCount = 0L;
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "review")
     private List<ReviewImage> reviewImages = new ArrayList<>();
 
     @Builder

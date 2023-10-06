@@ -1,6 +1,7 @@
 package com.somartreview.reviewmate.domain.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +16,6 @@ public interface TravelProductRepository extends JpaRepository<TravelProduct, Lo
 
     void deleteAllByPartnerCompany_PartnerDomain(String partnerDomain);
 
-
-    List<TravelProduct> findAllByPartnerSeller_Id(Long partnerSellerId);
+    @Query("select t.id from TravelProduct t where t.partnerSeller.id = :partnerSellerId")
+    List<Long> findTravelProductIdsByPartnerSeller_Id(Long partnerSellerId);
 }

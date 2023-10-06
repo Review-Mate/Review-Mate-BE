@@ -22,8 +22,10 @@ public enum ErrorCode {
     LIVE_FEEDBACK_NOT_HANDLED_YET("1102", "아직 처리되지 않은 실시간 피드백입니다."),
     LIVE_FEEDBACK_ALREADY_REPORTED_ERROR("1103", "이미 신고된 실시간 피드백입니다."),
     LIVE_FEEDBACK_ALREADY_SOLVED_ERROR("1104", "이미 해결된 실시간 피드백입니다."),
+    LIVE_FEEDBACK_NOT_FOUND("1105", "실시간 피드백을 찾을 수 없습니다."),
 
     LIVE_SATISFACTION_RATING_ERROR("1110", "실시간 만족도의 별점이 잘못된 범위입니다."),
+    LIVE_SATISFACTION_NOT_FOUND("1111", "실시간 만족도를 찾을 수 없습니다."),
 
     PARTNER_COMPANY_NAME_ERROR("1200", "파트너사의 이름이 너무 길거나 공백입니다."),
     PARTNER_COMPANY_NOT_FOUND("1201", "파트너사를 찾을 수 없습니다."),

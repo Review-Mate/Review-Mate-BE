@@ -20,7 +20,7 @@ public class CustomerDeleteService {
     public void delete(Long id) {
         validateExistCustomer(id);
 
-        reservationDeleteService.deleteAllByCustomerId(id);
+        // 고객 정보 비활성화로 대체
         customerRepository.deleteById(id);
     }
 
@@ -32,11 +32,6 @@ public class CustomerDeleteService {
 
     @Transactional
     public void deleteByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
-        long customerId = customerRepository.findByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)
-                .orElseThrow(() -> new DomainLogicException(CUSTOMER_NOT_FOUND))
-                .getId();
-
-        reservationDeleteService.deleteAllByCustomerId(customerId);
         customerRepository.deleteByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
     }
 
