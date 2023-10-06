@@ -28,11 +28,21 @@ public class ReservationDeleteService {
         validateExistId(id);
         Reservation reservation = reservationRepository.findById(id).get();
 
-        liveSatisfactionDeleteService.deleteById(reservation.getLiveSatisfaction().getId());
-        liveFeedbackDeleteService.deleteById(reservation.getLiveFeedback().getId());
-        reviewGlobalDeleteService.deleteById(reservation.getReview().getId());
         reservationRepository.deleteById(id);
+
+        if (reservation.getLiveSatisfaction() != null) {
+            liveSatisfactionDeleteService.deleteById(reservation.getLiveSatisfaction().getId());
+        }
+
+        if (reservation.getLiveFeedback() != null) {
+            liveFeedbackDeleteService.deleteById(reservation.getLiveFeedback().getId());
+        }
+
+        if (reservation.getReview() != null) {
+            reviewGlobalDeleteService.deleteById(reservation.getReview().getId());
+        }
     }
+
 
     private void validateExistId(Long id) {
         if (!reservationRepository.existsById(id)) {
@@ -48,9 +58,9 @@ public class ReservationDeleteService {
         List<Long> liveSatisfactionIds = reservations.stream().map(r -> r.getLiveSatisfaction().getId()).toList();
         List<Long> liveFeedbackIds = reservations.stream().map(r -> r.getLiveFeedback().getId()).toList();
 
+        reservationRepository.deleteAllByTravelProductId(travelProductId);
         reviewGlobalDeleteService.deleteAllByIds(reviewIds);
         liveSatisfactionDeleteService.deleteAllByIds(liveSatisfactionIds);
         liveFeedbackDeleteService.deleteAllByIds(liveFeedbackIds);
-        reservationRepository.deleteAllByTravelProductId(travelProductId);
     }
 }
