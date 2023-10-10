@@ -5,8 +5,7 @@ name: Development Automation
 on:
   push:
     branches:
-      - main
-      - releaseㅁㄴㅇㅁㄴ
+      - release
 
 permissions:
   contents: read
