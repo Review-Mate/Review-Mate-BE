@@ -25,8 +25,6 @@ import static com.somartreview.reviewmate.exception.ErrorCode.TRAVEL_PRODUCT_NOT
 @RequiredArgsConstructor
 public class SingleTravelProductService {
 
-
-
     private final SingleTravelProductRepository singleTravelProductRepository;
     private final TravelProductService travelProductService;
     private final PartnerCompanyService partnerCompanyService;
@@ -34,39 +32,40 @@ public class SingleTravelProductService {
 
 
     @Transactional
-    public Long create(String partnerDomain, SingleTravelProductCreateRequest request, MultipartFile thumbnailFile) {
+    public SingleTravelProduct create(String partnerDomain, SingleTravelProductCreateRequest request, MultipartFile thumbnailFile) {
         validateUniquePartnerCustomId(partnerDomain, request.getPartnerCustomId());
 
         final PartnerCompany partnerCompany = partnerCompanyService.findByPartnerDomain(partnerDomain);
+        request.setPartnerCompany(partnerCompany);
         final PartnerSeller partnerSeller = partnerSellerService.findById(request.getPartnerSellerId());
+        request.setPartnerSeller(partnerSeller);
 
         String thumbnailUrl = uploadThumbnailOnS3(thumbnailFile);
-
-        return singleTravelProductRepository.save(request.toEntity(thumbnailUrl, partnerCompany, partnerSeller)).getId();
+        return singleTravelProductRepository.save(request.toEntity(thumbnailUrl));
     }
 
     private void validateUniquePartnerCustomId(String partnerDomain, String partnerCustomId) {
-        if (existsByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId))
+        if (singleTravelProductRepository.existsByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)) {
             throw new DomainLogicException(TRAVEL_PRODUCT_NOT_UNIQUE_PARTNER_CUSTOM_ID);
+        }
     }
 
     @Transactional
     public SingleTravelProduct retreiveSingleTravelProduct(String partnerDomain, SingleTravelProductCreateRequest singleTravelProductCreateRequest, MultipartFile thumbnailFile) {
-        if (existsByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductCreateRequest.getPartnerCustomId())) {
+        if (existsByPartnerDomainAndPartnerCustomIdAndPartnerSellerId(partnerDomain, singleTravelProductCreateRequest.getPartnerCustomId(), singleTravelProductCreateRequest.getPartnerSellerId())) {
             return findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductCreateRequest.getPartnerCustomId());
         }
 
-        create(partnerDomain, singleTravelProductCreateRequest, thumbnailFile);
-        return findByPartnerDomainAndPartnerCustomId(partnerDomain, singleTravelProductCreateRequest.getPartnerCustomId());
+        return create(partnerDomain, singleTravelProductCreateRequest, thumbnailFile);
     }
 
-    public boolean existsByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
-        return singleTravelProductRepository.existsByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
+    public boolean existsByPartnerDomainAndPartnerCustomIdAndPartnerSellerId(String partnerDomain, String partnerCustomId, Long partnerSellerId) {
+        return singleTravelProductRepository.existsByPartnerCompany_PartnerDomainAndPartnerCustomIdAndPartnerSeller_Id(partnerDomain, partnerCustomId, partnerSellerId);
     }
 
     @Transactional
-    public void updateByTravelProductId(Long travelProductId, SingleTravelProductUpdateRequest request, MultipartFile thumbnailFile) {
-        SingleTravelProduct foundTravelProduct = findByTravelProductId(travelProductId);
+    public void update(String partnerDomain, String partnerCustomId, SingleTravelProductUpdateRequest request, MultipartFile thumbnailFile) {
+        SingleTravelProduct foundTravelProduct = findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
         String thumbnailUrl = uploadThumbnailOnS3(thumbnailFile);
 
         foundTravelProduct.update(request, thumbnailUrl);
@@ -74,55 +73,39 @@ public class SingleTravelProductService {
 
     private String uploadThumbnailOnS3(MultipartFile thumbnail) {
         //  Impl Uploading thumbnail to S3 and get the url
-        if (thumbnail != null) {
+        if (thumbnail == null) {
             return null;
         }
 
         return "https://www.testThumbnailUrl.com";
     }
 
-    public SingleTravelProduct findByTravelProductId(Long travelProductId) {
-        return singleTravelProductRepository.findById(travelProductId)
+    public SingleTravelProduct findById(Long id) {
+        return singleTravelProductRepository.findById(id)
                 .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
     }
 
     public SingleTravelProduct findByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
-        return singleTravelProductRepository.findByPartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)
+        return singleTravelProductRepository.findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)
                 .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
     }
 
-    public List<SingleTravelProduct> findAllByPartnerDomainAndTravelProductCategory(String partnerDomain, SingleTravelProductCategory singleTravelProductCategory) {
-        return singleTravelProductRepository.findAllByPartnerCompany_PartnerDomainAndSingleTravelProductCategory(partnerDomain, singleTravelProductCategory);
-    }
-
-    public SingleTravelProductConsoleElementResponse getSingleTravelProductConsoleElementResponseByTravelProductId(Long travelProductId) {
-        SingleTravelProduct singleTravelProduct = findByTravelProductId(travelProductId);
+    public SingleTravelProductConsoleElementResponse getSingleTravelProductConsoleElementResponseById(Long id) {
+        SingleTravelProduct singleTravelProduct = findById(id);
 
         return new SingleTravelProductConsoleElementResponse(singleTravelProduct);
     }
 
     public SingleTravelProductConsoleElementResponse getSingleTravelProductConsoleElementResponseByPartnerCustomId(String partnerDomain, String partnerCustomId) {
-        SingleTravelProduct singleTravelProduct = findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId);
+        SingleTravelProduct singleTravelProduct = singleTravelProductRepository.findByPartnerDomainAndPartnerCustomIdFetchJoin(partnerDomain, partnerCustomId)
+                .orElseThrow(() -> new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND));
 
         return new SingleTravelProductConsoleElementResponse(singleTravelProduct);
     }
 
     public List<SingleTravelProductConsoleElementResponse> getSingleTravelProductConsoleElementResponsesByPartnerDomainAndTravelProductCategory(String partnerDomain, SingleTravelProductCategory singleTravelProductCategory) {
-        return findAllByPartnerDomainAndTravelProductCategory(partnerDomain, singleTravelProductCategory)
-                .stream()
-                .map(SingleTravelProductConsoleElementResponse::new)
+        return singleTravelProductRepository.findAllByPartnerDomainAndSingleTravelProductCategoryFetchJoin(partnerDomain, singleTravelProductCategory)
+                .stream().map(SingleTravelProductConsoleElementResponse::new)
                 .toList();
-    }
-
-    @Transactional
-    public void deleteByTravelProductId(Long travelProductId) {
-        validateExistTravelProductId(travelProductId);
-
-        singleTravelProductRepository.deleteById(travelProductId);
-    }
-
-    public void validateExistTravelProductId(Long travelProductId) {
-        if (!singleTravelProductRepository.existsById(travelProductId))
-            throw new DomainLogicException(TRAVEL_PRODUCT_NOT_FOUND);
     }
 }

@@ -4,6 +4,7 @@ import com.somartreview.reviewmate.domain.product.SingleTravelProductCategory;
 import com.somartreview.reviewmate.dto.product.SingleTravelProductUpdateRequest;
 import com.somartreview.reviewmate.dto.product.SingleTravelProductConsoleElementResponse;
 import com.somartreview.reviewmate.service.products.SingleTravelProductService;
+import com.somartreview.reviewmate.service.products.TravelProductDeleteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 
@@ -25,13 +26,14 @@ import java.util.List;
 public class SingleTravelProductController {
 
     private final SingleTravelProductService singleTravelProductService;
+    private final TravelProductDeleteService travelProductDeleteService;
 
 
     @Operation(operationId = "getSingleTravelProductConsoleElementResponseByTravelProductId", summary = "단일 여행상품 단독 조회")
     @Parameter(name = "travelProductId", description = "단일 여행상품 ID")
     @GetMapping("/products/travel/single/{travelProductId}")
     public ResponseEntity<SingleTravelProductConsoleElementResponse> getSingleTravelProductConsoleElementResponseByTravelProductId(@PathVariable Long travelProductId) {
-        SingleTravelProductConsoleElementResponse singleTravelProductConsoleElementResponse = singleTravelProductService.getSingleTravelProductConsoleElementResponseByTravelProductId(travelProductId);
+        SingleTravelProductConsoleElementResponse singleTravelProductConsoleElementResponse = singleTravelProductService.getSingleTravelProductConsoleElementResponseById(travelProductId);
 
         return ResponseEntity.ok(singleTravelProductConsoleElementResponse);
     }
@@ -67,15 +69,27 @@ public class SingleTravelProductController {
     @Parameter(name = "travelProductId", description = "단일 여행상품 ID")
     @ApiResponse(responseCode = "204", description = "단일 여행상품 정보 수정 성공")
     @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
-    @PatchMapping(value = "/products/travel/single/{travelProductId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> updateSingleTravelProductByTravelProductId(@PathVariable Long travelProductId,
+    @PatchMapping(value = "/{partnerDomain}/products/travel/single/{partnerCustomId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> updateSingleTravelProductByTravelProductId(@PathVariable String partnerDomain,
+                                                                           @PathVariable String partnerCustomId,
                                                                            @Valid @RequestPart SingleTravelProductUpdateRequest singleTravelProductUpdateRequest,
                                                                            @RequestPart(required = false) MultipartFile thumbnailFile) {
-        singleTravelProductService.updateByTravelProductId(travelProductId, singleTravelProductUpdateRequest, thumbnailFile);
+        singleTravelProductService.update(partnerDomain, partnerCustomId, singleTravelProductUpdateRequest, thumbnailFile);
 
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(operationId = "deleteSingleTravelProductByPartnerCustomId", summary = "단일 여행상품 삭제")
+    @Parameter(name = "travelProductId", description = "단일 여행상품 ID")
+    @ApiResponse(responseCode = "204", description = "단일 여행상품 삭제 성공")
+    @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 파트너 커스텀 ID")
+    @DeleteMapping("/{partnerDomain}/products/travel/single/{partnerCustomId}")
+    public ResponseEntity<Void> deleteSingleTravelProductByPartnerCustomId(@PathVariable String partnerDomain,
+                                                                           @PathVariable String partnerCustomId) {
+        travelProductDeleteService.delete(partnerDomain, partnerCustomId);
+
+        return ResponseEntity.noContent().build();
+    }
 
     @Operation(operationId = "deleteSingleTravelProductByTravelProductId", summary = "단일 여행상품 삭제")
     @Parameter(name = "travelProductId", description = "단일 여행상품 ID")
@@ -83,8 +97,9 @@ public class SingleTravelProductController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 단일 여행상품 ID")
     @DeleteMapping("/products/travel/single/{travelProductId}")
     public ResponseEntity<Void> deleteSingleTravelProductByTravelProductId(@PathVariable Long travelProductId) {
-        singleTravelProductService.deleteByTravelProductId(travelProductId);
+        travelProductDeleteService.delete(travelProductId);
 
         return ResponseEntity.noContent().build();
     }
 }
+

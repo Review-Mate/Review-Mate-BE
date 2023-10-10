@@ -1,6 +1,8 @@
 package com.somartreview.reviewmate.domain.product;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,7 +13,16 @@ public interface SingleTravelProductRepository extends JpaRepository<SingleTrave
 
     boolean existsByPartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
 
-    Optional<SingleTravelProduct> findByPartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
+    @Query("select p from SingleTravelProduct p where p.partnerCompany.partnerDomain = :partnerDomain and p.partnerCustomId = :partnerCustomId")
+    Optional<SingleTravelProduct> findByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
 
-    List<SingleTravelProduct> findAllByPartnerCompany_PartnerDomainAndSingleTravelProductCategory(String partnerDomain, SingleTravelProductCategory singleTravelProductCategory);
+    @EntityGraph(attributePaths = {"partnerSeller"})
+    @Query("select p from SingleTravelProduct p where p.partnerCompany.partnerDomain = :partnerDomain and p.partnerCustomId = :partnerCustomId")
+    Optional<SingleTravelProduct> findByPartnerDomainAndPartnerCustomIdFetchJoin(String partnerDomain, String partnerCustomId);
+
+    @EntityGraph(attributePaths = {"partnerSeller"})
+    @Query("select p from SingleTravelProduct p where p.partnerCompany.partnerDomain = :partnerDomain and p.singleTravelProductCategory = :singleTravelProductCategory")
+    List<SingleTravelProduct> findAllByPartnerDomainAndSingleTravelProductCategoryFetchJoin(String partnerDomain, SingleTravelProductCategory singleTravelProductCategory);
+
+    boolean existsByPartnerCompany_PartnerDomainAndPartnerCustomIdAndPartnerSeller_Id(String partnerDomain, String partnerCustomId, Long partnerSellerId);
 }

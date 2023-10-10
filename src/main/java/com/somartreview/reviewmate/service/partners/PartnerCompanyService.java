@@ -6,6 +6,8 @@ import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyUpdateReque
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyCreateRequest;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.service.CustomerDeleteService;
+import com.somartreview.reviewmate.service.products.TravelProductDeleteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,11 @@ import static com.somartreview.reviewmate.exception.ErrorCode.*;
 public class PartnerCompanyService {
 
     private final PartnerCompanyRepository partnerCompanyRepository;
+    private final PartnerManagerDeleteService partnerManagerDeleteService;
+    private final PartnerSellerDeleteService partnerSellerDeleteService;
+    private final CustomerDeleteService customerDeleteService;
+    private final TravelProductDeleteService travelProductDeleteService;
+
 
     @Transactional
     public String create(PartnerCompanyCreateRequest request) {
@@ -25,44 +32,43 @@ public class PartnerCompanyService {
         return partnerCompanyRepository.save(request.toEntity()).getPartnerDomain();
     }
 
-    public void validateUniquePartnerDomain(String partnerDomain) {
-        if (partnerCompanyRepository.existsByPartnerDomain(partnerDomain)) {
+    private void validateUniquePartnerDomain(String domain) {
+        if (partnerCompanyRepository.existsByPartnerDomain(domain)) {
             throw new DomainLogicException(PARTNER_COMPANY_NOT_UNIQUE_PARTNER_DOMAIN);
         }
     }
 
-    public PartnerCompany findById(Long id) {
-        return partnerCompanyRepository.findById(id)
+    public PartnerCompany findByPartnerDomain(String domain) {
+        return partnerCompanyRepository.findByPartnerDomain(domain)
                 .orElseThrow(() -> new DomainLogicException(PARTNER_COMPANY_NOT_FOUND));
     }
 
-    public PartnerCompany findByPartnerDomain(String partnerDomain) {
-        return partnerCompanyRepository.findByPartnerDomain(partnerDomain)
-                .orElseThrow(() -> new DomainLogicException(PARTNER_COMPANY_NOT_FOUND));
-    }
-
-    public PartnerCompanyResponse getPartnerCompanyResponseByDomain(String partnerDomain) {
-        PartnerCompany partnerCompany = findByPartnerDomain(partnerDomain);
+    public PartnerCompanyResponse getPartnerCompanyResponseByPartnerDomain(String domain) {
+        PartnerCompany partnerCompany = findByPartnerDomain(domain);
         return new PartnerCompanyResponse(partnerCompany);
     }
 
     @Transactional
-    public void updateByPartnerDomain(String partnerDomain, PartnerCompanyUpdateRequest request) {
-        PartnerCompany partnerCompany = findByPartnerDomain(partnerDomain);
+    public void update(String domain, PartnerCompanyUpdateRequest request) {
+        PartnerCompany partnerCompany = findByPartnerDomain(domain);
 
         validateDuplicatedPartnerDomain(partnerCompany.getPartnerDomain(), request.getPartnerDomain());
 
         partnerCompany.update(request);
     }
 
-    public void validateDuplicatedPartnerDomain(String oldDomain, String newDomain) {
+    private void validateDuplicatedPartnerDomain(String oldDomain, String newDomain) {
         if (!oldDomain.equals(newDomain) && partnerCompanyRepository.existsByPartnerDomain(newDomain)) {
             throw new DomainLogicException(PARTNER_COMPANY_DUPLICATED_PARTNER_DOMAIN);
         }
     }
 
     @Transactional
-    public void deleteByPartnerDomain(String partnerDomain) {
-        partnerCompanyRepository.deleteByPartnerDomain(partnerDomain);
+    public void delete(String domain) {
+        partnerManagerDeleteService.deleteAllByPartnerDomain(domain);
+        partnerSellerDeleteService.deleteAllByPartnerDomain(domain);
+        customerDeleteService.deleteAllByPartnerDomain(domain);
+        travelProductDeleteService.deleteAllByPartnerDomain(domain);
+        partnerCompanyRepository.deleteByPartnerDomain(domain);
     }
 }

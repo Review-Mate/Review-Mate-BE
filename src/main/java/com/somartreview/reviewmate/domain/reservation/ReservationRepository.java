@@ -1,7 +1,11 @@
 package com.somartreview.reviewmate.domain.reservation;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,10 +17,40 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findAll();
 
-    List<Reservation> findAllByCustomer_Id(Long customerId);
+    @EntityGraph(attributePaths = {"customer", "travelProduct"})
+    @Query("select r from Reservation r where r.id = :id")
+    Optional<Reservation> findByIdFetchJoin(Long id);
 
-    List<Reservation> findAllByTravelProduct_Id(Long travelProductId);
+    @EntityGraph(attributePaths = {"customer", "travelProduct"})
+    @Query("select r from Reservation r where r.customer.id = :customerId")
+    List<Reservation> findAllByCustomerIdFetchJoin(Long customerId);
 
-    List<Reservation> findAllByTravelProduct_IdAndCustomer_Id(Long travelProductId, Long customerId);
+    List<Reservation> findAllByCustomerId(Long customerId);
 
+
+    @EntityGraph(attributePaths = {"customer", "travelProduct"})
+    @Query("select r from Reservation r where r.travelProduct.id = :travelProductId")
+    List<Reservation> findAllByTravelProductIdFetchJoin(Long travelProductId);
+
+    List<Reservation> findAllByTravelProductId(Long travelProductId);
+
+
+    @EntityGraph(attributePaths = {"customer", "travelProduct"})
+    @Query("select r from Reservation r where r.travelProduct.id = :travelProductId and r.customer.id = :customerId")
+    List<Reservation> findAllByTravelProductIdAndCustomerIdFetchJoin(Long travelProductId, Long customerId);
+
+    @Transactional
+    @Modifying
+    @Query("delete from Reservation r where r.id = :id")
+    void deleteById(Long id);
+
+    @Transactional
+    @Modifying
+    @Query("delete from Reservation r where r.id in :ids")
+    void deleteAllByIdsInQuery(List<Long> ids);
+
+    @Transactional
+    @Modifying
+    @Query("delete from Reservation r where r.travelProduct.id = :travelProductId")
+    void deleteAllByTravelProductId(Long travelProductId);
 }

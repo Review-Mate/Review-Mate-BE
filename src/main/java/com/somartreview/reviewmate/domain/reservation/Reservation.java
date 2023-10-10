@@ -2,8 +2,8 @@ package com.somartreview.reviewmate.domain.reservation;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.customer.Customer;
-import com.somartreview.reviewmate.domain.chatbot.feedback.LiveFeedback;
-import com.somartreview.reviewmate.domain.chatbot.satisfaction.LiveSatisfaction;
+import com.somartreview.reviewmate.domain.live.feedback.LiveFeedback;
+import com.somartreview.reviewmate.domain.live.satisfaction.LiveSatisfaction;
 import com.somartreview.reviewmate.domain.review.Review;
 import com.somartreview.reviewmate.domain.product.TravelProduct;
 import javax.persistence.*;
@@ -45,13 +45,16 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = "travel_product_id", nullable = false)
     private TravelProduct travelProduct;
 
-    @OneToOne(mappedBy = "reservation")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id")
     private Review review;
 
-    @OneToOne(mappedBy = "reservation")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "live_satisfaction_id")
     private LiveSatisfaction liveSatisfaction;
 
-    @OneToOne(mappedBy = "reservation")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "live_feedback_id")
     private LiveFeedback liveFeedback;
 
 
@@ -76,5 +79,9 @@ public class Reservation extends BaseEntity {
         if (startTime.isAfter(endTime)) {
             throw new DomainLogicException(ErrorCode.RESERVATION_FRONT_END_TIME_ERROR);
         }
+    }
+
+    public void addReview(final Review review) {
+        this.review = review;
     }
 }

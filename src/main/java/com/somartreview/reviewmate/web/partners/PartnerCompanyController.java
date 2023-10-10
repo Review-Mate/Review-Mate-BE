@@ -44,7 +44,7 @@ public class PartnerCompanyController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 Domain")
     @GetMapping("/{partnerDomain}")
     public ResponseEntity<PartnerCompanyResponse> getPartnerCompanyResponseByDomain(@PathVariable String partnerDomain) {
-        PartnerCompanyResponse partnerCompanyResponse = partnerCompanyService.getPartnerCompanyResponseByDomain(partnerDomain);
+        PartnerCompanyResponse partnerCompanyResponse = partnerCompanyService.getPartnerCompanyResponseByPartnerDomain(partnerDomain);
 
         return ResponseEntity.ok(partnerCompanyResponse);
     }
@@ -57,7 +57,7 @@ public class PartnerCompanyController {
     @PutMapping("/{partnerDomain}")
     public ResponseEntity<Void> updatePartnerCompanyByPartnerDomain(@PathVariable String partnerDomain,
                                                                     @Valid @RequestBody PartnerCompanyUpdateRequest request) {
-        partnerCompanyService.updateByPartnerDomain(partnerDomain, request);
+        partnerCompanyService.update(partnerDomain, request);
 
         return ResponseEntity.noContent().build();
     }
@@ -69,7 +69,7 @@ public class PartnerCompanyController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 Domain")
     @DeleteMapping("/{partnerDomain}")
     public ResponseEntity<Void> deletePartnerCompanyByPartnerDomain(@PathVariable String partnerDomain) {
-        partnerCompanyService.deleteByPartnerDomain(partnerDomain);
+        partnerCompanyService.delete(partnerDomain);
 
         return ResponseEntity.noContent().build();
     }

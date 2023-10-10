@@ -39,7 +39,7 @@ public class WidgetReviewResponse {
     @Schema(description = "적용된 속성 혹은 키워드가 포함된 문자열의 인덱스들")
     private List<ReviewHighlightPairResponse> reviewHighlightPairResponses;
 
-    public WidgetReviewResponse(final Review review, final List<ReviewTag> reviewTags) {
+    public WidgetReviewResponse(final Review review) {
         this.id = review.getId();
         this.rating = review.getRating();
         this.title = review.getTitle();
@@ -47,6 +47,6 @@ public class WidgetReviewResponse {
         this.authorName = review.getReservation().getCustomer().getName();
         this.createdAt = review.getCreatedAt().toString();
         this.polarity = review.getPolarity();
-        this.reviewHighlightPairResponses = reviewTags.stream().map(ReviewHighlightPairResponse::new).toList();
+        this.reviewHighlightPairResponses = review.getReviewTags().stream().map(ReviewHighlightPairResponse::new).toList();
     }
 }

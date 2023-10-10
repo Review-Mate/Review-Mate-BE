@@ -45,14 +45,19 @@ public class Review extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private ReviewPolarity polarity = NEUTRAL;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id")
+    @OneToOne(mappedBy = "review", fetch = FetchType.EAGER)
     private Reservation reservation;
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "review")
     private List<ReviewTag> reviewTags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(nullable = false)
+    private Long positiveTagsCount = 0L;
+
+    @Column(nullable = false)
+    private Long negativeTagsCount = 0L;
+
+    @OneToMany(mappedBy = "review")
     private List<ReviewImage> reviewImages = new ArrayList<>();
 
     @Builder
@@ -84,12 +89,10 @@ public class Review extends BaseEntity{
         }
     }
 
-    public void addReviewTag(ReviewTag reviewTag) {
-        this.reviewTags.add(reviewTag);
+    public void appendReviewTags(List<ReviewTag> reviewTags) {
+        this.reviewTags.addAll(reviewTags);
 
-        int positiveTagsCount = 0;
-        int negativeTagsCount = 0;
-        for (ReviewTag tag : this.reviewTags) {
+        for (ReviewTag tag : reviewTags) {
             if (tag.getPolarity().equals(POSITIVE)) {
                 positiveTagsCount++;
             }
@@ -112,6 +115,8 @@ public class Review extends BaseEntity{
 
     public void clearReviewTags() {
         this.reviewTags.clear();
+        this.positiveTagsCount = 0L;
+        this.negativeTagsCount = 0L;
         this.polarity = NEUTRAL;
     }
 

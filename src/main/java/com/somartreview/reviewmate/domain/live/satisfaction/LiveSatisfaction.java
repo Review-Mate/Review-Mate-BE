@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.domain.chatbot.satisfaction;
+package com.somartreview.reviewmate.domain.live.satisfaction;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.reservation.Reservation;
@@ -36,8 +36,7 @@ public class LiveSatisfaction extends BaseEntity {
     @Enumerated(STRING)
     private ReviewProperty dissatisfiedReviewProperty;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id")
+    @OneToOne(mappedBy = "liveSatisfaction",fetch = FetchType.EAGER)
     private Reservation reservation;
 
     @Builder

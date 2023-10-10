@@ -58,7 +58,7 @@ class PartnerCompanyControllerTest {
     @Test
     void 파트너사를_조회한다() throws Exception {
         // given
-        given(partnerCompanyService.getPartnerCompanyResponseByDomain(anyString())).willReturn(new PartnerCompanyResponse());
+        given(partnerCompanyService.getPartnerCompanyResponseByPartnerDomain(anyString())).willReturn(new PartnerCompanyResponse());
 
         // when & then
         mockMvc.perform(
@@ -70,7 +70,7 @@ class PartnerCompanyControllerTest {
     @Test
     void 파트너사의_정보를_수정한다() throws Exception {
         // given
-        doNothing().when(partnerCompanyService).updateByPartnerDomain(anyString(), any());
+        doNothing().when(partnerCompanyService).update(anyString(), any());
         PartnerCompanyUpdateRequest partnerCompanyUpdateRequest = new PartnerCompanyUpdateRequest(PARTNER_DOMAIN, "여기어때컴퍼니");
 
         // when & then
@@ -85,7 +85,7 @@ class PartnerCompanyControllerTest {
     @Test
     void 파트너사를_삭제한다() throws Exception {
         // given
-        doNothing().when(partnerCompanyService).deleteByPartnerDomain(anyString());
+        doNothing().when(partnerCompanyService).delete(anyString());
 
         // when & then
         mockMvc.perform(

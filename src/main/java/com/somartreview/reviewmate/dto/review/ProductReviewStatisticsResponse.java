@@ -19,18 +19,18 @@ public class ProductReviewStatisticsResponse {
     private Long reviewCount;
 
     @Schema(description = "5점 리뷰 개수")
-    private Integer fiveStarRatingCount;
+    private Long fiveStarRatingCount;
 
     @Schema(description = "4점 리뷰 개수")
-    private Integer fourStarRatingCount;
+    private Long fourStarRatingCount;
 
     @Schema(description = "3점 리뷰 개수")
-    private Integer threeStarRatingCount;
+    private Long threeStarRatingCount;
 
     @Schema(description = "2점 리뷰 개수")
-    private Integer twoStarRatingCount;
+    private Long twoStarRatingCount;
 
     @Schema(description = "1점 리뷰 개수")
-    private Integer oneStarRatingCount;
+    private Long oneStarRatingCount;
 
 }

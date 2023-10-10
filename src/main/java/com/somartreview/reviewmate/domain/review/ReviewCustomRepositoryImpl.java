@@ -1,11 +1,11 @@
 package com.somartreview.reviewmate.domain.review;
 
 import com.querydsl.core.Tuple;
-import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.dsl.*;
-import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.somartreview.reviewmate.dto.review.ReviewRatingCountsDto;
+import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
 import com.somartreview.reviewmate.service.review.WidgetReviewSearchCond;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -14,10 +14,10 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.somartreview.reviewmate.domain.customer.QCustomer.customer;
+import static com.somartreview.reviewmate.domain.reservation.QReservation.reservation;
 import static com.somartreview.reviewmate.domain.review.QReview.review;
-import static com.somartreview.reviewmate.domain.review.QReviewTag.reviewTag;
 import static com.somartreview.reviewmate.domain.review.ReviewOrderCriteria.*;
-import static com.somartreview.reviewmate.domain.review.ReviewPolarity.*;
 
 public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
 
@@ -28,26 +28,12 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
     }
 
     @Override
-    public Page<Review> searchWidgetReviews(String partnerDomain, String travelProductPartnerCustomId, WidgetReviewSearchCond searchCond, Pageable pageable) {
-        List<Tuple> content = queryFactory
-                .select(review,
-                        ExpressionUtils.as(
-                                JPAExpressions.select(reviewTag.count())
-                                        .from(reviewTag)
-                                        .where(reviewTag.review.eq(review)
-                                                .and(reviewTag.polarity.eq(POSITIVE))),
-                                "positiveTagsCount"
-                        ),
-                        ExpressionUtils.as(
-                                JPAExpressions.select(reviewTag.count())
-                                        .from(reviewTag)
-                                        .where(reviewTag.review.eq(review)
-                                                .and(reviewTag.polarity.eq(NEGATIVE))),
-                                "negativeTagsCount"
-                        )
-                )
-                .from(review)
+    public Page<WidgetReviewResponse> searchWidgetReviews(String partnerDomain, String travelProductPartnerCustomId, WidgetReviewSearchCond searchCond, Pageable pageable) {
+        List<Review> reviews = queryFactory
+                .selectFrom(review)
                 .where(reviewTagEq(searchCond.getProperty(), searchCond.getKeyword()))
+                .leftJoin(review.reservation, reservation).fetchJoin()
+                .leftJoin(reservation.customer, customer).fetchJoin()
                 .orderBy(orderCriteria(searchCond.getOrderCriteria()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -61,8 +47,8 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
                 )
                 .fetchOne();
 
-        List<Review> reviews = content.stream().map(tuple -> tuple.get(review)).toList();
-        return new PageImpl<>(reviews, pageable, totalCount);
+        List<WidgetReviewResponse> widgetReviewResponses = reviews.stream().map(WidgetReviewResponse::new).toList();
+        return new PageImpl<>(widgetReviewResponses, pageable, totalCount);
     }
 
     private BooleanExpression reviewTagEq(ReviewProperty property, String keyword) {
@@ -87,8 +73,35 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
         else if (orderCriteria.equals(LATEST)) return review.createdAt.desc();
         else if (orderCriteria.equals(RATING_ASC)) return review.rating.asc();
         else if (orderCriteria.equals(RATING_DESC)) return review.rating.desc();
-        else if (orderCriteria.equals(POSITIVE_DESC)) return Expressions.stringPath("positiveTagsCount").desc();
-        else if (orderCriteria.equals(NEGATIVE_DESC)) return Expressions.stringPath("negativeTagsCount").desc();
+        else if (orderCriteria.equals(POSITIVE_DESC)) return review.positiveTagsCount.desc();
+        else if (orderCriteria.equals(NEGATIVE_DESC)) return review.negativeTagsCount.desc();
         else return null;
+    }
+
+    @Override
+    public ReviewRatingCountsDto countReviewRatingByTravelProductId(Long travelProductId) {
+        List<Tuple> results = queryFactory
+                .select(review.rating, review.count())
+                .from(review)
+                .where(review.reservation.travelProduct.id.eq(travelProductId))
+                .groupBy(review.rating)
+                .having(review.rating.in(1, 2, 3, 4, 5))
+                .orderBy(review.rating.asc())
+                .fetch();
+
+        ReviewRatingCountsDto reviewRatingCountsDto = new ReviewRatingCountsDto();
+        for (Tuple tuple : results) {
+            if (tuple.get(review.rating) == 1) reviewRatingCountsDto.setOneStarRatingCount(tuple.get(review.count()));
+            else if (tuple.get(review.rating) == 2)
+                reviewRatingCountsDto.setTwoStarRatingCount(tuple.get(review.count()));
+            else if (tuple.get(review.rating) == 3)
+                reviewRatingCountsDto.setThreeStarRatingCount(tuple.get(review.count()));
+            else if (tuple.get(review.rating) == 4)
+                reviewRatingCountsDto.setFourStarRatingCount(tuple.get(review.count()));
+            else if (tuple.get(review.rating) == 5)
+                reviewRatingCountsDto.setFiveStarRatingCount(tuple.get(review.count()));
+        }
+
+        return reviewRatingCountsDto;
     }
 }

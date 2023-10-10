@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerCreateRequest;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerResponse;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerUpdateRequest;
+import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
+import com.somartreview.reviewmate.service.partners.PartnerSellerDeleteService;
 import com.somartreview.reviewmate.service.partners.PartnerSellerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,12 @@ class PartnerSellerControllerTest {
     @MockBean
     private PartnerSellerService partnerSellerService;
 
+    @MockBean
+    private PartnerSellerDeleteService partnerSellerDeleteService;
+
+    @MockBean
+    private PartnerCompanyService partnerCompanyService;
+
 
     @Test
     void 파트너사의_판매자를_생성한다() throws Exception {
@@ -59,7 +67,7 @@ class PartnerSellerControllerTest {
     @Test
     void 파트너사의_판매자를_조회한다() throws Exception {
         // given
-        given(partnerSellerService.getPartnerSellerResponseById(any())).willReturn(new PartnerSellerResponse());
+        given(partnerSellerService.getPartnerSellerResponseByPartnerSellerId(any())).willReturn(new PartnerSellerResponse());
 
         // when & then
         mockMvc.perform(
@@ -71,7 +79,7 @@ class PartnerSellerControllerTest {
     @Test
     void 파트너사의_판매자_정보를_수정한다() throws Exception {
         // given
-        doNothing().when(partnerSellerService).updateById(any(), any());
+        doNothing().when(partnerSellerService).update(any(), any());
         PartnerSellerUpdateRequest partnerSellerUpdateRequest = new PartnerSellerUpdateRequest("권순찬", "01012345678", "sckwon770");
 
         // when & then
@@ -86,7 +94,7 @@ class PartnerSellerControllerTest {
     @Test
     void 파트너사의_판매자를_삭제한다() throws Exception {
         // given
-        doNothing().when(partnerSellerService).deleteById(any());
+        doNothing().when(partnerSellerDeleteService).delete(any());
 
         // when & then
         mockMvc.perform(

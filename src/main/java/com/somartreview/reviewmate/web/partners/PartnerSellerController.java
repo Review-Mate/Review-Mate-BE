@@ -1,8 +1,11 @@
 package com.somartreview.reviewmate.web.partners;
 
+import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerCreateRequest;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerUpdateRequest;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerResponse;
+import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
+import com.somartreview.reviewmate.service.partners.PartnerSellerDeleteService;
 import com.somartreview.reviewmate.service.partners.PartnerSellerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,6 +27,7 @@ import java.net.URI;
 public class PartnerSellerController {
 
     private final PartnerSellerService partnerSellerService;
+    private final PartnerSellerDeleteService partnerSellerDeleteService;
 
 
     @Operation(operationId = "createPartnerSeller", summary = "판매자 생성")
@@ -45,7 +49,7 @@ public class PartnerSellerController {
     @ApiResponse(responseCode = "400", description = "파트너사 도메인과 판매자가 소속된 도메인이 다름")
             @GetMapping("/{partnerSellerId}")
             public ResponseEntity<PartnerSellerResponse>getPartnerSellerResponseById(@PathVariable Long partnerSellerId) {
-        PartnerSellerResponse partnerSellerResponse = partnerSellerService.getPartnerSellerResponseById(partnerSellerId);
+        PartnerSellerResponse partnerSellerResponse = partnerSellerService.getPartnerSellerResponseByPartnerSellerId(partnerSellerId);
 
         return ResponseEntity.ok(partnerSellerResponse);
     }
@@ -59,7 +63,7 @@ public class PartnerSellerController {
     @PutMapping("/{partnerSellerId}")
     public ResponseEntity<Void> updatePartnerSellerById(@PathVariable Long partnerSellerId,
                                                         @Valid @RequestBody PartnerSellerUpdateRequest partnerSellerUpdateRequest) {
-        partnerSellerService.updateById(partnerSellerId, partnerSellerUpdateRequest);
+        partnerSellerService.update(partnerSellerId, partnerSellerUpdateRequest);
 
         return ResponseEntity.noContent().build();
     }
@@ -72,7 +76,7 @@ public class PartnerSellerController {
     @ApiResponse(responseCode = "400", description = "파트너사 도메인과 판매자가 소속된 도메인이 다름")
     @DeleteMapping("/{partnerSellerId}")
     public ResponseEntity<Void> deletePartnerSellerById(@PathVariable Long partnerSellerId) {
-        partnerSellerService.deleteById(partnerSellerId);
+        partnerSellerDeleteService.delete(partnerSellerId);
 
         return ResponseEntity.noContent().build();
     }
