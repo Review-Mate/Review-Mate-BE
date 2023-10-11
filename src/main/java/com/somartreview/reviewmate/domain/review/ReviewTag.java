@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.domain.review;
 
+import com.querydsl.core.annotations.QueryInit;
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
@@ -39,6 +40,7 @@ public class ReviewTag extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id", nullable = false)
+    @QueryInit("reservation.travelProduct")
     private Review review;
 
     @Builder

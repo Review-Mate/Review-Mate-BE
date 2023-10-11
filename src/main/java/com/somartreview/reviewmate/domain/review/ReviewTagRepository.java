@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface ReviewTagRepository extends JpaRepository<ReviewTag, Long> {
+public interface ReviewTagRepository extends JpaRepository<ReviewTag, Long>, ReviewTagCustomRepository {
 
     List<ReviewTag> findAllByReview_Id(Long reviewId);
 
