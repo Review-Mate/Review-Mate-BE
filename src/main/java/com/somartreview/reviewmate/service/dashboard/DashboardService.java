@@ -1,6 +1,7 @@
 package com.somartreview.reviewmate.service.dashboard;
 
 import com.somartreview.reviewmate.domain.reservation.ReservationRepository;
+import com.somartreview.reviewmate.domain.review.ReviewRepository;
 import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.Objects;
 public class DashboardService {
 
     private final ReservationRepository reservationRepository;
+    private final ReviewRepository reviewRepository;
     private final PartnerCompanyService partnerCompanyService;
 
 
@@ -40,5 +42,11 @@ public class DashboardService {
             case WEEKLY -> now.with(DayOfWeek.MONDAY);
             case MONTHLY -> LocalDateTime.of(now.getYear(), now.getMonth(), 1, 0, 0, 0);
         };
+    }
+
+    public Long getTotalReviewCount(String partnerDomain) {
+        partnerCompanyService.validateExistingPartnerDomain(partnerDomain);
+
+        return reviewRepository.countByPartnerDomain(partnerDomain);
     }
 }
