@@ -63,6 +63,12 @@ public class PartnerCompanyService {
         }
     }
 
+    public void validateExistingPartnerDomain(String domain) {
+        if (!partnerCompanyRepository.existsByPartnerDomain(domain)) {
+            throw new DomainLogicException(PARTNER_COMPANY_NOT_FOUND);
+        }
+    }
+
     @Transactional
     public void delete(String domain) {
         partnerManagerDeleteService.deleteAllByPartnerDomain(domain);
