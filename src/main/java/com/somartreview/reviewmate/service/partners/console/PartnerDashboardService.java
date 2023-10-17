@@ -1,6 +1,6 @@
 package com.somartreview.reviewmate.service.partners.console;
 
-import com.somartreview.reviewmate.domain.partner.console.AchievementPeriodUnit;
+import com.somartreview.reviewmate.domain.partner.console.ConsoleTimeSeriesUnit;
 import com.somartreview.reviewmate.domain.reservation.ReservationRepository;
 import com.somartreview.reviewmate.domain.review.ReviewRepository;
 import com.somartreview.reviewmate.dto.partner.console.ReviewingAchievementGaugeChartResponse;
@@ -44,6 +44,9 @@ public class PartnerDashboardService {
             case DAILY -> LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 0, 0, 0);
             case WEEKLY -> now.with(DayOfWeek.MONDAY);
             case MONTHLY -> LocalDateTime.of(now.getYear(), now.getMonth(), 1, 0, 0, 0);
+            case QUARTERLY -> LocalDateTime.of(now.getYear(), now.getMonth().firstMonthOfQuarter(), 1, 0, 0, 0);
+            case HALF_YEARLY -> LocalDateTime.of(now.getYear(), now.getMonthValue() < 7 ? 1 : 7, 1, 0, 0, 0);
+            case YEARLY -> LocalDateTime.of(now.getYear(), 1, 1, 0, 0, 0);
         };
     }
 
@@ -56,12 +59,12 @@ public class PartnerDashboardService {
     public ReviewingAchievementGaugeChartResponse getReviewingAchievement(String partnerDomain) {
         partnerCompanyService.validateExistPartnerDomain(partnerDomain);
 
-        AchievementPeriodUnit achievementPeriodUnit = partnerConsoleConfigService.getAchievementPeriodUnit(partnerDomain);
-        float reviewingRate = getReviewingRate(partnerDomain, ConsoleTimeSeriesUnit.DAILY);
+        ConsoleTimeSeriesUnit achievementTimeSeriesUnit = partnerConsoleConfigService.getAchievementTimeSeriesUnit(partnerDomain);
+        float reviewingRate = getReviewingRate(partnerDomain, achievementTimeSeriesUnit);
         float targetReviewingRate = partnerConsoleConfigService.getTargetReviewingRate(partnerDomain);
 
         return ReviewingAchievementGaugeChartResponse.builder()
-                .achievementPeriodUnit(achievementPeriodUnit)
+                .achievementPeriodUnit(achievementTimeSeriesUnit)
                 .reviewingRate(reviewingRate)
                 .targetReviewingRate(targetReviewingRate)
                 .reviewingAchievementRate(reviewingRate / targetReviewingRate * 100)

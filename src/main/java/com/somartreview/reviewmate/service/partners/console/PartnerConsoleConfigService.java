@@ -1,6 +1,6 @@
 package com.somartreview.reviewmate.service.partners.console;
 
-import com.somartreview.reviewmate.domain.partner.console.AchievementPeriodUnit;
+import com.somartreview.reviewmate.domain.partner.console.ConsoleTimeSeriesUnit;
 import com.somartreview.reviewmate.domain.partner.console.PartnerConsoleConfig;
 import com.somartreview.reviewmate.domain.partner.console.PartnerConsoleConfigRepository;
 import com.somartreview.reviewmate.dto.partner.console.PartnerConsoleConfigUpdateRequest;
@@ -37,7 +37,7 @@ public class PartnerConsoleConfigService {
         return partnerConsoleConfigRepository.findTargetReviewingRateByPartnerDomain(partnerDomain);
     }
 
-    public AchievementPeriodUnit getAchievementPeriodUnit(String partnerDomain) {
-        return partnerConsoleConfigRepository.findAchievementPeriodUnitByPartnerDomain(partnerDomain);
+    public ConsoleTimeSeriesUnit getAchievementTimeSeriesUnit(String partnerDomain) {
+        return partnerConsoleConfigRepository.findAchievementTimeSeriesUnitByPartnerDomain(partnerDomain);
     }
 }

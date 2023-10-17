@@ -18,7 +18,7 @@ public class PartnerConsoleConfig {
     private Float targetReviewingRate = 100f;
 
     @Column(nullable = false)
-    private AchievementPeriodUnit achievementPeriodUnit = AchievementPeriodUnit.QUARTER;
+    private ConsoleTimeSeriesUnit achievementTimeSeriesUnit = ConsoleTimeSeriesUnit.QUARTERLY;
 
     @Column(nullable = false)
     private String partnerCompanyDomain;
@@ -30,6 +30,6 @@ public class PartnerConsoleConfig {
 
     public void update(PartnerConsoleConfigUpdateRequest request) {
         this.targetReviewingRate = request.getTargetReviewingRate();
-        this.achievementPeriodUnit = request.getAchievementPeriodUnit();
+        this.achievementTimeSeriesUnit = request.getAchievementTimeSeriesUnit();
     }
 }

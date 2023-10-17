@@ -2,7 +2,7 @@ package com.somartreview.reviewmate.web.partners.console;
 
 import com.somartreview.reviewmate.dto.partner.console.ReviewingAchievementGaugeChartResponse;
 import com.somartreview.reviewmate.service.partners.console.PartnerDashboardService;
-import com.somartreview.reviewmate.service.partners.console.ConsoleTimeSeriesUnit;
+import com.somartreview.reviewmate.domain.partner.console.ConsoleTimeSeriesUnit;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

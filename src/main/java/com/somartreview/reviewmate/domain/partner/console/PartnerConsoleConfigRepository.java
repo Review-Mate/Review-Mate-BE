@@ -13,6 +13,6 @@ public interface PartnerConsoleConfigRepository extends JpaRepository<PartnerCon
     @Query("select c.targetReviewingRate from PartnerConsoleConfig c where c.partnerCompanyDomain = :partnerDomain")
     Float findTargetReviewingRateByPartnerDomain(String partnerDomain);
 
-    @Query("select c.achievementPeriodUnit from PartnerConsoleConfig c where c.partnerCompanyDomain = :partnerDomain")
-    AchievementPeriodUnit findAchievementPeriodUnitByPartnerDomain(String partnerDomain);
+    @Query("select c.achievementTimeSeriesUnit from PartnerConsoleConfig c where c.partnerCompanyDomain = :partnerDomain")
+    ConsoleTimeSeriesUnit findAchievementTimeSeriesUnitByPartnerDomain(String partnerDomain);
 }

@@ -1,6 +1,6 @@
 package com.somartreview.reviewmate.dto.partner.console;
 
-import com.somartreview.reviewmate.domain.partner.console.AchievementPeriodUnit;
+import com.somartreview.reviewmate.domain.partner.console.ConsoleTimeSeriesUnit;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,5 +17,5 @@ public class PartnerConsoleConfigUpdateRequest {
 
     @NotNull
     @Schema(description = "달성률 기간 단위", example = "QUARTER")
-    private AchievementPeriodUnit achievementPeriodUnit;
+    private ConsoleTimeSeriesUnit achievementTimeSeriesUnit;
 }
