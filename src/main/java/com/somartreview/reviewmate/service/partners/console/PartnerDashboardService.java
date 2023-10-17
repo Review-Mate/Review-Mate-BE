@@ -57,7 +57,7 @@ public class PartnerDashboardService {
         partnerCompanyService.validateExistPartnerDomain(partnerDomain);
 
         List<SingleTravelProductCategory> categories = Arrays.stream(SingleTravelProductCategory.values()).toList();
-        Map<SingleTravelProductCategory, List<ReviewingLineChartDto>> categoriesReviewingLineGraphData = new HashMap<>();
+        Map<SingleTravelProductCategory, List<ReviewingLineChartDto>> categoriesReviewingLineGraphData = new EnumMap<>(SingleTravelProductCategory.class);
 
         for (SingleTravelProductCategory category : categories) {
 
