@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Tag(name = "관리자 대시보드")
 @RestController
@@ -32,7 +31,7 @@ public class PartnerDashboardController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 도메인")
     @GetMapping("/{partnerDomain}/dashboard/reviewing-rate")
     public ResponseEntity<Float> getDailyReviewingRate(@PathVariable String partnerDomain,
-                                                       @RequestParam(required = true, value = "consoleTimeSeriesUnit") ConsoleTimeSeriesUnit consoleTimeSeriesUnit) {
+                                                       @RequestParam(required = true, value = "timeSeriesUnit") ConsoleTimeSeriesUnit consoleTimeSeriesUnit) {
         LocalDateTime now = LocalDateTime.now();
         Float dailyReviewingRate = partnerDashboardService.getReviewingRate(partnerDomain, now, consoleTimeSeriesUnit);
 
