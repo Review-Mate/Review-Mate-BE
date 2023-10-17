@@ -18,6 +18,7 @@ public class PartnerConsoleConfig {
     private Float targetReviewingRate = 100f;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ConsoleTimeSeriesUnit achievementTimeSeriesUnit = ConsoleTimeSeriesUnit.QUARTERLY;
 
     @Column(nullable = false)

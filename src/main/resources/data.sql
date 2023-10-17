@@ -4,6 +4,9 @@
 INSERT INTO partner_company (created_at, updated_at, is_withdrawn, name, domain)
 VALUES('2023-10-17 12:00:00', '2023-10-17 12:00:00', 0, '여기어때', 'goodchoice.kr');
 
+INSERT INTO partner_console_config (target_reviewing_rate, achievement_time_series_unit, partner_company_domain)
+VALUES (100, 'QUARTERLY', 'goodchoice.kr');
+
 INSERT INTO partner_manager (created_at, updated_at, email, name, password, role, partner_company_id)
 VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', 'sckwon770@gmail.com', '권순찬', '1234', 'ADMIN', 1);
 

@@ -16,15 +16,19 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     Optional<Reservation> findByTravelProduct_PartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
 
+
     List<Reservation> findAll();
+
 
     @EntityGraph(attributePaths = {"customer", "travelProduct"})
     @Query("select r from Reservation r where r.id = :id")
     Optional<Reservation> findByIdFetchJoin(Long id);
 
+
     @EntityGraph(attributePaths = {"customer", "travelProduct"})
     @Query("select r from Reservation r where r.customer.id = :customerId")
     List<Reservation> findAllByCustomerIdFetchJoin(Long customerId);
+
 
     List<Reservation> findAllByCustomerId(Long customerId);
 
@@ -33,6 +37,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("select r from Reservation r where r.travelProduct.id = :travelProductId")
     List<Reservation> findAllByTravelProductIdFetchJoin(Long travelProductId);
 
+
     List<Reservation> findAllByTravelProductId(Long travelProductId);
 
 
@@ -40,19 +45,28 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("select r from Reservation r where r.travelProduct.id = :travelProductId and r.customer.id = :customerId")
     List<Reservation> findAllByTravelProductIdAndCustomerIdFetchJoin(Long travelProductId, Long customerId);
 
+
     @Query("select r.review.id from Reservation r join r.travelProduct.partnerCompany c " +
             "where r.travelProduct.partnerCompany.partnerDomain = :partnerDomain and r.createdAt >= :dateTime")
     List<Long> findAllReviewFKsByCreatedAtGreaterThanEqual(String partnerDomain, LocalDateTime dateTime);
+
+
+    @Query("select r.review.id from Reservation r join r.travelProduct.partnerCompany c " +
+            "where r.travelProduct.partnerCompany.partnerDomain = :partnerDomain and r.createdAt between :startDateTime and :endDateTime")
+    List<Long> findAllReviewFKsByCreatedAtBetween(String partnerDomain, LocalDateTime startDateTime, LocalDateTime endDateTime);
+
 
     @Transactional
     @Modifying
     @Query("delete from Reservation r where r.id = :id")
     void deleteById(Long id);
 
+
     @Transactional
     @Modifying
     @Query("delete from Reservation r where r.id in :ids")
     void deleteAllByIdsInQuery(List<Long> ids);
+
 
     @Transactional
     @Modifying
