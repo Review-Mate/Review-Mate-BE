@@ -1,7 +1,7 @@
-package com.somartreview.reviewmate.web;
+package com.somartreview.reviewmate.web.partners.console;
 
-import com.somartreview.reviewmate.service.dashboard.DashboardService;
-import com.somartreview.reviewmate.service.dashboard.TimeSeriesUnit;
+import com.somartreview.reviewmate.service.partners.console.PartnerDashboardService;
+import com.somartreview.reviewmate.service.partners.console.TimeSeriesUnit;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -10,13 +10,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "대시보드")
+@Tag(name = "관리자 대시보드")
 @RestController
 @RequestMapping("/api/console/v1/")
 @RequiredArgsConstructor
-public class DashboardController {
+public class PartnerDashboardController {
 
-    private final DashboardService dashboardService;
+    private final PartnerDashboardService partnerDashboardService;
 
 
     @Operation(operationId = "getReviewingRate", summary = "리뷰 작성률 조회")
@@ -27,7 +27,7 @@ public class DashboardController {
     @GetMapping("/{partnerDomain}/dashboard/reviewing-rate")
     public ResponseEntity<Float> getDailyReviewingRate(@PathVariable String partnerDomain,
                                                        @RequestParam(required = true, value = "timeSeriesUnit") TimeSeriesUnit timeSeriesUnit) {
-        Float dailyReviewingRate = dashboardService.getReviewingRate(partnerDomain, timeSeriesUnit);
+        Float dailyReviewingRate = partnerDashboardService.getReviewingRate(partnerDomain, timeSeriesUnit);
 
         return ResponseEntity.ok(dailyReviewingRate);
     }
@@ -39,8 +39,10 @@ public class DashboardController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 도메인")
     @GetMapping("/{partnerDomain}/dashboard/total-review-count")
     public ResponseEntity<Long> getTotalReviewCount(@PathVariable String partnerDomain) {
-        Long totalReviewCount = dashboardService.getTotalReviewCount(partnerDomain);
+        Long totalReviewCount = partnerDashboardService.getTotalReviewCount(partnerDomain);
 
         return ResponseEntity.ok(totalReviewCount);
     }
+
+
 }

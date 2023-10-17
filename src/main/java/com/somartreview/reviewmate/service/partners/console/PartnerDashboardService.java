@@ -1,8 +1,8 @@
-package com.somartreview.reviewmate.service.dashboard;
+package com.somartreview.reviewmate.service.partners.console;
 
 import com.somartreview.reviewmate.domain.reservation.ReservationRepository;
 import com.somartreview.reviewmate.domain.review.ReviewRepository;
-import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
+import com.somartreview.reviewmate.service.partners.company.PartnerCompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class DashboardService {
+public class PartnerDashboardService {
 
     private final ReservationRepository reservationRepository;
     private final ReviewRepository reviewRepository;
@@ -21,7 +21,7 @@ public class DashboardService {
 
 
     public Float getReviewingRate(String partnerDomain, TimeSeriesUnit timeSeriesUnit) {
-        partnerCompanyService.validateExistingPartnerDomain(partnerDomain);
+        partnerCompanyService.validateExistPartnerDomain(partnerDomain);
 
         LocalDateTime countingStartDateTime = getCountingStartDateTime(timeSeriesUnit);
         List<Long> reviewFks = reservationRepository.findAllReviewFKsByCreatedAtGreaterThanEqual(partnerDomain, countingStartDateTime);
@@ -45,7 +45,7 @@ public class DashboardService {
     }
 
     public Long getTotalReviewCount(String partnerDomain) {
-        partnerCompanyService.validateExistingPartnerDomain(partnerDomain);
+        partnerCompanyService.validateExistPartnerDomain(partnerDomain);
 
         return reviewRepository.countByPartnerDomain(partnerDomain);
     }

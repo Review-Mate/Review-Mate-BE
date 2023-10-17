@@ -7,7 +7,7 @@ import com.somartreview.reviewmate.dto.customer.CustomerCreateRequest;
 import com.somartreview.reviewmate.dto.customer.CustomerUpdateRequest;
 import com.somartreview.reviewmate.dto.customer.CustomerResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
-import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
+import com.somartreview.reviewmate.service.partners.company.PartnerCompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

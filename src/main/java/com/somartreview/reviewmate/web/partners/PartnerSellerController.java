@@ -1,12 +1,10 @@
 package com.somartreview.reviewmate.web.partners;
 
-import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerCreateRequest;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerUpdateRequest;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerResponse;
-import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
-import com.somartreview.reviewmate.service.partners.PartnerSellerDeleteService;
-import com.somartreview.reviewmate.service.partners.PartnerSellerService;
+import com.somartreview.reviewmate.service.partners.seller.PartnerSellerDeleteService;
+import com.somartreview.reviewmate.service.partners.seller.PartnerSellerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.headers.Header;

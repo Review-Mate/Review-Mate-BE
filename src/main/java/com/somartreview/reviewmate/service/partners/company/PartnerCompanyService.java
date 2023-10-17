@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.service.partners;
+package com.somartreview.reviewmate.service.partners.company;
 
 import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
 import com.somartreview.reviewmate.domain.partner.company.PartnerCompanyRepository;
@@ -7,6 +7,8 @@ import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyCreateReque
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.CustomerDeleteService;
+import com.somartreview.reviewmate.service.partners.manager.PartnerManagerDeleteService;
+import com.somartreview.reviewmate.service.partners.seller.PartnerSellerDeleteService;
 import com.somartreview.reviewmate.service.products.TravelProductDeleteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -63,7 +65,7 @@ public class PartnerCompanyService {
         }
     }
 
-    public void validateExistingPartnerDomain(String domain) {
+    public void validateExistPartnerDomain(String domain) {
         if (!partnerCompanyRepository.existsByPartnerDomain(domain)) {
             throw new DomainLogicException(PARTNER_COMPANY_NOT_FOUND);
         }
