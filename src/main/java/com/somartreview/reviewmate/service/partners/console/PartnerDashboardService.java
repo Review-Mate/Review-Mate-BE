@@ -3,7 +3,7 @@ package com.somartreview.reviewmate.service.partners.console;
 import com.somartreview.reviewmate.domain.partner.console.AchievementPeriodUnit;
 import com.somartreview.reviewmate.domain.reservation.ReservationRepository;
 import com.somartreview.reviewmate.domain.review.ReviewRepository;
-import com.somartreview.reviewmate.dto.partner.console.ReviewingAchievementResponse;
+import com.somartreview.reviewmate.dto.partner.console.ReviewingAchievementGaugeChartResponse;
 import com.somartreview.reviewmate.service.partners.company.PartnerCompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,10 +23,10 @@ public class PartnerDashboardService {
     private final PartnerConsoleConfigService partnerConsoleConfigService;
 
 
-    public Float getReviewingRate(String partnerDomain, TimeSeriesUnit timeSeriesUnit) {
+    public Float getReviewingRate(String partnerDomain, ConsoleTimeSeriesUnit consoleTimeSeriesUnit) {
         partnerCompanyService.validateExistPartnerDomain(partnerDomain);
 
-        LocalDateTime countingStartDateTime = getCountingStartDateTime(timeSeriesUnit);
+        LocalDateTime countingStartDateTime = getCountingStartDateTime(consoleTimeSeriesUnit);
         List<Long> reviewFks = reservationRepository.findAllReviewFKsByCreatedAtGreaterThanEqual(partnerDomain, countingStartDateTime);
 
         long todayReservationCount = reviewFks.size();
@@ -38,9 +38,9 @@ public class PartnerDashboardService {
         return (float) todayReviewCount / todayReservationCount * 100;
     }
 
-    private LocalDateTime getCountingStartDateTime(TimeSeriesUnit timeSeriesUnit) {
+    private LocalDateTime getCountingStartDateTime(ConsoleTimeSeriesUnit consoleTimeSeriesUnit) {
         LocalDateTime now = LocalDateTime.now();
-        return switch (timeSeriesUnit) {
+        return switch (consoleTimeSeriesUnit) {
             case DAILY -> LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 0, 0, 0);
             case WEEKLY -> now.with(DayOfWeek.MONDAY);
             case MONTHLY -> LocalDateTime.of(now.getYear(), now.getMonth(), 1, 0, 0, 0);
@@ -53,14 +53,14 @@ public class PartnerDashboardService {
         return reviewRepository.countByPartnerDomain(partnerDomain);
     }
 
-    public ReviewingAchievementResponse getReviewingAchievement(String partnerDomain) {
+    public ReviewingAchievementGaugeChartResponse getReviewingAchievement(String partnerDomain) {
         partnerCompanyService.validateExistPartnerDomain(partnerDomain);
 
         AchievementPeriodUnit achievementPeriodUnit = partnerConsoleConfigService.getAchievementPeriodUnit(partnerDomain);
-        float reviewingRate = getReviewingRate(partnerDomain, TimeSeriesUnit.DAILY);
+        float reviewingRate = getReviewingRate(partnerDomain, ConsoleTimeSeriesUnit.DAILY);
         float targetReviewingRate = partnerConsoleConfigService.getTargetReviewingRate(partnerDomain);
 
-        return ReviewingAchievementResponse.builder()
+        return ReviewingAchievementGaugeChartResponse.builder()
                 .achievementPeriodUnit(achievementPeriodUnit)
                 .reviewingRate(reviewingRate)
                 .targetReviewingRate(targetReviewingRate)

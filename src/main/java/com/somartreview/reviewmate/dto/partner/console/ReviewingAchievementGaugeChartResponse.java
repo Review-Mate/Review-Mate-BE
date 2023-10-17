@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @Builder
-public class ReviewingAchievementResponse {
+public class ReviewingAchievementGaugeChartResponse {
 
     @Schema(description = "달성률 기간 단위", example = "QUARTER")
     private AchievementPeriodUnit achievementPeriodUnit;
