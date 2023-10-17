@@ -7,6 +7,7 @@ import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyCreateReque
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.CustomerDeleteService;
+import com.somartreview.reviewmate.service.partners.console.PartnerConsoleConfigService;
 import com.somartreview.reviewmate.service.partners.manager.PartnerManagerDeleteService;
 import com.somartreview.reviewmate.service.partners.seller.PartnerSellerDeleteService;
 import com.somartreview.reviewmate.service.products.TravelProductDeleteService;
@@ -21,6 +22,7 @@ import static com.somartreview.reviewmate.exception.ErrorCode.*;
 public class PartnerCompanyService {
 
     private final PartnerCompanyRepository partnerCompanyRepository;
+    private final PartnerConsoleConfigService partnerConsoleConfigService;
     private final PartnerManagerDeleteService partnerManagerDeleteService;
     private final PartnerSellerDeleteService partnerSellerDeleteService;
     private final CustomerDeleteService customerDeleteService;
@@ -31,6 +33,7 @@ public class PartnerCompanyService {
     public String create(PartnerCompanyCreateRequest request) {
         validateUniquePartnerDomain(request.getPartnerDomain());
 
+        partnerConsoleConfigService.create(request.getPartnerDomain());
         return partnerCompanyRepository.save(request.toEntity()).getPartnerDomain();
     }
 
@@ -77,6 +80,7 @@ public class PartnerCompanyService {
         partnerSellerDeleteService.deleteAllByPartnerDomain(domain);
         customerDeleteService.deleteAllByPartnerDomain(domain);
         travelProductDeleteService.deleteAllByPartnerDomain(domain);
+        partnerConsoleConfigService.deleteByPartnerDomain(domain);
         partnerCompanyRepository.deleteByPartnerDomain(domain);
     }
 }
