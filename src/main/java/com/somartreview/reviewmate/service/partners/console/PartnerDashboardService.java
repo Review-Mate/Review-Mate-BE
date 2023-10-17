@@ -27,8 +27,6 @@ public class PartnerDashboardService {
 
 
     public Float getReviewingRate(String partnerDomain, LocalDateTime dateTime, ConsoleTimeSeriesUnit timeSeriesUnit) {
-        partnerCompanyService.validateExistPartnerDomain(partnerDomain);
-
         LocalDateTime startDateTime = getStartDateTimeOfTimeSeriesUnit(dateTime, timeSeriesUnit);
         List<Long> reviewFks = reservationRepository.findAllReviewFKsByCreatedAtGreaterThanEqual(partnerDomain, startDateTime);
 
@@ -66,7 +64,7 @@ public class PartnerDashboardService {
 
             for (int i = 0; i < REVIEWING_LINE_CHART_HORIZONTAL_AXIS_LENGTH; i++) {
                 LocalDateTime startDateTime = getStartDateTimeOfTimeSeriesUnit(endDateTime, timeSeriesUnit);
-                float reviewingRate = getReviewingRate(partnerDomain, startDateTime, endDateTime);
+                float reviewingRate = getReviewingRate(partnerDomain, category, startDateTime, endDateTime);
 
                 reviewingLineChartDtos.add(ReviewingLineChartDto.builder()
                         .startDateTime(startDateTime)
@@ -85,6 +83,18 @@ public class PartnerDashboardService {
                 .categories(categories)
                 .categoriesReviewingLineGraphData(categoriesReviewingLineGraphData)
                 .build();
+    }
+
+    public Float getReviewingRate(String partnerDomain, SingleTravelProductCategory category, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        List<Long> reviewFks = reservationRepository.findAllReviewFKsByCategoryAndCreatedAtBetween(partnerDomain, category, startDateTime, endDateTime);
+
+        long todayReservationCount = reviewFks.size();
+        if (todayReservationCount == 0) {
+            return 0f;
+        }
+
+        long todayReviewCount = reviewFks.stream().filter(Objects::nonNull).count();
+        return (float) todayReviewCount / todayReservationCount * 100;
     }
 
 
@@ -111,9 +121,7 @@ public class PartnerDashboardService {
 
     }
 
-    public Float getReviewingRate(String partnerDomain, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        partnerCompanyService.validateExistPartnerDomain(partnerDomain);
-
+    private Float getReviewingRate(String partnerDomain, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         List<Long> reviewFks = reservationRepository.findAllReviewFKsByCreatedAtBetween(partnerDomain, startDateTime, endDateTime);
 
         long todayReservationCount = reviewFks.size();
@@ -126,8 +134,9 @@ public class PartnerDashboardService {
     }
 
     public ReviewingAchievementBarChartResponse getReviewingAchievementBarChart(String partnerDomain) {
-        List<ReviewingAchievementBarChartDto> reviewingAchievementBarChartDtos = new ArrayList<>();
+        partnerCompanyService.validateExistPartnerDomain(partnerDomain);
 
+        List<ReviewingAchievementBarChartDto> reviewingAchievementBarChartDtos = new ArrayList<>();
         LocalDateTime endDateTime = LocalDateTime.now();
         ConsoleTimeSeriesUnit achievementTimeSeriesUnit = partnerConsoleConfigService.getAchievementTimeSeriesUnit(partnerDomain);
 

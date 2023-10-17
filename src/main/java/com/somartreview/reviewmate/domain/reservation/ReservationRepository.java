@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.domain.reservation;
 
+import com.somartreview.reviewmate.domain.product.SingleTravelProductCategory;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -49,6 +50,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("select r.review.id from Reservation r join r.travelProduct.partnerCompany c " +
             "where r.travelProduct.partnerCompany.partnerDomain = :partnerDomain and r.createdAt >= :dateTime")
     List<Long> findAllReviewFKsByCreatedAtGreaterThanEqual(String partnerDomain, LocalDateTime dateTime);
+
+
+    @Query("select r.review.id from Reservation r join r.travelProduct.partnerCompany c left outer join SingleTravelProduct p on r.travelProduct.id = p.id " +
+            "where c.partnerDomain = :partnerDomain and p.singleTravelProductCategory = :category and r.createdAt between :startDateTime and :endDateTime")
+    List<Long> findAllReviewFKsByCategoryAndCreatedAtBetween(String partnerDomain, SingleTravelProductCategory category, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
 
     @Query("select r.review.id from Reservation r join r.travelProduct.partnerCompany c " +
