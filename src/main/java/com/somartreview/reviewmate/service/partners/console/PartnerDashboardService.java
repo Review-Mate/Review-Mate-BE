@@ -4,10 +4,7 @@ import com.somartreview.reviewmate.domain.partner.console.ConsoleTimeSeriesUnit;
 import com.somartreview.reviewmate.domain.product.SingleTravelProductCategory;
 import com.somartreview.reviewmate.domain.reservation.ReservationRepository;
 import com.somartreview.reviewmate.domain.review.ReviewRepository;
-import com.somartreview.reviewmate.dto.partner.console.ReviewingAchievementBarChartResponse;
-import com.somartreview.reviewmate.dto.partner.console.ReviewingAchievementGaugeChartResponse;
-import com.somartreview.reviewmate.dto.partner.console.ReviewingLineChartDto;
-import com.somartreview.reviewmate.dto.partner.console.ReviewingLineChartResponse;
+import com.somartreview.reviewmate.dto.partner.console.*;
 import com.somartreview.reviewmate.service.partners.company.PartnerCompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -128,8 +125,8 @@ public class PartnerDashboardService {
         return (float) todayReviewCount / todayReservationCount * 100;
     }
 
-    public List<ReviewingAchievementBarChartResponse> getReviewingAchievementBarChart(String partnerDomain) {
-        List<ReviewingAchievementBarChartResponse> reviewingAchievementBarChartResponses = new ArrayList<>();
+    public ReviewingAchievementBarChartResponse getReviewingAchievementBarChart(String partnerDomain) {
+        List<ReviewingAchievementBarChartDto> reviewingAchievementBarChartData = new ArrayList<>();
 
         LocalDateTime endDateTime = LocalDateTime.now();
         ConsoleTimeSeriesUnit achievementTimeSeriesUnit = partnerConsoleConfigService.getAchievementTimeSeriesUnit(partnerDomain);
@@ -140,7 +137,7 @@ public class PartnerDashboardService {
             LocalDateTime startDateTime = getStartDateTimeOfTimeSeriesUnit(endDateTime, achievementTimeSeriesUnit);
             float reviewingRate = getReviewingRate(partnerDomain, startDateTime, endDateTime);
 
-            reviewingAchievementBarChartResponses.add(ReviewingAchievementBarChartResponse.builder()
+            reviewingAchievementBarChartData.add(ReviewingAchievementBarChartDto.builder()
                     .startDateTime(startDateTime)
                     .endDateTime(endDateTime)
                     .reviewingRate(reviewingRate)
@@ -150,6 +147,6 @@ public class PartnerDashboardService {
             endDateTime = startDateTime.minusDays(1);
         }
 
-        return reviewingAchievementBarChartResponses;
+        return new ReviewingAchievementBarChartResponse(reviewingAchievementBarChartData);
     }
 }

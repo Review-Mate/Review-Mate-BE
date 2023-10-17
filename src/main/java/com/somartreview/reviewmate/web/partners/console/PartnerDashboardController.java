@@ -83,8 +83,8 @@ public class PartnerDashboardController {
     @ApiResponse(responseCode = "200", description = "누적 리뷰 수 조회 성공")
     @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 도메인")
     @GetMapping("/{partnerDomain}/dashboard/reviewing-achievement-bar-chart")
-    public ResponseEntity<List<ReviewingAchievementBarChartResponse>> getReviewingAchievementBarChart(@PathVariable String partnerDomain) {
-        List<ReviewingAchievementBarChartResponse> reviewingAchievement = partnerDashboardService.getReviewingAchievementBarChart(partnerDomain);
+    public ResponseEntity<ReviewingAchievementBarChartResponse> getReviewingAchievementBarChart(@PathVariable String partnerDomain) {
+        ReviewingAchievementBarChartResponse reviewingAchievement = partnerDashboardService.getReviewingAchievementBarChart(partnerDomain);
 
         return ResponseEntity.ok(reviewingAchievement);
     }

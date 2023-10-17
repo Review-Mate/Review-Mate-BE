@@ -4,26 +4,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
 @Builder
 public class ReviewingAchievementBarChartResponse {
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @Schema(description = "작성률 측정 기간의 시작 날짜 { pattern: 'yyyy-MM-dd'T'HH:mm:ss' }", example = "2023-10-18T13:00:00")
-    private LocalDateTime startDateTime;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @Schema(description = "작성률 측정 기간의 끝 날짜 { pattern: 'yyyy-MM-dd'T'HH:mm:ss' }", example = "2023-10-18T13:00:00")
-    private LocalDateTime endDateTime;
-
-    @Schema(description = "현재 작성률", example = "50")
-    private Float reviewingRate;
-
-    @Schema(description = "목표 작성률", example = "100")
-    private Float targetReviewingRate;
+    @Schema(description = "시계열별 달성률 데이터\n 시계열 단위와 상관없이 가로축 8칸을 조회합니다.")
+    List<ReviewingAchievementBarChartDto> reviewingAchievementBarChartData;
 }
