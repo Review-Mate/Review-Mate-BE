@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class PartnerConsoleConfigService {
 
     private final PartnerConsoleConfigRepository partnerConsoleConfigRepository;
-    private final PartnerCompanyService partnerCompanyService;
 
 
     public Long create(String partnerDomain) {
@@ -25,8 +24,6 @@ public class PartnerConsoleConfigService {
 
     @Transactional
     public Long update(String partnerDomain, PartnerConsoleConfigUpdateRequest request) {
-        partnerCompanyService.validateExistPartnerDomain(partnerDomain);
-
         PartnerConsoleConfig partnerConsoleConfig = partnerConsoleConfigRepository.findByPartnerDomain(partnerDomain);
         partnerConsoleConfig.update(request);
 
