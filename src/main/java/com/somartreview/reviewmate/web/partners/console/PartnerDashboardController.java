@@ -2,6 +2,7 @@ package com.somartreview.reviewmate.web.partners.console;
 
 import com.somartreview.reviewmate.dto.partner.console.ReviewingAchievementBarChartResponse;
 import com.somartreview.reviewmate.dto.partner.console.ReviewingAchievementGaugeChartResponse;
+import com.somartreview.reviewmate.dto.partner.console.ReviewingLineChartResponse;
 import com.somartreview.reviewmate.service.partners.console.PartnerDashboardService;
 import com.somartreview.reviewmate.domain.partner.console.ConsoleTimeSeriesUnit;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,6 +37,20 @@ public class PartnerDashboardController {
         Float dailyReviewingRate = partnerDashboardService.getReviewingRate(partnerDomain, now, consoleTimeSeriesUnit);
 
         return ResponseEntity.ok(dailyReviewingRate);
+    }
+
+
+    @Operation(operationId = "getCategoriesReviewingLineChart", summary = "카테고리별 리뷰 작성률의 꺽은선 그래프 정보 조회", description = "- 시계열 단위와 상관없이 가로축 24칸을 조회합니다.\n - 오래된 데이터부터 최신 데이터 순으로 제공합니다.")
+    @Parameter(name = "partnerDomain", description = "대시보드 대상인 파트너사 도메인", example = "goodchoice.kr")
+    @Parameter(name = "timeSeriesUnit", description = "시계열 단위", example = "DAILY")
+    @ApiResponse(responseCode = "200", description = "리뷰 작성률 조회 성공")
+    @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 도메인")
+    @GetMapping("/{partnerDomain}/dashboard/categories-reviewing-line-chart")
+    public ResponseEntity<ReviewingLineChartResponse> getCategoriesReviewingLineChart(@PathVariable String partnerDomain,
+                                                                                      @RequestParam(required = true, value = "timeSeriesUnit") ConsoleTimeSeriesUnit timeSeriesUnit) {
+        ReviewingLineChartResponse reviewingLineChart = partnerDashboardService.getCategoriesReviewingLineChart(partnerDomain, timeSeriesUnit);
+
+        return ResponseEntity.ok(reviewingLineChart);
     }
 
 

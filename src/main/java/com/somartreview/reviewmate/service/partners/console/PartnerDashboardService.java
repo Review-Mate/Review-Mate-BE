@@ -1,25 +1,27 @@
 package com.somartreview.reviewmate.service.partners.console;
 
 import com.somartreview.reviewmate.domain.partner.console.ConsoleTimeSeriesUnit;
+import com.somartreview.reviewmate.domain.product.SingleTravelProductCategory;
 import com.somartreview.reviewmate.domain.reservation.ReservationRepository;
 import com.somartreview.reviewmate.domain.review.ReviewRepository;
 import com.somartreview.reviewmate.dto.partner.console.ReviewingAchievementBarChartResponse;
 import com.somartreview.reviewmate.dto.partner.console.ReviewingAchievementGaugeChartResponse;
+import com.somartreview.reviewmate.dto.partner.console.ReviewingLineChartDto;
+import com.somartreview.reviewmate.dto.partner.console.ReviewingLineChartResponse;
 import com.somartreview.reviewmate.service.partners.company.PartnerCompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class PartnerDashboardService {
 
     private static final int REVIEWING_ACHIEVEMENT_BAR_CHART_HORIZONTAL_AXIS_LENGTH = 8;
+    private static final int REVIEWING_LINE_CHART_HORIZONTAL_AXIS_LENGTH = 24;
 
     private final ReservationRepository reservationRepository;
     private final ReviewRepository reviewRepository;
@@ -53,6 +55,41 @@ public class PartnerDashboardService {
             case YEARLY -> LocalDateTime.of(dateTime.getYear(), 1, 1, 0, 0, 0);
         };
     }
+
+    public ReviewingLineChartResponse getCategoriesReviewingLineChart(String partnerDomain, ConsoleTimeSeriesUnit timeSeriesUnit) {
+        partnerCompanyService.validateExistPartnerDomain(partnerDomain);
+
+        List<SingleTravelProductCategory> categories = Arrays.stream(SingleTravelProductCategory.values()).toList();
+        Map<SingleTravelProductCategory, List<ReviewingLineChartDto>> categoriesReviewingLineGraphData = new HashMap<>();
+
+        for (SingleTravelProductCategory category : categories) {
+
+            LocalDateTime endDateTime = LocalDateTime.now();
+            List<ReviewingLineChartDto> reviewingLineChartDtos = new ArrayList<>();
+
+            for (int i = 0; i < REVIEWING_LINE_CHART_HORIZONTAL_AXIS_LENGTH; i++) {
+                LocalDateTime startDateTime = getStartDateTimeOfTimeSeriesUnit(endDateTime, timeSeriesUnit);
+                float reviewingRate = getReviewingRate(partnerDomain, startDateTime, endDateTime);
+
+                reviewingLineChartDtos.add(ReviewingLineChartDto.builder()
+                        .startDateTime(startDateTime)
+                        .endDateTime(endDateTime)
+                        .reviewingRate(reviewingRate)
+                        .build());
+
+                endDateTime = startDateTime.minusDays(1);
+            }
+
+            Collections.reverse(reviewingLineChartDtos);
+            categoriesReviewingLineGraphData.put(category, reviewingLineChartDtos);
+        }
+
+        return ReviewingLineChartResponse.builder()
+                .categories(categories)
+                .categoriesReviewingLineGraphData(categoriesReviewingLineGraphData)
+                .build();
+    }
+
 
     public Long getTotalReviewCount(String partnerDomain) {
         partnerCompanyService.validateExistPartnerDomain(partnerDomain);
