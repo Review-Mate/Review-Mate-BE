@@ -40,4 +40,8 @@ public class PartnerConsoleConfigService {
     public ConsoleTimeSeriesUnit getAchievementTimeSeriesUnit(String partnerDomain) {
         return partnerConsoleConfigRepository.findAchievementTimeSeriesUnitByPartnerDomain(partnerDomain);
     }
+
+    public void delete(String partnerDomain) {
+        partnerConsoleConfigRepository.deleteByPartnerDomain(partnerDomain);
+    }
 }

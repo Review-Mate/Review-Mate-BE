@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PartnerConsoleConfigRepository extends JpaRepository<PartnerConsoleConfig, Long> {
 
-    @Query("select c from PartnerConsoleConfig c where c = :partnerDomain")
+    @Query("select c from PartnerConsoleConfig c where c.partnerCompanyDomain = :partnerDomain")
     PartnerConsoleConfig findByPartnerDomain(String partnerDomain);
 
     @Query("select c.targetReviewingRate from PartnerConsoleConfig c where c.partnerCompanyDomain = :partnerDomain")
@@ -15,4 +15,7 @@ public interface PartnerConsoleConfigRepository extends JpaRepository<PartnerCon
 
     @Query("select c.achievementTimeSeriesUnit from PartnerConsoleConfig c where c.partnerCompanyDomain = :partnerDomain")
     ConsoleTimeSeriesUnit findAchievementTimeSeriesUnitByPartnerDomain(String partnerDomain);
+
+    @Query("select c from PartnerConsoleConfig c where c.partnerCompanyDomain = :partnerDomain")
+    void deleteByPartnerDomain(String partnerDomain);
 }
