@@ -72,9 +72,10 @@ public enum ErrorCode {
 
 
     INVALID_PROPERTY_ERROR("9001", "잘못된 값이 입력되었습니다."),
-    API_NOT_FOUND_ERROR("9002", "요청한 API가 존재하지 않습니다"),
-    DB_CONFLICT_ERROR("9003", "요청한 데이터가 데이터베이스와 충돌됩니다."),
+    MISSED_PARAMETER_ERROR("9002", "필수 파라미터가 누락되었습니다."),
 
+    API_NOT_FOUND_ERROR("9006", "요청한 API가 존재하지 않습니다"),
+    DB_CONFLICT_ERROR("9007", "요청한 데이터가 데이터베이스와 충돌됩니다."),
     REVIEW_MATE_ERROR("9908", "처리하지 못한 예외입니다."),
     RUNTIME_ERROR("9909", "알 수 없는 예외입니다.");
 
