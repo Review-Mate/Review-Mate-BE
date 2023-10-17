@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.web.partners.console;
 
+import com.somartreview.reviewmate.dto.partner.console.ReviewingAchievementResponse;
 import com.somartreview.reviewmate.service.partners.console.PartnerDashboardService;
 import com.somartreview.reviewmate.service.partners.console.TimeSeriesUnit;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,7 +20,7 @@ public class PartnerDashboardController {
     private final PartnerDashboardService partnerDashboardService;
 
 
-    @Operation(operationId = "getReviewingRate", summary = "리뷰 작성률 조회")
+    @Operation(operationId = "getReviewingRate", summary = "시계열 단위별 리뷰 작성률 조회")
     @Parameter(name = "partnerDomain", description = "대시보드 대상인 파트너사 도메인", example = "goodchoice.kr")
     @Parameter(name = "timeSeriesUnit", description = "시계열 단위", example = "DAILY")
     @ApiResponse(responseCode = "200", description = "리뷰 작성률 조회 성공")
@@ -45,4 +46,14 @@ public class PartnerDashboardController {
     }
 
 
+    @Operation(operationId = "getReviewingAchievement", summary = "리뷰 작성률의 목표 달성 정보 조회")
+    @Parameter(name = "partnerDomain", description = "대시보드 대상인 파트너사 도메인", example = "goodchoice.kr")
+    @ApiResponse(responseCode = "200", description = "누적 리뷰 수 조회 성공")
+    @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 도메인")
+    @GetMapping("/{partnerDomain}/dashboard/reviewing-achievement")
+    public ResponseEntity<ReviewingAchievementResponse> getReviewingAchievement(@PathVariable String partnerDomain) {
+        ReviewingAchievementResponse reviewingAchievement = partnerDashboardService.getReviewingAchievement(partnerDomain);
+
+        return ResponseEntity.ok(reviewingAchievement);
+    }
 }

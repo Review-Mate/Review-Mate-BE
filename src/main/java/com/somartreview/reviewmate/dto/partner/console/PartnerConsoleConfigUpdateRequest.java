@@ -12,10 +12,10 @@ import javax.validation.constraints.NotNull;
 public class PartnerConsoleConfigUpdateRequest {
 
     @NotNull
-    @Schema(description = "목표 리뷰 작성률")
+    @Schema(description = "목표 리뷰 작성률", example = "100")
     private Float targetReviewingRate;
 
     @NotNull
-    @Schema(description = "달성률 기간 단위")
+    @Schema(description = "달성률 기간 단위", example = "QUARTER")
     private AchievementPeriodUnit achievementPeriodUnit;
 }
