@@ -22,12 +22,14 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
 
     @EntityGraph(attributePaths = {"customer", "travelProduct"})
-    @Query("select r from Reservation r where r.id = :id")
+    @Query("select r from Reservation r " +
+            "where r.id = :id")
     Optional<Reservation> findByIdFetchJoin(Long id);
 
 
     @EntityGraph(attributePaths = {"customer", "travelProduct"})
-    @Query("select r from Reservation r where r.customer.id = :customerId")
+    @Query("select r from Reservation r " +
+            "where r.customer.id = :customerId")
     List<Reservation> findAllByCustomerIdFetchJoin(Long customerId);
 
 
@@ -35,7 +37,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
 
     @EntityGraph(attributePaths = {"customer", "travelProduct"})
-    @Query("select r from Reservation r where r.travelProduct.id = :travelProductId")
+    @Query("select r from Reservation r " +
+            "where r.travelProduct.id = :travelProductId")
     List<Reservation> findAllByTravelProductIdFetchJoin(Long travelProductId);
 
 
@@ -43,21 +46,26 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
 
     @EntityGraph(attributePaths = {"customer", "travelProduct"})
-    @Query("select r from Reservation r where r.travelProduct.id = :travelProductId and r.customer.id = :customerId")
+    @Query("select r from Reservation r " +
+            "where r.travelProduct.id = :travelProductId and r.customer.id = :customerId")
     List<Reservation> findAllByTravelProductIdAndCustomerIdFetchJoin(Long travelProductId, Long customerId);
 
 
-    @Query("select r.review.id from Reservation r join r.travelProduct.partnerCompany c " +
+    @Query("select r.review.id from Reservation r " +
+            "join r.travelProduct.partnerCompany c " +
             "where r.travelProduct.partnerCompany.partnerDomain = :partnerDomain and r.createdAt >= :dateTime")
     List<Long> findAllReviewFKsByCreatedAtGreaterThanEqual(String partnerDomain, LocalDateTime dateTime);
 
 
-    @Query("select r.review.id from Reservation r join r.travelProduct.partnerCompany c left outer join SingleTravelProduct p on r.travelProduct.id = p.id " +
+    @Query("select r.review.id from Reservation r " +
+            "join r.travelProduct.partnerCompany c " +
+            "left outer join SingleTravelProduct p on r.travelProduct.id = p.id " +
             "where c.partnerDomain = :partnerDomain and p.singleTravelProductCategory = :category and r.createdAt between :startDateTime and :endDateTime")
     List<Long> findAllReviewFKsByCategoryAndCreatedAtBetween(String partnerDomain, SingleTravelProductCategory category, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
 
-    @Query("select r.review.id from Reservation r join r.travelProduct.partnerCompany c " +
+    @Query("select r.review.id from Reservation r " +
+            "join r.travelProduct.partnerCompany c " +
             "where r.travelProduct.partnerCompany.partnerDomain = :partnerDomain and r.createdAt between :startDateTime and :endDateTime")
     List<Long> findAllReviewFKsByCreatedAtBetween(String partnerDomain, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
