@@ -2,6 +2,7 @@ package com.somartreview.reviewmate.service.partners.company;
 
 import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
 import com.somartreview.reviewmate.domain.partner.company.PartnerCompanyRepository;
+import com.somartreview.reviewmate.domain.partner.console.PartnerConsoleConfig;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyUpdateRequest;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyCreateRequest;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyResponse;
