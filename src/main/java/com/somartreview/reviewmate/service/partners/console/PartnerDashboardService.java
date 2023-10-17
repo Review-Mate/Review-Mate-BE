@@ -126,7 +126,7 @@ public class PartnerDashboardService {
     }
 
     public ReviewingAchievementBarChartResponse getReviewingAchievementBarChart(String partnerDomain) {
-        List<ReviewingAchievementBarChartDto> reviewingAchievementBarChartData = new ArrayList<>();
+        List<ReviewingAchievementBarChartDto> reviewingAchievementBarChartDtos = new ArrayList<>();
 
         LocalDateTime endDateTime = LocalDateTime.now();
         ConsoleTimeSeriesUnit achievementTimeSeriesUnit = partnerConsoleConfigService.getAchievementTimeSeriesUnit(partnerDomain);
@@ -137,7 +137,7 @@ public class PartnerDashboardService {
             LocalDateTime startDateTime = getStartDateTimeOfTimeSeriesUnit(endDateTime, achievementTimeSeriesUnit);
             float reviewingRate = getReviewingRate(partnerDomain, startDateTime, endDateTime);
 
-            reviewingAchievementBarChartData.add(ReviewingAchievementBarChartDto.builder()
+            reviewingAchievementBarChartDtos.add(ReviewingAchievementBarChartDto.builder()
                     .startDateTime(startDateTime)
                     .endDateTime(endDateTime)
                     .reviewingRate(reviewingRate)
@@ -147,6 +147,7 @@ public class PartnerDashboardService {
             endDateTime = startDateTime.minusDays(1);
         }
 
-        return new ReviewingAchievementBarChartResponse(reviewingAchievementBarChartData);
+        Collections.reverse(reviewingAchievementBarChartDtos);
+        return new ReviewingAchievementBarChartResponse(reviewingAchievementBarChartDtos);
     }
 }

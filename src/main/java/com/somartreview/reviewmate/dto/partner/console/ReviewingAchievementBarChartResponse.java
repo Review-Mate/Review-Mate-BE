@@ -13,5 +13,5 @@ import java.util.List;
 public class ReviewingAchievementBarChartResponse {
 
     @Schema(description = "시계열별 달성률 데이터\n 시계열 단위와 상관없이 가로축 8칸을 조회합니다.")
-    List<ReviewingAchievementBarChartDto> reviewingAchievementBarChartData;
+    List<ReviewingAchievementBarChartDto> reviewingAchievementBarChartDtos;
 }

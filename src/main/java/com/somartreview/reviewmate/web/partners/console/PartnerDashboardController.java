@@ -78,7 +78,7 @@ public class PartnerDashboardController {
     }
 
 
-    @Operation(operationId = "getReviewingAchievementBarChart", summary = "달성률의 막대 그래프 정보 조회", description = "시계열 단위와 상관없이 가로축 8칸을 조회합니다. \n달성률 = {(현재 리뷰 작성률)/(목표 리뷰 작성률)} * 100")
+    @Operation(operationId = "getReviewingAchievementBarChart", summary = "달성률의 막대 그래프 정보 조회", description = "- 시계열 단위와 상관없이 가로축 24칸을 조회합니다.\n - 오래된 데이터부터 최신 데이터 순으로 제공합니다.\n - 달성률 = {(현재 리뷰 작성률)/(목표 리뷰 작성률)} * 100")
     @Parameter(name = "partnerDomain", description = "대시보드 대상인 파트너사 도메인", example = "goodchoice.kr")
     @ApiResponse(responseCode = "200", description = "누적 리뷰 수 조회 성공")
     @ApiResponse(responseCode = "400", description = "존재하지 않는 파트너사 도메인")
