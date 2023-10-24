@@ -8,7 +8,7 @@ import com.somartreview.reviewmate.dto.customer.CustomerResponse;
 import com.somartreview.reviewmate.dto.customer.CustomerUpdateRequest;
 import com.somartreview.reviewmate.service.CustomerDeleteService;
 import com.somartreview.reviewmate.service.CustomerService;
-import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
+import com.somartreview.reviewmate.service.partners.company.PartnerCompanyService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.service.partners;
+package com.somartreview.reviewmate.service.partners.manager;
 
 import com.somartreview.reviewmate.domain.partner.manager.PartnerManagerRepository;
 import com.somartreview.reviewmate.exception.DomainLogicException;

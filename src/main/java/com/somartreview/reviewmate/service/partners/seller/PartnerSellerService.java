@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.service.partners;
+package com.somartreview.reviewmate.service.partners.seller;
 
 import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
 import com.somartreview.reviewmate.domain.partner.seller.PartnerSeller;
@@ -7,7 +7,7 @@ import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerCreateRequest
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerUpdateRequest;
 import com.somartreview.reviewmate.dto.partner.seller.PartnerSellerResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
-import com.somartreview.reviewmate.service.products.SingleTravelProductService;
+import com.somartreview.reviewmate.service.partners.company.PartnerCompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

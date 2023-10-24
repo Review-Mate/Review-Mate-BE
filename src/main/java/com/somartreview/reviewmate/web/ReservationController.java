@@ -1,18 +1,9 @@
 package com.somartreview.reviewmate.web;
 
-import com.somartreview.reviewmate.domain.customer.Customer;
-import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
-import com.somartreview.reviewmate.domain.partner.seller.PartnerSeller;
-import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
-import com.somartreview.reviewmate.dto.product.SingleTravelProductCreateRequest;
 import com.somartreview.reviewmate.dto.reservation.SingleTravelReservationCreateRequest;
 import com.somartreview.reviewmate.dto.reservation.SingleTravelProductReservationResponse;
-import com.somartreview.reviewmate.service.CustomerService;
 import com.somartreview.reviewmate.service.ReservationDeleteService;
 import com.somartreview.reviewmate.service.ReservationService;
-import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
-import com.somartreview.reviewmate.service.partners.PartnerSellerService;
-import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.headers.Header;
@@ -27,9 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Tag(name = "여행상품 예약/주문")

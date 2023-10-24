@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.service.partners;
+package com.somartreview.reviewmate.service.partners.seller;
 
 import com.somartreview.reviewmate.domain.partner.seller.PartnerSellerRepository;
 import com.somartreview.reviewmate.service.products.TravelProductDeleteService;

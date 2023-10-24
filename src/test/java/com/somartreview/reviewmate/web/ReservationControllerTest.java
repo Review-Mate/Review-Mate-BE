@@ -9,8 +9,8 @@ import com.somartreview.reviewmate.dto.reservation.SingleTravelReservationCreate
 import com.somartreview.reviewmate.service.CustomerService;
 import com.somartreview.reviewmate.service.ReservationDeleteService;
 import com.somartreview.reviewmate.service.ReservationService;
-import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
-import com.somartreview.reviewmate.service.partners.PartnerSellerService;
+import com.somartreview.reviewmate.service.partners.company.PartnerCompanyService;
+import com.somartreview.reviewmate.service.partners.seller.PartnerSellerService;
 import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

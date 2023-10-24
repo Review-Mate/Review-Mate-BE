@@ -1,12 +1,16 @@
-package com.somartreview.reviewmate.service.partners;
+package com.somartreview.reviewmate.service.partners.company;
 
 import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
 import com.somartreview.reviewmate.domain.partner.company.PartnerCompanyRepository;
+import com.somartreview.reviewmate.domain.partner.console.PartnerConsoleConfig;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyUpdateRequest;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyCreateRequest;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.CustomerDeleteService;
+import com.somartreview.reviewmate.service.partners.console.PartnerConsoleConfigService;
+import com.somartreview.reviewmate.service.partners.manager.PartnerManagerDeleteService;
+import com.somartreview.reviewmate.service.partners.seller.PartnerSellerDeleteService;
 import com.somartreview.reviewmate.service.products.TravelProductDeleteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,7 @@ import static com.somartreview.reviewmate.exception.ErrorCode.*;
 public class PartnerCompanyService {
 
     private final PartnerCompanyRepository partnerCompanyRepository;
+    private final PartnerConsoleConfigService partnerConsoleConfigService;
     private final PartnerManagerDeleteService partnerManagerDeleteService;
     private final PartnerSellerDeleteService partnerSellerDeleteService;
     private final CustomerDeleteService customerDeleteService;
@@ -29,6 +34,7 @@ public class PartnerCompanyService {
     public String create(PartnerCompanyCreateRequest request) {
         validateUniquePartnerDomain(request.getPartnerDomain());
 
+        partnerConsoleConfigService.create(request.getPartnerDomain());
         return partnerCompanyRepository.save(request.toEntity()).getPartnerDomain();
     }
 
@@ -63,12 +69,19 @@ public class PartnerCompanyService {
         }
     }
 
+    public void validateExistPartnerDomain(String domain) {
+        if (!partnerCompanyRepository.existsByPartnerDomain(domain)) {
+            throw new DomainLogicException(PARTNER_COMPANY_NOT_FOUND);
+        }
+    }
+
     @Transactional
     public void delete(String domain) {
         partnerManagerDeleteService.deleteAllByPartnerDomain(domain);
         partnerSellerDeleteService.deleteAllByPartnerDomain(domain);
         customerDeleteService.deleteAllByPartnerDomain(domain);
         travelProductDeleteService.deleteAllByPartnerDomain(domain);
+        partnerConsoleConfigService.deleteByPartnerDomain(domain);
         partnerCompanyRepository.deleteByPartnerDomain(domain);
     }
 }

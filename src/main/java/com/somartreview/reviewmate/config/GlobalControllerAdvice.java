@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -81,7 +82,19 @@ public class GlobalControllerAdvice {
                 .collect(Collectors.joining(","));
     }
 
-    @ExceptionHandler({HttpMessageNotReadableException.class})
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ExceptionResponse> handleMissedParameter(MissingServletRequestParameterException e) {
+        log.warn(MISSED_PARAMETER_ERROR.toString() + " : " + e.getMessage());
+        log.error(e.getParameterName() + "이 누락됐습니다.");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ExceptionResponse.builder()
+                        .code(MISSED_PARAMETER_ERROR.getCode())
+                        .message(MISSED_PARAMETER_ERROR.toString() + " : " + e.getParameterName() + "이 누락됐습니다.")
+                        .build());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ExceptionResponse> handleMismatchedInput(Exception e) {
         log.warn(INVALID_PROPERTY_ERROR.toString() + " : " + e.getMessage());
         log.error(e.getCause().getCause().getMessage());

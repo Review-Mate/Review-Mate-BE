@@ -3,7 +3,7 @@ package com.somartreview.reviewmate.web.partners;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyUpdateRequest;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyCreateRequest;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyResponse;
-import com.somartreview.reviewmate.service.partners.PartnerCompanyService;
+import com.somartreview.reviewmate.service.partners.company.PartnerCompanyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.headers.Header;
