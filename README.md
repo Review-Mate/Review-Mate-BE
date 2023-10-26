@@ -16,11 +16,6 @@
 [<img src="https://img.shields.io/badge/-reviewmate.co.kr-009AAB?logo=google-chrome&logoColor=white&label=%20&labelColor=grey" />](http://api.reviewmate.co.kr:8080/swagger-ui.html)
 [<img src="https://img.shields.io/badge/-reviewmate.co.kr-009AAB?logo=google-chrome&logoColor=white&label=%20&labelColor=grey" />](http://test.api.reviewmate.co.kr:8080/swagger-ui.html)
 
-[![Quality Gate Status](http://test.analysis.reviewmate.co.kr:8080/api/project_badges/measure?project=review-mate_review-mate-be_AYpxCkmbkDvpsC93SDU_&metric=alert_status&token=sqb_2933aeb1690b69b3b5553c2cabf1c1566066ec53)](http://test.analysis.reviewmate.co.kr:8080/dashboard?id=review-mate_review-mate-be_AYpxCkmbkDvpsC93SDU_)
-[![Coverage](http://test.analysis.reviewmate.co.kr:8080/api/project_badges/measure?project=review-mate_review-mate-be_AYpxCkmbkDvpsC93SDU_&metric=coverage&token=sqb_2933aeb1690b69b3b5553c2cabf1c1566066ec53)](http://test.analysis.reviewmate.co.kr:8080/dashboard?id=review-mate_review-mate-be_AYpxCkmbkDvpsC93SDU_)
-[![Code Smells](http://test.analysis.reviewmate.co.kr:8080/api/project_badges/measure?project=review-mate_review-mate-be_AYpxCkmbkDvpsC93SDU_&metric=code_smells&token=sqb_2933aeb1690b69b3b5553c2cabf1c1566066ec53)](http://test.analysis.reviewmate.co.kr:8080/dashboard?id=review-mate_review-mate-be_AYpxCkmbkDvpsC93SDU_)
-</div>
-
 ---
 
 # 💻 서버 아키텍처
