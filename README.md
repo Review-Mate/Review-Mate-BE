@@ -13,8 +13,7 @@
 인공지능: [리뷰 분석 ABSA 모델](https://github.com/review-mate/review-mate-ai-ABSA), [리뷰 제안 GPT](https://github.com/review-mate/review-mate-ai-gpt)
 
 [<img src="https://img.shields.io/badge/-reviewmate.co.kr-009AAB?logo=google-chrome&logoColor=white&label=%20&labelColor=grey" />](https://www.reviewmate.co.kr/)
-[<img src="https://img.shields.io/badge/-reviewmate.co.kr-009AAB?logo=google-chrome&logoColor=white&label=%20&labelColor=grey" />](http://api.reviewmate.co.kr:8080/swagger-ui.html)
-[<img src="https://img.shields.io/badge/-reviewmate.co.kr-009AAB?logo=google-chrome&logoColor=white&label=%20&labelColor=grey" />](http://test.api.reviewmate.co.kr:8080/swagger-ui.html)
+[<img src="https://img.shields.io/badge/-api.reviewmate.co.kr-009AAB?logo=google-chrome&logoColor=white&label=%20&labelColor=grey" />](http://api.reviewmate.co.kr:8080/swagger-ui.html)
 
 ---
 
