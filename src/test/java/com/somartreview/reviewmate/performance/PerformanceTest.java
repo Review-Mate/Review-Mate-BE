@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.performance;
 
+import com.somartreview.reviewmate.domain.partner.console.ConsoleTimeSeriesUnit;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -14,12 +15,13 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static com.somartreview.reviewmate.performance.api.CustomerAPIRequester.*;
 import static com.somartreview.reviewmate.performance.api.PartnerAPIRequester.*;
+import static com.somartreview.reviewmate.performance.api.PartnerDashboardAPIRequester.*;
 import static com.somartreview.reviewmate.performance.api.ReservationAPIRequester.*;
 import static com.somartreview.reviewmate.performance.api.ReviewAPIRequester.*;
 import static com.somartreview.reviewmate.performance.api.SingleTravelProductAPIRequester.*;
 import static org.springframework.boot.test.context.SpringBootTest.*;
 
-@Disabled // Disable this from the main application test
+//@Disabled // Disable this from the main application test
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("performance")
 public class PerformanceTest {
@@ -47,11 +49,12 @@ public class PerformanceTest {
     @Test
     void 성능을_테스트한다() {
         log.info("===== 성능 테스트 시작 =====");
-        예약_API의_성능을_테스트한다();
-        고객_API의_성능을_테스트한다();
-        여행상품_API의_성능을_테스트한다();
+//        예약_API의_성능을_테스트한다();
+//        고객_API의_성능을_테스트한다();
+//        여행상품_API의_성능을_테스트한다();
         리뷰_API의_성능을_테스트한다();
 //        삭제_요청의_성능을_테스트한다();
+//        대시보드_API의_성능을_테스트한다();
     }
 
     void 예약_API의_성능을_테스트한다() {
@@ -89,22 +92,22 @@ public class PerformanceTest {
     void 리뷰_API의_성능을_테스트한다() {
         log.info("(4/5) 리뷰 API");
 
-        ExtractableResponse<Response> response = 예약을_생성한다();
-        String[] urls = response.header("Location").split("/");
-        long reservationId = Long.parseLong(urls[urls.length - 1]);
-        리뷰를_생성한다();
-        예약Id로_예약을_삭제한다(reservationId);
-        커스텀Id로_고객을_삭제한다("CUSTOMER_" + PARTNER_CUSTOM_ID_POSTFIX);
-        파트너ID로_단일_여행상품을_삭제한다("PRODUCT_" + PARTNER_CUSTOM_ID_POSTFIX);
-
-        리뷰Id로_리뷰를_조회한다();
-        상품의_파트너Id로_리뷰목록을_조회한다();
+//        ExtractableResponse<Response> response = 예약을_생성한다();
+//        String[] urls = response.header("Location").split("/");
+//        long reservationId = Long.parseLong(urls[urls.length - 1]);
+//        리뷰를_생성한다();
+//        예약Id로_예약을_삭제한다(reservationId);
+//        커스텀Id로_고객을_삭제한다("CUSTOMER_" + PARTNER_CUSTOM_ID_POSTFIX);
+//        파트너ID로_단일_여행상품을_삭제한다("PRODUCT_" + PARTNER_CUSTOM_ID_POSTFIX);
+//
+//        리뷰Id로_리뷰를_조회한다();
+//        상품의_파트너Id로_리뷰목록을_조회한다();
         상품의_파트너Id로_속성_필터링으로_리뷰목록을_조회한다();
-        상품의_파트너Id로_키워드_필터링으로_리뷰목록을_조회한다();
-        상품의_파트너Id로_별점순_정렬로_리뷰목록을_조회한다();
-        상품의_파트너Id로_긍정적인순_정렬로_리뷰목록을_조회한다();
-        단일_여행상품의_리뷰_통계를_조회한다();
-        단일_여행상품의_리뷰태그_통계를_조회한다();
+//        상품의_파트너Id로_키워드_필터링으로_리뷰목록을_조회한다();
+//        상품의_파트너Id로_별점순_정렬로_리뷰목록을_조회한다();
+//        상품의_파트너Id로_긍정적인순_정렬로_리뷰목록을_조회한다();
+//        단일_여행상품의_리뷰_통계를_조회한다();
+//        단일_여행상품의_리뷰태그_통계를_조회한다();
     }
 
     void 삭제_요청의_성능을_테스트한다() {
@@ -113,8 +116,18 @@ public class PerformanceTest {
         리뷰Id로_리뷰를_삭제한다(6L);
         파트너ID로_단일_여행상품을_삭제한다("e7e5b11b-5b7a-47fd-942f-c7cf095fcdf1");
 
-                파트너사를_삭제한다();
+        파트너사를_삭제한다();
         파트너사_관리자를_삭제한다();
         파트너사_판매자를_삭제한다();
+    }
+
+    void 대시보드_API의_성능을_테스트한다() {
+        시계열_단위별_리뷰_작성률을_조회한다(ConsoleTimeSeriesUnit.DAILY);
+        시계열_단위별_리뷰_작성률을_조회한다(ConsoleTimeSeriesUnit.WEEKLY);
+        시계열_단위별_리뷰_작성률을_조회한다(ConsoleTimeSeriesUnit.MONTHLY);
+        카테고리별_리뷰_작성률의_꺽은선_그래프_정보를_조회한다(ConsoleTimeSeriesUnit.MONTHLY);
+        누적_리뷰_수를_조회한다();
+        달성률의_게이지_그래프_정보를_조회한다();
+        달성률의_막대_그래프_정보를_조회한다();
     }
 }

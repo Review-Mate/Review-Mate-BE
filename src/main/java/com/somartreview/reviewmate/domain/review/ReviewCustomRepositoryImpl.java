@@ -28,12 +28,12 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
     }
 
     @Override
-    public Page<WidgetReviewResponse> searchWidgetReviews(String partnerDomain, String travelProductPartnerCustomId, WidgetReviewSearchCond searchCond, Pageable pageable) {
+    public Page<Review> searchWidgetReviews(String partnerDomain, String travelProductPartnerCustomId, WidgetReviewSearchCond searchCond, Pageable pageable) {
         List<Review> reviews = queryFactory
                 .selectFrom(review)
                 .where(reviewTagEq(searchCond.getProperty(), searchCond.getKeyword()))
-                .leftJoin(review.reservation, reservation).fetchJoin()
-                .leftJoin(reservation.customer, customer).fetchJoin()
+                .leftJoin(review.reservation, reservation)
+                .leftJoin(reservation.customer, customer)
                 .orderBy(orderCriteria(searchCond.getOrderCriteria()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -42,13 +42,10 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
         Long totalCount = queryFactory
                 .select(review.count())
                 .from(review)
-                .where(
-                        reviewTagEq(searchCond.getProperty(), searchCond.getKeyword())
-                )
+                .where(review.in(reviews))
                 .fetchOne();
 
-        List<WidgetReviewResponse> widgetReviewResponses = reviews.stream().map(WidgetReviewResponse::new).toList();
-        return new PageImpl<>(widgetReviewResponses, pageable, totalCount);
+        return new PageImpl<>(reviews, pageable, totalCount);
     }
 
     private BooleanExpression reviewTagEq(ReviewProperty property, String keyword) {
