@@ -21,7 +21,7 @@ import static com.somartreview.reviewmate.performance.api.ReviewAPIRequester.*;
 import static com.somartreview.reviewmate.performance.api.SingleTravelProductAPIRequester.*;
 import static org.springframework.boot.test.context.SpringBootTest.*;
 
-//@Disabled // Disable this from the main application test
+@Disabled // Disable this from the main application test
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("performance")
 public class PerformanceTest {
@@ -102,12 +102,12 @@ public class PerformanceTest {
 //
 //        리뷰Id로_리뷰를_조회한다();
 //        상품의_파트너Id로_리뷰목록을_조회한다();
-//        상품의_파트너Id로_속성_필터링으로_리뷰목록을_조회한다();
+        상품의_파트너Id로_속성_필터링으로_리뷰목록을_조회한다();
         상품의_파트너Id로_키워드_필터링으로_리뷰목록을_조회한다();
-//        상품의_파트너Id로_별점순_정렬로_리뷰목록을_조회한다();
-//        상품의_파트너Id로_긍정적인순_정렬로_리뷰목록을_조회한다();
-//        단일_여행상품의_리뷰_통계를_조회한다();
-//        단일_여행상품의_리뷰태그_통계를_조회한다();
+        상품의_파트너Id로_별점순_정렬로_리뷰목록을_조회한다();
+        상품의_파트너Id로_긍정적인순_정렬로_리뷰목록을_조회한다();
+        단일_여행상품의_리뷰_통계를_조회한다();
+        단일_여행상품의_리뷰태그_통계를_조회한다();
     }
 
     void 삭제_요청의_성능을_테스트한다() {
