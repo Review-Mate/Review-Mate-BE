@@ -3,6 +3,7 @@ package com.somartreview.reviewmate.domain;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class BaseEntity {
+public abstract class BaseEntity {
 
     @CreatedDate
     private LocalDateTime createdAt;

@@ -32,8 +32,6 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
         List<Review> reviews = queryFactory
                 .selectFrom(review)
                 .where(reviewTagEq(searchCond.getProperty(), searchCond.getKeyword()))
-                .leftJoin(review.reservation, reservation)
-                .leftJoin(reservation.customer, customer)
                 .orderBy(orderCriteria(searchCond.getOrderCriteria()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

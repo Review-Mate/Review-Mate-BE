@@ -13,6 +13,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(indexes = {
+        @Index(name = "idx_review_id_property", columnList = "review_id, property")
+})
 public class ReviewTag extends BaseEntity {
 
     private static final int MAX_REVIEW_CONTENT_LENGTH = 255;
