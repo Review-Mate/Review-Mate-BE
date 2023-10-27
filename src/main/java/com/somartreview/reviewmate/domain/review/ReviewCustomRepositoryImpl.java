@@ -3,6 +3,7 @@ package com.somartreview.reviewmate.domain.review;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.somartreview.reviewmate.dto.review.ReviewRatingCountsDto;
 import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
@@ -17,6 +18,7 @@ import java.util.List;
 import static com.somartreview.reviewmate.domain.customer.QCustomer.customer;
 import static com.somartreview.reviewmate.domain.reservation.QReservation.reservation;
 import static com.somartreview.reviewmate.domain.review.QReview.review;
+import static com.somartreview.reviewmate.domain.review.QReviewTag.reviewTag;
 import static com.somartreview.reviewmate.domain.review.ReviewOrderCriteria.*;
 
 public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
@@ -53,13 +55,25 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
     }
 
     private BooleanExpression propertyEq(ReviewProperty property) {
-        return property == null ? null : review.reviewTags.any().reviewProperty.eq(property);
+        return property == null ? null : (
+                JPAExpressions
+                        .selectFrom(reviewTag)
+                        .where(
+                                reviewTag.review.eq(review)
+                                        .and(reviewTag.reviewProperty.eq(property))
+                        ).exists()
+        );
     }
 
     private BooleanExpression keywordEq(ReviewProperty property, String keyword) {
         return keyword == null ? null : (
-                review.reviewTags.any().reviewProperty.eq(property)
-                        .and(review.reviewTags.any().keyword.eq(keyword))
+                JPAExpressions
+                        .selectFrom(reviewTag)
+                        .where(
+                                reviewTag.review.eq(review)
+                                        .and(reviewTag.reviewProperty.eq(property))
+                                        .and(reviewTag.keyword.eq(keyword))
+                        ).exists()
         );
     }
 

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Table(indexes = {
-        @Index(name = "idx_review_id_property", columnList = "review_id, property")
+        @Index(name = "idx_review_id_property_keyword", columnList = "review_id, property, keyword")
 })
 public class ReviewTag extends BaseEntity {
 
