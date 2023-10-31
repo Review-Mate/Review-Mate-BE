@@ -44,7 +44,6 @@ public class ReviewService {
         Review review = reviewCreateRequest.toEntity(reservation);
         reviewRepository.save(review);
         reservation.getTravelProduct().addReviewInfo(review.getRating());
-        reservation.addReview(review);
 
         if (reviewImageFiles != null) {
             reviewImageService.createAll(reviewImageFiles, review);
@@ -134,12 +133,11 @@ public class ReviewService {
         Review review = findById(id);
 
         review.getReservation().getTravelProduct().substractReviewInfo(review.getRating());
-        List<Long> ids = List.of(review.getId());
-        reviewImageService.deleteAll(review.getReviewImages());
+        List<Review> reviews = List.of(review);
         review.clearReviewImages();
-        reviewGlobalDeleteService.deleteAllReviewImagesByIds(ids);
+        reviewGlobalDeleteService.deleteReviewImagesByReviews(reviews);
         review.clearReviewTags();
-        reviewGlobalDeleteService.deleteAllReviewTagsByIds(ids);
+        reviewGlobalDeleteService.deleteReviewTagsByReviews(reviews);
 
         review.updateReview(request);
         review.getReservation().getTravelProduct().addReviewInfo(request.getRating());

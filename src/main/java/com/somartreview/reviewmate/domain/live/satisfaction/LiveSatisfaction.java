@@ -36,7 +36,8 @@ public class LiveSatisfaction extends BaseEntity {
     @Enumerated(STRING)
     private ReviewProperty dissatisfiedReviewProperty;
 
-    @OneToOne(mappedBy = "liveSatisfaction",fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_id", nullable = false)
     private Reservation reservation;
 
     @Builder

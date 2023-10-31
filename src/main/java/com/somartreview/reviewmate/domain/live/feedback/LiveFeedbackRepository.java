@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.domain.live.feedback;
 
+import com.somartreview.reviewmate.domain.reservation.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,8 +16,10 @@ public interface LiveFeedbackRepository extends JpaRepository<LiveFeedback, Long
     @Modifying
     @Query("delete from LiveFeedback lf where lf.id = :id")
     void deleteById(Long id);
+
+
     @Transactional
     @Modifying
-    @Query("delete from LiveFeedback lf where lf.id in :ids")
-    void deleteAllByIdsInQuery(List<Long> ids);
+    @Query("delete from LiveFeedback lf where lf.reservation in :reservations")
+    void deleteAllByReservationsInQuery(List<Reservation> reservations);
 }

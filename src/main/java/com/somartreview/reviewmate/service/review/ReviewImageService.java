@@ -33,7 +33,7 @@ public class ReviewImageService {
     public void createAll(List<MultipartFile> reviewImageFiles, Review review) {
         for (MultipartFile reviewImageFile : reviewImageFiles) {
             ReviewImage reviewImage = ReviewImage.builder()
-                    .fileName(uploadReviewImageOnS3(reviewImageFile))
+                    .fileName(uploadReviewImageFilesOnS3(reviewImageFile))
                     .review(review)
                     .build();
 
@@ -41,7 +41,7 @@ public class ReviewImageService {
         }
     }
 
-    private String uploadReviewImageOnS3(MultipartFile reviewImage) {
+    private String uploadReviewImageFilesOnS3(MultipartFile reviewImage) {
         try {
             String fileName = reviewImage.getOriginalFilename();
             ObjectMetadata metadata = new ObjectMetadata();
@@ -58,13 +58,13 @@ public class ReviewImageService {
         }
     }
 
-    public void deleteAll(List<ReviewImage> reviewImages) {
+    public void removeReviewImageFiles(List<ReviewImage> reviewImages) {
         for (ReviewImage reviewImage : reviewImages) {
-            deleteReviewImageOnS3(reviewImage.getFileName());
+            removeReviewImageFilesOnS3(reviewImage.getFileName());
         }
     }
 
-    private void deleteReviewImageOnS3(String fileName) {
+    private void removeReviewImageFilesOnS3(String fileName) {
         try {
             amazonS3Client.deleteObject(s3ImageBucketName, fileName);
 

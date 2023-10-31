@@ -48,7 +48,8 @@ public class Review extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private ReviewPolarity polarity = NEUTRAL;
 
-    @OneToOne(mappedBy = "review", fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_id", nullable = false)
     private Reservation reservation;
 
     @OneToMany(mappedBy = "review")
