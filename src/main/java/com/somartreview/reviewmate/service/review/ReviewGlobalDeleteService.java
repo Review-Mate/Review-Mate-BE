@@ -34,8 +34,18 @@ public class ReviewGlobalDeleteService {
 
     @Transactional
     public void deleteAllByIds(List<Long> ids) {
-        reviewTagRepository.deleteAllByReviewIdInQuery(ids);
-        reviewImageRepository.deleteAllByReviewIdInQuery(ids);
+        deleteAllReviewTagsByIds(ids);
+        deleteAllReviewImagesByIds(ids);
         reviewRepository.deleteAllByIdsInQuery(ids);
+    }
+
+    @Transactional
+    public void deleteAllReviewTagsByIds(List<Long> ids) {
+        reviewTagRepository.deleteAllByReviewIdInQuery(ids);
+    }
+
+    @Transactional
+    public void deleteAllReviewImagesByIds(List<Long> ids) {
+        reviewImageRepository.deleteAllByReviewIdInQuery(ids);
     }
 }

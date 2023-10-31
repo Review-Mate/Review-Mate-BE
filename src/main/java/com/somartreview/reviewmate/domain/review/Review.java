@@ -118,6 +118,7 @@ public class Review extends BaseEntity{
 
     public void clearReviewTags() {
         this.reviewTags.clear();
+
         this.positiveTagsCount = 0L;
         this.negativeTagsCount = 0L;
         this.polarity = NEUTRAL;

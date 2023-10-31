@@ -14,29 +14,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReviewImage extends BaseEntity {
 
-    private static final int MAX_URL_LENGTH = 1024;
+    private static final int MAX_URL_LENGTH = 255;
 
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_image_id")
     private Long id;
 
-    @Column(nullable = false, length = 1024)
-    private String url;
+    @Column(nullable = false, length = 255)
+    private String fileName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id", nullable = false)
     private Review review;
 
     @Builder
-    public ReviewImage(String url, Review review) {
-        validateUrl(url);
-        this.url = url;
+    public ReviewImage(String fileName, Review review) {
+        validateFileName(fileName);
+        this.fileName = fileName;
         this.review = review;
     }
 
-    private void validateUrl(final String url) {
-        if (url.isBlank() || url.length() > MAX_URL_LENGTH) {
+    private void validateFileName(final String fileName) {
+        if (fileName.isBlank() || fileName.length() > MAX_URL_LENGTH) {
             throw new DomainLogicException(ErrorCode.REVIEW_IMAGE_URL_ERROR);
         }
     }

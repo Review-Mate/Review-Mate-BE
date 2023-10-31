@@ -54,6 +54,7 @@ public enum ErrorCode {
     REVIEW_TAG_FRONT_END_INDEX_ERROR("1311", "리뷰 태그의 끝 인덱스가 시작 인덱스보다 앞에 있습니다."),
 
     REVIEW_IMAGE_URL_ERROR("1320", "리뷰 이미지의 링크가 너무 길거나 공백입니다."),
+    REVIEW_IMAGE_FILE_IO_ERROR("1321", "리뷰 이미지의 IO 과정에서 오류가 발생했습니다."),
 
     TRAVEL_PRODUCT_THUMBNAIL_URL_ERROR("1400", "여행상품의 썸네일 링크가 너무 길거나 공백입니다."),
     TRAVEL_PRODUCT_NAME_ERROR("1401", "여행상품의 이름이 너무 길거나 공백입니다."),
@@ -73,10 +74,12 @@ public enum ErrorCode {
 
     INVALID_PROPERTY_ERROR("9001", "잘못된 값이 입력되었습니다."),
     MISSED_PARAMETER_ERROR("9002", "필수 파라미터가 누락되었습니다."),
-
     API_NOT_FOUND_ERROR("9006", "요청한 API가 존재하지 않습니다"),
     DB_CONFLICT_ERROR("9007", "요청한 데이터가 데이터베이스와 충돌됩니다."),
     REVIEW_MATE_ERROR("9908", "처리하지 못한 예외입니다."),
+
+    AWS_S3_CLIENT_ERROR("9101", "AWS S3 Client 에러입니다."),
+
     RUNTIME_ERROR("9909", "알 수 없는 예외입니다.");
 
     private final String code;

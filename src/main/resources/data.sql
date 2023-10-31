@@ -37,7 +37,7 @@ VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', 'POSITIVE', '리뷰 내용
 INSERT INTO review_tag (created_at, updated_at, keyword, polarity, property, start_index, end_index, review_id)
 VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', '먼지', 'NEGATIVE', 'CLEANNESS', 0, 1, 1);
 
-INSERT INTO review_image (created_at, updated_at, url, review_id)
+INSERT INTO review_image (created_at, updated_at, file_name, review_id)
 VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', 'testurl.com', 1);
 
 

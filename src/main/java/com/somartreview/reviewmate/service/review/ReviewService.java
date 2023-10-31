@@ -29,9 +29,12 @@ import static com.somartreview.reviewmate.exception.ErrorCode.REVIEW_NOT_FOUND;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final ReviewImageService reviewImageService;
     private final ReviewTagService reviewTagService;
+    private final ReviewGlobalDeleteService reviewGlobalDeleteService;
     private final ReservationService reservationService;
     private final SingleTravelProductService singleTravelProductService;
+
 
     @Transactional
     public Long create(String partnerDomain, String travelProductPartnerCustomId, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
@@ -40,13 +43,11 @@ public class ReviewService {
 
         Review review = reviewCreateRequest.toEntity(reservation);
         reviewRepository.save(review);
-
-        reservation.getTravelProduct().updateReviewData(review.getRating());
+        reservation.getTravelProduct().addReviewInfo(review.getRating());
         reservation.addReview(review);
 
         if (reviewImageFiles != null) {
-            List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles, review);
-            review.appendReviewImage(reviewImages);
+            reviewImageService.createAll(reviewImageFiles, review);
         }
 
         // Impl Requesting review inference through API gateway
@@ -58,20 +59,6 @@ public class ReviewService {
     private void validateExistReviewByReservationId(Long reservationId) {
         if (reviewRepository.existsByReservation_Id(reservationId))
             throw new DomainLogicException(REVIEW_ALREADY_EXISTS_ON_RESERVATION);
-    }
-
-    private List<ReviewImage> createReviewImages(List<MultipartFile> reviewImageFiles, Review review) {
-        return reviewImageFiles.stream()
-                .map(reviewImageFile -> ReviewImage.builder()
-                        .url(uploadReviewImageOnS3(reviewImageFile))
-                        .review(review)
-                        .build())
-                .toList();
-    }
-
-    private String uploadReviewImageOnS3(MultipartFile reviewImage) {
-        //  Impl uploading review image to S3 and get the url
-        return "https://www.testThumbnailUrl.com";
     }
 
     public Review findById(Long id) {
@@ -146,14 +133,17 @@ public class ReviewService {
     public void update(Long id, ReviewUpdateRequest request, List<MultipartFile> reviewImageFiles) {
         Review review = findById(id);
 
-        review.getReservation().getTravelProduct().removeReviewData(review.getRating());
-        review.clearReviewTags();
+        review.getReservation().getTravelProduct().substractReviewInfo(review.getRating());
+        List<Long> ids = List.of(review.getId());
+        reviewImageService.deleteAll(review.getReviewImages());
         review.clearReviewImages();
+        reviewGlobalDeleteService.deleteAllReviewImagesByIds(ids);
+        review.clearReviewTags();
+        reviewGlobalDeleteService.deleteAllReviewTagsByIds(ids);
 
         review.updateReview(request);
-        review.getReservation().getTravelProduct().updateReviewData(request.getRating());
-        List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles, review);
-        review.appendReviewImage(reviewImages);
+        review.getReservation().getTravelProduct().addReviewInfo(request.getRating());
+        reviewImageService.createAll(reviewImageFiles, review);
 
         // Impl Requesting review inference through API gateway
         // Impl Requesting review inference through kafka
