@@ -23,13 +23,13 @@ import static com.somartreview.reviewmate.exception.ErrorCode.REVIEW_IMAGE_FILE_
 @Service
 @RequiredArgsConstructor
 public class ReviewImageService {
+    public static String CDN_DOMAIN = "image.reviewmate.co.kr";
 
     private final ReviewImageRepository reviewImageRepository;
     private final AmazonS3Client amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
     private String s3ImageBucketName;
-    public static String CDN_DOMAIN = "image.reviewmate.co.kr";
 
 
     public void createAll(List<MultipartFile> reviewImageFiles, Review review) {
@@ -45,7 +45,7 @@ public class ReviewImageService {
 
     private String uploadReviewImageFilesOnS3(MultipartFile reviewImage) {
         try {
-            String fileName = reviewImage.getOriginalFilename();
+            String fileName = reviewImage.getOriginalFilename() + "_" + System.currentTimeMillis();
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(reviewImage.getContentType());
             metadata.setContentLength(reviewImage.getSize());
