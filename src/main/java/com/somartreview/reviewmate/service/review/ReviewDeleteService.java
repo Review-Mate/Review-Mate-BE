@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ReviewGlobalDeleteService {
+public class ReviewDeleteService {
 
     private final ReviewRepository reviewRepository;
     private final ReviewTagRepository reviewTagRepository;
@@ -23,7 +23,7 @@ public class ReviewGlobalDeleteService {
     public void deleteById(Long id) {
         validateExistId(id);
 
-        deleteAllByIds(List.of(id));
+        deleteAllByReservationIds(List.of(id));
     }
 
     private void validateExistId(Long id) {
@@ -33,9 +33,11 @@ public class ReviewGlobalDeleteService {
     }
 
     @Transactional
-    public void deleteAllByIds(List<Long> ids) {
-        reviewTagRepository.deleteAllByReviewIdInQuery(ids);
-        reviewImageRepository.deleteAllByReviewIdInQuery(ids);
-        reviewRepository.deleteAllByIdsInQuery(ids);
+    public void deleteAllByReservationIds(List<Long> reservationsIds) {
+        List<Long> reviewIds = reviewRepository.findReviewIdsAllByReservationIdsInQuery(reservationsIds);
+
+        reviewTagRepository.deleteAllByReviewIdsInQuery(reviewIds);
+        reviewImageRepository.deleteAllByReviewIdsInQuery(reviewIds);
+        reviewRepository.deleteAllByIdInBatch(reviewIds);
     }
 }

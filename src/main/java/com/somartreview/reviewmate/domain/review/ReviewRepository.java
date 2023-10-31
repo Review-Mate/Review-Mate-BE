@@ -1,23 +1,26 @@
 package com.somartreview.reviewmate.domain.review;
 
-import org.springframework.data.jpa.repository.Modifying;
+import com.somartreview.reviewmate.dto.review.ReviewTagStatisticsDto;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReviewRepository extends ReviewJpaRepository, ReviewCustomRepository {
 
-    Long findIdByReservationId(Long reservationId);
+    boolean existsByReservation_Id(Long reservationId);
+
+    List<Review> findAllByReservation_TravelProduct_PartnerCompany_PartnerDomainAndReservation_TravelProduct_PartnerCustomId(String partnerDomain, String partnerCustomId);
+
+    List<ReviewTagStatisticsDto> findReviewTagStatisticsByTravelProductId(Long travelProductId);
+
+    Optional<Review> findByReservation_Id(Long reservationId);
+
+    List<Long> findReviewIdsAllByReservationIdsInQuery(List<Long> reservationsIds);
 
     @Query("select count(r.id) from Review r join r.reservation.travelProduct.partnerCompany c " +
             "where r.reservation.travelProduct.partnerCompany.partnerDomain = :partnerDomain")
     Long countByPartnerDomain(String partnerDomain);
-
-    @Transactional
-    @Modifying
-    @Query("delete from Review r where r.id in :ids")
-    void deleteAllByIdsInQuery(List<Long> ids);
 }

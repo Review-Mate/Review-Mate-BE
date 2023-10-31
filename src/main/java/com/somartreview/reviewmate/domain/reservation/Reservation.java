@@ -45,19 +45,6 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = "travel_product_id", nullable = false)
     private TravelProduct travelProduct;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id")
-    private Review review;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "live_satisfaction_id")
-    private LiveSatisfaction liveSatisfaction;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "live_feedback_id")
-    private LiveFeedback liveFeedback;
-
-
     @Builder
     public Reservation(String partnerCustomId, LocalDateTime startDateTime, LocalDateTime endDateTime, Customer customer, TravelProduct travelProduct) {
         validatePartnerCustomId(partnerCustomId);
@@ -79,9 +66,5 @@ public class Reservation extends BaseEntity {
         if (startTime.isAfter(endTime)) {
             throw new DomainLogicException(ErrorCode.RESERVATION_FRONT_END_TIME_ERROR);
         }
-    }
-
-    public void addReview(final Review review) {
-        this.review = review;
     }
 }

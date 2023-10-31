@@ -15,8 +15,9 @@ public interface LiveFeedbackRepository extends JpaRepository<LiveFeedback, Long
     @Modifying
     @Query("delete from LiveFeedback lf where lf.id = :id")
     void deleteById(Long id);
+
     @Transactional
     @Modifying
     @Query("delete from LiveFeedback lf where lf.id in :ids")
-    void deleteAllByIdsInQuery(List<Long> ids);
+    void deleteAllByReservationIdsInQuery(List<Long> ids);
 }

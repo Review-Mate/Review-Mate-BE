@@ -22,4 +22,7 @@ public interface ReviewJpaRepository extends JpaRepository<Review, Long> {
     List<ReviewTagStatisticsDto> findReviewTagStatisticsByTravelProductId(Long travelProductId);
 
     Optional<Review> findByReservation_Id(Long reservationId);
+
+    @Query("SELECT r.id FROM Review r WHERE r.reservation.id IN :reservationsIds")
+    List<Long> findReviewIdsAllByReservationIdsInQuery(List<Long> reservationsIds);
 }

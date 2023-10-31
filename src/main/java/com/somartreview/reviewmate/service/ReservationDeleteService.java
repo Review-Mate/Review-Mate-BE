@@ -6,7 +6,7 @@ import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import com.somartreview.reviewmate.service.live.LiveFeedbackDeleteService;
 import com.somartreview.reviewmate.service.live.LiveSatisfactionDeleteService;
-import com.somartreview.reviewmate.service.review.ReviewGlobalDeleteService;
+import com.somartreview.reviewmate.service.review.ReviewDeleteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,27 +20,16 @@ public class ReservationDeleteService {
     private final ReservationRepository reservationRepository;
     private final LiveSatisfactionDeleteService liveSatisfactionDeleteService;
     private final LiveFeedbackDeleteService liveFeedbackDeleteService;
-    private final ReviewGlobalDeleteService reviewGlobalDeleteService;
+    private final ReviewDeleteService reviewDeleteService;
 
 
     @Transactional
     public void delete(Long id) {
         validateExistId(id);
-        Reservation reservation = reservationRepository.findById(id).get();
 
         reservationRepository.deleteById(id);
-
-        if (reservation.getLiveSatisfaction() != null) {
-            liveSatisfactionDeleteService.deleteById(reservation.getLiveSatisfaction().getId());
-        }
-
-        if (reservation.getLiveFeedback() != null) {
-            liveFeedbackDeleteService.deleteById(reservation.getLiveFeedback().getId());
-        }
-
-        if (reservation.getReview() != null) {
-            reviewGlobalDeleteService.deleteById(reservation.getReview().getId());
-        }
+        List<Long> reservationIds = List.of(id);
+        deleteAllRelatedEntitiesByReservationIds(reservationIds);
     }
 
 
@@ -54,13 +43,15 @@ public class ReservationDeleteService {
     @Transactional
     public void deleteAllByTravelProductId(Long travelProductId) {
         List<Reservation> reservations = reservationRepository.findAllByTravelProductId(travelProductId);
-        List<Long> reviewIds = reservations.stream().map(r -> r.getReview().getId()).toList();
-        List<Long> liveSatisfactionIds = reservations.stream().map(r -> r.getLiveSatisfaction().getId()).toList();
-        List<Long> liveFeedbackIds = reservations.stream().map(r -> r.getLiveFeedback().getId()).toList();
+        List<Long> reservationIds = reservations.stream().map(Reservation::getId).toList();
 
         reservationRepository.deleteAllByTravelProductId(travelProductId);
-        reviewGlobalDeleteService.deleteAllByIds(reviewIds);
-        liveSatisfactionDeleteService.deleteAllByIds(liveSatisfactionIds);
-        liveFeedbackDeleteService.deleteAllByIds(liveFeedbackIds);
+        deleteAllRelatedEntitiesByReservationIds(reservationIds);
+    }
+
+    private void deleteAllRelatedEntitiesByReservationIds(List<Long> reservationIds) {
+        reviewDeleteService.deleteAllByReservationIds(reservationIds);
+        liveSatisfactionDeleteService.deleteAllByReservationIds(reservationIds);
+        liveFeedbackDeleteService.deleteAllByReservationIds(reservationIds);
     }
 }

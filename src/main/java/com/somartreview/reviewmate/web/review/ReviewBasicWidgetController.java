@@ -5,7 +5,7 @@ import com.somartreview.reviewmate.domain.review.ReviewProperty;
 import com.somartreview.reviewmate.dto.review.ReviewCreateRequest;
 import com.somartreview.reviewmate.dto.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
-import com.somartreview.reviewmate.service.review.ReviewGlobalDeleteService;
+import com.somartreview.reviewmate.service.review.ReviewDeleteService;
 import com.somartreview.reviewmate.service.review.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,7 +31,7 @@ import java.util.List;
 public class ReviewBasicWidgetController {
 
     private final ReviewService reviewService;
-    private final ReviewGlobalDeleteService reviewGlobalDeleteService;
+    private final ReviewDeleteService reviewDeleteService;
 
     @Operation(operationId = "reviewCreateRequest", summary = "리뷰 생성", description = "⚠️ formData에 데이터를 넣고 파라미터 별로 MediaType 구별해서 요청해주세요.")
     @Parameter(name = "partnerDomain", description = "파트너사 도메인", example = "goodchoice.kr")
@@ -106,7 +106,7 @@ public class ReviewBasicWidgetController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 리뷰 ID")
     @DeleteMapping("/reviews/{reviewId}")
     public ResponseEntity<Void> deleteReviewByReviewId(@PathVariable Long reviewId) {
-        reviewGlobalDeleteService.deleteById(reviewId);
+        reviewDeleteService.deleteById(reviewId);
 
         return ResponseEntity.noContent().build();
     }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface LiveSatisfactionRepository extends JpaRepository<LiveSatisfaction, Long> {
@@ -16,8 +15,9 @@ public interface LiveSatisfactionRepository extends JpaRepository<LiveSatisfacti
     @Modifying
     @Query("delete from LiveSatisfaction ls where ls.id = :id")
     void deleteById(Long id);
+    
     @Transactional
     @Modifying
-    @Query("delete from LiveSatisfaction ls where ls.id in :ids")
-    void deleteAllByIdsInQuery(List<Long> ids);
+    @Query("delete from LiveSatisfaction ls where ls.reservation.id in :ids")
+    void deleteAllByReservationIdsInQuery(List<Long> ids);
 }

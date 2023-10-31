@@ -30,7 +30,7 @@ public class LiveFeedbackDeleteService {
     }
 
     @Transactional
-    public void deleteAllByIds(List<Long> ids) {
-        liveFeedbackRepository.deleteAllByIdsInQuery(ids);
+    public void deleteAllByReservationIds(List<Long> ids) {
+        liveFeedbackRepository.deleteAllByReservationIdsInQuery(ids);
     }
 }

@@ -15,5 +15,5 @@ public interface ReviewImageRepository extends JpaRepository<ReviewImage, Long> 
     @Transactional
     @Modifying
     @Query("delete from ReviewImage ri where ri.review.id in :ids")
-    void deleteAllByReviewIdInQuery(List<Long> ids);
+    void deleteAllByReviewIdsInQuery(List<Long> ids);
 }

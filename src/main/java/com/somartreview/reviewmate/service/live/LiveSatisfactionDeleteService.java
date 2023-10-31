@@ -30,7 +30,7 @@ public class LiveSatisfactionDeleteService {
     }
 
     @Transactional
-    public void deleteAllByIds(List<Long> ids) {
-        liveSatisfactionRepository.deleteAllByIdsInQuery(ids);
+    public void deleteAllByReservationIds(List<Long> reservationIds) {
+        liveSatisfactionRepository.deleteAllByReservationIdsInQuery(reservationIds);
     }
 }

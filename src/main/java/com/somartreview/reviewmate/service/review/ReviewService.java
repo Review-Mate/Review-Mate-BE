@@ -40,9 +40,7 @@ public class ReviewService {
 
         Review review = reviewCreateRequest.toEntity(reservation);
         reviewRepository.save(review);
-
         reservation.getTravelProduct().updateReviewData(review.getRating());
-        reservation.addReview(review);
 
         if (reviewImageFiles != null) {
             List<ReviewImage> reviewImages = createReviewImages(reviewImageFiles, review);
