@@ -26,6 +26,7 @@ public class Customer extends BaseEntity {
 
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customer_id")
     private Long id;
 
     @Column(nullable = false, unique = true, length = 50)

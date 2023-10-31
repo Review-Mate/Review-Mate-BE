@@ -27,4 +27,5 @@ spring:
     store-type: jdbc
 
 #logging.level:
+#  org.hibernate.type: trace
 #  org.hibernate.SQL: DEBUG

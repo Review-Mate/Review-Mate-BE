@@ -20,6 +20,9 @@ import static com.somartreview.reviewmate.exception.ErrorCode.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(indexes = {
+        @Index(name = "idx_created_at", columnList = "createdAt DESC")
+})
 public class Review extends BaseEntity{
 
     private static final int MAX_TITLE_LENGTH = 255;
