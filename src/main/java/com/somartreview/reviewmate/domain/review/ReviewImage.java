@@ -40,8 +40,4 @@ public class ReviewImage extends BaseEntity {
             throw new DomainLogicException(ErrorCode.REVIEW_IMAGE_URL_ERROR);
         }
     }
-
-    public void setReview(Review review) {
-        this.review = review;
-    }
 }

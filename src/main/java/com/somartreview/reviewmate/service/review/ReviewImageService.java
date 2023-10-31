@@ -9,6 +9,7 @@ import com.somartreview.reviewmate.domain.review.ReviewImageRepository;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ExternalServiceException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,7 @@ public class ReviewImageService {
 
     @Value("${cloud.aws.s3.bucket}")
     private String s3ImageBucketName;
+    public static String CDN_DOMAIN = "image.reviewmate.co.kr";
 
 
     public void createAll(List<MultipartFile> reviewImageFiles, Review review) {

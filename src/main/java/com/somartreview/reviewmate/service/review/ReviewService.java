@@ -8,6 +8,7 @@ import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.ReservationService;
 import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
