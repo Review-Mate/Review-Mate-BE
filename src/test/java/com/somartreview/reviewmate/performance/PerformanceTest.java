@@ -21,7 +21,7 @@ import static com.somartreview.reviewmate.performance.api.ReviewAPIRequester.*;
 import static com.somartreview.reviewmate.performance.api.SingleTravelProductAPIRequester.*;
 import static org.springframework.boot.test.context.SpringBootTest.*;
 
-@Disabled // Disable this from the main application test
+//@Disabled // Disable this from the main application test
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("performance")
 public class PerformanceTest {
@@ -49,11 +49,11 @@ public class PerformanceTest {
     @Test
     void 성능을_테스트한다() {
         log.info("===== 성능 테스트 시작 =====");
-//        예약_API의_성능을_테스트한다();
-//        고객_API의_성능을_테스트한다();
-//        여행상품_API의_성능을_테스트한다();
+        예약_API의_성능을_테스트한다();
+        고객_API의_성능을_테스트한다();
+        여행상품_API의_성능을_테스트한다();
         리뷰_API의_성능을_테스트한다();
-//        삭제_요청의_성능을_테스트한다();
+        삭제_요청의_성능을_테스트한다();
 //        대시보드_API의_성능을_테스트한다();
     }
 
