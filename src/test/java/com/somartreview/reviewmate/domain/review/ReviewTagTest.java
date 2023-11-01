@@ -16,7 +16,7 @@ class ReviewTagTest {
     @BeforeEach
     void setUp() {
         reviewTag = ReviewTag.builder()
-                .reviewProperty(ReviewProperty.CLEANNESS)
+                .reviewProperty(ReviewProperty.ROOM)
                 .keyword("키워드")
                 .polarity(ReviewPolarity.POSITIVE)
                 .startIndex(0)
