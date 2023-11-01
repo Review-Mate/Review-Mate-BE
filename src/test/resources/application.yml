@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    include: secret
 
   datasource:
     url: jdbc:h2:~/reviewmate;DB_CLOSE_DELAY=-1;MODE=MYSQL;DATABASE_TO_UPPER=false
@@ -23,15 +25,3 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 30MB
-
-cloud:
-  aws:
-    stack:
-      auto: false
-    region:
-      static: ap-northeast-2
-    s3:
-      bucket: reviewmate-image-bucket
-      credentials:
-        accessKey: AKIA3Z3MJ7BIFCIVW3I4
-        secretKey: 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
