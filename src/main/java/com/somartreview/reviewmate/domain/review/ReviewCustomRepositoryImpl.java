@@ -59,7 +59,7 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
                         .where(
                                 reviewTag.review.eq(review)
                                         .and(reviewTag.reviewProperty.eq(property))
-                        ).limit(1).exists()
+                        ).exists()
         );
     }
 
@@ -72,7 +72,7 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
                                 reviewTag.review.eq(review)
                                         .and(reviewTag.reviewProperty.eq(property))
                                         .and(reviewTag.keyword.eq(keyword))
-                        ).limit(1).exists()
+                        ).exists()
         );
     }
 
