@@ -13,8 +13,9 @@ public interface ReviewTagRepository extends JpaRepository<ReviewTag, Long>, Rev
 
     List<ReviewTag> findAllByReview_Id(Long reviewId);
 
+
     @Transactional
     @Modifying
-    @Query("delete from ReviewTag rt where rt.review.id in :ids")
-    void deleteAllByReviewIdInQuery(List<Long> ids);
+    @Query("delete from ReviewTag rt where rt.review in :reviews")
+    void deleteAllByReviewsInQuery(List<Review> reviews);
 }

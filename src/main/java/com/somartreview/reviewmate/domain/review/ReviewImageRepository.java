@@ -12,8 +12,13 @@ import java.util.List;
 @Repository
 public interface ReviewImageRepository extends JpaRepository<ReviewImage, Long> {
 
+
+    @Query("select ri from ReviewImage ri where ri.review in :reviews")
+    List<ReviewImage> findReviewImagesByReviewIdsInQuery(List<Review> reviews);
+
+
     @Transactional
     @Modifying
-    @Query("delete from ReviewImage ri where ri.review.id in :ids")
-    void deleteAllByReviewIdInQuery(List<Long> ids);
+    @Query("delete from ReviewImage ri where ri.review in :reviews")
+    void deleteAllByReviewsInQuery(List<Review> reviews);
 }

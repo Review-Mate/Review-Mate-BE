@@ -106,7 +106,7 @@ public class ReviewBasicWidgetController {
     @ApiResponse(responseCode = "400", description = "존재하지 않는 리뷰 ID")
     @DeleteMapping("/reviews/{reviewId}")
     public ResponseEntity<Void> deleteReviewByReviewId(@PathVariable Long reviewId) {
-        reviewGlobalDeleteService.deleteById(reviewId);
+        reviewGlobalDeleteService.deleteReviewByReviewId(reviewId);
 
         return ResponseEntity.noContent().build();
     }
