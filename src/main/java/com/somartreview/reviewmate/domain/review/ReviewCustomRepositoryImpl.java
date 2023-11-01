@@ -28,9 +28,20 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
 
     @Override
     public Page<Review> searchWidgetReviews(String partnerDomain, String travelProductPartnerCustomId, WidgetReviewSearchCond searchCond, Pageable pageable) {
+
+        List<Long> ids = queryFactory
+                .selectDistinct(reviewTag.review.id)
+                .from(reviewTag)
+                .where(
+                        reviewTag.review.eq(review),
+                        searchCond.getProperty() == null ? null : reviewTag.reviewProperty.eq(searchCond.getProperty()),
+                        searchCond.getKeyword() == null ? null : reviewTag.keyword.eq(searchCond.getKeyword())
+                ).fetch();
+
         List<Review> reviews = queryFactory
                 .selectFrom(review)
-                .where(reviewTagEq(searchCond.getProperty(), searchCond.getKeyword()))
+//                .where(reviewTagEq(searchCond.getProperty(), searchCond.getKeyword()))
+                .where(review.id.in(ids))
                 .orderBy(orderCriteria(searchCond.getOrderCriteria()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
