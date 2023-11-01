@@ -48,7 +48,8 @@ public class WidgetReviewResponse {
         this.rating = review.getRating();
         this.title = review.getTitle();
         this.content = review.getContent();
-        this.authorName = review.getReservation().getCustomer().getName();
+//        this.authorName = review.getReservation().getCustomer().getName();
+        this.authorName = "t";
         this.createdAt = review.getCreatedAt().toString();
         this.reviewImageUrls = review.getReviewImages().stream().map(reviewImage -> CDN_DOMAIN + "/" + reviewImage.getFileName()).toList();
         this.polarity = review.getPolarity();
