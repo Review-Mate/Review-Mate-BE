@@ -47,7 +47,8 @@ jobs:
           echo "${{ secrets.PROPERTIES_MAIN_PROD }}" > ./application-prod.properties
           touch ./sonarqube.properties
           echo "${{ secrets.SONAR_PROPERTIES }}" > ./sonarqube.properties
-          
+
+          mkdir -p ./src/test/resources
           cd ./src/test/resources
           touch ./application-secret.properties
           echo "${{ secrets.PROPERTIES_TEST_SECRET }}" > ./application-secret.properties
