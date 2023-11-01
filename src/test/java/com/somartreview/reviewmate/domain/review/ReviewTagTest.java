@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.domain.review;
 
+import com.somartreview.reviewmate.domain.review.tag.ReviewTag;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

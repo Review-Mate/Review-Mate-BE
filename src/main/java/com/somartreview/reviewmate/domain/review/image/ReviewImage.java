@@ -1,6 +1,7 @@
-package com.somartreview.reviewmate.domain.review;
+package com.somartreview.reviewmate.domain.review.image;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
+import com.somartreview.reviewmate.domain.review.Review;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;

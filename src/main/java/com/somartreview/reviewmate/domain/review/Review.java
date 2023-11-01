@@ -2,6 +2,8 @@ package com.somartreview.reviewmate.domain.review;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.reservation.Reservation;
+import com.somartreview.reviewmate.domain.review.image.ReviewImage;
+import com.somartreview.reviewmate.domain.review.tag.ReviewTag;
 import com.somartreview.reviewmate.dto.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 

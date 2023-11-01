@@ -16,7 +16,9 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
 
-    Optional<Reservation> findByTravelProduct_PartnerCompany_PartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
+    @Query("select r from Reservation r " +
+            "where r.travelProduct.partnerCompany.partnerDomain = :partnerDomain and r.partnerCustomId = :partnerCustomId")
+    Optional<Reservation> findByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId);
 
 
     @EntityGraph(attributePaths = {"customer", "travelProduct"})

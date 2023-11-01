@@ -139,7 +139,7 @@ class SingleTravelProductTest {
         // given & when
         singleTravelProduct.addReviewInfo(5);
         singleTravelProduct.addReviewInfo(5);
-        singleTravelProduct.substractReviewInfo(5);
+        singleTravelProduct.subtractReviewInfo(5);
 
         // then
         assertThat(singleTravelProduct)
@@ -151,7 +151,7 @@ class SingleTravelProductTest {
     void 단일_여행상품에_리뷰가_삭제될때_리뷰갯수가_0개여도_dividedByZero_예외가_발생하지_않는다() {
         // given & when
         singleTravelProduct.addReviewInfo(5);
-        singleTravelProduct.substractReviewInfo(5);
+        singleTravelProduct.subtractReviewInfo(5);
 
         // then
         assertThat(singleTravelProduct)

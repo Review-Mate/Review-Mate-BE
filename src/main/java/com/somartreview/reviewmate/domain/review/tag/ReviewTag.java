@@ -1,7 +1,10 @@
-package com.somartreview.reviewmate.domain.review;
+package com.somartreview.reviewmate.domain.review.tag;
 
 import com.querydsl.core.annotations.QueryInit;
 import com.somartreview.reviewmate.domain.BaseEntity;
+import com.somartreview.reviewmate.domain.review.Review;
+import com.somartreview.reviewmate.domain.review.ReviewPolarity;
+import com.somartreview.reviewmate.domain.review.ReviewProperty;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import javax.persistence.*;
@@ -48,7 +51,7 @@ public class ReviewTag extends BaseEntity {
     private Review review;
 
     @Builder
-    public ReviewTag(ReviewProperty reviewProperty, String keyword, ReviewPolarity polarity, Integer startIndex, Integer endIndex) {
+    public ReviewTag(ReviewProperty reviewProperty, String keyword, ReviewPolarity polarity, Integer startIndex, Integer endIndex, Review review) {
         this.reviewProperty = reviewProperty;
         this.keyword = keyword;
         this.polarity = polarity;
@@ -57,6 +60,7 @@ public class ReviewTag extends BaseEntity {
         validateEndIndex(endIndex);
         validateFrontEndIndex(startIndex, endIndex);
         this.endIndex = endIndex;
+        this.review = review;
     }
 
     private void validateStartIndex(Integer startIndex) {
