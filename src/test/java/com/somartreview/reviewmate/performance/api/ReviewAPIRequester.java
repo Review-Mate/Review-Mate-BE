@@ -40,7 +40,7 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 상품의_파트너Id로_리뷰목록을_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("travelProductPartnerCustomId", SAFE_COMMON_ID)
+                .pathParam("travelProductPartnerCustomId", TRAVEL_PARTNER_CUSTOMER_ID)
                 .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
                 .then()
                 .extract();
@@ -49,8 +49,8 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 상품의_파트너Id로_속성_필터링으로_리뷰목록을_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("travelProductPartnerCustomId", SAFE_COMMON_ID)
-                .param("property", "CLEANNESS")
+                .pathParam("travelProductPartnerCustomId", TRAVEL_PARTNER_CUSTOMER_ID)
+                .param("property", "ROOM")
                 .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
                 .then()
                 .extract();
@@ -59,8 +59,8 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 상품의_파트너Id로_키워드_필터링으로_리뷰목록을_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("travelProductPartnerCustomId", SAFE_COMMON_ID)
-                .param("property", "CLEANNESS")
+                .pathParam("travelProductPartnerCustomId", TRAVEL_PARTNER_CUSTOMER_ID)
+                .param("property", "ROOM")
                 .param("keyword", "냄새")
                 .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
                 .then()
@@ -70,7 +70,7 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 상품의_파트너Id로_별점순_정렬로_리뷰목록을_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("travelProductPartnerCustomId", SAFE_COMMON_ID)
+                .pathParam("travelProductPartnerCustomId", TRAVEL_PARTNER_CUSTOMER_ID)
                 .param("orderCriteria", "RATING_DESC")
                 .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
                 .then()
@@ -80,7 +80,7 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 상품의_파트너Id로_긍정적인순_정렬로_리뷰목록을_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("travelProductPartnerCustomId", SAFE_COMMON_ID)
+                .pathParam("travelProductPartnerCustomId", TRAVEL_PARTNER_CUSTOMER_ID)
                 .param("orderCriteria", "POSITIVE_DESC")
                 .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
                 .then()
@@ -113,3 +113,4 @@ public class ReviewAPIRequester {
                 .extract();
     }
 }
+
