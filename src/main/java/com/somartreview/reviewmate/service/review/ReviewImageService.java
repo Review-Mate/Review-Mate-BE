@@ -10,6 +10,8 @@ import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ExternalServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +35,11 @@ public class ReviewImageService {
 
 
     @Async
+    @Retryable(
+            value = {ExternalServiceException.class},
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 10000)
+    )
     public void createAll(List<MultipartFile> reviewImageFiles, Review review) {
         for (MultipartFile reviewImageFile : reviewImageFiles) {
             ReviewImage reviewImage = ReviewImage.builder()

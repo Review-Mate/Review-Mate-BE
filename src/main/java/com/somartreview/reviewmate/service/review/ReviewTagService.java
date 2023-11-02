@@ -9,7 +9,11 @@ import com.somartreview.reviewmate.dto.review.tag.ReviewTagCreateRequest;
 import com.somartreview.reviewmate.dto.review.tag.ReviewTagInferenceRequest;
 import com.somartreview.reviewmate.dto.review.tag.ReviewTagInferenceResponse;
 import com.somartreview.reviewmate.service.products.TravelProductService;
+import feign.FeignException;
+import feign.FeignException.FeignClientException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,11 @@ public class ReviewTagService {
 
 
     @Async
+    @Retryable(
+            value = {FeignClientException.class, FeignException.FeignServerException.class},
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 10000)
+    )
     public void createAll(Review review) {
         // Ask inference review tag
         ReviewTagInferenceRequest reviewTagInferenceRequest = new ReviewTagInferenceRequest(review.getContent());
