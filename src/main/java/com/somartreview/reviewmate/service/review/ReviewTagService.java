@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-// Add positiveTags and negativeTags assignment in TravelProduct DTO after implementing reviewTag service
 @Service
 @RequiredArgsConstructor
 public class ReviewTagService {
