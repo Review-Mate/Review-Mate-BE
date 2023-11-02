@@ -95,17 +95,14 @@ public class Review extends BaseEntity{
         }
     }
 
-    public void appendReviewTags(List<ReviewTag> reviewTags) {
-        this.reviewTags.addAll(reviewTags);
+    public void addReviewTag(ReviewTag reviewTag) {
+        this.reviewTags.add(reviewTag);
 
-        for (ReviewTag tag : reviewTags) {
-            if (tag.getPolarity().equals(POSITIVE)) {
-                positiveTagsCount++;
-            }
-
-            if (tag.getPolarity().equals(NEGATIVE)) {
-                negativeTagsCount++;
-            }
+        if (reviewTag.getPolarity().equals(POSITIVE)) {
+            positiveTagsCount++;
+        }
+        if (reviewTag.getPolarity().equals(NEGATIVE)) {
+            negativeTagsCount++;
         }
 
         if (positiveTagsCount > negativeTagsCount) {
@@ -127,8 +124,8 @@ public class Review extends BaseEntity{
         this.polarity = NEUTRAL;
     }
 
-    public void appendReviewImage(List<ReviewImage> reviewImages) {
-        this.reviewImages.addAll(reviewImages);
+    public void addReviewImage(ReviewImage reviewImage) {
+        this.reviewImages.add(reviewImage);
     }
 
     public void clearReviewImages() {

@@ -2,11 +2,15 @@ package com.somartreview.reviewmate.service.review;
 
 import com.somartreview.reviewmate.domain.review.Review;
 import com.somartreview.reviewmate.domain.review.tag.ReviewTag;
+import com.somartreview.reviewmate.domain.review.tag.ReviewTagInferenceClient;
 import com.somartreview.reviewmate.domain.review.tag.ReviewTagRepository;
 import com.somartreview.reviewmate.dto.review.tag.ReviewTagClassificationDto;
 import com.somartreview.reviewmate.dto.review.tag.ReviewTagCreateRequest;
+import com.somartreview.reviewmate.dto.review.tag.ReviewTagInferenceRequest;
+import com.somartreview.reviewmate.dto.review.tag.ReviewTagInferenceResponse;
 import com.somartreview.reviewmate.service.products.TravelProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -18,17 +22,22 @@ public class ReviewTagService {
 
     private final ReviewTagRepository reviewTagRepository;
     private final TravelProductService travelProductService;
+    private final ReviewTagInferenceClient reviewTagInferenceClient;
 
-    public List<ReviewTag> createAll(List<ReviewTagCreateRequest> reviewTagCreateRequests, Review review) {
-        List<ReviewTag> reviewTags = new ArrayList<>();
 
+    @Async
+    public void createAll(Review review) {
+        // Ask inference review tag
+        ReviewTagInferenceRequest reviewTagInferenceRequest = new ReviewTagInferenceRequest(review.getContent());
+        ReviewTagInferenceResponse reviewTagInferenceResponse = reviewTagInferenceClient.inferenceReview(reviewTagInferenceRequest);
+
+        // Create review tags
+        List<ReviewTagCreateRequest> reviewTagCreateRequests = reviewTagInferenceResponse.getBody().getResults().stream().map(ReviewTagCreateRequest::new).toList();
         for (ReviewTagCreateRequest reviewTagCreateRequest : reviewTagCreateRequests) {
             ReviewTag reviewTag = reviewTagCreateRequest.toEntity(review);
             reviewTag = reviewTagRepository.save(reviewTag);
-            reviewTags.add(reviewTag);
+            review.addReviewTag(reviewTag);
         }
-
-        return reviewTags;
     }
 
     public List<ReviewTag> findReviewTagsByReviewId(Long reviewId) {
