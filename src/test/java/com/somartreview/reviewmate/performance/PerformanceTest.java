@@ -5,7 +5,6 @@ import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +29,7 @@ public class PerformanceTest {
 
     public static final String PARTNER_DOMAIN = "goodchoice.kr";
     public static final Long SAFE_COMMON_ID = 1L;
-    public static final String TRAVEL_PARTNER_CUSTOMER_ID = "CUSTOMER_9";
-    public static final String SAFE_PRODUCT_PARTNER_CUSTOM_ID = "4e16aa67-a2fd-4c92-ad11-775a3ad190e4";
+    public static final String SAFE_TRAVEL_PARTNER_CUSTOMER_ID = "CUSTOMER_9";
     public static final String PARTNER_CUSTOM_ID_POSTFIX = "_1018_17";
     public static final String CUSTOMER_PHONE_NUMBER = "02709159941";
     public static final String DELETING_PARTNER_COMPANY_DOMAIN = "goodchoice.kr";
