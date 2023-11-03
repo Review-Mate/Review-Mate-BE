@@ -22,7 +22,7 @@ INSERT INTO customer (created_at, updated_at, kakao_id, name, partner_custom_id,
 VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', 'sckwon770kakao', '권순찬', 'CUSTOMER_0001', '010-1234-1234', 1);
 
 INSERT INTO travel_product (dtype, created_at, updated_at, name, partner_custom_id, review_count, rating, thumbnail_url, category, partner_company_id, partner_seller_id)
-VALUES ('SingleTravelProduct', '2023-10-17 12:00:00', '2023-10-17 12:00:00', '신라더스테이 호텔 - 스위트룸', 'PRODUCT_0001', 1, 5, 'testurl.com', 'ACCOMMODATION', 1, 1);
+VALUES ('SingleTravelProduct', '2023-10-17 12:00:00', '2023-10-17 12:00:00', '신라더스테이 호텔 - 스위트룸', 'CUSTOMER_9', 1, 5, 'testurl.com', 'ACCOMMODATION', 1, 1);
 
 
 --  Review  #####################################################################################################################################################################################################################
@@ -35,7 +35,7 @@ INSERT INTO review (created_at, updated_at, polarity, content, rating, title, po
 VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', 'POSITIVE', '리뷰 내용 1', 3, '리뷰 제목 1', 0, 1, 1);
 
 INSERT INTO review_tag (created_at, updated_at, keyword, polarity, property, start_index, end_index, review_id)
-VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', '먼지', 'NEGATIVE', 'CLEANNESS', 0, 1, 1);
+VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', '먼지', 'NEGATIVE', 'ROOM', 0, 1, 1);
 
 INSERT INTO review_image (created_at, updated_at, file_name, review_id)
 VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', 'testurl.com', 1);
@@ -49,13 +49,13 @@ INSERT INTO review (created_at, updated_at, polarity, content, rating, title, po
 VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', 'POSITIVE', '리뷰 내용 1', 5, '리뷰 제목 1', 0, 3, 2);
 
 INSERT INTO review_tag (created_at, updated_at, keyword, polarity, property, start_index, end_index, review_id)
-VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', '냄새', 'NEGATIVE', 'CLEANNESS', 0, 2, 2);
+VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', '냄새', 'NEGATIVE', 'ROOM', 0, 2, 2);
 
 INSERT INTO review_tag (created_at, updated_at, keyword, polarity, property, start_index, end_index, review_id)
-VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', '냄새', 'NEGATIVE', 'CLEANNESS', 0, 2, 2);
+VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', '냄새', 'NEGATIVE', 'ROOM', 0, 2, 2);
 
 INSERT INTO review_tag (created_at, updated_at, keyword, polarity, property, start_index, end_index, review_id)
-VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', '냄새', 'NEGATIVE', 'CLEANNESS', 0, 2, 2);
+VALUES ('2023-10-17 12:00:00', '2023-10-17 12:00:00', '냄새', 'NEGATIVE', 'ROOM', 0, 2, 2);
 
 
 

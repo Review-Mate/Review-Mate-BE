@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static com.somartreview.reviewmate.service.review.ReviewImageService.CDN_DOMAIN;
@@ -41,18 +43,29 @@ public class WidgetReviewResponse {
     private ReviewPolarity polarity;
 
     @Schema(description = "적용된 속성 혹은 키워드가 포함된 문자열의 인덱스들")
-    private List<ReviewTagIndexResponse> reviewTagIndexRespons;
+    private List<ReviewTagIndexResponse> reviewTagIndexResponses;
 
     public WidgetReviewResponse(final Review review) {
         this.id = review.getId();
         this.rating = review.getRating();
         this.title = review.getTitle();
         this.content = review.getContent();
-//        this.authorName = review.getReservation().getCustomer().getName();
-        this.authorName = "t";
+        this.authorName = review.getReservation().getCustomer().getName();
         this.createdAt = review.getCreatedAt().toString();
         this.reviewImageUrls = review.getReviewImages().stream().map(reviewImage -> CDN_DOMAIN + "/" + reviewImage.getFileName()).toList();
         this.polarity = review.getPolarity();
-        this.reviewTagIndexRespons = review.getReviewTags().stream().map(ReviewTagIndexResponse::new).toList();
+        this.reviewTagIndexResponses = review.getReviewTags().stream().map(ReviewTagIndexResponse::new).toList();
+    }
+
+    public WidgetReviewResponse(Long id, Integer rating, String title, String content, String authorName, LocalDateTime createdAt, List<String> reviewImageFileNames, ReviewPolarity polarity, List<ReviewTagIndexResponse> reviewTagIndexResponses) {
+        this.id = id;
+        this.rating = rating;
+        this.title = title;
+        this.content = content;
+        this.authorName = authorName;
+        this.createdAt = createdAt.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+        this.reviewImageUrls = reviewImageFileNames.stream().map(name -> CDN_DOMAIN + "/" + name).toList();
+        this.polarity = polarity;
+        this.reviewTagIndexResponses = reviewTagIndexResponses;
     }
 }

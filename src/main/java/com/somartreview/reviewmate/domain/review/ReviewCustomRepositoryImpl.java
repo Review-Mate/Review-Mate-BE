@@ -2,10 +2,12 @@ package com.somartreview.reviewmate.domain.review;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.somartreview.reviewmate.dto.review.ReviewRatingCountsDto;
+import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
 import com.somartreview.reviewmate.service.review.WidgetReviewSearchCond;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,8 +31,15 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
     @Override
     public Page<Review> searchWidgetReviews(String partnerDomain, String travelProductPartnerCustomId, WidgetReviewSearchCond searchCond, Pageable pageable) {
         List<Review> reviews = queryFactory
-                .selectFrom(review)
-                .where(reviewTagEq(searchCond.getProperty(), searchCond.getKeyword()))
+                .select(review)
+                .from(review)
+//                .where(reviewTagEq(searchCond.getProperty(), searchCond.getKeyword()))
+                .innerJoin(review.reviewTags, reviewTag)
+                .where(
+                        searchCond.getProperty() == null ? null : reviewTag.reviewProperty.eq(searchCond.getProperty()),
+                        searchCond.getKeyword() == null ? null : reviewTag.keyword.eq(searchCond.getKeyword())
+                )
+                .groupBy(review.id)
                 .orderBy(orderCriteria(searchCond.getOrderCriteria()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
