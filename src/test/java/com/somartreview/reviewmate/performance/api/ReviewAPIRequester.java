@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.performance.api;
 
+import com.somartreview.reviewmate.performance.PerformanceTest;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -40,7 +41,7 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 상품의_파트너Id로_리뷰목록을_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("travelProductPartnerCustomId", TRAVEL_PARTNER_CUSTOMER_ID)
+                .pathParam("travelProductPartnerCustomId", SAFE_TRAVEL_PARTNER_CUSTOMER_ID)
                 .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
                 .then()
                 .extract();
@@ -49,7 +50,7 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 상품의_파트너Id로_속성_필터링으로_리뷰목록을_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("travelProductPartnerCustomId", TRAVEL_PARTNER_CUSTOMER_ID)
+                .pathParam("travelProductPartnerCustomId", SAFE_TRAVEL_PARTNER_CUSTOMER_ID)
                 .param("property", "ROOM")
                 .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
                 .then()
@@ -59,7 +60,7 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 상품의_파트너Id로_키워드_필터링으로_리뷰목록을_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("travelProductPartnerCustomId", TRAVEL_PARTNER_CUSTOMER_ID)
+                .pathParam("travelProductPartnerCustomId", SAFE_TRAVEL_PARTNER_CUSTOMER_ID)
                 .param("property", "ROOM")
                 .param("keyword", "냄새")
                 .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
@@ -70,7 +71,7 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 상품의_파트너Id로_별점순_정렬로_리뷰목록을_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("travelProductPartnerCustomId", TRAVEL_PARTNER_CUSTOMER_ID)
+                .pathParam("travelProductPartnerCustomId", SAFE_TRAVEL_PARTNER_CUSTOMER_ID)
                 .param("orderCriteria", "RATING_DESC")
                 .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
                 .then()
@@ -80,7 +81,7 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 상품의_파트너Id로_긍정적인순_정렬로_리뷰목록을_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("travelProductPartnerCustomId", TRAVEL_PARTNER_CUSTOMER_ID)
+                .pathParam("travelProductPartnerCustomId", SAFE_TRAVEL_PARTNER_CUSTOMER_ID)
                 .param("orderCriteria", "POSITIVE_DESC")
                 .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
                 .then()
@@ -90,7 +91,7 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 단일_여행상품의_리뷰_통계를_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("singleTravelProductPartnerCustomId", SAFE_PRODUCT_PARTNER_CUSTOM_ID)
+                .pathParam("singleTravelProductPartnerCustomId", PerformanceTest.SAFE_TRAVEL_PARTNER_CUSTOMER_ID)
                 .when().get("/api/widget/v1/{partnerDomain}/products/{singleTravelProductPartnerCustomId}/statistics/reviews")
                 .then()
                 .extract();
@@ -99,7 +100,7 @@ public class ReviewAPIRequester {
     public static ExtractableResponse<Response> 단일_여행상품의_리뷰태그_통계를_조회한다() {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
-                .pathParam("singleTravelProductPartnerCustomId", SAFE_PRODUCT_PARTNER_CUSTOM_ID)
+                .pathParam("singleTravelProductPartnerCustomId", PerformanceTest.SAFE_TRAVEL_PARTNER_CUSTOMER_ID)
                 .when().get("/api/widget/v1/{partnerDomain}/products/{singleTravelProductPartnerCustomId}/statistics/tags")
                 .then()
                 .extract();
