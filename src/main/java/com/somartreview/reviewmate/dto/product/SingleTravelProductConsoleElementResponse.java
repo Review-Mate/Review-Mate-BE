@@ -1,7 +1,7 @@
 package com.somartreview.reviewmate.dto.product;
 
 import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
-import com.somartreview.reviewmate.dto.review.ReviewTagResponse;
+import com.somartreview.reviewmate.dto.review.tag.ReviewTagResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

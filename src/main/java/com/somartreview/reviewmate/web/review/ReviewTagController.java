@@ -1,6 +1,6 @@
 package com.somartreview.reviewmate.web.review;
 
-import com.somartreview.reviewmate.dto.review.ReviewTagClassificationDto;
+import com.somartreview.reviewmate.dto.review.tag.ReviewTagClassificationDto;
 import com.somartreview.reviewmate.service.review.ReviewTagService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

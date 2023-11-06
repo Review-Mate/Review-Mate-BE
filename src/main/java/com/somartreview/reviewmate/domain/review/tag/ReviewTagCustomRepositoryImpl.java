@@ -1,13 +1,13 @@
-package com.somartreview.reviewmate.domain.review;
+package com.somartreview.reviewmate.domain.review.tag;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.somartreview.reviewmate.dto.review.ReviewTagClassificationDto;
+import com.somartreview.reviewmate.dto.review.tag.ReviewTagClassificationDto;
 
 import javax.persistence.EntityManager;
 import java.util.*;
 
-import static com.somartreview.reviewmate.domain.review.QReviewTag.reviewTag;
+import static com.somartreview.reviewmate.domain.review.tag.QReviewTag.reviewTag;
 
 public class ReviewTagCustomRepositoryImpl implements ReviewTagCustomRepository {
 

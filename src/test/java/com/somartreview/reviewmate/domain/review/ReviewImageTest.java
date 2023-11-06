@@ -1,7 +1,7 @@
 package com.somartreview.reviewmate.domain.review;
 
+import com.somartreview.reviewmate.domain.review.image.ReviewImage;
 import com.somartreview.reviewmate.exception.DomainLogicException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.somartreview.reviewmate.exception.ErrorCode.*;

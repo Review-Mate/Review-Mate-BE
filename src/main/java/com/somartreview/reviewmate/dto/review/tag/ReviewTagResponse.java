@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.dto.review;
+package com.somartreview.reviewmate.dto.review.tag;
 
 import com.somartreview.reviewmate.domain.review.ReviewProperty;
 import io.swagger.v3.oas.annotations.media.Schema;

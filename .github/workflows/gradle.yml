@@ -38,15 +38,20 @@ jobs:
           ${{ runner.os }}-gradle-
 
 
-    ## create application-prod.properties
-    - name: make application-prod.properties
+    ## create src/main/resources/application-prod.properties / src/test/resources/application-secret.yml
+    - name: make properties
       run: |
           mkdir -p ./src/main/resources
           cd ./src/main/resources
           touch ./application-prod.properties
-          echo "${{ secrets.PROPERTIES_PROD }}" > ./application-prod.properties
+          echo "${{ secrets.PROPERTIES_MAIN_PROD }}" > ./application-prod.properties
           touch ./sonarqube.properties
           echo "${{ secrets.SONAR_PROPERTIES }}" > ./sonarqube.properties
+
+          mkdir -p ./src/test/resources
+          cd ./src/test/resources
+          touch ./application-secret.properties
+          echo "${{ secrets.PROPERTIES_TEST_SECRET }}" > ./application-secret.properties
       shell: bash
 
     ## gradle build

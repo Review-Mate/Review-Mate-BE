@@ -92,12 +92,12 @@ public abstract class TravelProduct extends BaseEntity {
     }
 
 
-    public void updateReviewData(int newReviewRating) {
+    public void addReviewInfo(int newReviewRating) {
         this.reviewCount++;
         this.rating = (this.rating * (this.reviewCount - 1) + newReviewRating) / this.reviewCount;
     }
 
-    public void removeReviewData(int removedReviewRating) {
+    public void subtractReviewInfo(int removedReviewRating) {
         this.reviewCount--;
         if (reviewCount == 0) {
             this.rating = 0.0f;

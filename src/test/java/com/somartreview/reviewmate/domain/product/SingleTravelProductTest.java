@@ -126,7 +126,7 @@ class SingleTravelProductTest {
     @Test
     void 단일_여행상품에_리뷰가_추가된다() {
         // given & when
-        singleTravelProduct.updateReviewData(5);
+        singleTravelProduct.addReviewInfo(5);
 
         // then
         assertThat(singleTravelProduct)
@@ -137,9 +137,9 @@ class SingleTravelProductTest {
     @Test
     void 단일_여행상품에_리뷰가_삭제된다() {
         // given & when
-        singleTravelProduct.updateReviewData(5);
-        singleTravelProduct.updateReviewData(5);
-        singleTravelProduct.removeReviewData(5);
+        singleTravelProduct.addReviewInfo(5);
+        singleTravelProduct.addReviewInfo(5);
+        singleTravelProduct.subtractReviewInfo(5);
 
         // then
         assertThat(singleTravelProduct)
@@ -150,8 +150,8 @@ class SingleTravelProductTest {
     @Test
     void 단일_여행상품에_리뷰가_삭제될때_리뷰갯수가_0개여도_dividedByZero_예외가_발생하지_않는다() {
         // given & when
-        singleTravelProduct.updateReviewData(5);
-        singleTravelProduct.removeReviewData(5);
+        singleTravelProduct.addReviewInfo(5);
+        singleTravelProduct.subtractReviewInfo(5);
 
         // then
         assertThat(singleTravelProduct)
