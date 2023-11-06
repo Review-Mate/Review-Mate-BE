@@ -41,7 +41,7 @@ public class WidgetReviewResponse {
     private ReviewPolarity polarity;
 
     @Schema(description = "적용된 속성 혹은 키워드가 포함된 문자열의 인덱스들")
-    private List<ReviewTagIndexResponse> reviewTagIndexRespons;
+    private List<ReviewTagIndexResponse> reviewTagIndexResponses;
 
     public WidgetReviewResponse(final Review review) {
         this.id = review.getId();
@@ -52,6 +52,6 @@ public class WidgetReviewResponse {
         this.createdAt = review.getCreatedAt().toString();
         this.reviewImageUrls = review.getReviewImages().stream().map(reviewImage -> CDN_DOMAIN + "/" + reviewImage.getFileName()).toList();
         this.polarity = review.getPolarity();
-        this.reviewTagIndexRespons = review.getReviewTags().stream().map(ReviewTagIndexResponse::new).toList();
+        this.reviewTagIndexResponses = review.getReviewTags().stream().map(ReviewTagIndexResponse::new).toList();
     }
 }

@@ -54,7 +54,7 @@ public class ReviewImageService {
 
     private String uploadReviewImageFilesOnS3(MultipartFile reviewImage) {
         try {
-            String fileName = reviewImage.getOriginalFilename() + "_" + System.currentTimeMillis();
+            String fileName = System.currentTimeMillis() + "_" + reviewImage.getOriginalFilename();
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(reviewImage.getContentType());
             metadata.setContentLength(reviewImage.getSize());
