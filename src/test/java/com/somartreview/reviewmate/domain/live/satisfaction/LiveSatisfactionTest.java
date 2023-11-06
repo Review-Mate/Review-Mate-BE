@@ -18,8 +18,8 @@ class LiveSatisfactionTest {
     void setup() {
         liveSatisfaction = LiveSatisfaction.builder()
                 .rating(5)
-                .satisfiedReviewProperty(ReviewProperty.CLEANNESS)
-                .dissatisfiedReviewProperty(ReviewProperty.CLEANNESS)
+                .satisfiedReviewProperty(ReviewProperty.ROOM)
+                .dissatisfiedReviewProperty(ReviewProperty.ROOM)
                 .reservation(new Reservation())
                 .build();
     }
@@ -27,12 +27,12 @@ class LiveSatisfactionTest {
     @Test
     void 만족도를_생성한다() {
         // when
-        LiveSatisfaction liveSatisfaction = new LiveSatisfaction(5, ReviewProperty.CLEANNESS, ReviewProperty.CLEANNESS, new Reservation());
+        LiveSatisfaction liveSatisfaction = new LiveSatisfaction(5, ReviewProperty.ROOM, ReviewProperty.ROOM, new Reservation());
 
         // then
         assertThat(liveSatisfaction)
                 .extracting("rating", "satisfiedReviewProperty", "dissatisfiedReviewProperty")
-                .containsExactly(5, ReviewProperty.CLEANNESS, ReviewProperty.CLEANNESS);
+                .containsExactly(5, ReviewProperty.ROOM, ReviewProperty.ROOM);
         assertThat(liveSatisfaction.getReservation()).isInstanceOf(Reservation.class);
     }
 
@@ -43,7 +43,7 @@ class LiveSatisfactionTest {
         Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new LiveSatisfaction(rating, ReviewProperty.CLEANNESS, ReviewProperty.CLEANNESS, mockReservation))
+        assertThatThrownBy(() -> new LiveSatisfaction(rating, ReviewProperty.ROOM, ReviewProperty.ROOM, mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(LIVE_SATISFACTION_RATING_ERROR.getMessage());
     }
@@ -55,7 +55,7 @@ class LiveSatisfactionTest {
         Reservation mockReservation = new Reservation();
 
         // when & then
-        assertThatThrownBy(() -> new LiveSatisfaction(rating, ReviewProperty.CLEANNESS, ReviewProperty.CLEANNESS, mockReservation))
+        assertThatThrownBy(() -> new LiveSatisfaction(rating, ReviewProperty.ROOM, ReviewProperty.ROOM, mockReservation))
                 .isInstanceOf(DomainLogicException.class)
                 .hasMessage(LIVE_SATISFACTION_RATING_ERROR.getMessage());
     }

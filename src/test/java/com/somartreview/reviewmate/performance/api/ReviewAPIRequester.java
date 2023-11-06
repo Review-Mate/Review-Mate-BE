@@ -50,7 +50,7 @@ public class ReviewAPIRequester {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
                 .pathParam("travelProductPartnerCustomId", SAFE_COMMON_ID)
-                .param("property", "CLEANNESS")
+                .param("property", "ROOM")
                 .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
                 .then()
                 .extract();
@@ -60,7 +60,7 @@ public class ReviewAPIRequester {
         return RestAssured.given()
                 .pathParam("partnerDomain", PARTNER_DOMAIN)
                 .pathParam("travelProductPartnerCustomId", SAFE_COMMON_ID)
-                .param("property", "CLEANNESS")
+                .param("property", "ROOM")
                 .param("keyword", "냄새")
                 .when().get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews")
                 .then()
