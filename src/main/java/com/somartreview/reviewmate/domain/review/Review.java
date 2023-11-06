@@ -2,6 +2,8 @@ package com.somartreview.reviewmate.domain.review;
 
 import com.somartreview.reviewmate.domain.BaseEntity;
 import com.somartreview.reviewmate.domain.reservation.Reservation;
+import com.somartreview.reviewmate.domain.review.image.ReviewImage;
+import com.somartreview.reviewmate.domain.review.tag.ReviewTag;
 import com.somartreview.reviewmate.dto.review.ReviewUpdateRequest;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 
@@ -93,17 +95,14 @@ public class Review extends BaseEntity{
         }
     }
 
-    public void appendReviewTags(List<ReviewTag> reviewTags) {
-        this.reviewTags.addAll(reviewTags);
+    public void addReviewTag(ReviewTag reviewTag) {
+        this.reviewTags.add(reviewTag);
 
-        for (ReviewTag tag : reviewTags) {
-            if (tag.getPolarity().equals(POSITIVE)) {
-                positiveTagsCount++;
-            }
-
-            if (tag.getPolarity().equals(NEGATIVE)) {
-                negativeTagsCount++;
-            }
+        if (reviewTag.getPolarity().equals(POSITIVE)) {
+            positiveTagsCount++;
+        }
+        if (reviewTag.getPolarity().equals(NEGATIVE)) {
+            negativeTagsCount++;
         }
 
         if (positiveTagsCount > negativeTagsCount) {
@@ -125,8 +124,8 @@ public class Review extends BaseEntity{
         this.polarity = NEUTRAL;
     }
 
-    public void appendReviewImage(List<ReviewImage> reviewImages) {
-        this.reviewImages.addAll(reviewImages);
+    public void addReviewImage(ReviewImage reviewImage) {
+        this.reviewImages.add(reviewImage);
     }
 
     public void clearReviewImages() {

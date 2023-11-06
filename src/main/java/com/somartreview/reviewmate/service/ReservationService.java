@@ -40,7 +40,7 @@ public class ReservationService {
     }
 
     public Reservation findByPartnerDomainAndPartnerCustomId(String partnerDomain, String partnerCustomId) {
-        return reservationRepository.findByTravelProduct_PartnerCompany_PartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)
+        return reservationRepository.findByPartnerDomainAndPartnerCustomId(partnerDomain, partnerCustomId)
                 .orElseThrow(() -> new DomainLogicException(RESERVATION_NOT_FOUND));
     }
 

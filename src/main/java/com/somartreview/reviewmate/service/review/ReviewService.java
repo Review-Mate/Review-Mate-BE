@@ -3,12 +3,13 @@ package com.somartreview.reviewmate.service.review;
 import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
 import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.domain.review.*;
+import com.somartreview.reviewmate.domain.review.tag.ReviewTag;
 import com.somartreview.reviewmate.dto.review.*;
+import com.somartreview.reviewmate.dto.review.tag.ReviewTagStatisticsDto;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.ReservationService;
 import com.somartreview.reviewmate.service.products.SingleTravelProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -38,26 +39,30 @@ public class ReviewService {
 
 
     @Transactional
-    public Long create(String partnerDomain, String travelProductPartnerCustomId, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
-        final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, travelProductPartnerCustomId);
-        validateExistReviewByReservationId(reservation.getId());
+    public Long create(String partnerDomain, String reservationPartnerCustomId, ReviewCreateRequest reviewCreateRequest, List<MultipartFile> reviewImageFiles) {
+        // Get reservation
+        final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, reservationPartnerCustomId);
+        validateAlreadyReviewedByReservationId(reservation.getId());
 
+        // Create review
         Review review = reviewCreateRequest.toEntity(reservation);
         reviewRepository.save(review);
         reservation.getTravelProduct().addReviewInfo(review.getRating());
 
+        // Create review images
         if (reviewImageFiles != null) {
             reviewImageService.createAll(reviewImageFiles, review);
         }
 
-        // Impl Requesting review inference through API gateway
+        // Create review tag
+        reviewTagService.createAll(review);
         // Impl Requesting review inference through kafka
 
         return review.getId();
     }
 
-    private void validateExistReviewByReservationId(Long reservationId) {
-        if (reviewRepository.existsByReservation_Id(reservationId))
+    private void validateAlreadyReviewedByReservationId(Long reservationId) {
+        if (reviewRepository.existsByReservationId(reservationId))
             throw new DomainLogicException(REVIEW_ALREADY_EXISTS_ON_RESERVATION);
     }
 
@@ -133,7 +138,7 @@ public class ReviewService {
     public void update(Long id, ReviewUpdateRequest request, List<MultipartFile> reviewImageFiles) {
         Review review = findById(id);
 
-        review.getReservation().getTravelProduct().substractReviewInfo(review.getRating());
+        review.getReservation().getTravelProduct().subtractReviewInfo(review.getRating());
         List<Review> reviews = List.of(review);
         review.clearReviewImages();
         reviewGlobalDeleteService.deleteReviewImagesByReviews(reviews);

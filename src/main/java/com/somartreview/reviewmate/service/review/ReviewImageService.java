@@ -4,13 +4,15 @@ import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.somartreview.reviewmate.domain.review.Review;
-import com.somartreview.reviewmate.domain.review.ReviewImage;
-import com.somartreview.reviewmate.domain.review.ReviewImageRepository;
+import com.somartreview.reviewmate.domain.review.image.ReviewImage;
+import com.somartreview.reviewmate.domain.review.image.ReviewImageRepository;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ExternalServiceException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +34,12 @@ public class ReviewImageService {
     private String s3ImageBucketName;
 
 
+    @Async
+    @Retryable(
+            value = {ExternalServiceException.class},
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 10000)
+    )
     public void createAll(List<MultipartFile> reviewImageFiles, Review review) {
         for (MultipartFile reviewImageFile : reviewImageFiles) {
             ReviewImage reviewImage = ReviewImage.builder()
@@ -39,7 +47,8 @@ public class ReviewImageService {
                     .review(review)
                     .build();
 
-            reviewImageRepository.save(reviewImage);
+            reviewImage = reviewImageRepository.save(reviewImage);
+            review.addReviewImage(reviewImage);
         }
     }
 

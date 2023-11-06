@@ -97,7 +97,7 @@ public abstract class TravelProduct extends BaseEntity {
         this.rating = (this.rating * (this.reviewCount - 1) + newReviewRating) / this.reviewCount;
     }
 
-    public void substractReviewInfo(int removedReviewRating) {
+    public void subtractReviewInfo(int removedReviewRating) {
         this.reviewCount--;
         if (reviewCount == 0) {
             this.rating = 0.0f;

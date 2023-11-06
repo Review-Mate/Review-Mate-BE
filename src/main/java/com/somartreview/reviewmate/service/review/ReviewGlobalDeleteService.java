@@ -2,6 +2,9 @@ package com.somartreview.reviewmate.service.review;
 
 import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.domain.review.*;
+import com.somartreview.reviewmate.domain.review.image.ReviewImage;
+import com.somartreview.reviewmate.domain.review.image.ReviewImageRepository;
+import com.somartreview.reviewmate.domain.review.tag.ReviewTagRepository;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
