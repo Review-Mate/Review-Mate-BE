@@ -125,6 +125,75 @@ jobs:
 
 ####################################################################################################################################
 
+  development-automation-test-server:
+    needs: development-automation-prod-server-2
+    if: contains(github.ref, 'release')
+    runs-on: ubuntu-latest
+    steps:
+
+    ## jdk setting
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin' # https://github.com/actions/setup-java
+
+    ## gradle caching
+    - name: Gradle Caching
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+
+    ## create application-prod.properties
+    - name: make application-test.properties
+      run: |
+          rm -r -f ./src/main/resources
+          mkdir -p ./src/main/resources
+          cd ./src/main/resources
+          touch ./application-test.properties
+          echo "${{ secrets.PROPERTIES_TEST }}" > ./application-test.properties
+          touch ./sonarqube.properties
+          echo "${{ secrets.SONAR_PROPERTIES }}" > ./sonarqube.properties
+      shell: bash
+
+    ## gradle build
+    - name: Build with Gradle
+      run: ./gradlew build
+
+    ## docker build & push to production
+    - name: Docker build & push to prod
+      run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -f Dockerfile-prod -t ${{ secrets.DOCKER_REPO_PROD }} .
+          docker push ${{ secrets.DOCKER_REPO_PROD }}
+
+    ## deploy to test
+    - name: Deploy to test
+      uses: appleboy/ssh-action@master
+      id: deploy-test
+      with:
+          host: ${{ secrets.EC2_DOMAIN_TEST }}
+          username: ec2-user
+          key: ${{ secrets.AWS_PEM_KEY }}
+          port: 22
+          envs: GITHUB_SHA
+          script: |
+              docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+              sudo docker rm -f $(docker ps -qa)
+              sudo docker pull ${{ secrets.DOCKER_REPO_PROD }}
+              sudo docker-compose up -d
+              sudo docker image prune -f
+
+
+####################################################################################################################################
+
 
   ## slack alarm
   action-slack:
