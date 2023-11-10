@@ -157,8 +157,8 @@ jobs:
           rm -r -f ./src/main/resources
           mkdir -p ./src/main/resources
           cd ./src/main/resources
-          touch ./application-test.properties
-          echo "${{ secrets.PROPERTIES_TEST }}" > ./application-test.properties
+          touch ./application.properties
+          echo "${{ secrets.PROPERTIES_TEST }}" > ./application.properties
           touch ./sonarqube.properties
           echo "${{ secrets.SONAR_PROPERTIES }}" > ./sonarqube.properties
       shell: bash
