@@ -198,7 +198,7 @@ jobs:
   ## slack alarm
   action-slack:
     if: success()
-    needs: [development-automation-prod-server-1, development-automation-prod-server-2]
+    needs: [development-automation-prod-server-1, development-automation-prod-server-2, development-automation-test-server]
     runs-on: ubuntu-latest
     steps:
         - name: Slack Alarm
