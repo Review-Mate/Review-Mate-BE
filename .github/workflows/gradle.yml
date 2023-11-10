@@ -125,7 +125,7 @@ jobs:
 
 ####################################################################################################################################
 
-  development-automation-test-server:
+  development-automation-test-server-1:
     needs: development-automation-prod-server-2
     if: contains(github.ref, 'release')
     runs-on: ubuntu-latest
@@ -174,12 +174,59 @@ jobs:
           docker build -f Dockerfile-prod -t ${{ secrets.DOCKER_REPO_PROD }} .
           docker push ${{ secrets.DOCKER_REPO_PROD }}
 
-    ## deploy to test
+    ## deploy to test AZ 1
     - name: Deploy to test
       uses: appleboy/ssh-action@master
       id: deploy-test
       with:
-          host: ${{ secrets.EC2_DOMAIN_TEST }}
+          host: ${{ secrets.EC2_DOMAIN_TEST_1 }}
+          username: ec2-user
+          key: ${{ secrets.AWS_PEM_KEY }}
+          port: 22
+          envs: GITHUB_SHA
+          script: |
+              docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+              sudo docker rm -f $(docker ps -qa)
+              sudo docker pull ${{ secrets.DOCKER_REPO_PROD }}
+              sudo docker-compose up -d
+              sudo docker image prune -f
+
+
+
+####################################################################################################################################
+
+  development-automation-test-server-2:
+    needs: development-automation-test-server-1
+    if: contains(github.ref, 'release')
+    runs-on: ubuntu-latest
+    steps:
+
+    ## jdk setting
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin' # https://github.com/actions/setup-java
+
+    ## gradle caching
+    - name: Gradle Caching
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+
+    ## deploy to test AZ 2
+    - name: Deploy to test
+      uses: appleboy/ssh-action@master
+      id: deploy-test
+      with:
+          host: ${{ secrets.EC2_DOMAIN_TEST_2 }}
           username: ec2-user
           key: ${{ secrets.AWS_PEM_KEY }}
           port: 22
