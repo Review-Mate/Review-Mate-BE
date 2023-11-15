@@ -2,12 +2,10 @@ package com.somartreview.reviewmate.domain.review;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.somartreview.reviewmate.dto.review.ReviewRatingCountsDto;
-import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
 import com.somartreview.reviewmate.service.review.WidgetReviewSearchCond;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,6 +14,9 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.somartreview.reviewmate.domain.partner.company.QPartnerCompany.partnerCompany;
+import static com.somartreview.reviewmate.domain.product.QTravelProduct.travelProduct;
+import static com.somartreview.reviewmate.domain.reservation.QReservation.reservation;
 import static com.somartreview.reviewmate.domain.review.QReview.review;
 import static com.somartreview.reviewmate.domain.review.ReviewOrderCriteria.*;
 import static com.somartreview.reviewmate.domain.review.tag.QReviewTag.reviewTag;
@@ -33,13 +34,14 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
         List<Review> reviews = queryFactory
                 .select(review)
                 .from(review)
-//                .where(reviewTagEq(searchCond.getProperty(), searchCond.getKeyword()))
-                .innerJoin(review.reviewTags, reviewTag)
+                .innerJoin(review.reservation, reservation)
+                .innerJoin(reservation.travelProduct, travelProduct)
+                .innerJoin(travelProduct.partnerCompany, partnerCompany)
                 .where(
-                        searchCond.getProperty() == null ? null : reviewTag.reviewProperty.eq(searchCond.getProperty()),
-                        searchCond.getKeyword() == null ? null : reviewTag.keyword.eq(searchCond.getKeyword())
+                        partnerCompany.partnerDomain.eq(partnerDomain),
+                        travelProduct.partnerCustomId.eq(travelProductPartnerCustomId),
+                        reviewTagEq(searchCond.getProperty(), searchCond.getKeyword())
                 )
-                .groupBy(review.id)
                 .orderBy(orderCriteria(searchCond.getOrderCriteria()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

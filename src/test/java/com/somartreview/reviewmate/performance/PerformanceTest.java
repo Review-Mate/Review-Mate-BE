@@ -5,6 +5,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ public class PerformanceTest {
 
     public static final String PARTNER_DOMAIN = "goodchoice.kr";
     public static final Long SAFE_COMMON_ID = 1L;
-    public static final String SAFE_TRAVEL_PARTNER_CUSTOMER_ID = "CUSTOMER_9";
+    public static final String SAFE_TRAVEL_PARTNER_CUSTOMER_ID = "CUSTOMER_1";
     public static final String PARTNER_CUSTOM_ID_POSTFIX = "_1018_17";
     public static final String CUSTOMER_PHONE_NUMBER = "02709159941";
     public static final String DELETING_PARTNER_COMPANY_DOMAIN = "goodchoice.kr";
@@ -99,14 +100,14 @@ public class PerformanceTest {
 //        커스텀Id로_고객을_삭제한다("CUSTOMER_" + PARTNER_CUSTOM_ID_POSTFIX);
 //        파트너ID로_단일_여행상품을_삭제한다("PRODUCT_" + PARTNER_CUSTOM_ID_POSTFIX);
 //
-//        리뷰Id로_리뷰를_조회한다();
-//        상품의_파트너Id로_리뷰목록을_조회한다();
-//        상품의_파트너Id로_속성_필터링으로_리뷰목록을_조회한다();
+        리뷰Id로_리뷰를_조회한다();
+        상품의_파트너Id로_리뷰목록을_조회한다();
+        상품의_파트너Id로_속성_필터링으로_리뷰목록을_조회한다();
         상품의_파트너Id로_키워드_필터링으로_리뷰목록을_조회한다();
-//        상품의_파트너Id로_별점순_정렬로_리뷰목록을_조회한다();
-//        상품의_파트너Id로_긍정적인순_정렬로_리뷰목록을_조회한다();
-//        단일_여행상품의_리뷰_통계를_조회한다();
-//        단일_여행상품의_리뷰태그_통계를_조회한다();
+        상품의_파트너Id로_별점순_정렬로_리뷰목록을_조회한다();
+        상품의_파트너Id로_긍정적인순_정렬로_리뷰목록을_조회한다();
+        단일_여행상품의_리뷰_통계를_조회한다();
+        단일_여행상품의_리뷰태그_통계를_조회한다();
     }
 
     void 삭제_요청의_성능을_테스트한다() {
