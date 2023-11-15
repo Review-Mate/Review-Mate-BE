@@ -1,5 +1,6 @@
-package com.somartreview.reviewmate.domain.review;
+package com.somartreview.reviewmate.domain.review.tag;
 
+import com.somartreview.reviewmate.domain.review.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,8 +14,9 @@ public interface ReviewTagRepository extends JpaRepository<ReviewTag, Long>, Rev
 
     List<ReviewTag> findAllByReview_Id(Long reviewId);
 
+
     @Transactional
     @Modifying
-    @Query("delete from ReviewTag rt where rt.review.id in :ids")
-    void deleteAllByReviewIdsInQuery(List<Long> ids);
+    @Query("delete from ReviewTag rt where rt.review in :reviews")
+    void deleteAllByReviewsInQuery(List<Review> reviews);
 }

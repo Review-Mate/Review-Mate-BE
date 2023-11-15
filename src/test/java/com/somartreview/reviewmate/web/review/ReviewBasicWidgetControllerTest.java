@@ -90,7 +90,7 @@ class ReviewBasicWidgetControllerTest {
 //        // when & then
 //        mockMvc.perform(
 //                        get("/api/widget/v1/{partnerDomain}/products/{travelProductPartnerCustomId}/reviews", PARTNER_DOMAIN, RESERVATION_PARTNER_CUSTOM_ID)
-//                                .param("property", String.valueOf(ReviewProperty.CLEANNESS))
+//                                .param("property", String.valueOf(ReviewProperty.ROOM))
 //                                .param("keyword", "편안")
 //                                .param("orderBy", String.valueOf(ReviewOrderCriteria.RATING_DESC))
 //                                .param("page", "0")

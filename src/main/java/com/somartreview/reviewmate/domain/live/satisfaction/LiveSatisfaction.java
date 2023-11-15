@@ -37,7 +37,7 @@ public class LiveSatisfaction extends BaseEntity {
     private ReviewProperty dissatisfiedReviewProperty;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id")
+    @JoinColumn(name = "reservation_id", nullable = false)
     private Reservation reservation;
 
     @Builder

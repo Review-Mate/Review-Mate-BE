@@ -1,6 +1,7 @@
-package com.somartreview.reviewmate.domain.review;
+package com.somartreview.reviewmate.domain.review.image;
 
 
+import com.somartreview.reviewmate.domain.review.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,8 +13,13 @@ import java.util.List;
 @Repository
 public interface ReviewImageRepository extends JpaRepository<ReviewImage, Long> {
 
+
+    @Query("select ri from ReviewImage ri where ri.review in :reviews")
+    List<ReviewImage> findReviewImagesByReviewIdsInQuery(List<Review> reviews);
+
+
     @Transactional
     @Modifying
-    @Query("delete from ReviewImage ri where ri.review.id in :ids")
-    void deleteAllByReviewIdsInQuery(List<Long> ids);
+    @Query("delete from ReviewImage ri where ri.review in :reviews")
+    void deleteAllByReviewsInQuery(List<Review> reviews);
 }

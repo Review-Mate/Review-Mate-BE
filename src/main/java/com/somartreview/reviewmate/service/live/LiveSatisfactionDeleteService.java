@@ -1,6 +1,7 @@
 package com.somartreview.reviewmate.service.live;
 
 import com.somartreview.reviewmate.domain.live.satisfaction.LiveSatisfactionRepository;
+import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -18,19 +19,19 @@ public class LiveSatisfactionDeleteService {
 
     @Transactional
     public void deleteById(Long id) {
-        validateExistId(id);
+        validateExistById(id);
 
         liveSatisfactionRepository.deleteById(id);
     }
 
-    private void validateExistId(Long id) {
+    private void validateExistById(Long id) {
         if (!liveSatisfactionRepository.existsById(id)) {
             throw new DomainLogicException(ErrorCode.LIVE_SATISFACTION_NOT_FOUND);
         }
     }
 
     @Transactional
-    public void deleteAllByReservationIds(List<Long> reservationIds) {
-        liveSatisfactionRepository.deleteAllByReservationIdsInQuery(reservationIds);
+    public void deleteAllByReservations(List<Reservation> reservations) {
+        liveSatisfactionRepository.deleteAllByReservationsInQuery(reservations);
     }
 }

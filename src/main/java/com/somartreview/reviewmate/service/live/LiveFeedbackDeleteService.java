@@ -1,6 +1,7 @@
 package com.somartreview.reviewmate.service.live;
 
 import com.somartreview.reviewmate.domain.live.feedback.LiveFeedbackRepository;
+import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class LiveFeedbackDeleteService {
     }
 
     @Transactional
-    public void deleteAllByReservationIds(List<Long> ids) {
-        liveFeedbackRepository.deleteAllByReservationIdsInQuery(ids);
+    public void deleteAllByReservations(List<Reservation> reservations) {
+        liveFeedbackRepository.deleteAllByReservationsInQuery(reservations);
     }
 }

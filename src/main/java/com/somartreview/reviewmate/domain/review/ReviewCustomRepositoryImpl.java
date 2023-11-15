@@ -6,7 +6,6 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.somartreview.reviewmate.dto.review.ReviewRatingCountsDto;
-import com.somartreview.reviewmate.dto.review.WidgetReviewResponse;
 import com.somartreview.reviewmate.service.review.WidgetReviewSearchCond;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,11 +14,9 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static com.somartreview.reviewmate.domain.customer.QCustomer.customer;
-import static com.somartreview.reviewmate.domain.reservation.QReservation.reservation;
 import static com.somartreview.reviewmate.domain.review.QReview.review;
-import static com.somartreview.reviewmate.domain.review.QReviewTag.reviewTag;
 import static com.somartreview.reviewmate.domain.review.ReviewOrderCriteria.*;
+import static com.somartreview.reviewmate.domain.review.tag.QReviewTag.reviewTag;
 
 public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
 

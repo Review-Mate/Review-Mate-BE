@@ -2,13 +2,14 @@ package com.somartreview.reviewmate.dto.review;
 
 import com.somartreview.reviewmate.domain.review.Review;
 import com.somartreview.reviewmate.domain.review.ReviewPolarity;
-import com.somartreview.reviewmate.domain.review.ReviewTag;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
+import static com.somartreview.reviewmate.service.review.ReviewImageService.CDN_DOMAIN;
 
 @Getter
 @NoArgsConstructor
@@ -33,11 +34,14 @@ public class WidgetReviewResponse {
     @Schema(description = "업로드 날짜", example = "2021.01.01")
     private String createdAt;
 
+    @Schema(description = "리뷰 사진 URL", example = "https://image.reviewmate.co.kr/image.png")
+    private List<String> reviewImageUrls;
+
     @Schema(description = "긍부정", example = "POSITIVE")
     private ReviewPolarity polarity;
 
     @Schema(description = "적용된 속성 혹은 키워드가 포함된 문자열의 인덱스들")
-    private List<ReviewHighlightPairResponse> reviewHighlightPairResponses;
+    private List<ReviewTagIndexResponse> reviewTagIndexResponses;
 
     public WidgetReviewResponse(final Review review) {
         this.id = review.getId();
@@ -46,7 +50,8 @@ public class WidgetReviewResponse {
         this.content = review.getContent();
         this.authorName = review.getReservation().getCustomer().getName();
         this.createdAt = review.getCreatedAt().toString();
+        this.reviewImageUrls = review.getReviewImages().stream().map(reviewImage -> CDN_DOMAIN + "/" + reviewImage.getFileName()).toList();
         this.polarity = review.getPolarity();
-        this.reviewHighlightPairResponses = review.getReviewTags().stream().map(ReviewHighlightPairResponse::new).toList();
+        this.reviewTagIndexResponses = review.getReviewTags().stream().map(ReviewTagIndexResponse::new).toList();
     }
 }

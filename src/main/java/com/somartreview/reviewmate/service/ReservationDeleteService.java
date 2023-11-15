@@ -25,33 +25,25 @@ public class ReservationDeleteService {
 
     @Transactional
     public void delete(Long id) {
-        validateExistId(id);
-
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new DomainLogicException(ErrorCode.RESERVATION_NOT_FOUND));
+        List<Reservation> reservations = List.of(reservation);
+        deleteReservationCascade(reservations);
         reservationRepository.deleteById(id);
-        List<Long> reservationIds = List.of(id);
-        deleteAllRelatedEntitiesByReservationIds(reservationIds);
     }
 
-
-    private void validateExistId(Long id) {
-        if (!reservationRepository.existsById(id)) {
-            throw new DomainLogicException(ErrorCode.RESERVATION_NOT_FOUND);
-        }
-    }
 
     // 문제의 원인
     @Transactional
     public void deleteAllByTravelProductId(Long travelProductId) {
         List<Reservation> reservations = reservationRepository.findAllByTravelProductId(travelProductId);
-        List<Long> reservationIds = reservations.stream().map(Reservation::getId).toList();
-
-        reservationRepository.deleteAllByTravelProductId(travelProductId);
-        deleteAllRelatedEntitiesByReservationIds(reservationIds);
+        deleteReservationCascade(reservations);
+        reservationRepository.deleteAllInBatch(reservations);
     }
 
-    private void deleteAllRelatedEntitiesByReservationIds(List<Long> reservationIds) {
-        reviewDeleteService.deleteAllByReservationIds(reservationIds);
-        liveSatisfactionDeleteService.deleteAllByReservationIds(reservationIds);
-        liveFeedbackDeleteService.deleteAllByReservationIds(reservationIds);
+    private void deleteReservationCascade(List<Reservation> reservations) {
+        reviewDeleteService.deleteAllByReservations(reservations);
+        liveSatisfactionDeleteService.deleteAllByReservations(reservations);
+        liveFeedbackDeleteService.deleteAllByReservations(reservations);
     }
 }

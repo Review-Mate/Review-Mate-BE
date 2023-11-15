@@ -1,6 +1,6 @@
-package com.somartreview.reviewmate.domain.review;
+package com.somartreview.reviewmate.domain.review.tag;
 
-import com.somartreview.reviewmate.dto.review.ReviewTagClassificationDto;
+import com.somartreview.reviewmate.dto.review.tag.ReviewTagClassificationDto;
 
 import java.util.List;
 

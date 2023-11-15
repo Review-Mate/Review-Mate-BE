@@ -42,7 +42,7 @@ public class LiveFeedback extends BaseEntity {
     private Boolean isSolved = false;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id")
+    @JoinColumn(name = "reservation_id", nullable = false)
     private Reservation reservation;
 
     @Builder

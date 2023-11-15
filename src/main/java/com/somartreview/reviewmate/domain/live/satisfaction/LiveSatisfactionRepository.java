@@ -1,5 +1,6 @@
 package com.somartreview.reviewmate.domain.live.satisfaction;
 
+import com.somartreview.reviewmate.domain.reservation.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,9 +16,10 @@ public interface LiveSatisfactionRepository extends JpaRepository<LiveSatisfacti
     @Modifying
     @Query("delete from LiveSatisfaction ls where ls.id = :id")
     void deleteById(Long id);
-    
+
+
     @Transactional
     @Modifying
-    @Query("delete from LiveSatisfaction ls where ls.reservation.id in :ids")
-    void deleteAllByReservationIdsInQuery(List<Long> ids);
+    @Query("delete from LiveSatisfaction ls where ls.reservation in :reservations")
+    void deleteAllByReservationsInQuery(List<Reservation> reservations);
 }

@@ -26,7 +26,7 @@ class ReviewCustomRepositoryTest {
 //    @Test
 //    void 위젯_리뷰를_속성으로_검색한다() {
 //        // given
-//        WidgetReviewSearchCond widgetReviewSearchCond = new WidgetReviewSearchCond(CLEANNESS, null, null);
+//        WidgetReviewSearchCond widgetReviewSearchCond = new WidgetReviewSearchCond(ROOM, null, null);
 //
 //        // when
 //        Page<Review> results = reviewRepository.searchWidgetReviews(
@@ -42,14 +42,14 @@ class ReviewCustomRepositoryTest {
 //        for (Review review : results.get().toList()) {
 //            assertThat(review.getReviewTags())
 //                    .extracting(ReviewTag::getReviewProperty)
-//                    .contains(CLEANNESS);
+//                    .contains(ROOM);
 //        }
 //    }
 //
 //    @Test
 //    void 위젯_리뷰를_키워드로_검색한다() {
 //        // given
-//        WidgetReviewSearchCond widgetReviewSearchCond = new WidgetReviewSearchCond(CLEANNESS, "먼지", null);
+//        WidgetReviewSearchCond widgetReviewSearchCond = new WidgetReviewSearchCond(ROOM, "먼지", null);
 //
 //        // when
 //        Page<Review> results = reviewRepository.searchWidgetReviews(
@@ -65,7 +65,7 @@ class ReviewCustomRepositoryTest {
 //        for (Review review : results.get().toList()) {
 //            assertThat(review.getReviewTags())
 //                    .extracting(ReviewTag::getReviewProperty, ReviewTag::getKeyword)
-//                    .contains(tuple(CLEANNESS, "먼지"));
+//                    .contains(tuple(ROOM, "먼지"));
 //        }
 //    }
 //

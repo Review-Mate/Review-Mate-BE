@@ -2,6 +2,7 @@ package com.somartreview.reviewmate.config;
 
 import com.somartreview.reviewmate.dto.ExceptionResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
+import com.somartreview.reviewmate.exception.ExternalServiceException;
 import com.somartreview.reviewmate.exception.ReviewMateException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -130,12 +131,24 @@ public class GlobalControllerAdvice {
                         .build());
     }
 
+    @ExceptionHandler(ExternalServiceException.class)
+    public ResponseEntity<ExceptionResponse> handleExternalServiceException(ExternalServiceException e) {
+        log.warn(e.getErrorCode().toString() + " : " + e.getMessage());
+        log.error(e.getCause().getCause().getMessage());
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ExceptionResponse.builder()
+                        .code(e.getErrorCode().getCode())
+                        .message(e.getErrorCode().toString() + " : " + e.getMessage() + ". " + e.getCause().getCause().getMessage())
+                        .build());
+    }
+
     @ExceptionHandler(ReviewMateException.class)
     public ResponseEntity<ExceptionResponse> handleReviewMateException(ReviewMateException e) {
         log.warn(e.getErrorCode().toString() + " : " + e.getMessage());
         log.error(e.getCause().getCause().getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionResponse.builder()
                         .code(e.getErrorCode().getCode())
                         .message(e.getErrorCode().toString() + " : " + e.getMessage() + ". " + e.getCause().getCause().getMessage())

@@ -1,8 +1,10 @@
 package com.somartreview.reviewmate.service.review;
 
-import com.somartreview.reviewmate.domain.review.ReviewImageRepository;
-import com.somartreview.reviewmate.domain.review.ReviewRepository;
-import com.somartreview.reviewmate.domain.review.ReviewTagRepository;
+import com.somartreview.reviewmate.domain.reservation.Reservation;
+import com.somartreview.reviewmate.domain.review.*;
+import com.somartreview.reviewmate.domain.review.image.ReviewImage;
+import com.somartreview.reviewmate.domain.review.image.ReviewImageRepository;
+import com.somartreview.reviewmate.domain.review.tag.ReviewTagRepository;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,26 +21,48 @@ public class ReviewDeleteService {
     private final ReviewRepository reviewRepository;
     private final ReviewTagRepository reviewTagRepository;
     private final ReviewImageRepository reviewImageRepository;
+    private final ReviewImageService reviewImageService;
 
     @Transactional
-    public void deleteById(Long id) {
-        validateExistId(id);
+    public void deleteReviewByReviewId(Long reviewId) {
+        Review review = validateExistId(reviewId);
 
-        deleteAllByReservationIds(List.of(id));
+        deleteReviewCascade(List.of(review));
+        reviewRepository.deleteById(reviewId);
     }
 
-    private void validateExistId(Long id) {
-        if (!reviewRepository.existsById(id)) {
+    private Review validateExistId(Long reviewId) {
+        Optional<Review> review = reviewRepository.findById(reviewId);
+        if (review.isEmpty()) {
             throw new DomainLogicException(ErrorCode.REVIEW_NOT_FOUND);
         }
+
+        return review.get();
     }
 
     @Transactional
-    public void deleteAllByReservationIds(List<Long> reservationsIds) {
-        List<Long> reviewIds = reviewRepository.findReviewIdsAllByReservationIdsInQuery(reservationsIds);
+    public void deleteAllByReservations(List<Reservation> reservations) {
+        List<Review> reviews = reviewRepository.findAllByReservation(reservations);
 
-        reviewTagRepository.deleteAllByReviewIdsInQuery(reviewIds);
-        reviewImageRepository.deleteAllByReviewIdsInQuery(reviewIds);
-        reviewRepository.deleteAllByIdInBatch(reviewIds);
+        deleteReviewCascade(reviews);
+        reviewRepository.deleteAllInBatch(reviews);
+    }
+
+    private void deleteReviewCascade(List<Review> reviews) {
+        deleteReviewTagsByReviews(reviews);
+        deleteReviewImagesByReviews(reviews);
+    }
+
+    @Transactional
+    public void deleteReviewTagsByReviews(List<Review> reviews) {
+        reviewTagRepository.deleteAllByReviewsInQuery(reviews);
+    }
+
+    @Transactional
+    public void deleteReviewImagesByReviews(List<Review> reviews) {
+        List<ReviewImage> reviewImages = reviewImageRepository.findReviewImagesByReviewIdsInQuery(reviews);
+        reviewImageService.removeReviewImageFiles(reviewImages);
+
+        reviewImageRepository.deleteAllByReviewsInQuery(reviews);
     }
 }

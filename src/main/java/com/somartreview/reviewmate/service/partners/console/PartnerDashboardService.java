@@ -2,6 +2,7 @@ package com.somartreview.reviewmate.service.partners.console;
 
 import com.somartreview.reviewmate.domain.partner.console.ConsoleTimeSeriesUnit;
 import com.somartreview.reviewmate.domain.product.SingleTravelProductCategory;
+import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.domain.reservation.ReservationRepository;
 import com.somartreview.reviewmate.domain.review.ReviewRepository;
 import com.somartreview.reviewmate.dto.partner.console.*;
@@ -28,15 +29,15 @@ public class PartnerDashboardService {
 
     public Float getReviewingRate(String partnerDomain, LocalDateTime dateTime, ConsoleTimeSeriesUnit timeSeriesUnit) {
         LocalDateTime startDateTime = getStartDateTimeOfTimeSeriesUnit(dateTime, timeSeriesUnit);
-        List<Long> reviewFks = reservationRepository.findAllReviewFKsByCreatedAtGreaterThanEqual(partnerDomain, startDateTime);
+        List<Reservation> reservations = reservationRepository.findAllByCreatedAtGreaterThanEqual(partnerDomain, startDateTime);
 
-        long todayReservationCount = reviewFks.size();
-        if (todayReservationCount == 0) {
+        long reservationCount = reservations.size();
+        if (reservationCount == 0) {
             return 0f;
         }
 
-        long todayReviewCount = reviewFks.stream().filter(Objects::nonNull).count();
-        return (float) todayReviewCount / todayReservationCount * 100;
+        long reviewCount = reviewRepository.countByReservations(reservations);
+        return (float) reviewCount / reservationCount * 100;
     }
 
     private LocalDateTime getStartDateTimeOfTimeSeriesUnit(LocalDateTime dateTime, ConsoleTimeSeriesUnit timeSeriesUnit) {
@@ -86,15 +87,15 @@ public class PartnerDashboardService {
     }
 
     public Float getReviewingRate(String partnerDomain, SingleTravelProductCategory category, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        List<Long> reviewFks = reservationRepository.findAllReviewFKsByCategoryAndCreatedAtBetween(partnerDomain, category, startDateTime, endDateTime);
+        List<Reservation> reservations = reservationRepository.findAllByCategoryAndCreatedAtBetween(partnerDomain, category, startDateTime, endDateTime);
 
-        long todayReservationCount = reviewFks.size();
-        if (todayReservationCount == 0) {
+        long reservationCount = reservations.size();
+        if (reservationCount == 0) {
             return 0f;
         }
 
-        long todayReviewCount = reviewFks.stream().filter(Objects::nonNull).count();
-        return (float) todayReviewCount / todayReservationCount * 100;
+        long reviewCount = reviewRepository.countByReservations(reservations);
+        return (float) reviewCount / reservationCount * 100;
     }
 
 
@@ -122,15 +123,15 @@ public class PartnerDashboardService {
     }
 
     private Float getReviewingRate(String partnerDomain, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        List<Long> reviewFks = reservationRepository.findAllReviewFKsByCreatedAtBetween(partnerDomain, startDateTime, endDateTime);
+        List<Reservation> reservations = reservationRepository.findAllByCreatedAtBetween(partnerDomain, startDateTime, endDateTime);
 
-        long todayReservationCount = reviewFks.size();
-        if (todayReservationCount == 0) {
+        long reservationCount = reservations.size();
+        if (reservationCount == 0) {
             return 0f;
         }
 
-        long todayReviewCount = reviewFks.stream().filter(Objects::nonNull).count();
-        return (float) todayReviewCount / todayReservationCount * 100;
+        long reviewCount = reviewRepository.countByReservations(reservations);
+        return (float) reviewCount / reservationCount * 100;
     }
 
     public ReviewingAchievementBarChartResponse getReviewingAchievementBarChart(String partnerDomain) {
