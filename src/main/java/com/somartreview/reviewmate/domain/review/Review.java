@@ -23,7 +23,7 @@ import static com.somartreview.reviewmate.exception.ErrorCode.*;
 @Getter
 @NoArgsConstructor
 @Table(indexes = {
-        @Index(name = "idx_created_at", columnList = "createdAt DESC")
+        @Index(name = "idx_reservation_id_created_at", columnList = "reservation_id asc, createdAt DESC")
 })
 public class Review extends BaseEntity{
 
