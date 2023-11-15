@@ -4,11 +4,7 @@ import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
 import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.domain.review.*;
 import com.somartreview.reviewmate.domain.review.tag.ReviewTag;
-import com.somartreview.reviewmate.domain.review.tag.ReviewTagInferenceClient;
 import com.somartreview.reviewmate.dto.review.*;
-import com.somartreview.reviewmate.dto.review.tag.ReviewTagInferenceRequest;
-import com.somartreview.reviewmate.dto.review.tag.ReviewTagCreateRequest;
-import com.somartreview.reviewmate.dto.review.tag.ReviewTagInferenceResponse;
 import com.somartreview.reviewmate.dto.review.tag.ReviewTagStatisticsDto;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.service.ReservationService;
@@ -40,7 +36,6 @@ public class ReviewService {
     private final ReviewGlobalDeleteService reviewGlobalDeleteService;
     private final ReservationService reservationService;
     private final SingleTravelProductService singleTravelProductService;
-    private final ReviewTagInferenceClient reviewTagInferenceClient;
 
 
     @Transactional
@@ -49,24 +44,18 @@ public class ReviewService {
         final Reservation reservation = reservationService.findByPartnerDomainAndPartnerCustomId(partnerDomain, reservationPartnerCustomId);
         validateAlreadyReviewedByReservationId(reservation.getId());
 
-        // Save review
+        // Create review
         Review review = reviewCreateRequest.toEntity(reservation);
         reviewRepository.save(review);
         reservation.getTravelProduct().addReviewInfo(review.getRating());
 
-        // Save review images
+        // Create review images
         if (reviewImageFiles != null) {
             reviewImageService.createAll(reviewImageFiles, review);
         }
 
-        // Save review tags
-        // 1. Ask inference review tag
-        ReviewTagInferenceRequest reviewTagInferenceRequest = new ReviewTagInferenceRequest(review.getContent());
-        ReviewTagInferenceResponse reviewTagInferenceResponse = reviewTagInferenceClient.inferenceReview(reviewTagInferenceRequest);
-        // 2. Create review tags
-        List<ReviewTagCreateRequest> reviewTagCreateRequests = reviewTagInferenceResponse.getBody().getResults().stream().map(ReviewTagCreateRequest::new).toList();
-        List<ReviewTag> reviewTags = reviewTagService.createAll(reviewTagCreateRequests, review);
-        review.appendReviewTags(reviewTags);
+        // Create review tag
+        reviewTagService.createAll(review);
         // Impl Requesting review inference through kafka
 
         return review.getId();

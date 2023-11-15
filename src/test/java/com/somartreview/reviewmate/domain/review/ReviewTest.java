@@ -124,10 +124,9 @@ class ReviewTest {
         // given
         Review mockReview = new Review();
         ReviewTag reviewTag = new ReviewTag(ReviewProperty.LOCATION, "키워드", ReviewPolarity.POSITIVE, 0, 1, mockReview);
-        List<ReviewTag> reviewTags = new ArrayList<>(List.of(reviewTag));
 
         // when
-        review.appendReviewTags(reviewTags);
+        review.addReviewTag(reviewTag);
 
         // then
         assertThat(review.getReviewTags()).hasSize(1);
@@ -139,10 +138,10 @@ class ReviewTest {
         // given
         Review mockReview = new Review();
         ReviewTag reviewTag = new ReviewTag(ReviewProperty.LOCATION, "키워드", ReviewPolarity.NEGATIVE, 0, 1, mockReview);
-        List<ReviewTag> reviewTags = new ArrayList<>(List.of(reviewTag));
+
 
         // when
-        review.appendReviewTags(reviewTags);
+        review.addReviewTag(reviewTag);
 
         // then
         assertThat(review.getReviewTags()).hasSize(1);
@@ -152,13 +151,15 @@ class ReviewTest {
     @Test
     void 리뷰에_중립_리뷰태그를_추가한다() {
         // given
-        Review mockReview = new Review();
-        ReviewTag positiveReviewTag = new ReviewTag(ReviewProperty.LOCATION, "키워드", ReviewPolarity.POSITIVE, 0, 1, mockReview);
-        ReviewTag negativeReviewTag = new ReviewTag(ReviewProperty.LOCATION, "키워드", ReviewPolarity.NEGATIVE, 0, 1, mockReview);
+        Review mockReview1 = new Review();
+        ReviewTag positiveReviewTag = new ReviewTag(ReviewProperty.LOCATION, "키워드", ReviewPolarity.POSITIVE, 0, 1, mockReview1);
+        Review mockReview2 = new Review();
+        ReviewTag negativeReviewTag = new ReviewTag(ReviewProperty.LOCATION, "키워드", ReviewPolarity.NEGATIVE, 0, 1, mockReview2);
         List<ReviewTag> reviewTags = new ArrayList<>(List.of(positiveReviewTag, negativeReviewTag));
 
         // when
-        review.appendReviewTags(reviewTags);
+        review.addReviewTag(positiveReviewTag);
+        review.addReviewTag(negativeReviewTag);
 
 
         // then
@@ -181,13 +182,12 @@ class ReviewTest {
         // given
         Review mockReview1 = new Review();
         Review mockReview2 = new Review();
-        List<ReviewImage> reviewImages = new ArrayList<>(Arrays.asList(
-                new ReviewImage("www.image1.com", mockReview1),
-                new ReviewImage("www.image2.com", mockReview2)
-        ));
+        ReviewImage reviewImage1 = new ReviewImage("www.image1.com", mockReview1);
+        ReviewImage reviewImage2 = new ReviewImage("www.image2.com", mockReview2);
 
         // then
-        review.appendReviewImage(reviewImages);
+        review.addReviewImage(reviewImage1);
+        review.addReviewImage(reviewImage2);
 
         // then
         assertThat(review.getReviewImages()).hasSize(2);
