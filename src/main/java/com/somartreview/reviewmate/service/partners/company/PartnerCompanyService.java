@@ -2,12 +2,11 @@ package com.somartreview.reviewmate.service.partners.company;
 
 import com.somartreview.reviewmate.domain.partner.company.PartnerCompany;
 import com.somartreview.reviewmate.domain.partner.company.PartnerCompanyRepository;
-import com.somartreview.reviewmate.domain.partner.console.PartnerConsoleConfig;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyUpdateRequest;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyCreateRequest;
 import com.somartreview.reviewmate.dto.partner.company.PartnerCompanyResponse;
 import com.somartreview.reviewmate.exception.DomainLogicException;
-import com.somartreview.reviewmate.service.CustomerDeleteService;
+import com.somartreview.reviewmate.service.customers.CustomerDeleteService;
 import com.somartreview.reviewmate.service.partners.console.PartnerConsoleConfigService;
 import com.somartreview.reviewmate.service.partners.manager.PartnerManagerDeleteService;
 import com.somartreview.reviewmate.service.partners.seller.PartnerSellerDeleteService;

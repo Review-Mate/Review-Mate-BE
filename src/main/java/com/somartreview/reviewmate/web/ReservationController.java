@@ -2,8 +2,8 @@ package com.somartreview.reviewmate.web;
 
 import com.somartreview.reviewmate.dto.reservation.SingleTravelReservationCreateRequest;
 import com.somartreview.reviewmate.dto.reservation.SingleTravelProductReservationResponse;
-import com.somartreview.reviewmate.service.ReservationDeleteService;
-import com.somartreview.reviewmate.service.ReservationService;
+import com.somartreview.reviewmate.service.reservation.ReservationDeleteService;
+import com.somartreview.reviewmate.service.reservation.ReservationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.headers.Header;

@@ -78,7 +78,9 @@ public enum ErrorCode {
     DB_CONFLICT_ERROR("9007", "요청한 데이터가 데이터베이스와 충돌됩니다."),
     REVIEW_MATE_ERROR("9908", "처리하지 못한 예외입니다."),
 
-    AWS_S3_CLIENT_ERROR("9101", "AWS S3 Client 에러입니다."),
+    SCHEDULER_REGISTER_ERROR("9101", "예약 스케줄러 등록에 실패했습니다."),
+
+    AWS_S3_CLIENT_ERROR("9801", "AWS S3 Client 에러입니다."),
 
     RUNTIME_ERROR("9909", "알 수 없는 예외입니다.");
 

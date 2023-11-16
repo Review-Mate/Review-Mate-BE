@@ -1,11 +1,8 @@
 package com.somartreview.reviewmate.service.products;
 
-import com.somartreview.reviewmate.domain.product.SingleTravelProduct;
-import com.somartreview.reviewmate.domain.product.TravelProduct;
 import com.somartreview.reviewmate.domain.product.TravelProductRepository;
-import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.exception.DomainLogicException;
-import com.somartreview.reviewmate.service.ReservationDeleteService;
+import com.somartreview.reviewmate.service.reservation.ReservationDeleteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

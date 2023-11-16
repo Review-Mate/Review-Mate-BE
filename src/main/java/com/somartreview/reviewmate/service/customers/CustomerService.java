@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.service;
+package com.somartreview.reviewmate.service.customers;
 
 import com.somartreview.reviewmate.domain.customer.Customer;
 import com.somartreview.reviewmate.domain.customer.CustomerRepository;

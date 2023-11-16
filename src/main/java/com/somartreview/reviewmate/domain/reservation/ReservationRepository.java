@@ -64,6 +64,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findAllByCreatedAtBetween(String partnerDomain, LocalDateTime startDateTime, LocalDateTime endDateTime);
 
 
+    @Query("select r from Reservation r inner join fetch r.customer c " +
+            "where r.travelProduct.id = :productId and r.startDateTime = :localDateTime")
+    List<Reservation> findByProductIdAndStartDateTime(Long productId, LocalDateTime localDateTime);
+
     @Transactional
     @Modifying
     @Query("delete from Reservation r where r.id = :id")

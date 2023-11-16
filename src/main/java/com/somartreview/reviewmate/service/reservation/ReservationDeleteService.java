@@ -1,4 +1,4 @@
-package com.somartreview.reviewmate.service;
+package com.somartreview.reviewmate.service.reservation;
 
 import com.somartreview.reviewmate.domain.reservation.Reservation;
 import com.somartreview.reviewmate.domain.reservation.ReservationRepository;
