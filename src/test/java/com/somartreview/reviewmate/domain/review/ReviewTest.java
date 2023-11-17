@@ -139,6 +139,7 @@ class ReviewTest {
         Review mockReview = new Review();
         ReviewTag reviewTag = new ReviewTag(ReviewProperty.LOCATION, "키워드", ReviewPolarity.NEGATIVE, 0, 1, mockReview);
 
+
         // when
         review.addReviewTag(reviewTag);
 

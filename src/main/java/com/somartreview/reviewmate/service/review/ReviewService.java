@@ -112,7 +112,7 @@ public class ReviewService {
         List<ReviewTagStatisticsDto> reviewTagStatisticsDtos = reviewRepository.findReviewTagStatisticsByTravelProductId(singleTravelProductId);
 
         for (ReviewTagStatisticsDto reviewTagStatisticDto : reviewTagStatisticsDtos) {
-            if (reviewTagStatisticsMap.get(reviewTagStatisticDto.getProperty()) == null) {
+            if (!reviewTagStatisticsMap.containsKey(reviewTagStatisticDto.getProperty())) {
                 ProductReviewTagStatisticsResponse productReviewTagStatisticsResponse = new ProductReviewTagStatisticsResponse(reviewTagStatisticDto.getProperty());
                 reviewTagStatisticsMap.put(reviewTagStatisticDto.getProperty(), productReviewTagStatisticsResponse);
             }

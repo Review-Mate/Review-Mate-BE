@@ -14,6 +14,9 @@ import org.springframework.data.domain.Pageable;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.somartreview.reviewmate.domain.partner.company.QPartnerCompany.partnerCompany;
+import static com.somartreview.reviewmate.domain.product.QTravelProduct.travelProduct;
+import static com.somartreview.reviewmate.domain.reservation.QReservation.reservation;
 import static com.somartreview.reviewmate.domain.review.QReview.review;
 import static com.somartreview.reviewmate.domain.review.ReviewOrderCriteria.*;
 import static com.somartreview.reviewmate.domain.review.tag.QReviewTag.reviewTag;
@@ -29,8 +32,16 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
     @Override
     public Page<Review> searchWidgetReviews(String partnerDomain, String travelProductPartnerCustomId, WidgetReviewSearchCond searchCond, Pageable pageable) {
         List<Review> reviews = queryFactory
-                .selectFrom(review)
-                .where(reviewTagEq(searchCond.getProperty(), searchCond.getKeyword()))
+                .select(review)
+                .from(review)
+                .innerJoin(review.reservation, reservation)
+                .innerJoin(reservation.travelProduct, travelProduct)
+                .innerJoin(travelProduct.partnerCompany, partnerCompany)
+                .where(
+                        partnerCompany.partnerDomain.eq(partnerDomain),
+                        travelProduct.partnerCustomId.eq(travelProductPartnerCustomId),
+                        reviewTagEq(searchCond.getProperty(), searchCond.getKeyword())
+                )
                 .orderBy(orderCriteria(searchCond.getOrderCriteria()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -54,7 +65,8 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
     private BooleanExpression propertyEq(ReviewProperty property) {
         return property == null ? null : (
                 JPAExpressions
-                        .selectFrom(reviewTag)
+                        .selectOne()
+                        .from(reviewTag)
                         .where(
                                 reviewTag.review.eq(review)
                                         .and(reviewTag.reviewProperty.eq(property))
@@ -65,7 +77,8 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
     private BooleanExpression keywordEq(ReviewProperty property, String keyword) {
         return keyword == null ? null : (
                 JPAExpressions
-                        .selectFrom(reviewTag)
+                        .selectOne()
+                        .from(reviewTag)
                         .where(
                                 reviewTag.review.eq(review)
                                         .and(reviewTag.reviewProperty.eq(property))
