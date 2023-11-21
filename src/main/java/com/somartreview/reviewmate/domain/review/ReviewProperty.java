@@ -12,5 +12,6 @@ public enum ReviewProperty {
     FOOD,
     EXTERNAL_FACILITIES,
     INTERNAL_FACILITIES,
-    PETS
+    PETS,
+    ETC
 }

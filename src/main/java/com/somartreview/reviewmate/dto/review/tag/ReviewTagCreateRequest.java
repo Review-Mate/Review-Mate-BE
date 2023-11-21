@@ -35,4 +35,15 @@ public class ReviewTagCreateRequest {
                 .review(review)
                 .build();
     }
+
+    @Override
+    public String toString() {
+        return "ReviewTagCreateRequest{" +
+                "reviewProperty=" + reviewProperty +
+                ", keyword='" + keyword + '\'' +
+                ", polarity=" + polarity +
+                ", startIndex=" + startIndex +
+                ", endIndex=" + endIndex +
+                '}';
+    }
 }

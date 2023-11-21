@@ -138,10 +138,11 @@ jacocoTestReport {
                             '**/*Formatter*',
                             '**/*Interceptor*',
                             '**/config/**',
+                            '**/dto/**',
+                            '**/exception/**',
+                            '**/GlobalControllerAdvice*',
                             '**/performance/**',
                             '**/BaseEntity*',
-                            '**/*Response*',
-                            '**/*Request*',
                             '**/domain/**/Q*',
                     ])
                 })

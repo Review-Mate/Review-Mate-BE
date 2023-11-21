@@ -13,21 +13,14 @@ import java.util.List;
 public class ReviewTagInferenceResponse {
 
     private Integer statusCode;
-    private Body body;
-
-    @Getter
-    @AllArgsConstructor
-    public static class Body {
-        private String review;
-        private List<Result> results;
-    }
+    private List<Result> body;
 
     @Getter
     @AllArgsConstructor
     public static class Result {
         private ReviewProperty property;
-        private ReviewPolarity polarity;
         private String keyword;
+        private ReviewPolarity polarity;
         private ReviewTagIndexResponse reviewTagIndexResponse;
     }
 }
