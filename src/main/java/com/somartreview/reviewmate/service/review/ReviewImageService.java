@@ -68,6 +68,7 @@ public class ReviewImageService {
         } catch (SdkClientException e) {
             throw new ExternalServiceException(AWS_S3_CLIENT_ERROR);
         } catch (IOException e) {
+            e.printStackTrace();
             throw new DomainLogicException(REVIEW_IMAGE_FILE_IO_ERROR);
         }
     }
