@@ -41,4 +41,13 @@ public class ReviewImage extends BaseEntity {
             throw new DomainLogicException(ErrorCode.REVIEW_IMAGE_URL_ERROR);
         }
     }
+
+    @Override
+    public String toString() {
+        return "ReviewImage{" +
+                "id=" + id +
+                ", fileName='" + fileName + '\'' +
+                ", review=" + review +
+                '}';
+    }
 }

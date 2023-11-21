@@ -12,6 +12,7 @@ import com.somartreview.reviewmate.service.products.TravelProductService;
 import feign.FeignException;
 import feign.FeignException.FeignClientException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
@@ -21,6 +22,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReviewTagService {
 
     private final ReviewTagRepository reviewTagRepository;
@@ -42,6 +44,8 @@ public class ReviewTagService {
         // Create review tags
         List<ReviewTagCreateRequest> reviewTagCreateRequests = reviewTagInferenceResponse.getBody().stream().map(ReviewTagCreateRequest::new).toList();
         for (ReviewTagCreateRequest reviewTagCreateRequest : reviewTagCreateRequests) {
+            log.info(reviewTagCreateRequest.toString());
+
             ReviewTag reviewTag = reviewTagCreateRequest.toEntity(review);
             reviewTag = reviewTagRepository.save(reviewTag);
             review.addReviewTag(reviewTag);
