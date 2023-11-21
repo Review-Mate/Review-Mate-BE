@@ -13,5 +13,5 @@ public enum ReviewProperty {
     EXTERNAL_FACILITIES,
     INTERNAL_FACILITIES,
     PETS,
-    NULL
+    ETC
 }
