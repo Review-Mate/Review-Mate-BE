@@ -40,7 +40,7 @@ public class ReviewTagService {
         ReviewTagInferenceResponse reviewTagInferenceResponse = reviewTagInferenceClient.inferenceReview(reviewTagInferenceRequest);
 
         // Create review tags
-        List<ReviewTagCreateRequest> reviewTagCreateRequests = reviewTagInferenceResponse.getBody().getResults().stream().map(ReviewTagCreateRequest::new).toList();
+        List<ReviewTagCreateRequest> reviewTagCreateRequests = reviewTagInferenceResponse.getBody().stream().map(ReviewTagCreateRequest::new).toList();
         for (ReviewTagCreateRequest reviewTagCreateRequest : reviewTagCreateRequests) {
             ReviewTag reviewTag = reviewTagCreateRequest.toEntity(review);
             reviewTag = reviewTagRepository.save(reviewTag);
