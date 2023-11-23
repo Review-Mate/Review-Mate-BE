@@ -2,6 +2,9 @@ package com.somartreview.reviewmate.dto.review;
 
 import com.somartreview.reviewmate.domain.review.Review;
 import com.somartreview.reviewmate.domain.review.ReviewPolarity;
+import com.somartreview.reviewmate.domain.review.ReviewProperty;
+import com.somartreview.reviewmate.domain.review.tag.ReviewTag;
+import com.somartreview.reviewmate.service.review.ReviewTagsPredicate;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +13,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static com.somartreview.reviewmate.service.review.ReviewImageService.CDN_DOMAIN;
 
@@ -45,6 +49,19 @@ public class WidgetReviewResponse {
     @Schema(description = "적용된 속성 혹은 키워드가 포함된 문자열의 인덱스들")
     private List<ReviewTagIndexResponse> reviewTagIndexResponses;
 
+    public WidgetReviewResponse(final Review review, ReviewProperty property, String keyword) {
+        this.id = review.getId();
+        this.rating = review.getRating();
+        this.title = review.getTitle();
+        this.content = review.getContent();
+        this.authorName = review.getReservation().getCustomer().getName();
+        this.createdAt = review.getCreatedAt().toString();
+        this.reviewImageUrls = review.getReviewImages().stream().map(reviewImage -> CDN_DOMAIN + "/" + reviewImage.getFileName()).toList();
+        this.polarity = review.getPolarity();
+        List<Predicate<ReviewTag>> reviewTagsPredicates = new ReviewTagsPredicate(property, keyword).getPredicates();
+        this.reviewTagIndexResponses = review.getReviewTags().stream().filter(reviewTagsPredicates.stream().reduce(x -> true, Predicate::and)).map(ReviewTagIndexResponse::new).toList();
+    }
+
     public WidgetReviewResponse(final Review review) {
         this.id = review.getId();
         this.rating = review.getRating();
@@ -55,17 +72,5 @@ public class WidgetReviewResponse {
         this.reviewImageUrls = review.getReviewImages().stream().map(reviewImage -> CDN_DOMAIN + "/" + reviewImage.getFileName()).toList();
         this.polarity = review.getPolarity();
         this.reviewTagIndexResponses = review.getReviewTags().stream().map(ReviewTagIndexResponse::new).toList();
-    }
-
-    public WidgetReviewResponse(Long id, Integer rating, String title, String content, String authorName, LocalDateTime createdAt, List<String> reviewImageFileNames, ReviewPolarity polarity, List<ReviewTagIndexResponse> reviewTagIndexResponses) {
-        this.id = id;
-        this.rating = rating;
-        this.title = title;
-        this.content = content;
-        this.authorName = authorName;
-        this.createdAt = createdAt.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
-        this.reviewImageUrls = reviewImageFileNames.stream().map(name -> CDN_DOMAIN + "/" + name).toList();
-        this.polarity = polarity;
-        this.reviewTagIndexResponses = reviewTagIndexResponses;
     }
 }

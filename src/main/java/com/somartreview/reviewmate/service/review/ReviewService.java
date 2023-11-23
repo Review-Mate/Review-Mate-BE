@@ -85,7 +85,7 @@ public class ReviewService {
         Pageable pageable = PageRequest.of(page, size);
 
         Page<Review> reviews = reviewRepository.searchWidgetReviews(partnerDomain, travelProductPartnerCustomId, widgetReviewSearchCond, pageable);
-        List<WidgetReviewResponse> widgetReviewResponses = reviews.stream().map(WidgetReviewResponse::new).toList();
+        List<WidgetReviewResponse> widgetReviewResponses = reviews.stream().map(review -> new WidgetReviewResponse(review, property, keyword)).toList();
 
         return new PageImpl<>(widgetReviewResponses, pageable, reviews.getTotalElements());
     }
