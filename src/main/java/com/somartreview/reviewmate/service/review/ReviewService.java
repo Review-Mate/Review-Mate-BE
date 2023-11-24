@@ -84,7 +84,7 @@ public class ReviewService {
         Pageable pageable = PageRequest.of(page, size);
 
         Page<Review> reviews = reviewRepository.searchWidgetReviews(partnerDomain, travelProductPartnerCustomId, widgetReviewSearchCond, pageable);
-        List<WidgetReviewResponse> widgetReviewResponses = reviews.stream().map(WidgetReviewResponse::new).toList();
+        List<WidgetReviewResponse> widgetReviewResponses = reviews.stream().map(review -> new WidgetReviewResponse(review, property, keyword)).toList();
 
         return new PageImpl<>(widgetReviewResponses, pageable, reviews.getTotalElements());
     }
@@ -111,7 +111,7 @@ public class ReviewService {
         List<ReviewTagStatisticsDto> reviewTagStatisticsDtos = reviewRepository.findReviewTagStatisticsByTravelProductId(singleTravelProductId);
 
         for (ReviewTagStatisticsDto reviewTagStatisticDto : reviewTagStatisticsDtos) {
-            if (reviewTagStatisticsMap.get(reviewTagStatisticDto.getProperty()) == null) {
+            if (!reviewTagStatisticsMap.containsKey(reviewTagStatisticDto.getProperty())) {
                 ProductReviewTagStatisticsResponse productReviewTagStatisticsResponse = new ProductReviewTagStatisticsResponse(reviewTagStatisticDto.getProperty());
                 reviewTagStatisticsMap.put(reviewTagStatisticDto.getProperty(), productReviewTagStatisticsResponse);
             }

@@ -89,8 +89,10 @@ configurations {
 
 test {
     useJUnitPlatform()
+    testLogging.showStandardStreams = true
     finalizedBy jacocoTestReport, jacocoTestCoverageVerification
 }
+
 
 def sonarqubeProperties = new Properties()
 file("src/main/resources/sonarqube.properties").withInputStream { sonarqubeProperties.load(it) }
@@ -137,10 +139,11 @@ jacocoTestReport {
                             '**/*Formatter*',
                             '**/*Interceptor*',
                             '**/config/**',
+                            '**/dto/**',
+                            '**/exception/**',
+                            '**/GlobalControllerAdvice*',
                             '**/performance/**',
                             '**/BaseEntity*',
-                            '**/*Response*',
-                            '**/*Request*',
                             '**/domain/**/Q*',
                     ])
                 })

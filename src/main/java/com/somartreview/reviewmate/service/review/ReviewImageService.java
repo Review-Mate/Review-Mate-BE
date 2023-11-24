@@ -9,6 +9,7 @@ import com.somartreview.reviewmate.domain.review.image.ReviewImageRepository;
 import com.somartreview.reviewmate.exception.DomainLogicException;
 import com.somartreview.reviewmate.exception.ExternalServiceException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
@@ -24,6 +25,7 @@ import static com.somartreview.reviewmate.exception.ErrorCode.REVIEW_IMAGE_FILE_
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReviewImageService {
     public static String CDN_DOMAIN = "image.reviewmate.co.kr";
 
@@ -47,6 +49,7 @@ public class ReviewImageService {
                     .review(review)
                     .build();
 
+            log.info(reviewImage.toString());
             reviewImage = reviewImageRepository.save(reviewImage);
             review.addReviewImage(reviewImage);
         }
@@ -65,6 +68,7 @@ public class ReviewImageService {
         } catch (SdkClientException e) {
             throw new ExternalServiceException(AWS_S3_CLIENT_ERROR);
         } catch (IOException e) {
+            e.printStackTrace();
             throw new DomainLogicException(REVIEW_IMAGE_FILE_IO_ERROR);
         }
     }
