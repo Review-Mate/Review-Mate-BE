@@ -4,12 +4,14 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.somartreview.reviewmate.dto.review.ReviewRatingCountsDto;
 import com.somartreview.reviewmate.service.review.WidgetReviewSearchCond;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -47,13 +49,19 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        Long totalCount = queryFactory
+        JPAQuery<Long> countQuery = queryFactory
                 .select(review.count())
                 .from(review)
-                .where(review.in(reviews))
-                .fetchOne();
+                .innerJoin(review.reservation, reservation)
+                .innerJoin(reservation.travelProduct, travelProduct)
+                .innerJoin(travelProduct.partnerCompany, partnerCompany)
+                .where(
+                        partnerCompany.partnerDomain.eq(partnerDomain),
+                        travelProduct.partnerCustomId.eq(travelProductPartnerCustomId),
+                        reviewTagEq(searchCond.getProperty(), searchCond.getKeyword())
+                );
 
-        return new PageImpl<>(reviews, pageable, totalCount);
+        return PageableExecutionUtils.getPage(reviews, pageable, countQuery::fetchOne);
     }
 
     private BooleanExpression reviewTagEq(ReviewProperty property, String keyword) {

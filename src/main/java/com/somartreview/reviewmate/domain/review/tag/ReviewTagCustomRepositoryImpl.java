@@ -25,6 +25,7 @@ public class ReviewTagCustomRepositoryImpl implements ReviewTagCustomRepository 
                 .from(reviewTag)
                 .where(reviewTag.review.reservation.travelProduct.id.eq(travelProductId))
                 .groupBy(reviewTag.reviewProperty, reviewTag.keyword)
+                .orderBy(reviewTag.keyword.asc())
                 .fetch();
 
         return groupByTags.stream().map(tag ->
